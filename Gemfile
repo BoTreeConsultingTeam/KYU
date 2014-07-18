@@ -39,6 +39,17 @@ group :development do
   # replaces the standard Rails error page with a much better and more useful error page
   # http://railscasts.com/episodes/402-better-errors-railspanel
   gem "better_errors"
+  gem 'guard-rails'
+  gem 'guard-livereload'
+  gem 'guard-jasmine'
+end
+
+group :development, :test do
+  gem 'rspec'
+  gem 'guard'
+  gem 'spork-rails'
+  gem 'guard-spork'
+  gem 'guard-rspec'
 end
 
 # Use ActiveModel has_secure_password
