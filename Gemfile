@@ -3,6 +3,7 @@ source 'https://rubygems.org'
 ruby '2.0.0'
 gem 'rails', '4.0.0'
 gem 'pg'
+gem 'devise'
 gem 'rails_config', '~> 0.4.2'
 
 # Use SCSS for stylesheets
@@ -46,7 +47,7 @@ group :development do
 end
 
 group :development, :test do
-  gem 'rspec'
+  gem 'rspec-rails'
   gem 'guard'
   gem 'spork-rails'
   gem 'guard-spork'
