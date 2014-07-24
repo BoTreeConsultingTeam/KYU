@@ -3,6 +3,8 @@ source 'https://rubygems.org'
 ruby '2.0.0'
 gem 'rails', '4.0.0'
 gem 'pg'
+gem 'devise'
+gem 'rails_config', '~> 0.4.2'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'
@@ -28,14 +30,14 @@ end
 group :development do
   # rake routes is slow and painful. view routes in browser - http://localhost:3000/rails/routes.
   gem 'sextant'
-  
+
   # turns off the Rails asset pipeline log. suppresses asset messages in your development log
   gem 'quiet_assets'
-  
+
   # powerful alternative to the standard IRB
   # features: syntax highlighting, a flexible plugin architecture, runtime invocation and source and documentation browsing.
   gem 'pry-rails'
-  
+
   # replaces the standard Rails error page with a much better and more useful error page
   # http://railscasts.com/episodes/402-better-errors-railspanel
   gem "better_errors"
@@ -45,7 +47,7 @@ group :development do
 end
 
 group :development, :test do
-  gem 'rspec'
+  gem 'rspec-rails'
   gem 'guard'
   gem 'spork-rails'
   gem 'guard-spork'
