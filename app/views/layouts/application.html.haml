@@ -6,14 +6,9 @@
     = javascript_include_tag 'application'
     = csrf_meta_tags
     %meta{name: 'viewport', content: 'width=device-width, initial-scale=1, maximum-scale=1'}
-  %body.background_color_for_inner_pages
+  %body
     #wrap
       = render partial: 'layouts/navigation'
-      .container-fixed
-        #main-container.main-container
-          .main-container-inner
-            .main-content
-              .page-content
-                #message-container
-                  / = render partial: 'shared/flash_messages'
-                = yield
+      .container
+        = render partial: 'shared/flash_messages'
+        = yield

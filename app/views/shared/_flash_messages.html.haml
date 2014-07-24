@@ -1,0 +1,8 @@
+- unless flash.empty?
+  .row.flash_msg
+    - flash.each do |name, message|
+      - render_css_for = render_css_class(name)
+      %div{ class: "text-center alert #{render_css_for[:css_class]}" }
+        %button.close{'data-dismiss' => 'alert', type: 'button'} &times;
+        %i{ class: "#{render_css_for[:msg_icon_class]}" }
+        = message
