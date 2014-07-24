@@ -5,4 +5,8 @@ KYU::Application.routes.draw do
     get '/signin' => 'devise/sessions#new'
     get '/signout' => 'devise/sessions#destroy'
   end
+
+  resources :admin
+  resources :operators
+  resources :teachers
 end
