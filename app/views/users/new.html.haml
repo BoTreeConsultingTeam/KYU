@@ -1,0 +1,33 @@
+%h2 Sign up
+= form_tag  create_member_users_path, class: 'form-horizontal', role: 'form' do
+  %div
+    = label_tag 'Salutation'
+    %br/
+    = select_tag 'user[salutation]', options_for_select(get_options_salutation_dropdown), :prompt => '-- Select --'
+  %div
+    = label_tag 'first Name'
+    %br/
+    = text_field_tag 'user[first_name]'
+  %div
+    = label_tag 'Middle Name'
+    %br/
+    = text_field_tag 'user[middle_name]'
+  %div
+    = label_tag 'Last Name'
+    %br/
+    = text_field_tag 'user[last_name]'
+  %div
+    = label_tag 'Email'
+    %br/
+    = email_field_tag 'user[email]'
+  %div
+    = label_tag 'Date of birth'
+    %br/
+    = text_field_tag 'user[date_of_birth]', nil, class: 'date-picker', id: 'id-date-picker-1'
+  %br/
+  %div= submit_tag "Sign up"
+
+:javascript
+  $(function () {
+      $('#id-date-picker-1').datepicker();
+  });

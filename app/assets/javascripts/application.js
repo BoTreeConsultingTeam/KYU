@@ -15,3 +15,4 @@
 //= require turbolinks
 //= require bootstrap
 //= require bootstrap.min
+//= require bootstrap-datepicker.min

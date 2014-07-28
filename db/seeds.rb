@@ -36,10 +36,10 @@ def find_or_create_user(user_attrs)
   user
 end
 
-operator = find_or_create_user({ email: 'operator@kyu.com', password: Settings.default_password })
-admin = find_or_create_user({ email: 'admin@kyu.com', password: Settings.default_password })
-teacher = find_or_create_user({ email: 'teacher@kyu.com', password: Settings.default_password })
-student = find_or_create_user({ email: 'student@kyu.com', password: Settings.default_password })
+operator = find_or_create_user({salutation: 'Mr', first_name: 'jacob', middle_name: 'm', last_name: 'kyu', email: 'operator@kyu.com', password: Settings.default_password, date_of_birth: Time.now})
+admin = find_or_create_user({salutation: 'Mr', first_name: 'jacob', middle_name: 'm', last_name: 'kyu', email: 'admin@kyu.com', password: Settings.default_password, date_of_birth: Time.now})
+teacher = find_or_create_user({salutation: 'Mr', first_name: 'jacob', middle_name: 'm', last_name: 'kyu', email: 'teacher@kyu.com', password: Settings.default_password, date_of_birth: Time.now})
+student = find_or_create_user({salutation: 'Mr', first_name: 'jacob', middle_name: 'm', last_name: 'kyu', email: 'student@kyu.com', password: Settings.default_password, date_of_birth: Time.now})
 
 # Assign roles to Operator, Administrator, Teacher, Student users
 def find_or_create_user_role(user, role)
@@ -53,11 +53,11 @@ end
 
 # Set role for Operator, Administrator, Teacher, Student
 operator_role = Role.role_operator
-administrator_role = Role.role_administrator
-teacher_role = Role.role_teacher
-student_role = Role.role_student
+# administrator_role = Role.role_administrator
+# teacher_role = Role.role_teacher
+# student_role = Role.role_student
 
 user_role_for_operator = find_or_create_user_role(operator, operator_role)
-user_role_for_administrator = find_or_create_user_role(admin, administrator_role)
-user_role_for_teacher = find_or_create_user_role(teacher, teacher_role)
-user_role_for_student = find_or_create_user_role(student, student_role)
+# user_role_for_administrator = find_or_create_user_role(admin, administrator_role)
+# user_role_for_teacher = find_or_create_user_role(teacher, teacher_role)
+# user_role_for_student = find_or_create_user_role(student, student_role)

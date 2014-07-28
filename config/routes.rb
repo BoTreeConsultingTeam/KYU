@@ -1,12 +1,14 @@
 KYU::Application.routes.draw do
   root to: 'static_pages#index'
 
-  devise_for :users do
-    get '/signin' => 'devise/sessions#new'
-    get '/signout' => 'devise/sessions#destroy'
-  end
-
+  devise_for :users
   resources :admin
   resources :operators
   resources :teachers
+
+  resources :users do
+    collection do
+      post :create_member
+    end
+  end
 end
