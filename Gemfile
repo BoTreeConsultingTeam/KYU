@@ -1,8 +1,12 @@
 source 'https://rubygems.org'
 
-ruby '2.0.0'
-gem 'rails', '4.0.0'
+ruby '2.1.1'
+gem 'rails', '4.1.2'
 gem 'pg'
+gem 'haml', '~> 4.0.5'
+gem 'haml-rails'
+gem 'devise'
+gem 'rails_config', '~> 0.4.2'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'
@@ -45,7 +49,7 @@ group :development do
 end
 
 group :development, :test do
-  gem 'rspec'
+  gem 'rspec-rails'
   gem 'guard'
   gem 'spork-rails'
   gem 'guard-spork'

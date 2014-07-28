@@ -1,0 +1,5 @@
+app_name: "KYU"
+default_password: 'password'
+mail:
+  default_url_options:
+    support_email: 'support@kyu.com'
