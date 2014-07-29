@@ -1,9 +1,9 @@
 source 'https://rubygems.org'
 
-ruby '2.1.1'
-gem 'rails', '4.1.2'
+ruby '2.0.0'
+gem 'rails', '4.0.0'
 gem 'pg'
-gem 'haml', '~> 4.0.5'
+gem 'haml'
 gem 'haml-rails'
 gem 'devise'
 gem 'rails_config', '~> 0.4.2'

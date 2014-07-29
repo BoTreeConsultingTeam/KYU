@@ -1,31 +1,30 @@
-%h2 Sign up
+- field_tag_class = 'form-control'
+%h2= t('registration.caption.page_header.registration')
 = form_tag  create_member_users_path, class: 'form-horizontal', role: 'form' do
-  %div
-    = label_tag 'Salutation'
-    %br/
-    = select_tag 'user[salutation]', options_for_select(get_options_salutation_dropdown), :prompt => '-- Select --'
-  %div
-    = label_tag 'first Name'
-    %br/
-    = text_field_tag 'user[first_name]'
-  %div
-    = label_tag 'Middle Name'
-    %br/
-    = text_field_tag 'user[middle_name]'
-  %div
-    = label_tag 'Last Name'
-    %br/
-    = text_field_tag 'user[last_name]'
-  %div
-    = label_tag 'Email'
-    %br/
-    = email_field_tag 'user[email]'
-  %div
-    = label_tag 'Date of birth'
-    %br/
-    = text_field_tag 'user[date_of_birth]', nil, class: 'date-picker', id: 'id-date-picker-1'
-  %br/
-  %div= submit_tag "Sign up"
+  .col-xs-3
+    .form-group
+      %label.control-label= t('registration.caption.role')
+      = select_tag 'user[role_id]', options_for_select(Role.all), :prompt => '-- Select --', class: field_tag_class
+    .form-group
+      %label.control-label= t('registration.caption.salutation')
+      = select_tag 'user[salutation]', options_for_select(get_options_salutation_dropdown), :prompt => '-- Select --', class: field_tag_class
+    .form-group
+      %label.control-label= t('registration.caption.first_name')
+      = text_field_tag 'user[first_name]', nil, class: field_tag_class
+    .form-group
+      %label.control-label= t('registration.caption.middle_name')
+      = text_field_tag 'user[middle_name]', nil, class: field_tag_class
+    .form-group
+      %label.control-label= t('registration.caption.last_name')
+      = text_field_tag 'user[last_name]', nil, class: field_tag_class
+    .form-group
+      %label.control-label= t('registration.caption.email')
+      = email_field_tag 'user[email]', nil, class: field_tag_class
+    .form-group
+      %label.control-label= t('registration.caption.date_of_birth')
+      = text_field_tag 'user[date_of_birth]', nil, class: "date-picker #{field_tag_class}", id: 'id-date-picker-1'
+    .form-group
+      = submit_tag t('common.btn.submit'), class: 'btn btn-primary btn-sm', title: t('common.btn.submit')
 
 :javascript
   $(function () {

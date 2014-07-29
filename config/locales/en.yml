@@ -3,6 +3,20 @@ en:
     admin_rights_required: 'Administrator rights are required to access this page.'
     operator_rights_required: 'Only operators can access this page.'
     teacher_rights_required: 'Only teachers rights are required to access this page.'
+  registration:
+    caption:
+      role: 'Role'
+      salutation: 'Salutation'
+      first_name: 'First Name'
+      middle_name: 'Middle Name'
+      last_name: 'Last Name'
+      email: 'Email'
+      date_of_birth: 'Date Of Birth'
+      page_header:
+        registration: 'Registration'
+  common:
+    btn:
+      submit: Submit
   mailer:
     user:
       subject:
