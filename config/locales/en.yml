@@ -12,6 +12,7 @@ en:
       last_name: 'Last Name'
       email: 'Email'
       date_of_birth: 'Date Of Birth'
+      role_select_prompt: '---Select Role---'
       page_header:
         registration: 'Registration'
   common:

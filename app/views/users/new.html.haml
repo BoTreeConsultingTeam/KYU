@@ -4,7 +4,7 @@
   .col-xs-3
     .form-group
       %label.control-label= t('registration.caption.role')
-      = select_tag 'user[role_id]', options_for_select(Role.all), :prompt => '-- Select --', class: field_tag_class
+      = roles_dropdown(Role.all)
     .form-group
       %label.control-label= t('registration.caption.salutation')
       = select_tag 'user[salutation]', options_for_select(get_options_salutation_dropdown), :prompt => '-- Select --', class: field_tag_class
