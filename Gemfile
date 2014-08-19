@@ -1,10 +1,10 @@
 source 'https://rubygems.org'
 
-ruby '2.0.0'
-gem 'rails', '4.0.0'
+ruby '2.1.2'
+gem 'rails', '4.1.2'
 gem 'pg'
 gem 'haml'
-gem 'haml-rails'
+gem 'haml-rails', '~> 0.5.3'
 gem 'devise'
 gem 'rails_config', '~> 0.4.2'
 
@@ -54,6 +54,9 @@ group :development, :test do
   gem 'spork-rails'
   gem 'guard-spork'
   gem 'guard-rspec'
+  gem 'factory_girl_rails'
+  gem 'shoulda'
+  gem 'shoulda-matchers', require: false
 end
 
 # Use ActiveModel has_secure_password
