@@ -5,6 +5,10 @@ gem 'rails', '4.0.0'
 gem 'pg'
 gem 'haml'
 gem 'haml-rails'
+gem 'bootstrap-sass'
+gem 'acts_as_votable', '~> 0.10.0'
+gem 'acts-as-taggable-on'
+gem 'acts_as_commentable_with_threading'
 gem 'devise'
 gem 'rails_config', '~> 0.4.2'
 
@@ -17,6 +21,7 @@ gem 'jquery-rails'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'
 
+gem 'sdoc', '~> 0.4.0',          group: :doc
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 1.2'
 
