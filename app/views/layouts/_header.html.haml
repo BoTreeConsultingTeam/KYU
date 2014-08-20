@@ -1,0 +1,15 @@
+%header.navbar-fixed-top.navbar-inverse{:role => "navigation"}
+  %ul.nav.nav-pills.pull-right
+    %li
+      %a{:href => root_path} Home
+    %li
+      %a{:href => "#"} Tags
+    %li
+      %a{:href => "#"} About us
+    %li
+      %a{:href => "#"} Contact us
+    - if student_signed_in?
+      %li
+        = link_to 'Edit profile', edit_student_registration_path
+      %li
+        = link_to "Logout", destroy_student_session_path, method: :delete
