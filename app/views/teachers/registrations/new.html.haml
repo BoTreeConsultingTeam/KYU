@@ -1,0 +1,32 @@
+%h2 Sign up for teacher
+= form_for(resource, :as => resource_name, :url => teacher_registration_path) do |f|
+  = devise_error_messages!
+  %div
+    
+    %br/
+    = f.label :salutation
+    = f.select :salutation, options_for_select(%w[Mr. Ms. Mrs.])
+    = f.label :first_name
+    = f.text_field :first_name
+    %br
+    = f.label :last_name
+    = f.text_field :last_name
+    %br
+    = f.label :user_name
+    = f.text_field :username
+    %br
+    = f.label :qualification
+    = f.text_field :qualification
+    %br
+    = f.label :email
+    = f.email_field :email, :autofocus => true
+  %div
+    = f.label :password
+    %br/
+    = f.password_field :password
+  %div
+    = f.label :password_confirmation
+    %br/
+    = f.password_field :password_confirmation
+  %div= f.submit "Sign up"
+= render "teachers/shared/links"

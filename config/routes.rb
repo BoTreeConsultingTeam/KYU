@@ -6,7 +6,10 @@ Rails.application.routes.draw do
  
   devise_scope :student do
     get "/students" => "students/registrations#index"
-end
+  end
+  devise_scope :teacher do
+    get "/teachers" => "teachers/registrations#index"
+  end
    # Add a custom sign in route for user sign in
   
   # The priority is based upon order of creation: first created -> highest priority.
