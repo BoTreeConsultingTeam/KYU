@@ -13,6 +13,7 @@ Rails.application.routes.draw do
 
   resources :questions
   resources :answers
+  resources :tags 
   get 'tags/:tag', to: 'questions#index', as: :tag
    # Add a custom sign in route for user sign in
   
