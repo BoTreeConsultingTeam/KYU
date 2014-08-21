@@ -1,33 +1,40 @@
-%h2 Sign up for student
-= form_for(resource, :as => resource_name, :url => student_registration_path) do |f|
-  = devise_error_messages!
-  %div
-    %br
-    = f.label :first_name
-    = f.text_field :first_name
-    %br
-    =f.label :middle_name
-    =f.text_field :middle_name
-    %br
-    = f.label :last_name
-    = f.text_field :last_name
-    %br
-    = f.label :user_name
-    =f.text_field :username
-    %br
-    = f.label :DOB
-    = f.date_field :birthdate
-    %br   
-    = f.label :email
-    %br/
-    = f.email_field :email, :autofocus => true
-    %div
-    = f.label :password
-    %br/
-    = f.password_field :password
-    %div
-    = f.label :password_confirmation
-    %br/
-    = f.password_field :password_confirmation
-    %div= f.submit "Sign up"
-= render "students/shared/links"
+%div
+  %h2.page-header
+    =t('common.page_header.sign_up') 
+  .row
+    .col-lg-3
+    .col-lg-3
+      = form_for(resource, :as => resource_name, :url => student_registration_path) do |f|
+        = devise_error_messages!
+        %div
+          %br
+          = f.label :first_name
+          = f.text_field :first_name,class: 'form-control'
+          %br
+          =f.label :middle_name
+          =f.text_field :middle_name,class: 'form-control'
+          %br
+          = f.label :last_name
+          = f.text_field :last_name,class: 'form-control'
+          %br
+          = f.label :user_name
+          =f.text_field :username,class: 'form-control'
+          %br
+          = f.label :DOB
+          = f.date_field :birthdate,class: 'form-control'
+          %br   
+          = f.label :email
+          %br/
+          = f.email_field :email, :autofocus => true,class: 'form-control'
+          %div
+          %br/
+          = f.label :password          
+          = f.password_field :password,class: 'form-control'
+          %div
+          %br/
+          = f.label :password_confirmation
+          = f.password_field :password_confirmation,class: 'form-control'
+          %br/
+          %div= f.submit "Sign up"
+    .pull-right.btn.btn-default.btn-lg
+      = render "students/shared/links"

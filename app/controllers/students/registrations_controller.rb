@@ -6,6 +6,13 @@ class Students::RegistrationsController <  Devise::RegistrationsController
       @questions = Question.all
     end
   end
+  def student_list
+      @students=Student.all
+  end
+
+  def show
+    @student=Student.find(params[:id])
+  end
 
   def create
     super

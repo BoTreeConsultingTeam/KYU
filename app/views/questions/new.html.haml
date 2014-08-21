@@ -1,20 +1,24 @@
-%h2 New Question
-  
-= form_for(@question) do |f|
-  %div
-  = f.label :title
-  %br/
-  = f.text_field :title, :autofocus => true
-  %div
-  = f.label :content
-  %br/
-  = f.text_area :content
-  %div
-    = f.label :tag_list, "Tags (separated by commas)"
-    = f.text_field :tag_list
-    -if !(current_student.nil?) 
-      = f.hidden_field :user_id, :value => current_student.id 
-    -else
-      = f.hidden_field :user_id, :value => current_teacher.id 
-    = f.submit "Submit",class: 'btn btn-primary'
+%div
+  %h2.page-header New Question
+  .row
+    .col-lg-3
+    .col-lg-3  
+      = form_for(@question) do |f|
+        %div
+        = f.label :title
+        %br/
+        = f.text_field :title, :autofocus => true,class: 'form-control'
+        %div
+        = f.label :content
+        %br/
+        = f.text_area :content,class: 'form-control'
+        %div
+          = f.label :tag_list, "Tags (separated by commas)"
+          = f.text_field :tag_list,class: 'form-control'
+          -if !(current_student.nil?) 
+            = f.hidden_field :user_id, :value => current_student.id 
+          -else
+            = f.hidden_field :user_id, :value => current_teacher.id 
+          %br/
+          = f.submit "Submit",class: 'btn btn-primary'
 

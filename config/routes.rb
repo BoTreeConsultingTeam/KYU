@@ -6,12 +6,17 @@ Rails.application.routes.draw do
  
   devise_scope :student do
     get "/students" => "students/registrations#index"
+    get "/students/student_list" => "students/registrations#student_list"
+    get "/students/:id" => "students/registrations#show",as: 'student'
   end
   devise_scope :teacher do
     get "/teachers" => "teachers/registrations#index"
   end
 
-  resources :questions
+  resources :questions do
+    member { post :vote }
+  end
+  
   resources :answers
   get 'tags/:tag', to: 'questions#index', as: :tag
    # Add a custom sign in route for user sign in

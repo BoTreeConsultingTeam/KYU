@@ -20,4 +20,15 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  teacher:
+    captions:
+    btn:
+      teacher: 'Teacher'
+  student:
+    btn:
+      student: 'Student'    
+  common:
+    page_header:
+      sign_up: 'Sign up'
+      sing_in: 'Sign in'
+

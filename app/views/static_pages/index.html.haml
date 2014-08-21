@@ -1,18 +1,12 @@
 
-%h1 KYU
+
 -if current_teacher.nil? && current_student.nil?
-  = link_to  'Student  Sign up', new_student_registration_path
-  %br
-  = link_to  'Teachers  Sign up', new_teacher_registration_path
-  %br
-  = link_to  'Student  Sign in', new_student_session_path
-  %br
-  = link_to  'Teacher  Sign in', new_teacher_session_path
--else
-  -if current_teacher.nil?
-    
-    = link_to  'Student  Sign out', destroy_student_session_path, method: :delete
-  -else
-    = link_to  'teacher  Sign out',  destroy_teacher_session_path, method: :delete 
+  %div.row
+    %div.col-lg-4
+  %div.row
+    %div.col-lg-6
+      = link_to  t('teacher.btn.student'), new_student_registration_path, class: "btn btn-primary btn-lg"
+      
+      = link_to  t('student.btn.teacher'), new_teacher_registration_path, class: "btn btn-primary btn-lg"
 
 
