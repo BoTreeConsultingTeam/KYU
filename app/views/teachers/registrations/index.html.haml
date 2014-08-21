@@ -1,0 +1,19 @@
+%div
+  = button_to  'New Question', new_question_path,method: :get, class:" btn btn-primary pull-right" 
+%div
+  %h1
+    Latest Questions
+    -i=1
+  - @questions.each do |que|
+    %h3
+      = i
+      = link_to  que.title, question_path(que)
+
+    By
+    = Student.find(que.user_id).first_name
+
+    %br
+    #{time_ago_in_words(que.created_at)} ago.
+    - i += 1
+    Tags: #{raw que.tag_list.map { |t| link_to t, tag_path(t) }.join(', ')}
+    %hr

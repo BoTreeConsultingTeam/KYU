@@ -15,9 +15,13 @@ class QuestionsController < ApplicationController
 
   def create
     @question = Question.create(question_params)
-    redirect_to root_path
+    redirect_to questions_path
   end
-
+  def show
+    @question = Question.find(params[:id])
+    @answers = @question.answers
+  end
+  private
   def question_params
     params.require(:question).permit(:title,:content, :user_id, :tag_list)
   end

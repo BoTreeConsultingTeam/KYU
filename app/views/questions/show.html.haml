@@ -1,0 +1,15 @@
+%h3  
+  Que.
+  =@question.title
+  %br
+  = link_to 'New Answer', new_answer_path(:question_id => @question.id) 
+  %hr
+  Answers
+  %hr
+-@answers.each do |ans|
+  %h4.strong
+    =ans.content
+  By
+  =Student.find(ans.user_id).first_name
+  #{time_ago_in_words(ans.created_at)} ago.
+  %hr
