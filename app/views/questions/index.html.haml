@@ -4,6 +4,7 @@
 
 %div
   = button_to  'New Question  ', new_question_path,method: :get, class:" btn btn-primary pull-right" 
+= paginate @questions  
 %div
   %h1
     Latest Questions
@@ -20,3 +21,5 @@
     - i += 1
     Tags: #{raw que.tag_list.map { |t| link_to t, tag_path(t) }.join(', ')}
     %hr
+.pull-right    
+  = paginate @questions
