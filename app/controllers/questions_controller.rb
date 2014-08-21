@@ -3,8 +3,14 @@ class QuestionsController < ApplicationController
   def index
     if params[:tag]
       @questions = Question.tagged_with(params[:tag])
+    elsif params[:time]
+      if params[:time] == 'week'
+        @questions = Question.recent_data_week
+      else
+        @questions = Question.recent_data_month
+      end
     else
-      @questions = Question.all
+      @questions = Question.all_data
     end
   end
 

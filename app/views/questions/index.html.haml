@@ -1,4 +1,8 @@
 %div
+  = link_to "Last Week", questions_path(:time => 'week')
+  = link_to "Last Month", questions_path(:time => 'month')
+
+%div
   = button_to  'New Question  ', new_question_path,method: :get, class:" btn btn-primary pull-right" 
 %div
   %h1
