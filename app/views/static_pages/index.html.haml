@@ -5,15 +5,6 @@
     %div.col-lg-4
   %div.row
     %div.col-lg-6
-      = link_to  'Sign_up as Student', new_student_registration_path, class: "btn btn-primary btn-lg"
+      = link_to  t('teacher.btn.student'), new_student_registration_path, class: "btn btn-primary btn-lg"
       
-      = link_to  'Sign_up as Teachers', new_teacher_registration_path, class: "btn btn-primary btn-lg"
--else
-  .pull-right
-    -if current_teacher.nil?
-      
-      = link_to  'Student  Sign out', destroy_student_session_path, method: :delete,class: "btn btn-primary btn-lg"
-    -else
-      = link_to  'teacher  Sign out',  destroy_teacher_session_path, method: :delete,class: "btn btn-primary btn-lg" 
-
-
+      = link_to  t('student.btn.teacher'), new_teacher_registration_path, class: "btn btn-primary btn-lg"
