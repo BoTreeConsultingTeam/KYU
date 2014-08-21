@@ -20,6 +20,7 @@
     #{time_ago_in_words(que.created_at)} ago.
     - i += 1
     Tags: #{raw que.tag_list.map { |t| link_to t, tag_path(t) }.join(', ')}
+    Views: #{que.impressionist_count} 
     %hr
 .pull-right    
   = paginate @questions
