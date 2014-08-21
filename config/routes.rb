@@ -13,9 +13,7 @@ Rails.application.routes.draw do
     get "/teachers" => "teachers/registrations#index"
   end
 
-  resources :questions do
-    member { post :vote }
-  end
+  resources :questions
   
   resources :answers
   get 'tags/:tag', to: 'questions#index', as: :tag
