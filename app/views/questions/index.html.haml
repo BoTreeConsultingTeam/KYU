@@ -1,10 +1,10 @@
 %div
-  = link_to "Last Week", questions_path(:time => 'week')
-  = link_to "Last Month", questions_path(:time => 'month')
+  = link_for('Last Week', 'week')
+  = link_for('Last Month', 'month')
 
 %div
   = button_to  'New Question  ', new_question_path,method: :get, class:" btn btn-primary pull-right" 
-= paginate @questions  
+= render :partial => "shared/pagination", :locals => {:object => @questions} 
 %div
   %h1
     Latest Questions
@@ -21,5 +21,5 @@
     - i += 1
     Tags: #{raw que.tag_list.map { |t| link_to t, tag_path(t) }.join(', ')}
     %hr
-.pull-right    
-  = paginate @questions
+.pull-right  
+  = render :partial => "shared/pagination", :locals => {:object => @questions} 

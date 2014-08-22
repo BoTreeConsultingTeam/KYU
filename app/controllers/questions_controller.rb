@@ -1,16 +1,16 @@
 class QuestionsController < ApplicationController
-  
+  include QuestionsHelper
   def index
-    if params[:tag]
-      @questions = Question.tagged_with(params[:tag]).page params[:page]
-    elsif params[:time]
-      if params[:time] == 'week'
+    if received_tag
+      @questions = Question.tagged_with(received_tag).page params[:page]
+    elsif received_time
+      if received_time == 'week'
         @questions = Question.recent_data_week.page params[:page]
       else
         @questions = Question.recent_data_month.page params[:page]
       end
     else
-      @questions = Question.all_data.page params[:page]
+      @questions = Question.all.page params[:page]
     end
   end
 
