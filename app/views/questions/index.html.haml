@@ -1,11 +1,11 @@
 %div
-  = link_to "Last Week", questions_path(:time => 'week')
-  = link_to "Last Month", questions_path(:time => 'month')
+  = link_to t('questions.link.last_week'), questions_path(:time => 'week')
+  = link_to t('questions.link.last_month'), questions_path(:time => 'month')
 
 %div
-  = button_to  'New Question  ', new_question_path,method: :get, class:" btn btn-primary pull-right" 
+  = button_to  t('questions.btn.new_question'), new_question_path,method: :get, class:" btn btn-primary pull-right" 
 %h2
-  Questions
+  = t('questions.page_header.title')
 =paginate @questions  
 %div
   -i=1
@@ -14,18 +14,18 @@
     %h3
       = i
       = link_to  que.title, question_path(que)
-    
-    By
+
+    = t('questions.basic.asked_by')
     = Student.find(que.user_id).first_name
     
     #{time_ago_in_words(que.created_at)} ago.
     - i += 1
     %br
     %strong
-      Tags: 
+      = t('questions.basic.tag')
     #{raw que.tag_list.map { |t| link_to t, tag_path(t) }.join(', ')}
     %strong
-      Views:
+      = t('questions.basic.view')
     #{que.impressionist_count} 
     %hr
 .pull-right    
