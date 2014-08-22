@@ -18,9 +18,17 @@ class QuestionsController < ApplicationController
    
     @question = Question.find(params[:id])
     if value==1
-      @question.liked_by current_student
+      if !current_student.nil?
+        @question.liked_by current_student
+      else
+        @question.liked_by current_teacher
+      end
     elsif value==-1
-      @question.disliked_by current_student
+      if !current_student.nil?
+        @question.disliked_by current_student
+      else
+        @question.disliked_by current_teacher
+      end
     end
 
     redirect_to questions_path

@@ -15,4 +15,7 @@
     #{time_ago_in_words(que.created_at)} ago.
     - i += 1
     Tags: #{raw que.tag_list.map { |t| link_to t, tag_path(t) }.join(', ')}
+    %br/
+    = link_to 'Vote Up', vote_question_path(que, type: "up"), method: "post"
+    = link_to 'Vote Down', vote_question_path(que, type: "down"),method: "post"
     %hr
