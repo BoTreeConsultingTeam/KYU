@@ -12,7 +12,7 @@
           
           %br/
           = f.label :salutation
-          = f.select(:salutation, options_for_select(%w[Mr. Ms. Mrs.]),{},{class: 'form-control'})
+          = f.select(:salutation, options_for_salution,{},{class: 'form-control'})
           = f.label :first_name
           = f.text_field :first_name,class: 'form-control'
           %br

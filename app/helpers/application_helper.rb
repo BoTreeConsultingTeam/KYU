@@ -1,4 +1,5 @@
 module ApplicationHelper
+  SALUTATIONS = %w[Mr Ms Mrs]
   def render_css_class(name)
     css_class = ''
     msg_icon_class = ''
@@ -15,5 +16,9 @@ module ApplicationHelper
     else
     end
     {css_class: css_class, msg_icon_class: msg_icon_class}
+  end
+
+  def options_for_salution
+    options_for_select(SALUTATIONS)
   end
 end

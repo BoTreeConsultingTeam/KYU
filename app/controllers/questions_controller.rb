@@ -13,25 +13,16 @@ class QuestionsController < ApplicationController
     @question.user_id = session[:id]
   end
 
-  def vote
-    value = params[:type] == "up" ? 1 : -1
-   
-    @question = Question.find(params[:id])
-    if value==1
-      if !current_student.nil?
-        @question.liked_by current_student
-      else
-        @question.liked_by current_teacher
-      end
-    elsif value==-1
-      if !current_student.nil?
-        @question.disliked_by current_student
-      else
-        @question.disliked_by current_teacher
-      end
-    end
+  def upvote
+     @question = Question.find(params[:id])
+     question_liked_by(@question,liked_by)
+    redirect_to :back
+  end
 
-    redirect_to questions_path
+  def downvote
+    @question = Question.find(params[:id])
+    question_disliked_by(@question,liked_by)
+    redirect_to :back
   end
 
   def create
@@ -46,5 +37,18 @@ class QuestionsController < ApplicationController
   def question_params
     params.require(:question).permit(:title,:content, :user_id, :tag_list)
   end
+  private 
 
+  def question_liked_by(question,user=nil)
+    question.liked_by(user)
+  end
+
+  def question_disliked_by(question,user=nil)
+    question.disliked_by(user)
+  end
+
+  def liked_by
+    liked_by=  current_student.present? ? current_student : current_teacher
+    return liked_by
+  end
 end
