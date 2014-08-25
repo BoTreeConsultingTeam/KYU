@@ -18,7 +18,9 @@ Rails.application.routes.draw do
   get '/members' => 'members#index'
   get '/members/:id' => 'members#show',as: :member
   
-  resources :answers
+  resources :answers do
+    member { post :upvote,:downvote }
+  end
   get 'tags/:tag', to: 'questions#index', as: :tag
    # Add a custom sign in route for user sign in
   
