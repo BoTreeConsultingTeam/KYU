@@ -2,10 +2,8 @@
   = form_for (@answer) do |f|
     =f.label :Your_answer
     =f.text_area :content
-    -if !(current_student.nil?)
-      = f.hidden_field :user_id, :value => current_student.id
-    -else
-      = f.hidden_field :user_id, :value => current_teacher.id
+
+    = f.hidden_field :user_id, :value => current_user.id
     = f.hidden_field :question_id, :value => params[:question_id]
     
     =f.submit 

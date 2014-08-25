@@ -39,16 +39,15 @@ class QuestionsController < ApplicationController
   end
   private 
 
-  def question_liked_by(question,user=nil)
+  def question_liked_by(question,user)
     question.liked_by(user)
   end
 
-  def question_disliked_by(question,user=nil)
+  def question_disliked_by(question,user)
     question.disliked_by(user)
   end
 
   def liked_by
-    liked_by=  current_student.present? ? current_student : current_teacher
-    return liked_by
+    liked_by = current_student.present? ? current_student : current_teacher
   end
 end
