@@ -1,25 +1,20 @@
 %div
-  = link_to t('questions.link.last_week'), questions_path(:time => 'week')
-  = link_to t('questions.link.last_month'), questions_path(:time => 'month')
-
+  = set_link(t('questions.link.last_week'),'week')
+  = set_link(t('questions.link.last_month'),'month')
 %div
   = button_to  t('questions.btn.new_question'), new_question_path,method: :get, class:" btn btn-primary pull-right" 
 %h2
   = t('questions.page_header.title')
 =paginate @questions  
 %div
-  -i=1
   - @questions.each do |que|
     
     %h3
-      = i
       = link_to  que.title, question_path(que)
-
     = t('questions.basic.asked_by')
-    = Student.find(que.user_id).first_name
-    
+    = get_user_name(que.user_id)
     #{time_ago_in_words(que.created_at)} ago.
-    - i += 1
+    
     %br
     %strong
       = t('questions.basic.tag')
