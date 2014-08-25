@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   end
 
   resources :questions
+  resources :comments
   resources :answers
   get 'tags/:tag', to: 'questions#index', as: :tag
    # Add a custom sign in route for user sign in
