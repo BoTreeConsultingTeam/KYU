@@ -3,7 +3,10 @@ class Question < ActiveRecord::Base
   paginates_per 10
 
 	acts_as_taggable
+	acts_as_votable
 	belongs_to :user
+	belongs_to :student
+	belongs_to :teacher
 	has_many :answers
 	has_many :users, through: :answers, dependent: :destroy
   belongs_to :askable, polymorphic: true

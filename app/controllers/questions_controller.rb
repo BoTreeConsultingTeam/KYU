@@ -19,6 +19,18 @@ class QuestionsController < ApplicationController
     @question.user_id = session[:id]
   end
 
+  def upvote
+     @question = Question.find(params[:id])
+     question_liked_by(@question,liked_by)
+    redirect_to :back
+  end
+
+  def downvote
+    @question = Question.find(params[:id])
+    question_disliked_by(@question,liked_by)
+    redirect_to :back
+  end
+
   def create
     logged_in_user = current_student ? current_student : current_teacher
     @question = Question.create(question_params.merge({askable: logged_in_user}))
@@ -36,5 +48,17 @@ class QuestionsController < ApplicationController
   def question_params
     params.require(:question).permit(:title,:content, :user_id, :tag_list)
   end
+  private 
 
+  def question_liked_by(question,user)
+    question.liked_by(user)
+  end
+
+  def question_disliked_by(question,user)
+    question.disliked_by(user)
+  end
+
+  def liked_by
+    liked_by = current_student.present? ? current_student : current_teacher
+  end
 end

@@ -18,7 +18,7 @@ en:
       last_week: 'Last week'
       last_month: 'Last Month'  
   answers:
-    captions:    
+    captions:
     basic:
       answer_label: 'Your answer'
       new_answer: 'New Answer'
@@ -57,4 +57,14 @@ en:
       title_confirmation: 'Resend confirmation instructions'    
       title_sign_in: 'Sign in'
     basic:
-      salutation: 'Salutations:'  
+  teacher:
+    captions:
+    btn:
+      teacher: 'Teacher'
+  student:
+    btn:
+      student: 'Student'    
+  common:
+    page_header:
+      sign_up: 'Sign up'
+      sing_in: 'Sign in'

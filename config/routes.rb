@@ -14,7 +14,17 @@ Rails.application.routes.draw do
   resources :questions
   resources :answers
   get 'answers/accept/:id', to: 'answers#accept', as: :index
-  resources :tags 
+  resources :tags
+  resources :questions do
+    member { post :upvote,:downvote }
+  end
+
+  get '/members' => 'members#index'
+  get '/members/:id' => 'members#show',as: :member
+  
+  resources :answers do
+    member { post :upvote,:downvote }
+  end
   get 'tags/:tag', to: 'questions#index', as: :tag
    # Add a custom sign in route for user sign in
   
