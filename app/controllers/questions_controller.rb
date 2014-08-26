@@ -20,7 +20,8 @@ class QuestionsController < ApplicationController
   end
 
   def create
-    @question = Question.create(question_params)
+    logged_in_user = current_student ? current_student : current_teacher
+    @question = Question.create(question_params.merge({askable: logged_in_user}))
     redirect_to questions_path
   end
 
