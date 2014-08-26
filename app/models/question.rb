@@ -20,7 +20,7 @@ class Question < ActiveRecord::Base
 
 	def ans_id
 		answers.each do |ans|
-			if ans.flag== true
+			if ans.flag == true
 				return ans.id
 			end
 		end
