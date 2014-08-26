@@ -103,7 +103,11 @@ GEM
       railties (~> 4.0.0)
     hike (1.2.3)
     http_parser.rb (0.6.0)
+    httpclient (2.4.0)
     i18n (0.6.11)
+    impressionist (1.5.1)
+      httpclient (~> 2.2)
+      nokogiri (~> 1.5)
     jbuilder (1.5.3)
       activesupport (>= 3.0.0)
       multi_json (>= 1.2.0)
@@ -124,8 +128,11 @@ GEM
       treetop (~> 1.4.8)
     method_source (0.8.2)
     mime-types (1.25.1)
+    mini_portile (0.6.0)
     minitest (4.7.5)
     multi_json (1.10.1)
+    nokogiri (1.6.3.1)
+      mini_portile (= 0.6.0)
     orm_adapter (0.5.0)
     pg (0.17.1)
     polyglot (0.3.5)
@@ -236,6 +243,7 @@ DEPENDENCIES
   guard-spork
   haml
   haml-rails
+  impressionist
   jbuilder (~> 1.2)
   jquery-rails
   kaminari
