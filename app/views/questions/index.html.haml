@@ -7,8 +7,7 @@
   = t('questions.page_header.title')
 =paginate @questions  
 %div
-  - @questions.each do |que|
-    
+  - @questions.each do |que|  
     %h3
       = link_to  que.title, question_path(que)
     = t('questions.basic.asked_by')
@@ -23,5 +22,5 @@
       = t('questions.basic.view')
     #{que.impressionist_count} 
     %hr
-.pull-right    
-  = paginate @questions
+.pull-right
+  = render :partial => "shared/pagination", :locals => {:object => @questions}
