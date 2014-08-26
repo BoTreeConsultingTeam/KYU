@@ -7,7 +7,12 @@
   Answers
   %hr
 -@answers.each do |ans|
+  -if !@question.answered?
+    - if @question.user_id == current_student.id 
+      = link_to "Accept", index_path(ans.id)
   %h4.strong
+    -if @question.ans_id == ans.id   
+      %span.glyphicon.glyphicon-ok
     =ans.content
   By
   =Student.find(ans.user_id).first_name

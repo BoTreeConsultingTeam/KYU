@@ -11,6 +11,14 @@ class AnswersController < ApplicationController
     redirect_to questions_path
   end
 
+  def accept
+    @answer=Answer.find(params[:id])
+    @answer.flag = true
+    @answer.save
+
+    redirect_to question_path(@answer.question)
+  end
+
   private
 
   def answer_params
