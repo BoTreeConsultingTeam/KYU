@@ -6,7 +6,7 @@ class Students::RegistrationsController <  Devise::RegistrationsController
       @questions = Question.all
     end
   end
-
+ 
   def create
     super
   end

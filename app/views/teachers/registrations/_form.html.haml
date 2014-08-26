@@ -1,0 +1,31 @@
+= form_for(resource, :as => resource_name, :url => teacher_registration_path) do |f|
+  = devise_error_messages!
+  %div    
+    %br/
+    = f.label :salutation
+    = f.select(:salutation, options_for_salution,{},{class: 'form-control'})
+    = f.label :first_name
+    = f.text_field :first_name,class: 'form-control'
+    %br
+    = f.label :last_name
+    = f.text_field :last_name,class: 'form-control'
+    %br
+    = f.label :user_name
+    = f.text_field :username,class: 'form-control'
+    %br
+    = f.label :qualification
+    = f.text_field :qualification,class: 'form-control'
+    %br
+    = f.label :email
+    = f.email_field :email, :autofocus => true,class: 'form-control'
+  %div
+    %br/
+    = f.label :password
+    = f.password_field :password,class: 'form-control'
+  %div
+    %br/
+    = f.label :password_confirmation
+    
+    = f.password_field :password_confirmation,class: 'form-control'
+  %br/     
+  %div= f.submit "Submit"
