@@ -20,23 +20,8 @@
             %a{:href => "#question"} Question
           %li
             %a{:href => "#contact"} Contact
-
-          
-          %ul.nav.navbar-nav.navbar-right
-            %li
-              -if current_teacher.nil?      
-                = link_to  'Student  Sign out', destroy_student_session_path, method: :delete
-              -else
-                = link_to  'teacher  Sign out',  destroy_teacher_session_path, method: :delete
-        
-          
-
-        
-        / %ul.nav.navbar-nav.navbar-right
-        /   %li
-        /     %a{:href => "../navbar/"} Default
-        /   %li.active
-        /     %a{:href => "./"} Static top
-        /   %li
-        /     %a{:href => "../navbar-fixed-top/"} Fixed top
-        .nav-collapse
+    - if student_signed_in?
+      %li
+        = link_to 'Edit profile', edit_student_registration_path
+      %li
+        = link_to "Logout", destroy_student_session_path, method: :delete

@@ -11,6 +11,10 @@ Rails.application.routes.draw do
     get "/teachers" => "teachers/registrations#index"
   end
 
+  resources :questions
+  resources :answers
+  get 'answers/accept/:id', to: 'answers#accept', as: :index
+  resources :tags
   resources :questions do
     member { post :upvote,:downvote }
   end

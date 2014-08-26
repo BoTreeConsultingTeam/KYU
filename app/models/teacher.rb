@@ -1,6 +1,8 @@
 class Teacher < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
+  has_many :questions, as: :askable
+  has_many :answers, as: :answerable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
     VALID_EMAIL_REGEX=/\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i

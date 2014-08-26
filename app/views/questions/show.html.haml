@@ -2,12 +2,17 @@
   Que.
   =@question.title
   %br
-  = link_to 'New Answer', new_answer_path(:question_id => @question.id) 
+  = link_to t('answers.basic.new_answer'), new_answer_path(:question_id => @question.id) 
   %hr
   Answers
   %hr
 -@answers.each do |answer|
+  -if !@question.answered?
+    - if @question.user_id == current_student.id 
+      = link_to "Accept", index_path(answer.id)
   %h4.strong
+    -if @question.ans_id == answer.id   
+      %span.glyphicon.glyphicon-ok
     =answer.content
   By
   =Student.find(answer.user_id).first_name

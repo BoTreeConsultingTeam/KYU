@@ -1,10 +1,16 @@
 class QuestionsController < ApplicationController
-  
+  include QuestionsHelper
   def index
-    if params[:tag]
-      @questions = Question.tagged_with(params[:tag])
+    if received_tag
+      @questions = Question.tagged_with(received_tag).page params[:page]
+    elsif received_time
+      if received_time == 'week'
+        @questions = Question.recent_data_week.page params[:page]
+      else
+        @questions = Question.recent_data_month.page params[:page]
+      end
     else
-      @questions = Question.all
+      @questions = Question.all.page params[:page]
     end
   end
 
@@ -26,14 +32,19 @@ class QuestionsController < ApplicationController
   end
 
   def create
-    @question = Question.create(question_params)
+    logged_in_user = current_student ? current_student : current_teacher
+    @question = Question.create(question_params.merge({askable: logged_in_user}))
     redirect_to questions_path
   end
+
   def show
     @question = Question.find(params[:id])
     @answers = @question.answers
+    impressionist(@question, nil, { unique: [:session_hash] })
   end
+
   private
+  
   def question_params
     params.require(:question).permit(:title,:content, :user_id, :tag_list)
   end

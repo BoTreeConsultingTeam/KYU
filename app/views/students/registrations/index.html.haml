@@ -1,8 +1,8 @@
 %div
-  = button_to  'New Question  ', new_question_path,method: :get, class:" btn btn-primary pull-right" 
+  = button_to  t('questions.btn.new_question') , new_question_path,method: :get, class:" btn btn-primary pull-right" 
 %div
   %h1
-    Latest Questions
+    = t('questions.page_header.title')
     -i=1
   - @questions.each do |question|
     %h3

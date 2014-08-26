@@ -1,9 +1,10 @@
 %div
   = form_for (@answer) do |f|
-    =f.label :Your_answer
+    =f.label :content, t('answers.basic.answer_label')
     =f.text_area :content
-
-    = f.hidden_field :user_id, :value => current_user.id
+    -if current_student
+      = f.hidden_field :user_id, :value => current_student.id
+    -elsif current_teacher
+      = f.hidden_field :user_id, :value => current_teacher.id
     = f.hidden_field :question_id, :value => params[:question_id]
-    
-    =f.submit 
+    = f.submit t('answers.btn.submit_answer')
