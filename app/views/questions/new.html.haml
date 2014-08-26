@@ -12,9 +12,9 @@
   %div
     = f.label :tag_list, "Tags (separated by commas)"
     = f.text_field :tag_list
-    -if !(current_student.nil?) 
+    -if current_student
       = f.hidden_field :user_id, :value => current_student.id 
-    -else
+    -elsif current_teacher
       = f.hidden_field :user_id, :value => current_teacher.id 
     = f.submit "Submit",class: 'btn btn-primary'
 

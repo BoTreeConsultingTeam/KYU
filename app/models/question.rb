@@ -12,6 +12,6 @@ class Question < ActiveRecord::Base
   belongs_to :user
   has_many :answers 
   has_many :users, through: :answers, dependent: :destroy
-
+  belongs_to :askable, polymorphic: true
   accepts_nested_attributes_for :answers
 end

@@ -2,9 +2,9 @@
   = form_for (@answer) do |f|
     =f.label :Your_answer
     =f.text_area :content
-    -if !(current_student.nil?)
+    -if current_student
       = f.hidden_field :user_id, :value => current_student.id
-    -else
+    -elsif current_teacher
       = f.hidden_field :user_id, :value => current_teacher.id
     = f.hidden_field :question_id, :value => params[:question_id]
     
