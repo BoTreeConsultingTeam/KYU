@@ -6,7 +6,8 @@ class AnswersController < ApplicationController
   end
 
   def create
-    @answer = Answer.create(answer_params)    
+    logged_in_user = current_student ? current_student : current_teacher
+    @answer = Answer.create(answer_params.merge({answerable: logged_in_user}))
     redirect_to questions_path
   end
 
