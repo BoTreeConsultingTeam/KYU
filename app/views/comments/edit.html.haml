@@ -8,8 +8,8 @@
 
     = form_for (@comment) do |f|
       = f.text_area :comment, placeholder: "Write a comment...",maxlength: 30
-      = f.hidden_field :commentable_type, :value => @question.class.to_s
-      = f.hidden_field :commentable_id, :value => @question.id
+      = f.hidden_field :relative_type, :value => @question.class.to_s
+      = f.hidden_field :relative_id, :value => @question.id
       = submit_tag "post coment"
     %hr
     -comments_of_this_question.each do |c|

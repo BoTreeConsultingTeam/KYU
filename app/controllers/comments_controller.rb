@@ -13,8 +13,8 @@ before_action :authenticate_user!
   def update
     @comment=Comment.find_by_id(params[:id])
     @comment.update(comment_params)
-    if params[:comment][:commentable_id].present?
-      redirect_to question_path(params[:comment][:commentable_id])
+    if params[:comment][:relative_id].present?
+      redirect_to question_path(params[:comment][:relative_id])
     else
       redirect_to comment_path(params[:comment][:relative_id])
     end
