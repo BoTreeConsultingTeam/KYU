@@ -8,8 +8,14 @@ class AnswersController < ApplicationController
 
   def create
     logged_in_user = current_student ? current_student : current_teacher
-    @answer = Answer.create(answer_params.merge({answerable: logged_in_user}))
-    redirect_to questions_path
+    @answer = Answer.new(answer_params.merge({answerable: logged_in_user}))
+    @question = @answer.question
+    if @answer.save
+      redirect_to questions_path
+    else 
+      flash[:error]= 'Must contain some text'
+      redirect_to :back
+    end
   end
 
   def upvote
