@@ -1,0 +1,62 @@
+-if @question.present?
+  %h3  
+    Que.
+    =@question.title
+    %br
+    = link_to 'New Answer', new_answer_path(:question_id => @question.id) 
+    %hr
+
+    = form_for (@comment) do |f|
+      = f.text_area :comment, placeholder: "Write a comment...",maxlength: 30
+      = f.hidden_field :commentable_type, :value => @question.class.to_s
+      = f.hidden_field :commentable_id, :value => @question.id
+      = submit_tag "post coment"
+    %hr
+    -comments_of_this_question.each do |c|
+      %div.row
+        .col-lg-1
+        .col-lg-8
+          =c.comment
+          - if c.commentable == current_user
+            =link_to 'edit',edit_question_comment_path(@question.id,c.id)
+            |
+            = link_to 'delete',question_comment_path(@question.id,c),method: :delete,data: {confirm: "are you sure?"}
+          %hr/
+
+    %br/  
+    %br/
+    
+    %h2 Answers
+    %hr
+  -@answers.each do |ans|
+    %h4.strong
+      =ans.content
+    By
+    =Student.find(ans.user_id).first_name
+    #{time_ago_in_words(ans.created_at)} ago.
+    %hr
+
+    
+-else
+  %h2
+    =@answer.question.title
+  %hr/
+  %h4.strong
+    =@answer.content
+ 
+  = form_for (@comment) do |f|
+    = f.text_area :comment, placeholder: "Write a comment...",maxlength: 30
+    = f.hidden_field :relative_type, :value => @answer.class
+    = f.hidden_field :relative_id, :value => @answer.id
+    = submit_tag "post coment"
+
+  -comments_of_this_answer.each do |c|
+    %div.row
+      .col-lg-1
+      .col-lg-8
+        =c.comment
+        - if c.commentable == current_user
+          =link_to 'edit',edit_answer_comment_path(@answer.id,c.id)
+          |
+          = link_to 'delete',answer_comment_path(@answer.id,c),method: :delete,data: {confirm: "are you sure?"}
+        %hr/

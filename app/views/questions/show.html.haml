@@ -5,17 +5,22 @@
   = link_to 'New Answer', new_answer_path(:question_id => @question.id) 
   %hr
 
-  = form_for (Comment.new) do |f|
+  = form_for (@comment) do |f|
     = f.text_area :comment, placeholder: "Write a comment..."
-    = f.hidden_field :commentable_type, :value => @question.class.to_s
-    = f.hidden_field :commentable_id, :value => @question.id
+    = f.hidden_field :relative, :value => @question
+    = f.hidden_field :relative_type, :value => @question.class.to_s
+    = f.hidden_field :relative_id, :value => @question.id
     = submit_tag "post coment"
   %hr
   -comments_of_this_question.each do |c|
     %div.row
       .col-lg-1
       .col-lg-8
-        =c.comment
+        = c.comment
+        - if c.commentable == current_user
+          = link_to "Edit", edit_question_comment_path(@question.id,c.id)
+          |
+          = link_to 'delete',question_comment_path(@question.id,c),method: :delete,data: {confirm: "are you sure?"}
         %hr/
 
   %br/  
@@ -23,10 +28,11 @@
   
   %h2 Answers
   %hr
--@answers.each do |ans|
+-@answers.each do |answer|
   %h4.strong
-    =ans.content
+    =answer.content
+    = link_to "Add comment", comment_path(answer)
   By
-  =Student.find(ans.user_id).first_name
-  #{time_ago_in_words(ans.created_at)} ago.
+  =Student.find(answer.user_id).first_name
+  #{time_ago_in_words(answer.created_at)} ago.
   %hr

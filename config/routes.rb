@@ -11,9 +11,15 @@ Rails.application.routes.draw do
     get "/teachers" => "teachers/registrations#index"
   end
 
-  resources :questions
+  resources :questions do 
+    resources :comments
+  end
   resources :comments
-  resources :answers
+
+  resources :answers do
+    resources :comments
+  end
+
   get 'tags/:tag', to: 'questions#index', as: :tag
    # Add a custom sign in route for user sign in
   
