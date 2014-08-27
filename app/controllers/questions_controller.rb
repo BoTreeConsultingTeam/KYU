@@ -60,17 +60,4 @@ class QuestionsController < ApplicationController
   def question_disliked_by(question,user)
     question.disliked_by(user)
   end
-
-  def liked_by
-    liked_by = current_student.present? ? current_student : current_teacher
-  end
-  def logged_in_user
-      logged_in_user = current_student ? current_student : current_teacher
-  end
-
-  def authenticate_user!
-    if logged_in_user.nil?
-      redirect_to root_path
-    end
-  end
 end

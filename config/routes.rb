@@ -16,6 +16,7 @@ Rails.application.routes.draw do
 
   resources :tags
   resources :questions do
+    resources :answers
     member { post :upvote,:downvote }
   end
   get 'questions/:tag' => 'questions#index',as: :show

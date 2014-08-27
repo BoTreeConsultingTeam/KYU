@@ -11,7 +11,26 @@ class AnswersController < ApplicationController
   def create
     logged_in_user = current_student ? current_student : current_teacher
     @answer = Answer.create(answer_params.merge({answerable: logged_in_user}))
-    redirect_to :back
+    @question = Question.find(params[:answer][:question_id])
+    redirect_to question_path(@question)
+  end
+  
+  def edit
+    @question = Question.find(params[:question_id])
+    @answer = Answer.find(params[:id])
+  end
+
+  def update
+    @answer = Answer.find(params[:id])
+    @answer.update(answer_params)
+    @question = Question.find(params[:answer][:question_id])
+    redirect_to question_path(@question)
+  end
+
+  def destroy
+    @answer = Answer.find(params[:id]).delete
+    @question = Question.find(params[:question_id])
+    redirect_to question_path(@question)
   end
 
   def upvote
@@ -30,7 +49,6 @@ class AnswersController < ApplicationController
     @answer=Answer.find(params[:id])
     @answer.flag = true
     @answer.save
-
     redirect_to question_path(@answer.question)
   end
   private
@@ -46,18 +64,4 @@ class AnswersController < ApplicationController
   def answer_disliked_by(answer,user)
     answer.disliked_by(user)
   end
-
-  def liked_by
-    liked_by = current_student.present? ? current_student : current_teacher
-  end
-  def logged_in_user
-      logged_in_user = current_student ? current_student : current_teacher
-  end
-
-  def authenticate_user!
-    if logged_in_user.nil?
-      redirect_to root_path
-    end
-  end
-
 end
