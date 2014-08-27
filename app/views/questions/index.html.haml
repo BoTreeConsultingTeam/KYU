@@ -2,25 +2,28 @@
   = set_link(t('questions.link.last_week'),'week')
   = set_link(t('questions.link.last_month'),'month')
 %div
-  = button_to  t('questions.btn.new_question'), new_question_path,method: :get, class:" btn btn-primary pull-right" 
+  = link_to  t('questions.btn.new_question'), new_question_path,method: :get, class:" btn btn-primary pull-right" 
 %h2
   = t('questions.page_header.title')
 =paginate @questions  
 %div
-  - @questions.each do |que|  
+  #tag_cloud
+  - tag_cloud get_tag_counts, %w{s m l} do |tag|
+    = link_to tag.name, tag_path(tag.name)
+  - @questions.each do |question|  
     %h3
-      = link_to  que.title, question_path(que)
+      = link_to  question.title, question_path(question)
     = t('questions.basic.asked_by')
-    = get_user_name(que.user_id)
-    #{time_ago_in_words(que.created_at)} ago.
+    = question.askable.first_name
+    #{time_ago_in_words(question.created_at)} ago.
     
     %br
     %strong
       = t('questions.basic.tag')
-    #{raw que.tag_list.map { |t| link_to t, tag_path(t) }.join(', ')}
+    #{raw question.tag_list.map { |t| link_to t, tag_path(t) }.join(', ')}
     %strong
       = t('questions.basic.view')
-    #{que.impressionist_count} 
+    #{question.impressionist_count} 
     %hr
 .pull-right
   = render :partial => "shared/pagination", :locals => {:object => @questions}

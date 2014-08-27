@@ -2,6 +2,7 @@ class AnswersController < ApplicationController
   
   def new
     @answer = Answer.new
+    @question =  Question.find(params[:question_id])
     question_id = @answer.question
   end
 
@@ -23,13 +24,13 @@ class AnswersController < ApplicationController
     redirect_to :back
   end
 
-   def accept
+  def accept
     @answer=Answer.find(params[:id])
     @answer.flag = true
     @answer.save
-
     redirect_to question_path(@answer.question)
   end
+  
   private
 
   def answer_params

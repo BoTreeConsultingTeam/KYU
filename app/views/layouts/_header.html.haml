@@ -10,18 +10,16 @@
     .navbar-collapse.collapse
       %ul.nav.navbar-nav
         -if !(current_teacher.nil? && current_student.nil?)
-        
-          / %li.active
           %li
             %a{:href => root_path } Home
           %li
             %a{:href => members_path} users
           %li
-            %a{:href => "#question"} Question
+            %a{:href => questions_path} Questions
           %li
-            %a{:href => "#contact"} Contact
-    - if student_signed_in?
-      %li
-        = link_to 'Edit profile', edit_student_registration_path
-      %li
-        = link_to "Logout", destroy_student_session_path, method: :delete
+            %a{:href => tags_path} Tags
+        - if student_signed_in?
+          %li
+            = link_to 'Edit profile', edit_student_registration_path
+          %li
+            = link_to "Logout", destroy_student_session_path, method: :delete

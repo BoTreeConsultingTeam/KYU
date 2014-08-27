@@ -1,12 +1,13 @@
 class QuestionsController < ApplicationController
-  include QuestionsHelper
+  
   def index
     if received_tag
       @questions = Question.tagged_with(received_tag).page params[:page]
     elsif received_time
-      if received_time == 'week'
+      case received_time
+      when 'week'
         @questions = Question.recent_data_week.page params[:page]
-      else
+      when 'month'
         @questions = Question.recent_data_month.page params[:page]
       end
     else
@@ -43,12 +44,15 @@ class QuestionsController < ApplicationController
     impressionist(@question, nil, { unique: [:session_hash] })
   end
 
+  def alltags
+    @tags = ActsAsTaggableOn::Tag.all
+  end
+
   private
   
   def question_params
     params.require(:question).permit(:title,:content, :user_id, :tag_list)
   end
-  private 
 
   def question_liked_by(question,user)
     question.liked_by(user)
@@ -61,4 +65,12 @@ class QuestionsController < ApplicationController
   def liked_by
     liked_by = current_student.present? ? current_student : current_teacher
   end
+
+  def received_tag
+      params[:tag]
+    end
+
+    def received_time
+      params[:time]
+    end
 end

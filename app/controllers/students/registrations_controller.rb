@@ -1,4 +1,5 @@
 class Students::RegistrationsController <  Devise::RegistrationsController
+  
   def index
     if params[:tag]
       @questions = Question.tagged_with(params[:tag])

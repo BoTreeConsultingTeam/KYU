@@ -13,7 +13,8 @@ Rails.application.routes.draw do
 
   get 'answers/accept/:id', to: 'answers#accept', as: :index
 
-  resources :tags
+  get 'tags/:tag', to: 'questions#index', as: :tag 
+  get 'questions/tags', to: 'questions#alltags', as: :tags
   resources :questions do
     member { post :upvote,:downvote }
   end
