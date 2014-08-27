@@ -1,4 +1,4 @@
-%h2 
+%h2
   = t('questions.page_header.title_for_new')
   
 = form_for(@question) do |f|
@@ -13,9 +13,6 @@
   %div
     = f.label :tag_list, t('questions.basic.tag_on_new')
     = f.text_field :tag_list
-    -if current_student
-      = f.hidden_field :user_id, :value => current_student.id 
-    -elsif current_teacher
-      = f.hidden_field :user_id, :value => current_teacher.id 
+    = f.hidden_field :user_id, :value => current_user.id 
     = f.submit t('questions.btn.submit'),class: 'btn btn-primary'
 

@@ -8,7 +8,7 @@
   %hr
 -@answers.each do |answer|
   -if !@question.answered?
-    - if @question.user_id == current_student.id 
+    - if @question.user_id == current_user.id 
       = link_to "Accept", index_path(answer.id)
   %h4.strong
     -if @question.ans_id == answer.id   
@@ -19,5 +19,13 @@
   #{time_ago_in_words(answer.created_at)} ago.
   %br/
   = vote_up_answer_link(answer)
+  = answer.get_upvotes.size
   = vote_down_answer_link(answer)
+  = answer.get_downvotes.size
   %hr
+= form_for (@answer) do |f|
+  =f.label :content, t('answers.basic.answer_label')
+  =f.text_area :content
+  = f.hidden_field :user_id, :value => current_user.id  
+  = f.hidden_field :question_id, :value => @question.id
+  = f.submit t('answers.btn.submit_answer')

@@ -1,4 +1,5 @@
 module QuestionsHelper
+  
   private
     def received_tag
       params[:tag]
@@ -30,4 +31,5 @@ module QuestionsHelper
 	def current_user
 		current_user = current_student.present? ? current_student : current_teacher
 	end
+ 
 end

@@ -1,14 +1,17 @@
 class AnswersController < ApplicationController
-  
+  before_action :authenticate_user!
+
   def new
     @answer = Answer.new
+    @question = Question.find(params[:question_id])
     question_id = @answer.question
+
   end
 
   def create
     logged_in_user = current_student ? current_student : current_teacher
     @answer = Answer.create(answer_params.merge({answerable: logged_in_user}))
-    redirect_to questions_path
+    redirect_to :back
   end
 
   def upvote
@@ -46,6 +49,15 @@ class AnswersController < ApplicationController
 
   def liked_by
     liked_by = current_student.present? ? current_student : current_teacher
+  end
+  def logged_in_user
+      logged_in_user = current_student ? current_student : current_teacher
+  end
+
+  def authenticate_user!
+    if logged_in_user.nil?
+      redirect_to root_path
+    end
   end
 
 end

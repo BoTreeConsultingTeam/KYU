@@ -1,4 +1,6 @@
 class QuestionsController < ApplicationController
+  before_action :authenticate_user!
+
   include QuestionsHelper
   def index
     if received_tag
@@ -40,6 +42,7 @@ class QuestionsController < ApplicationController
   def show
     @question = Question.find(params[:id])
     @answers = @question.answers
+    @answer = Answer.new
     impressionist(@question, nil, { unique: [:session_hash] })
   end
 
@@ -60,5 +63,14 @@ class QuestionsController < ApplicationController
 
   def liked_by
     liked_by = current_student.present? ? current_student : current_teacher
+  end
+  def logged_in_user
+      logged_in_user = current_student ? current_student : current_teacher
+  end
+
+  def authenticate_user!
+    if logged_in_user.nil?
+      redirect_to root_path
+    end
   end
 end

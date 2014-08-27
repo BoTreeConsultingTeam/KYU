@@ -7,20 +7,24 @@
   = t('questions.page_header.title')
 =paginate @questions  
 %div
-  - @questions.each do |que|  
+  - @questions.each do |question|  
     %h3
-      = link_to  que.title, question_path(que)
+      = link_to  question.title, question_path(question)
     = t('questions.basic.asked_by')
-    = get_user_name(que.user_id)
-    #{time_ago_in_words(que.created_at)} ago.
-    
+    = get_user_name(question.user_id)
+    #{time_ago_in_words(question.created_at)} ago.
     %br
     %strong
       = t('questions.basic.tag')
-    #{raw que.tag_list.map { |t| link_to t, tag_path(t) }.join(', ')}
+    #{raw question.tag_list.map { |t| link_to t, tag_path(t) }.join(', ')}
     %strong
       = t('questions.basic.view')
-    #{que.impressionist_count} 
+    #{question.impressionist_count}  
+    %br/  
+    = vote_up_question_link(question)
+    = question.get_upvotes.size 
+    = vote_down_question_link(question)
+    = question.get_downvotes.size
     %hr
 .pull-right
   = render :partial => "shared/pagination", :locals => {:object => @questions}

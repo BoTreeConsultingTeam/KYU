@@ -1,34 +1,4 @@
 %h2 
   = t('common.page_header.title_sign_up')
-= form_for(resource, :as => resource_name, :url => student_registration_path) do |f|
-  = devise_error_messages!
-  %div
-  %br
-  = f.label t('common.basic.first_name')
-  = f.text_field :first_name
-  %br
-  =f.label t('students.basic.middle_name')
-  =f.text_field :middle_name
-  %br
-  = f.label t('common.basic.last_name')
-  = f.text_field :last_name
-  %br
-  = f.label t('common.basic.user_name')
-  =f.text_field :username
-  %br
-  = f.label t('common.basic.dob')
-  = f.date_field :birthdate
-  %br   
-  = f.label t('common.basic.email')
-  %br/
-  = f.email_field :email, :autofocus => true
-  %div
-  = f.label t('common.basic.password')
-  %br/
-  = f.password_field :password
-  %div
-  = f.label t('common.basic.password_confirmation')
-  %br/
-  = f.password_field :password_confirmation
-  %div= f.submit t('common.btn.submit'),class: 'btn btn-primary'
+= render 'form' 
 = render "students/shared/links"

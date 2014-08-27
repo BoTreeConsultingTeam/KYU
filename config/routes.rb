@@ -6,6 +6,7 @@ Rails.application.routes.draw do
 
   devise_scope :student do
     get "/students" => "students/registrations#index"
+    get "/students/:id/edit" => "students/registrations#edit"
   end
   devise_scope :teacher do
     get "/teachers" => "teachers/registrations#index"
@@ -17,7 +18,7 @@ Rails.application.routes.draw do
   resources :questions do
     member { post :upvote,:downvote }
   end
-
+  get 'questions/:tag' => 'questions#index',as: :show
   get '/members' => 'members#index'
   get '/members/:id' => 'members#show', as: :member
 
