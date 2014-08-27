@@ -9,6 +9,7 @@ en:
       asked_by: 'Asked By'  
       tag_on_index: 'Tags:'
       view: 'Views:' 
+      answers: 'Answers'
       tag_on_new: "Tags (separated by commas)"
       content_label: 'Content:'
     btn:
@@ -68,3 +69,4 @@ en:
     page_header:
       sign_up: 'Sign up'
       sing_in: 'Sign in'
+      edit: 'Edit'
