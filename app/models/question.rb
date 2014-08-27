@@ -18,6 +18,8 @@ class Question < ActiveRecord::Base
 
   validates_presence_of :title
   validates_presence_of :content
+  validates :title, length: { maximum: 150, minimum: 20 }
+  validates :content, length: { maximum: 1000, minimum: 100 }
   
   def answered?
     answers.where(flag: true).count > 0

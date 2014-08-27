@@ -5,4 +5,5 @@ class Answer < ActiveRecord::Base
   acts_as_votable
 
   validates_presence_of :content
+  validates :content, length: { maximum: 1000 }
 end

@@ -6,6 +6,7 @@ class TagsController < ApplicationController
   end 
 
   def show 
+    @tag = ActsAsTaggableOn::Tag
   end
   
   private

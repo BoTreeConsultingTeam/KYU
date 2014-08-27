@@ -47,7 +47,26 @@ class QuestionsController < ApplicationController
     @answers = @question.answers
     impressionist(@question, nil, { unique: [:session_hash] })
   end
+  
+  def edit
+    @question = Question.find(params[:id])
+  end
 
+  def destroy
+    @question = Question.find(params[:id])
+    @question.delete
+    redirect_to questions_path
+  end
+
+  def update
+    @question = Question.find(params[:id])
+    if @question.update(question_params)
+      flash[:success] = "Profile updated"
+      redirect_to questions_path
+    else
+      render 'edit'
+    end 
+  end
   def alltags
     @tags = ActsAsTaggableOn::Tag.all
   end

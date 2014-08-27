@@ -24,6 +24,9 @@
     %strong
       = t('questions.basic.view')
     #{question.impressionist_count} 
+    -if question.askable == current_user
+      =link_to "Edit", edit_question_path(question)
+      =link_to "Delete", question_path(question), method: :delete,data: { confirm: "Are you sure?" }
     %hr
 .pull-right
   = render :partial => "shared/pagination", :locals => {:object => @questions}
