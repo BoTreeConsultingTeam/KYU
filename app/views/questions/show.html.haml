@@ -12,25 +12,23 @@
     = f.hidden_field :relative_id, :value => @question.id
     = submit_tag "post coment"
   %hr
-  -comments_of_this_question.each do |c|
-    %div.row
-      .col-lg-1
-      .col-lg-8
-        = c.comment
-        - if c.commentable == current_user
-          = link_to "Edit", edit_question_comment_path(@question.id,c.id)
-          |
-          = link_to 'delete',question_comment_path(@question.id,c),method: :delete,data: {confirm: "are you sure?"}
-        %hr/
-
-  %br/  
-  %br/
+-comments_of_this_question.each do |c|
+  %div.row
+    .col-lg-1
+    .col-lg-8
+      = c.comment
+      - if c.commentable == current_user
+        = link_to "Edit", edit_question_comment_path(@question.id,c.id)
+        |
+        = link_to 'delete',question_comment_path(@question.id,c),method: :delete,data: {confirm: "are you sure?"}
+      %hr/
   
-  %h2 Answers
-  %hr
+%h2 Answers
+%hr
 -@answers.each do |answer|
   %h4.strong
-    =answer.content
+    = answer.content
+    = link_to "delete",answer_path(answer.id),method: :delete,data: {confirm: "are you sure?"}
     = link_to "Add comment", comment_path(answer)
   By
   =Student.find(answer.user_id).first_name

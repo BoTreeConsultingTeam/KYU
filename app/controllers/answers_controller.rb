@@ -9,7 +9,11 @@ class AnswersController < ApplicationController
     @answer = Answer.create(answer_params)    
     redirect_to questions_path
   end
-
+  def destroy
+    @answer = Answer.find(params[:id])
+    @answer.destroy
+    redirect_to :back
+  end
   private
 
   def answer_params

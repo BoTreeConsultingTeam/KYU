@@ -22,6 +22,13 @@ class QuestionsController < ApplicationController
     @answers = @question.answers
     @comment = Comment.new
   end
+
+  def destroy
+    @question = Question.find(params[:id])
+    @question.destroy
+    redirect_to students_path
+  end
+
   private
   def question_params
     params.require(:question).permit(:title,:content, :user_id, :tag_list)
