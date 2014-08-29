@@ -9,6 +9,10 @@ class QuestionsController < ApplicationController
         @questions = Question.recent_data_week.page params[:page]
       when 'month'
         @questions = Question.recent_data_month.page params[:page]
+      when 'un_answered'
+        @questions = Kaminari.paginate_array(Question.find_all_by_id(un_answered_questions)).page params[:page]
+      when 'most_voted'
+        most_voted_questions
       end
     else
       @questions = Question.all.page params[:page]
@@ -90,10 +94,31 @@ class QuestionsController < ApplicationController
   end
 
   def received_tag
-      params[:tag]
-    end
+    params[:tag]
+  end
 
-    def received_time
-      params[:time]
+  def received_time
+    params[:time]
+  end
+
+  def all_questions
+    questions = Question.all
+  end
+
+  def un_answered_questions
+    question = {}
+    all_questions.each do |q| 
+      if q.answers.count == 0
+        question[q.id] = q
+      end
     end
+    question.keys
+  end
+
+  def most_voted_questions
+    question = {}
+    all_questions.each do |q|
+      question[q.id] = q.get_likes.size
+    end
+  end
 end

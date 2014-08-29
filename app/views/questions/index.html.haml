@@ -1,6 +1,8 @@
 %div
   = set_link(t('questions.link.last_week'),'week')
   = set_link(t('questions.link.last_month'),'month')
+  = set_link(t('questions.link.un_answered'),'un_answered')
+  = set_link(t('questions.link.most_voted'),'most_voted')
 %div
   = link_to  t('questions.btn.new_question'), new_question_path,method: :get, class:" btn btn-primary pull-right" 
 %h2
@@ -10,6 +12,7 @@
   #tag_cloud
   - tag_cloud get_tag_counts, %w{s m l} do |tag|
     = link_to tag.name, tag_path(tag.name)
+  %br/
   - @questions.each do |question|  
     %h3
       = link_to  question.title, question_path(question)
@@ -23,7 +26,7 @@
     #{raw question.tag_list.map { |t| link_to t, tag_path(t) }.join(', ')}
     %strong
       = t('questions.basic.view')
-    #{question.impressionist_count} 
+    #{question.impressionist_count}
     %strong
       = t('questions.basic.answers')
     #{question.answers.count} 
