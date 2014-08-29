@@ -21,4 +21,25 @@ module ApplicationHelper
   def options_for_salution
     options_for_select(SALUTATIONS)
   end
+  def set_link(title,time)
+    link_to title, questions_path(:time => "#{time}")
+  end
+
+  def questions_count
+    Question.count
+  end
+
+  def students_count
+    Student.count
+  end
+
+  def teachers_count
+    Teacher.count
+  end
+
+  def most_used_tags
+    @tags = Question.tag_counts_on(:tags).limit(5).order('count desc')
+  end
+
+
 end

@@ -1,16 +1,14 @@
 class Question < ActiveRecord::Base
 
-  belongs_to :user
   belongs_to :student
   belongs_to :teacher
   belongs_to :askable, polymorphic: true
-  has_many :answers
-  has_many :users, through: :answers, dependent: :destroy
+  has_many :answers, dependent: :destroy
   paginates_per 10
   is_impressionable
   acts_as_taggable
   acts_as_votable
-  accepts_nested_attributes_for :answers
+  #accepts_nested_attributes_for :answers
 
   default_scope order("created_at DESC")
   scope :recent_data_month, -> { where(:created_at => (1.month.ago)..(Time.now)).order("created_at desc") }

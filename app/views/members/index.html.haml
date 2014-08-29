@@ -1,4 +1,53 @@
-%ul
-  - @students.each do |s|
-    %li
-      = link_to s.first_name, member_path(s)
+/ %ul
+/   - @students.each do |s|
+/     %li
+/       = link_to s.first_name, member_path(s)
+/ -@tags.each do |tag|
+/   = link_to tag, tag_path(tag.name)
+/   %br 
+.container-fluid
+  .row
+  / END HEADER
+  #header_sidebar.col-md-12.col-xs-12
+  = render 'layouts/left_sidebar'
+  .col-md-8.main-content
+    .row.select-category
+      .col-md-6.col-xs-6.current-category
+        %span Users  
+    .clearfix         
+    #question_filter.row.question-filter
+      .col-md-6.col-xs-6.sort-questions
+        %ul
+          %li
+            = set_link(t('questions.link.name'),'week')
+            
+          %li
+            = set_link(t('questions.link.points'),'month')
+    %ul#main_users_list.row
+      - @students.each do |student|
+        %li.user-item.col-md-4.col-xs-6
+          %span.user-avatar
+            %img.avatar{:alt => "", :src => "http://demo.enginethemes.com/qaengine/wp-content/uploads/2014/08/1282.jpg"}
+          .left-info
+            %a{:href => "http://demo.enginethemes.com/qaengine/member/admin/"}
+              %span.display_name 
+                = student.username
+            %br
+              %span.location
+                = student.email
+              .question-cat
+                %span.user-badge{:style => "background-color:#780978;", :title => "1543"} studnent.type
+                %span.points 1543 Points
+          
+    .row.paginations.home
+      .col-md-12
+        %ul.page-numbers
+          %li
+            %span.page-numbers.current 1
+          %li
+            %a.page-numbers{:href => "http://demo.enginethemes.com/qaengine/questions/page/2/"} 2
+          %li
+            %a.next.page-numbers{:href => "http://demo.enginethemes.com/qaengine/questions/page/2/"} &gt;
+    / END MAIN-PAGINATIONS
+  = render 'layouts/right_sidebar'
+  / END ROW

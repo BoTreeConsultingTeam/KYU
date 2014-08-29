@@ -54,7 +54,7 @@ class QuestionsController < ApplicationController
 
   def destroy
     @question = Question.find(params[:id])
-    @question.delete
+    @question.destroy
     redirect_to questions_path
   end
 
@@ -68,7 +68,8 @@ class QuestionsController < ApplicationController
     end 
   end
   def alltags
-    @tags = ActsAsTaggableOn::Tag.all
+    @tags = ActsAsTaggableOn::Tag.all.page(params[:page]).per(5)
+
   end
 
   private

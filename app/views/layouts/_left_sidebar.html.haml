@@ -1,0 +1,75 @@
+.col-md-2.disable-mobile.left-sidebar
+  .widget.widget-btn
+    %button.action.ask-question{"data-toggle" => "modal", :type => "button"}
+      %i.fa.fa-plus
+      ASK A QUESTION
+  / END BUTTON MODAL QUESTION
+  .widget.widget-menus
+    .menu-left-menu-container
+      %ul#menu-left-menu-1.menu
+        %li.fa-question-circle.menu-item.menu-item-type-custom.menu-item-object-custom.current-menu-item.menu-item-1765
+          %a{:href => "/questions"}
+            %i.fa.fa-question-circle>
+            Questions
+        %li.fa-tags.menu-item.menu-item-type-post_type.menu-item-object-page.menu-item-183
+          %a{:href => "/questions/tags"}
+            %i.fa.fa-tags>
+            Tags
+        / %li.fa-trophy.menu-item.menu-item-type-post_type.menu-item-object-page.menu-item-18
+        /   %a{:href => "http://demo.enginethemes.com/qaengine/badges/"}
+        /     %i.fa.fa-trophy>
+        /     Badges
+        / %li.fa-th-list.menu-item.menu-item-type-post_type.menu-item-object-page.menu-item-1742
+        /   %a{:href => "http://demo.enginethemes.com/qaengine/categories-3/"}
+        /     %i.fa.fa-th-list>
+        /     Categories
+        %li.fa-users.menu-item.menu-item-type-post_type.menu-item-object-page.menu-item-1743
+          %a{:href => "/members"}
+            %i.fa.fa-users>
+            Users
+  / END LEFT MENU
+  .widget.widget-recent-activity
+    %ul
+      %li
+        %i.fa.fa-undo
+        %span
+          Your question  was unvoted.
+          %br
+            %span.time-activity on August 13, 2014
+            %br
+      %li
+        %i.fa.fa-undo
+        %span
+          Your unvoted an answer on question .
+          %br
+            %span.time-activity on July 3, 2014
+            %br
+      %li
+        %i.fa.fa-undo
+        %span
+          Your unvoted an answer on question .
+          %br
+            %span.time-activity on July 3, 2014
+            %br
+      %li
+        %i.fa.fa-question-circle
+        %span
+          Your question  was edited.
+          %br
+            %span.time-activity on June 25, 2014
+            %br
+      %li
+        %i.fa.fa-comments
+        %span
+          You answered question .
+          %br
+            %span.time-activity on June 25, 2014
+            %br
+      %li
+        %i.fa.fa-question-circle
+        %span
+          You asked .
+          %br
+            %span.time-activity on June 25, 2014
+            %br
+  

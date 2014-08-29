@@ -1,0 +1,28 @@
+.col-md-2.disable-mobile.right-sidebar
+  .widget.widget-statistic
+    %p.questions-count
+      Questions
+      %br
+        %span 
+          = questions_count
+    %p.students-count
+      Students
+      %br
+        %span 
+          = students_count
+    %p.teachers-count
+      Teachers
+      %br
+        %span 
+          = teachers_count    
+  / END widget-statistic
+  .widget.widget-related-tags
+    %h3 MOST USED TAGS
+    %ul
+      - most_used_tags.each do |tag|
+        %li
+          = link_to tag, tag_path(tag),class: 'q-tag'   
+    %a{:href => tags_path} See more tags
+  / END widget-related-tags
+  .widget.widget-hot-questions
+    %h3 HOT QUESTIONS

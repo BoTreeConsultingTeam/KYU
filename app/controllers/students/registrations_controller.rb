@@ -6,12 +6,19 @@ class Students::RegistrationsController <  Devise::RegistrationsController
     else
       @questions = Question.all
     end
+    @most_used_tags = tag_cloud
+    @students_count = Student.count
+    @teachers_count = Teacher.count
+    @questions_count = Question.count
   end
  
   def create
     super
   end
 
+  def tag_cloud
+    @tags = Question.tag_counts_on(:tags).limit(5).order('count desc')
+  end
   private
   
   def sign_up_params

@@ -1,23 +1,156 @@
-%h3  
-  Que.
-  =@question.title
-  %br
-  = link_to t('answers.basic.new_answer'), new_answer_path(question_id: @question.id) 
-  %hr
-  Answers
-  %hr
--@answers.each do |answer|
-  -if !@question.answered?
-    - if @question.user_id == current_student.id 
-      = link_to "Accept", index_path(answer.id)
-  %h4.strong
-    -if @question.ans_id == answer.id   
-      %span.glyphicon.glyphicon-ok
-    =answer.content
-  By
-  =answer.answerable.first_name
-  = "#{time_ago_in_words(answer.created_at)} ago."
-  %br/
-  = vote_up_answer_link(answer)
-  = vote_down_answer_link(answer)
-  %hr
+.container-fluid
+  .row
+    / END HEADER
+    #header_sidebar.col-md-12.col-xs-12
+    = render 'layouts/left_sidebar'
+    .col-md-8.main-content.single-content
+      .row.select-category.single-head
+        .col-md-2.col-xs-2
+          %span.back
+            %i.fa.fa-angle-double-left
+            %a{:href => "http://demo.enginethemes.com/qaengine"} Home
+        .col-md-8.col-xs-8
+          %h3 
+            = @question.title
+      / END SELECT-CATEGORY
+      #question_content.row.question-main-content.question-item{"data-id" => "1728"}
+        / Vote section
+        .col-md-2.col-xs-2.vote-block
+          / vote group
+          %ul
+            / vote up
+            %li{:title => "This is useful."}
+              %a.action.vote.vote-up.img-circle.active{"data-name" => "vote_up", :href => "javascript:void(0)"}
+                %i.fa.fa-chevron-up
+            / // vote up
+            / vote point
+            %li
+              %span.vote-count 3
+            / // vote point
+            / vote down
+            %li{:title => "This is not useful"}
+              %a.action.vote.vote-down.img-circle.disabled{"data-name" => "vote_down", :href => "javascript:void(0)"}
+                %i.fa.fa-chevron-down
+            / // vote down
+          / // vote group
+        / // Vote section
+        .col-md-9.col-xs-9.q-right-content
+          / admin control
+          %ul.post-controls
+            %li
+              %a.post-edit.action{"data-name" => "edit", "data-original-title" => "Edit", "data-toggle" => "tooltip", :href => "javascript:void(0)"}
+                %i.fa.fa-pencil
+            %li
+              %a.post-delete.action{"data-name" => "delete", "data-original-title" => "Delete", "data-toggle" => "tooltip", :href => "javascript:void(0)"}
+                %i.fa.fa-trash-o
+            / Follow Action
+            %li
+              %a.action.follow{"data-name" => "follow", "data-original-title" => "Follow", "data-toggle" => "tooltip", :href => "javascript:void(0)"}
+                %i.fa.fa-plus-square
+            / // Follow Action
+            / report Action
+            %li
+              %a.action.report{"data-name" => "report", "data-original-title" => "Report", "data-toggle" => "tooltip", :href => "javascript:void(0)"}
+                %i.fa.fa-exclamation-triangle
+            / // Report Action
+          / // admin control
+          / question tag
+          .top-content
+            %span.answered
+              %i.fa.fa-check
+              Answered
+            %ul.question-tags
+              - @question.tag_list.each do |tag|
+                %li
+                  = link_to tag, tag_path(tag),class: 'q-tag'   
+          .clearfix
+          .question-content
+            = @question.content
+          .row
+            .col-md-8.col-xs-8.question-cat
+              %a{:href => "http://demo.enginethemes.com/qaengine/member/admindemo/"}
+                %span.author-avatar
+                  %img.avatar{:alt => "", :src => "http://1.gravatar.com/avatar/3743112a070d24fe4dbd5cb39d6a5e9e?s=30&amp;d=http%3A%2F%2F1.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D30&amp;r=G"}                 %span.author-name Admin Demo
+              %span.user-badge{:style => "background-color:#04aad4;", :title => "66"} 
+                = @question.askable.class
+              %span.question-time
+                Asked on June 9, 2014 in
+              %span.question-category
+                %a{:href => "http://demo.enginethemes.com/qaengine/question-category/movie/"} Movie.
+            .col-md-4.col-xs-4.question-control
+              %ul
+                %li
+                  %a.show-comments{:href => "#container_1728"}
+                    Comment(0)
+                    %i.fa.fa-comment
+          .clearfix
+          #container_1728.comments-container.collapse
+            .comments-wrapper
+            %a.add-comment{"data-id" => "1728", :href => "javascript:void(0)"} Add Comment
+            .clearfix
+            %form.child-reply{:method => "POST"}
+              %input{:name => "qa_nonce", :type => "hidden", :value => "52fe0f22af"}
+                %input{:name => "comment_post_ID", :type => "hidden", :value => "1728"}
+                  %input{:name => "comment_type", :type => "hidden", :value => "question"}
+                    %input{:name => "user_id", :type => "hidden", :value => "11"}
+                      #editor_wrap_1728.child-answer-wrap.collapse
+                        .wp-editor-container
+                          %textarea#insert_answer_1728{:name => "post_content"}
+                        .row.submit-wrapper
+                          .col-md-3.col-xs-3
+                            %button#submit_reply.btn-submit
+                              Add comment
+                          .col-md-9.col-xs-9
+                            %a.hide-comment{:href => "javascript:void(0)"} Cancel
+            / END SUBMIT FORM COMMENT
+          / END COMMENTS CONTAINER
+      / END QUESTION-MAIN-CONTENT
+      .sticky-wrapper{:style => ""}
+        #answers_filter.row.answers-filter
+          .max-col-md-8
+            .col-md-6.col-xs-6
+              %span.answers-count
+                %span.number 0
+                Answers
+            .col-md-6.col-xs-6.sort-questions
+              %ul
+                %li
+                  %a.active{:href => "http://demo.enginethemes.com/qaengine/question/what-are-some-of-your-favorite-deep-awe-inspiring-andor-thought-provoking-movies/"} Votes
+                /
+                  <li>
+                  <a class="" href="/qaengine/question/what-are-some-of-your-favorite-deep-awe-inspiring-andor-thought-provoking-movies/?sort=active">Active</a>
+                  </li>
+                %li
+                  %a{:href => "/qaengine/question/what-are-some-of-your-favorite-deep-awe-inspiring-andor-thought-provoking-movies/?sort=oldest"} Oldest
+      / ANSWERS LOOP
+      #answers_main_list
+      / ANSWERS LOOP
+      .row.paginations.collapse
+        .col-md-12
+      / END PAGINATIONS
+      :javascript
+        var answersData  = [];
+        var commentsData = [];
+      .row.form-reply
+        .col-md-12
+          %h3 Your Answer
+          %form#form_reply{:method => "POST"}
+            %input{:name => "qa_nonce", :type => "hidden", :value => "4c9ff2042e"}
+              %input{:name => "post_parent", :type => "hidden", :value => "1728"}
+                #wp-post_content-wrap.wp-core-ui.wp-editor-wrap.tmce-active
+                  %link#dashicons-css{:href => "css/dashicons.min.css?ver=3.9.2", :media => "all", :rel => "stylesheet", :type => "text/css"}
+                    %link#editor-buttons-css{:href => "css/editor.min.css?ver=3.9.2", :media => "all", :rel => "stylesheet", :type => "text/css"}
+                      #wp-post_content-editor-container.wp-editor-container
+                        %textarea#post_content.wp-editor-area{:autocomplete => "off", :cols => "40", :name => "post_content", :rows => "20", :style => "visibility: hidden;", :tabindex => "5"}
+                .row.submit-wrapper
+                  .col-md-2
+                    %button#submit_reply.btn-submit
+                      Post answer
+                  .col-md-10.term-texts
+                    By posting your answer, you agree to the
+                    %a{:href => "http://demo.enginethemes.com/qaengine/term/", :target => "_blank"} privacy policy
+                    and
+                    %a{:href => "http://demo.enginethemes.com/qaengine/term/", :target => "_blank"} terms of service.
+      / END FORM REPLY
+    = render 'layouts/right_sidebar'
+    

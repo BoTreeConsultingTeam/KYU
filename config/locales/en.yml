@@ -38,6 +38,8 @@ en:
       email: 'Email'
       password: 'Password'
       password_confirmation: 'Retype Password'
+      current: 'Current Password' 
+      remember: 'Remember me'
     btn:  
       sign_in: 'Sign in'
       submit: 'Submit'
@@ -57,16 +59,3 @@ en:
     page_header: 
       title_confirmation: 'Resend confirmation instructions'    
       title_sign_in: 'Sign in'
-    basic:
-  teacher:
-    captions:
-    btn:
-      teacher: 'Teacher'
-  student:
-    btn:
-      student: 'Student'    
-  common:
-    page_header:
-      sign_up: 'Sign up'
-      sing_in: 'Sign in'
-      edit: 'Edit'
