@@ -1,23 +1,66 @@
-# Files in the config/locales directory are used for internationalization
-# and are automatically loaded by Rails. If you want to use locales other
-# than English, add the necessary files in this directory.
-#
-# To use the locales, use `I18n.t`:
-#
-#     I18n.t 'hello'
-#
-# In views, this is aliased to just `t`:
-#
-#     <%= t('hello') %>
-#
-# To use a different locale, set it with `I18n.locale`:
-#
-#     I18n.locale = :es
-#
-# This would use the information in config/locales/es.yml.
-#
-# To learn more, please read the Rails Internationalization guide
-# available at http://guides.rubyonrails.org/i18n.html.
-
 en:
-  hello: "Hello world"
+  questions:
+    captions:
+    page_header:
+      title: 'Question'
+      title_for_new: 'New Question'
+    basic:  
+      answer_by: 'Answered by'
+      asked_by: 'Asked By'  
+      tag_on_index: 'Tags:'
+      view: 'Views:' 
+      tag_on_new: "Tags (separated by commas)"
+      content_label: 'Content:'
+    btn:
+      new_question: 'New Question'
+      submit: 'Submit'
+    link:
+      last_week: 'Last week'
+      last_month: 'Last Month'  
+  answers:
+    captions:
+    basic:
+      answer_label: 'Your answer'
+      new_answer: 'New Answer'
+    btn:
+      submit_answer: 'Submit'
+  common:
+    captions:
+      dob: 'Birthdate'      
+      first_name: 'First Name'
+      middle_name: 'Middle Name'
+      last_name: 'Last Name'
+      user_name: 'User Name'
+      email: 'Email'
+      qualification: 'Qualification'
+      password: 'Password'
+      password_confirmation: 'Retype Password'
+    page_header:     
+      title_sign_up: 'Sign up'
+      title_sign_in: 'Sign in'
+    basic:
+
+    btn:  
+      sign_in: 'Sign in'
+      submit: 'Submit'
+    links:
+      sign_in: 'Sign in'
+      sign_up: 'Sign up' 
+      forgot_password: 'Forgot your password?'  
+  students:
+    captions:
+      middle_name: 'Middle Name' 
+    page_header: 
+      title_confirmation: 'Resend confirmation instructions'    
+    basic:
+           
+      forgot_password: 'Forgot your password?'
+  teachers:
+    captions:
+    page_header: 
+      title_confirmation: 'Resend confirmation instructions'    
+      title_sign_in: 'Sign in'
+    basic: 
+      salutation: 'Salutations'
+
+ 

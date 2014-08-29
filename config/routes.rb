@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  root :to => 'static_pages#index'
 
   devise_for :students,controllers: { sessions: 'students/sessions', registrations: 'students/registrations', passwords:'students/passwords'}
   devise_for :teachers,controllers: { sessions: 'teachers/sessions', registrations: 'teachers/registrations', passwords:'teachers/passwords' }
@@ -6,6 +7,7 @@ Rails.application.routes.draw do
  
   devise_scope :student do
     get "/students" => "students/registrations#index"
+    get "/students/:id/edit" => "students/registrations#edit"
   end
   devise_scope :teacher do
     get "/teachers" => "teachers/registrations#index"
@@ -21,6 +23,8 @@ Rails.application.routes.draw do
   end
 
   get 'tags/:tag', to: 'questions#index', as: :tag
+  get 'answers/accept/:id', to: 'answers#accept', as: :index
+
    # Add a custom sign in route for user sign in
   
   # The priority is based upon order of creation: first created -> highest priority.
@@ -35,46 +39,16 @@ Rails.application.routes.draw do
   # Example of named route that can be invoked with purchase_url(id: product.id)
   #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase
 
-  # Example resource route (maps HTTP verbs to controller actions automatically):
-  #   resources :products
+  resources :tags
+  resources :questions do
+    resources :answers
+    member { post :upvote,:downvote }
+  end
+  get 'questions/:tag' => 'questions#index',as: :show
+  get '/members' => 'members#index'
+  get '/members/:id' => 'members#show', as: :member
 
-  # Example resource route with options:
-  #   resources :products do
-  #     member do
-  #       get 'short'
-  #       post 'toggle'
-  #     end
-  #
-  #     collection do
-  #       get 'sold'
-  #     end
-  #   end
-
-  # Example resource route with sub-resources:
-  #   resources :products do
-  #     resources :comments, :sales
-  #     resource :seller
-  #   end
-
-  # Example resource route with more complex sub-resources:
-  #   resources :products do
-  #     resources :comments
-  #     resources :sales do
-  #       get 'recent', on: :collection
-  #     end
-  #   end
-
-  # Example resource route with concerns:
-  #   concern :toggleable do
-  #     post 'toggle'
-  #   end
-  #   resources :posts, concerns: :toggleable
-  #   resources :photos, concerns: :toggleable
-
-  # Example resource route within a namespace:
-  #   namespace :admin do
-  #     # Directs /admin/products/* to Admin::ProductsController
-  #     # (app/controllers/admin/products_controller.rb)
-  #     resources :products
-  #   end
+  resources :answers do
+    member { post :upvote,:downvote }
+  end
 end

@@ -1,0 +1,11 @@
+%h3  
+  Que.
+  =@question.title
+  %br
+%div
+  = form_for (@answer) do |f|
+    = f.label :content, t('answers.basic.answer_label')
+    = f.text_area :content
+    = f.hidden_field :user_id, :value => current_user.id  
+    = f.hidden_field :question_id, :value => @question.id
+    = f.submit t('answers.btn.submit_answer')

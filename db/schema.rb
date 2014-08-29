@@ -24,7 +24,7 @@ ActiveRecord::Schema.define(version: 20140827105851) do
     t.datetime "updated_at"
     t.integer  "answerable_id"
     t.string   "answerable_type"
-    t.boolean  "flag",            default: false
+    t.boolean  "flag", default: false
   end
 
   create_table "badges_sashes", force: true do |t|
@@ -108,7 +108,7 @@ ActiveRecord::Schema.define(version: 20140827105851) do
   end
 
   create_table "merit_scores", force: true do |t|
-    t.integer "sash_id"
+    t.integer "sash_id"to:
     t.string  "category", default: "default"
   end
 

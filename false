@@ -1,0 +1,2 @@
+      invoke  active_record
+      create    db/migrate/20140822072424_add_flag_to_answers.rb

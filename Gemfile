@@ -12,6 +12,8 @@ gem 'acts_as_commentable'
 gem 'acts_as_commentable_with_threading'
 gem 'devise'
 gem 'rails_config', '~> 0.4.2'
+gem 'kaminari'
+gem 'impressionist'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'
