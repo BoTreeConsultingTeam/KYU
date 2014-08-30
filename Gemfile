@@ -13,7 +13,7 @@ gem 'devise'
 gem 'rails_config', '~> 0.4.2'
 gem 'kaminari'
 gem 'impressionist'
-
+gem "ckeditor"
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'
 

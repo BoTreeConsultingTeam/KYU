@@ -7,22 +7,9 @@
       .row.select-category
         .col-md-6.col-xs-6.current-category
           %span All Questions
-        .col-md-6.col-xs-6
-          .select-categories-wrapper
-            .select-categories
-              %select#move_to_category.select-grey-bg
-                %option{:value => ""} Filter by category
-                %option{:value => "http://demo.enginethemes.com/qaengine/question-category/accessories/"}
-                  Accessories
-                %option{:value => "http://demo.enginethemes.com/qaengine/question-category/ebook/"}
-                  Ebook
       / END SELECT-CATEGORY
       .clearfix
       #q_filter_waypoints.row.q-filter-waypoints.collapse{:style => "display: none;"}
-        .col-md-2.col-xs-2
-          %button.action.ask-question{"data-toggle" => "modal", :type => "button"}
-            %i.fa.fa-plus
-            ASK A QUESTION
         .col-md-8.col-sm-10.col-xs-10
           .row
             .col-md-2.col-xs-2
@@ -53,15 +40,6 @@
                       Arts
                     
               / END SELECT CATEGORIES
-              .number-of-questions-wrapper
-                .number-of-questions
-                  %select#filter-numbers.select-grey-bg
-                    %option{:value => "http://demo.enginethemes.com/qaengine/questions/?numbers=20"} 20
-                    %option{:value => "http://demo.enginethemes.com/qaengine/questions/?numbers=15"} 15
-                    %option{:selected => "", :value => "http://demo.enginethemes.com/qaengine/questions/?numbers=12"} 12
-                    %option{:value => "http://demo.enginethemes.com/qaengine/questions/?numbers=10"} 10
-                    %option{:value => "http://demo.enginethemes.com/qaengine/questions/?numbers=5"} 5
-              / END POSTS PER PAGE
       #question_filter.row.question-filter
         .col-md-6.col-xs-6.sort-questions
           %ul
@@ -82,7 +60,7 @@
                 .q-lbtm-content
                   .question-excerpt
                     %p 
-                      = question.content         
+                      = raw(question.content)
                   .question-cat
                     %ul.question-tags
                       - question.tag_list.each do |tag|

@@ -47,6 +47,9 @@ GEM
       timers (~> 1.1.0)
     childprocess (0.5.3)
       ffi (~> 1.0, >= 1.0.11)
+    ckeditor (4.1.0)
+      mime-types
+      orm_adapter (~> 0.5.0)
     coderay (1.1.0)
     coffee-rails (4.0.1)
       coffee-script (>= 2.2.0)
@@ -287,6 +290,7 @@ DEPENDENCIES
   acts_as_votable (~> 0.10.0)
   better_errors
   bootstrap-sass
+  ckeditor
   coffee-rails
   devise
   guard

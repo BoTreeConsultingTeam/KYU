@@ -7,15 +7,6 @@
       .row.select-category
         .col-md-6.col-xs-6.current-category
           %span All Questions
-        .col-md-6.col-xs-6
-          .select-categories-wrapper
-            .select-categories
-              %select#move_to_category.select-grey-bg
-                %option{:value => ""} Filter by category
-                %option{:value => "http://demo.enginethemes.com/qaengine/question-category/accessories/"}
-                  Accessories
-                %option{:value => "http://demo.enginethemes.com/qaengine/question-category/ebook/"}
-                  Ebook
       / END SELECT-CATEGORY
       .clearfix
       #q_filter_waypoints.row.q-filter-waypoints.collapse{:style => "display: none;"}
@@ -39,29 +30,7 @@
                   %a{:href => "/qaengine/questions/?sort=unanswer"} Unanswered
               / END FILTER
             .col-md-6.col-xs-6
-              .select-categories-wrapper
-                .select-categories
-                  %select#move_to_category.select-grey-bg
-                    %option Filter by category
-                    %option{:value => "http://demo.enginethemes.com/qaengine/question-category/accessories/"}
-                      Accessories
-                    %option{:value => "http://demo.enginethemes.com/qaengine/question-category/accounting/"}
-                      Accounting
-                    %option{:value => "http://demo.enginethemes.com/qaengine/question-category/advice/"}
-                      Advice
-                    %option{:value => "http://demo.enginethemes.com/qaengine/question-category/arts/"}
-                      Arts
-                    
-              / END SELECT CATEGORIES
-              .number-of-questions-wrapper
-                .number-of-questions
-                  %select#filter-numbers.select-grey-bg
-                    %option{:value => "http://demo.enginethemes.com/qaengine/questions/?numbers=20"} 20
-                    %option{:value => "http://demo.enginethemes.com/qaengine/questions/?numbers=15"} 15
-                    %option{:selected => "", :value => "http://demo.enginethemes.com/qaengine/questions/?numbers=12"} 12
-                    %option{:value => "http://demo.enginethemes.com/qaengine/questions/?numbers=10"} 10
-                    %option{:value => "http://demo.enginethemes.com/qaengine/questions/?numbers=5"} 5
-              / END POSTS PER PAGE
+              
       #question_filter.row.question-filter
         .col-md-6.col-xs-6.sort-questions
           %ul
@@ -73,16 +42,7 @@
             %li
               = set_link(t('questions.link.last_month'),'month')
         .col-md-6.col-xs-6
-          .number-of-questions-wrapper
-            %span.number-of-questions-text Questions Per Page:
-            .number-of-questions
-              %select#filter-numbers.select-grey-bg
-                %option{:value => "http://demo.enginethemes.com/qaengine/questions/?numbers=20"} 20
-                %option{:value => "http://demo.enginethemes.com/qaengine/questions/?numbers=15"} 15
-                %option{:selected => "", :value => "http://demo.enginethemes.com/qaengine/questions/?numbers=12"} 12
-                %option{:value => "http://demo.enginethemes.com/qaengine/questions/?numbers=10"} 10
-                %option{:value => "http://demo.enginethemes.com/qaengine/questions/?numbers=5"} 5
-      / END QUESTIONS-FILTER
+          
       .main-questions-list
         %ul#main_questions_list
           - @questions.each do |question|
@@ -133,45 +93,5 @@
             
               / end right content
         / END MAIN-QUESTIONS-LIST
-      .row.paginations.home
-        .col-md-12
-          %ul.page-numbers
-            %li
-              %span.page-numbers.current 1
-            %li
-              %a.page-numbers{:href => "http://demo.enginethemes.com/qaengine/questions/page/2/"} 2
-            %li
-              %a.next.page-numbers{:href => "http://demo.enginethemes.com/qaengine/questions/page/2/"} &gt;
-      / END MAIN-PAGINATIONS
-    .col-md-2.disable-mobile.right-sidebar
-      .widget.widget-statistic
-        %p.questions-count
-          Questions
-          %br
-            %span 
-              = @questions.count
-        %p.students-count
-          Students
-          %br
-            %span 
-              = @students_count
-        %p.teachers-count
-          Teachers
-          %br
-            %span 
-              = @teachers_count    
-      / END widget-statistic
-      .widget.widget-related-tags
-        %h3 MOST USED TAGS
-        %ul
-          - @most_used_tags.each do |tag|
-            %li
-              = link_to tag, tag_path(tag),class: 'q-tag'   
-        %a{:href => tags_path} See more tags
-      / END widget-related-tags
-      .widget.widget-hot-questions
-        %h3 HOT QUESTIONS
-        
-      / END widget-related-tags
-    / END RIGHT-SIDEBAR
+    = render 'layouts/right_sidebar'
   / END ROW

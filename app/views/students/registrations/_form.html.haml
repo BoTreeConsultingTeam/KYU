@@ -1,42 +1,42 @@
-.row
-  .col-lg-12
-    = form_for(resource, :as => resource_name, :url => student_registration_path) do |f|
-      = devise_error_messages!
-      %div
-      %br
-      = f.label t('common.basic.first_name')
-      = f.text_field :first_name,class: 'form-control'
-      %br
-      =f.label t('students.basic.middle_name')
-      =f.text_field :middle_name,class: 'form-control'
-      %br
-      = f.label t('common.basic.last_name')
-      = f.text_field :last_name,class: 'form-control'
-      %br
-      = f.label t('common.basic.user_name')
-      =f.text_field :username,class: 'form-control'
-      %br
-      = f.label t('common.basic.dob')
-      = f.date_field :birthdate,class: 'form-control'
-      %br   
-      = f.label t('common.basic.email')
+.modal-submit-questions
+  .modal-dialog
+    .modal-body
+      = form_for(resource, :as => resource_name, :url => student_registration_path) do |f|
+        %div
+        %br
+        = f.label t('common.basic.first_name')
+        = f.text_field :first_name,class: 'form-control'
+        %br
+        =f.label t('students.basic.middle_name')
+        =f.text_field :middle_name,class: 'form-control'
+        %br
+        = f.label t('common.basic.last_name')
+        = f.text_field :last_name,class: 'form-control'
+        %br
+        = f.label t('common.basic.user_name')
+        =f.text_field :username,class: 'form-control'
+        %br
+        = f.label t('common.basic.dob')
+        = f.date_field :birthdate,class: 'form-control'
+        %br   
+        = f.label t('common.basic.email')
 
-      = f.email_field :email, :autofocus => true,class: 'form-control'
-      %div
-      %br/
-      = f.label t('common.basic.password')
+        = f.email_field :email, :autofocus => true,class: 'form-control'
+        %div
+        %br/
+        = f.label t('common.basic.password')
 
-      = f.password_field :password,class: 'form-control'
-      %div
-      %br/
-      = f.label t('common.basic.user_name')
+        = f.password_field :password,class: 'form-control'
+        %div
+        %br/
+        = f.label t('common.basic.user_name')
 
-      = f.password_field :password_confirmation,class: 'form-control'
-      %br/
-      %div
+        = f.password_field :password_confirmation,class: 'form-control'
+        %br/
+        %div
 
-      = f.label t('common.basic.current')
-      %i (we need your current password to confirm your changes)
-      %br/
-      = f.password_field :current_password,class: 'form-control'
-      %div= f.submit "Submit",class: 'btn btn-primary'
+        = f.label t('common.basic.current')
+        %i (we need your current password to confirm your changes)
+        %br/
+        = f.password_field :current_password,class: 'form-control'
+        %div= f.submit "Submit",class: 'btn-submit-question', id: 'btn_submit_question'  

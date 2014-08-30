@@ -41,13 +41,7 @@
           
     .row.paginations.home
       .col-md-12
-        %ul.page-numbers
-          %li
-            %span.page-numbers.current 1
-          %li
-            %a.page-numbers{:href => "http://demo.enginethemes.com/qaengine/questions/page/2/"} 2
-          %li
-            %a.next.page-numbers{:href => "http://demo.enginethemes.com/qaengine/questions/page/2/"} &gt;
+        =paginate @students
     / END MAIN-PAGINATIONS
   = render 'layouts/right_sidebar'
   / END ROW

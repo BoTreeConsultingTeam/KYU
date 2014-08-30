@@ -45,6 +45,7 @@ class QuestionsController < ApplicationController
   def show
     @question = Question.find(params[:id])
     @answers = @question.answers
+    @answer = Answer.new
     impressionist(@question, nil, { unique: [:session_hash] })
   end
   
