@@ -27,6 +27,7 @@ GEM
       tzinfo (~> 0.3.37)
     acts-as-taggable-on (3.3.0)
       activerecord (>= 3, < 5)
+    acts_as_commentable (4.0.1)
     acts_as_commentable_with_threading (1.2.0)
       activerecord (>= 3.0)
       activesupport (>= 3.0)
@@ -289,6 +290,7 @@ PLATFORMS
 
 DEPENDENCIES
   acts-as-taggable-on
+  acts_as_commentable
   acts_as_commentable_with_threading
   acts_as_votable (~> 0.10.0)
   better_errors

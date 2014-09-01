@@ -8,4 +8,7 @@ class MembersController < ApplicationController
     @student = Student.find(params[:id])
   end
 
+  def show
+    @student = Student.find(params[:id])
+  end
 end

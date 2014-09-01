@@ -1,0 +1,12 @@
+%h3  
+  Que.
+  =@question.title
+  %br
+  = link_to 'New Answer', new_answer_path(:question_id => @question.id) 
+  %hr
+= render partial: 'form', locals: {type: 'edit',object: @question}
+%hr
+= render 'show_comments_of_questions'
+%h2 Answers
+%hr
+= render 'answers/answers'
