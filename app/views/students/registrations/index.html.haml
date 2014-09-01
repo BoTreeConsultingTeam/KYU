@@ -4,33 +4,8 @@
     #header_sidebar.col-md-12.col-xs-12
     = render 'layouts/left_sidebar'
     .col-md-8.main-content
-      .row.select-category
-        .col-md-6.col-xs-6.current-category
-          %span All Questions
-      / END SELECT-CATEGORY
-      .clearfix
-      #q_filter_waypoints.row.q-filter-waypoints.collapse{:style => "display: none;"}
-        .col-md-2.col-xs-2
-          %button.action.ask-question{"data-toggle" => "modal", :type => "button"}
-            %i.fa.fa-plus
-            ASK A QUESTION
-        .col-md-8.col-sm-10.col-xs-10
-          .row
-            .col-md-2.col-xs-2
-              %span.q-f-title
-                All Questions
-            / END TITLE
-            .col-md-4.col-xs-4
-              %ul.q-f-sort
-                %li
-                  %a.active{:href => "http://demo.enginethemes.com/qaengine/questions/"} Latest
-                %li
-                  %a{:href => "/qaengine/questions/?sort=vote"} Votes
-                %li
-                  %a{:href => "/qaengine/questions/?sort=unanswer"} Unanswered
-              / END FILTER
-            .col-md-6.col-xs-6
-              
+      = render :partial => "layouts/sub_heading", :locals => {:object => 'All Questions'}
+      .clearfix        
       #question_filter.row.question-filter
         .col-md-6.col-xs-6.sort-questions
           %ul
@@ -53,7 +28,7 @@
                 .q-lbtm-content
                   .question-excerpt
                     %p 
-                      = question.content         
+                      = raw(question.content)         
                   .question-cat
                     %ul.question-tags
                       / question.tag_list .map { |t| link_to t, tag_path(t) }.join(', ')}
@@ -83,11 +58,11 @@
                     answers
                   %li
                     %span.question-views.question_view_overwrite
-                      3
+                      #{question.get_likes.size}
                     Upvotes
                   %li
                     %span.question-answers.question_view_overwrite
-                      3
+                      #{question.get_dislikes.size}
                     Downvotes  
               / end right content
             

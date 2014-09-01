@@ -40,6 +40,7 @@ en:
       password_confirmation: 'Retype Password'
       current: 'Current Password' 
       remember: 'Remember me'
+      salutations: 'Salutations'
     btn:  
       sign_in: 'Sign in'
       submit: 'Submit'

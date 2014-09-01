@@ -8,7 +8,8 @@
         .col-md-2.col-xs-2
           %span.back
             %i.fa.fa-angle-double-left
-            %a{:href => "http://demo.enginethemes.com/qaengine"} Home
+            %a 
+              = link_to 'Home',questions_path
         .col-md-8.col-xs-8
           %h3 
             = @question.title
@@ -18,20 +19,21 @@
         .col-md-2.col-xs-2.vote-block
           / vote group
           %ul
-            / vote up
-            %li{:title => "This is useful."}
-              %a.action.vote.vote-up.img-circle.active{"data-name" => "vote_up", :href => "javascript:void(0)"}
-                %i.fa.fa-chevron-up
+            %li{"data-original-title" => "This is useful.", :title => ""}
+              = vote_up_question_link(@question)
             / // vote up
             / vote point
             %li
-              %span.vote-count 3
+              %span.vote-count 
+                = @question.get_likes.size
+            %li
+              %span.vote-count   
+                = @question.get_dislikes.size
             / // vote point
             / vote down
-            %li{:title => "This is not useful"}
-              %a.action.vote.vote-down.img-circle.disabled{"data-name" => "vote_down", :href => "javascript:void(0)"}
-                %i.fa.fa-chevron-down
-            / // vote down
+            %li{"data-original-title" => "This is useful.", :title => ""}
+              = vote_down_question_link(@question)
+              / // vote down
           / // vote group
         / // Vote section
         .col-md-9.col-xs-9.q-right-content
@@ -49,9 +51,6 @@
                 %i.fa.fa-plus-square
             / // Follow Action
             / report Action
-            %li
-              %a.action.report{"data-name" => "report", "data-original-title" => "Report", "data-toggle" => "tooltip", :href => "javascript:void(0)"}
-                %i.fa.fa-exclamation-triangle
             / // Report Action
           / // admin control
           / question tag

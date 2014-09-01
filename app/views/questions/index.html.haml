@@ -4,42 +4,9 @@
     #header_sidebar.col-md-12.col-xs-12
     = render 'layouts/left_sidebar'
     .col-md-8.main-content
-      .row.select-category
-        .col-md-6.col-xs-6.current-category
-          %span All Questions
+      = render :partial => "layouts/sub_heading", :locals => {:object => 'All Questions'}
       / END SELECT-CATEGORY
       .clearfix
-      #q_filter_waypoints.row.q-filter-waypoints.collapse{:style => "display: none;"}
-        .col-md-8.col-sm-10.col-xs-10
-          .row
-            .col-md-2.col-xs-2
-              %span.q-f-title
-                All Questions
-            / END TITLE
-            .col-md-4.col-xs-4
-              %ul.q-f-sort
-                %li
-                  %a.active{:href => "http://demo.enginethemes.com/qaengine/questions/"} Latest
-                %li
-                  %a{:href => "/qaengine/questions/?sort=vote"} Votes
-                %li
-                  %a{:href => "/qaengine/questions/?sort=unanswer"} Unanswered
-              / END FILTER
-            .col-md-6.col-xs-6
-              .select-categories-wrapper
-                .select-categories
-                  %select#move_to_category.select-grey-bg
-                    %option Filter by category
-                    %option{:value => "http://demo.enginethemes.com/qaengine/question-category/accessories/"}
-                      Accessories
-                    %option{:value => "http://demo.enginethemes.com/qaengine/question-category/accounting/"}
-                      Accounting
-                    %option{:value => "http://demo.enginethemes.com/qaengine/question-category/advice/"}
-                      Advice
-                    %option{:value => "http://demo.enginethemes.com/qaengine/question-category/arts/"}
-                      Arts
-                    
-              / END SELECT CATEGORIES
       #question_filter.row.question-filter
         .col-md-6.col-xs-6.sort-questions
           %ul
@@ -95,10 +62,6 @@
                     %span.question-answers.question_view_overwrite
                       = question.get_downvotes.size
                     Downvotes  
-              / end right content
-            
-              / end right content
-        / END MAIN-QUESTIONS-LIST
       .row.paginations.home
         .col-md-12
           =paginate @questions  

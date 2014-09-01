@@ -23,6 +23,7 @@ module Merit
       #   'comments#create',
       #   'photos#create'
       # ]
+      score 20, :on => 'students/registrations#create'
     end
   end
 end

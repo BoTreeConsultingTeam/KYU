@@ -16,7 +16,7 @@ gem 'impressionist'
 gem "ckeditor"
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'
-
+gem 'merit'
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 

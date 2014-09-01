@@ -1,18 +1,72 @@
-%div
-  = button_to  'New Question', new_question_path,method: :get, class:" btn btn-primary pull-right" 
-%div
-  %h1
-    Latest Questions
-    
-  - @questions.each do |question|
-    %h3  
-      = link_to  question.title, question_path(question)
-    By
-    = question.askable.first_name
-    %br
-    = "#{time_ago_in_words(question.created_at)} ago."
-    Tags: #{raw question.tag_list.map { |t| link_to t, tag_path(t) }.join(', ')}
-    %br/
-    = vote_up_question_link(question)
-    = vote_down_question_link(question)
-    %hr
+.container-fluid
+  .row
+    / END HEADER
+    #header_sidebar.col-md-12.col-xs-12
+    = render 'layouts/left_sidebar'
+    .col-md-8.main-content
+      = render :partial => "layouts/sub_heading", :locals => {:object => 'All Questions'}
+      .clearfix        
+      #question_filter.row.question-filter
+        .col-md-6.col-xs-6.sort-questions
+          %ul
+            %li
+              %a.active{:href => "http://demo.enginethemes.com/qaengine/questions/"} Latest
+            %li
+              = set_link(t('questions.link.last_week'),'week')
+              
+            %li
+              = set_link(t('questions.link.last_month'),'month')
+        .col-md-6.col-xs-6
+          
+      .main-questions-list
+        %ul#main_questions_list
+          - @questions.each do |question|
+            %li.post-1728.question.type-question.status-publish.hentry.question-item{"data-id" => "1728"}
+              .col-md-8.col-xs-8.q-left-content
+                .q-ltop-content
+                  = link_to  question.title, question_path(question),class: 'question-title'
+                .q-lbtm-content
+                  .question-excerpt
+                    %p 
+                      = raw(question.content)         
+                  .question-cat
+                    %ul.question-tags
+                      / question.tag_list .map { |t| link_to t, tag_path(t) }.join(', ')}
+                      - question.tag_list.each do |tag|
+                        %li
+                          = link_to tag, tag_path(tag),class: 'q-tag'   
+                    .clearfix
+                    %a{:href => "http://demo.enginethemes.com/qaengine/member/admindemo/"}
+                      %span.author-avatar
+                        %img.avatar{:alt => "", :src => "http://1.gravatar.com/avatar/3743112a070d24fe4dbd5cb39d6a5e9e?s=30&amp;d=http%3A%2F%2F1.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D30&amp;r=G"}                     
+                      %span.author-name 
+                        = question.askable.username
+                    %span.user-badge{:style => "background-color:#04aad4;", :title => "67"} 
+                      = question.askable.class
+                    %span.question-time
+                      #{time_ago_in_words(question.created_at)} ago.
+              / end left content
+              .col-md-4.col-xs-4.q-right-content
+                %ul.question-statistic
+                  %li
+                    %span.question-views.question_view_overwrite
+                      #{question.impressionist_count} 
+                    views
+                  %li.active
+                    %span.question-answers.question_view_overwrite
+                      #{question.answers.count} 
+                    answers
+                  %li
+                    %span.question-views.question_view_overwrite
+                      #{question.get_likes.size}
+                    Upvotes
+                  %li
+                    %span.question-answers.question_view_overwrite
+                      #{question.get_dislikes.size}
+                    Downvotes  
+              / end right content
+            
+              / end right content
+        / END MAIN-QUESTIONS-LIST
+    = render 'layouts/right_sidebar'
+  / END ROW

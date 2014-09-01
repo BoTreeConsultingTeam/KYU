@@ -21,7 +21,7 @@
     %ul
       - most_used_tags.each do |tag|
         %li
-          = link_to tag, tag_path(tag),class: 'q-tag'   
+          = link_to tag, tag_path(tag.name),class: 'q-tag'   
     %a{:href => tags_path} See more tags
   / END widget-related-tags
   .widget.widget-hot-questions

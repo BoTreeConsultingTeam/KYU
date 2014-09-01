@@ -13,9 +13,15 @@ class Students::RegistrationsController <  Devise::RegistrationsController
   end
  
   def create
+    @student = build_resource
+    @student.save
+    # @student.add_points(10,category: 'answer upvote')
     super
   end
-
+ def update
+    @students = resource # Needed for Merit
+    super
+  end
   def tag_cloud
     @tags = Question.tag_counts_on(:tags).limit(5).order('count desc')
   end

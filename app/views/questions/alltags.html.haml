@@ -7,34 +7,19 @@
     #header_sidebar.col-md-12.col-xs-12
     = render 'layouts/left_sidebar'
     .col-md-8.main-content
-      .row.select-category
-        .col-md-6.col-xs-6.current-category
-          %span Tags
-        .col-md-6.col-xs-6.select-categories.input-find-tags
-          %form.form-input-search{:action => "http://demo.enginethemes.com/qaengine/tags-4/", :autocomplete => "off", :method => "GET"}
-            %input#tkey.search-users{:autocomplete => "off", :name => "tkey", :placeholder => "Find Tags", :type => "text", :value => ""}/
-            %i.fa.fa-chevron-circle-right
-        #question_filter.row.question-filter
-          .col-md-6.col-xs-6.sort-questions
-            %ul
-              %li
-                = set_link(t('questions.link.name'),'week')  
-              %li
-                = set_link(t('questions.link.popular'),'month')
-        .main-tag-list
-          .tags-list
-            .wrap-tag-list
-              .clearfix
-              / // character
-              / // tag item
-              .question-cat
-                %ul.question-tags
-                  - @tags.each do |tag|
-                    %li
-                      = link_to tag, tag_path(tag.name),class: 'q-tag'   
-        .clearfix
-          .row.paginations.home
-            .col-md-12
-              =paginate @tags  
+      = render :partial => "layouts/sub_heading", :locals => {:object => 'Tags'}
+      .main-tag-list
+        .tags-list
+          .wrap-tag-list
+            .clearfix
+            .question-cat
+              %ul.question-tags
+                - @tags.each do |tag|
+                  %li
+                    = link_to tag, tag_path(tag.name),class: 'q-tag'   
+      .clearfix
+        .row.paginations.home
+          .col-md-12
+            =paginate @tags  
     = render 'layouts/right_sidebar'
   / END ROW
