@@ -7,30 +7,30 @@
           = devise_error_messages!
           %div
           %br
-          = f.label t('common.basic.first_name')
+          = f.label t('common.captions.first_name')
           = f.text_field :first_name,class: 'submit-input'
           %br
-          =f.label t('students.basic.middle_name')
+          =f.label t('students.captions.middle_name')
           =f.text_field :middle_name,class: 'submit-input'
           %br
-          = f.label t('common.basic.last_name')
+          = f.label t('common.captions.last_name')
           = f.text_field :last_name,class: 'submit-input'
           %br
-          = f.label t('common.basic.user_name')
+          = f.label t('common.captions.user_name')
           =f.text_field :username,class: 'submit-input'
           %br
-          = f.label t('common.basic.dob')
+          = f.label t('common.captions.dob')
           = f.date_field :birthdate,class: 'submit-input'
           %br   
-          = f.label t('common.basic.email')
+          = f.label t('common.captions.email')
           %br/
           = f.email_field :email, :autofocus => true,class: 'submit-input'
           %div
-          = f.label t('common.basic.password')
+          = f.label t('common.captions.password')
           %br/
           = f.password_field :password,class: 'submit-input'
           %div
-          = f.label t('common.basic.password_confirmation')
+          = f.label t('common.captions.password_confirmation')
           %br/
           = f.password_field :password_confirmation,class: 'submit-input'
           %div= f.submit t('common.btn.submit'),class: 'btn-submit-question', id: 'btn_submit_question' 

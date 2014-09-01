@@ -12,7 +12,7 @@ class QuestionsController < ApplicationController
         @questions = Question.recent_data_month.page params[:page]
       end
     else
-      @questions = Question.all
+      @questions = Question.all.page params[:page]
     end
   end
 
@@ -22,7 +22,7 @@ class QuestionsController < ApplicationController
   end
 
   def create
-    @question = Question.new(question_params.merge({askable: logged_in_user}))
+    @question = Question.new(question_params.merge({askable: current_user}))
     if @question.save
       redirect_to questions_path
     else
