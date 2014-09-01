@@ -1,0 +1,21 @@
+-@answers.each do |answer|
+  -if !@question.answered?
+    - if @question.askable == current_user
+      = link_to "Accept", index_path(answer.id)
+  %h4.strong
+    -if @question.accepted_answer_id == answer.id   
+      %span.glyphicon.glyphicon-ok
+    = answer.content
+    - if answer.answerable == current_user
+      = link_to "| Delete", question_answer_path(@question.id,answer.id), method: :delete,data: {confirm: "are you sure?"}, class: 'pull-right'
+      = link_to "| Edit ", edit_question_answer_path(@question.id,answer.id), class: 'pull-right'
+    = link_to "Add comment ", answer_comment_path(@question.id,answer.id),class: 'pull-right'
+  By
+  = answer.answerable.first_name
+  #{time_ago_in_words(answer.created_at)} ago.
+  %br/
+  = vote_up_answer_link(answer)
+  = answer.get_upvotes.size 
+  = vote_down_answer_link(answer)
+  = answer.get_downvotes.size
+  %hr

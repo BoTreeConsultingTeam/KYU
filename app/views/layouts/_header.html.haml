@@ -1,15 +1,39 @@
-%header.navbar-fixed-top.navbar-inverse{:role => "navigation"}
-  %ul.nav.nav-pills.pull-right
-    %li
-      %a{:href => root_path} Home
-    %li
-      %a{:href => "#"} Tags
-    %li
-      %a{:href => "#"} About us
-    %li
-      %a{:href => "#"} Contact us
-    - if student_signed_in?
-      %li
-        = link_to 'Edit profile', edit_student_registration_path
-      %li
-        = link_to "Logout", destroy_student_session_path, method: :delete
+%header#header
+  #logo.col-md-2.col-xs-2
+    KYU
+  -if (student_signed_in? || teacher_signed_in?)
+    .col-md-8.col-xs-8
+      .header-menu
+        %ul
+          %li
+            %a{:href => root_path } Home
+          %li
+            %a{:href => members_path} Users
+          %li
+            %a{:href => questions_path} Questions
+          %li
+            %a{:href => tags_path} Tags
+          - if student_signed_in?
+            %li
+              = link_to 'Edit profile', edit_student_registration_path
+            %li
+              = link_to "Logout", destroy_student_session_path, method: :delete
+          - if teacher_signed_in?
+            %li
+              = link_to 'Edit profile', edit_teacher_registration_path
+            %li
+              = link_to "Logout", destroy_teacher_session_path, method: :delete
+      / menu
+    .col-md-2.col-xs-2.btn-group.header-avatar
+      %span.expand.dropdown-toggle{"data-toggle" => "dropdown", :type => "span"}
+        %a.dropdown-account{:href => "javascript:void(0)"}
+          %span.avatar
+            %img.avatar{:alt => "", :src => "http://1.gravatar.com/avatar/3743112a070d24fe4dbd5cb39d6a5e9e?s=30&amp;d=http%3A%2F%2F1.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D30&amp;r=G"}/
+          %span.display_name 
+          - if student_signed_in?
+            = "Welcome #{current_student.username}"
+          - if teacher_signed_in?
+            = "Welcome #{current_teacher.username}"
+          
+      
+    / avatar
