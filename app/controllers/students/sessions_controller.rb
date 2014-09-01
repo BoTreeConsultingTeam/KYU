@@ -1,9 +1,9 @@
 class Students::SessionsController <  Devise::SessionsController
   def destroy
-  	super
+    super
   end 
 
   def after_sign_in_path_for(resource)
-  	students_path
+    students_path
   end
 end

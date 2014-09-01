@@ -1,0 +1,10 @@
+-@comments.each do |c|
+  %div.row
+    .col-lg-1
+    .col-lg-8
+      = c.comment
+      - if c.is_author?(current_user)
+        =link_to 'Edit',edit_answer_comment_path(@answer.id,c.id)
+        |
+        = link_to 'Delete',answer_comment_path(@answer.id,c),method: :delete,data: {confirm: "are you sure?"}
+      %hr/

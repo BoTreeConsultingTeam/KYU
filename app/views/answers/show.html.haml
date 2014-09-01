@@ -1,27 +1,15 @@
-%h2 
-  Question
-  %br/
-%h3
-  =@answer.question.title
-%hr/
-%h4.strong
-  %u
-    Answer
-  %br/
-  %br/
-  =@answer.content
+/ %h2 
+/   Question
+/   %br/
+/ %h3
+/   =@answer.question.title
+/ %hr/
+/ %h4.strong
+/   %u
+/   Answer
+/   %br/
+/   %br/
+/   =@answer.content
   
-  = form_for (@comment) do |f|
-    = f.text_area :comment, placeholder: "Write a comment...",maxlength: 30
-    = f.hidden_field :relative, :value => @answer
-    = f.hidden_field :relative_type, :value => @answer.class
-    = f.hidden_field :relative_id, :value => @answer.id
-    = submit_tag "post coment"
-
-  -comments_of_this_answer.each do |c|
-    %div.row
-      .col-lg-1
-      .col-lg-8
-        =c.comment
-        =link_to 'edit',edit_answer_comment_path(@answer.id,c.id)
-        %hr/
+/   = render partial: 'form', locals: {type: 'new',object: @answer}
+/   = render 'comments/show_comments_of_answers'

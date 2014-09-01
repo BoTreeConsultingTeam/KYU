@@ -11,19 +11,6 @@
   %br/
   =@answer.content
   
-= form_for (@comment) do |f|
-  = f.text_area :comment, placeholder: "Write a comment...",maxlength: 30
-  = f.hidden_field :relative, :value => @answer
-  = f.hidden_field :relative_type, :value => @answer.class
-  = f.hidden_field :relative_id, :value => @answer.id
-  = submit_tag "post comment"
+= render partial: 'form', locals: {type: 'new',object: @answer}
 %hr/
--comments_of_this_answer.each do |c|
-  .row
-    .col-lg-8
-      = c.comment
-      - if c.commentable == current_user
-        = link_to 'edit',edit_answer_comment_path(@answer.id,c.id)
-        |
-        = link_to 'delete',answer_comment_path(@answer.id,c),method: :delete,data: {confirm: "are you sure?"}
-  %hr/
+= render 'comments/show_comments_of_answers'

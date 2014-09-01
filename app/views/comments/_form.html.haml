@@ -1,0 +1,8 @@
+= form_for (@comment) do |f|
+  = f.text_area :comment, placeholder: "Write a comment...",maxlength: 30
+  - if !(type == 'edit')
+    = f.hidden_field :relative, :value => object
+  = f.hidden_field :relative_type, :value => object.class.to_s
+  = f.hidden_field :relative_id, :value => object.id
+  = submit_tag "Post"
+  

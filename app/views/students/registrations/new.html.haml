@@ -1,4 +1,33 @@
-%h2 
-  = t('common.page_header.title_sign_up')
-= render 'form' 
+%h2 Sign up for student
+= form_for(resource, :as => resource_name, :url => student_registration_path) do |f|
+  = devise_error_messages!
+  %div
+    %br
+    = f.label :first_name
+    = f.text_field :first_name
+    %br
+    =f.label :middle_name
+    =f.text_field :middle_name
+    %br
+    = f.label :last_name
+    = f.text_field :last_name
+    %br
+    = f.label :user_name
+    =f.text_field :username
+    %br
+    = f.label :DOB
+    = f.date_field :birthdate
+    %br   
+    = f.label :email
+    %br/
+    = f.email_field :email, :autofocus => true
+    %div
+    = f.label :password
+    %br/
+    = f.password_field :password
+    %div
+    = f.label :password_confirmation
+    %br/
+    = f.password_field :password_confirmation
+    %div= f.submit "Sign up"
 = render "students/shared/links"

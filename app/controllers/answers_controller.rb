@@ -1,63 +1,82 @@
 class AnswersController < ApplicationController
-  before_action :authenticate_user!
-
+  before_action :user_signed_in?
+  
   def new
     @answer = Answer.new
-    @question = Question.find(params[:question_id])
     question_id = @answer.question
-
   end
 
   def create
-    logged_in_user = current_student ? current_student : current_teacher
-    @answer = Answer.create(answer_params.merge({answerable: logged_in_user}))
-    @question = Question.find(params[:answer][:question_id])
-    redirect_to questions_path(@question)
+    @answer = Answer.create(answer_params.merge({answerable: current_user}))
+    redirect_to question_path(params[:answer][:question_id])
   end
-  
+
   def edit
     @question = Question.find(params[:question_id])
-    @answer = Answer.find(params[:id])
+    @answers = @question.answers
+    @answer = Answer.find_by_id(params[:id])
+    if @answer.nil?
+      redirect_to question_path(params[:question_id]),flash: { error: "No such Answer found for edit!" }
+    end
   end
 
   def update
-    @answer = Answer.find(params[:id])
-    @answer.update(answer_params)
-    @question = Question.find(params[:answer][:question_id])
-    redirect_to question_path(@question)
+    @answer = Answer.find_by_id(params[:id])
+    if !(@answer.nil?)
+      @answer.update(answer_params)
+      redirect_to question_path(params[:answer][:question_id]),flash: { success: "Updated Successfully!" }
+    else
+      redirect_to question_path(params[:answer][:question_id]),flash: { error: "No such Answer found for Update!" }
+    end    
   end
 
   def destroy
-    @answer = Answer.find(params[:id]).delete
-    @question = Question.find(params[:question_id])
-    @answer.destroy
-    redirect_to question_path(@question)
+    @answer = Answer.find_by_id(params[:id])
+    if @answer.nil?
+      redirect_to question_path(params[:question_id]), flash: { error: "No such Answer found for delete!" }
+    else
+      @answer.destroy
+      redirect_to question_path(params[:question_id]), flash: { success: "Deleted successfully!" }
+    end
   end
 
   def upvote
-    @answer = Answer.find(params[:id])
-    answer_liked_by(@answer,liked_by)
-    redirect_to :back
+    @answer = Answer.find_by_id(params[:id])
+    if @answer.nil?
+      redirect_to questions_path,flash: { error: "No such Answer found for Vote!" }
+    else
+      answer_liked_by(@answer,liked_by)
+      redirect_to question_path(@answer.question)
+    end
   end
 
   def downvote
-    @answer = Answer.find(params[:id])
-    answer_disliked_by(@answer,liked_by)
-    redirect_to :back
+    @answer = Answer.find_by_id(params[:id])
+    if @answer.nil?
+      redirect_to questions_path,flash: { error: "No such Answer found for Vote!" }
+    else
+      answer_disliked_by(@answer,liked_by)
+      redirect_to question_path(@answer.question)
+    end
   end
 
-   def accept
-    @answer=Answer.find(params[:id])
-    @answer.flag = true
-    @answer.save
-    redirect_to question_path(@answer.question)
+  def accept
+    @answer=Answer.find_by_id(params[:id])
+    if @answer.nil?
+      redirect_to question_path(@answer.question),flash: { error: "No such Answer found for Accept!" }
+    else
+      @answer.flag = true
+      @answer.save
+      redirect_to question_path(@answer.question),flash: { success: "Answer Accepted!" }
+    end
   end
+
   private
 
   def answer_params
     params.require(:answer).permit(:content,:question_id, :user_id)
   end
-
+  
   def answer_liked_by(answer,user)
     answer.liked_by(user)
   end
