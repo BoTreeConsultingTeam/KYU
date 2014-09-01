@@ -43,9 +43,8 @@ module Merit
       #
       #   user.name.length > 4
       # end
-    grant_on 'questions#vote', badge: '', to: :student do |question|
-      question.votes.count == 5
-    end
+      grant_on 'students/registrations#create', badge: 'best-unicorn', model_name: 'Student'
+
     end
   end
 end

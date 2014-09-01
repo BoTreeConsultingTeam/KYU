@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140827105851) do
+ActiveRecord::Schema.define(version: 20140830204843) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -108,7 +108,7 @@ ActiveRecord::Schema.define(version: 20140827105851) do
   end
 
   create_table "merit_scores", force: true do |t|
-    t.integer "sash_id"to:
+    t.integer "sash_id"
     t.string  "category", default: "default"
   end
 

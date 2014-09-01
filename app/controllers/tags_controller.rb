@@ -1,15 +1,16 @@
 class TagsController < ApplicationController
+  
   def index
-  	@tags = ActsAsTaggableOn::Tag.all  	
-  end	
+    @tags = ActsAsTaggableOn::Tag.all
+    questions = Questions.all
+  end 
 
-  def show
-  		if params[:id].present? 
-           @question = Question.tagged_with(params[:id])
-        end
+  def show 
+    @tag = ActsAsTaggableOn::Tag
   end
-
+  
   private
+  
   def tag_params
     params.require(:tag).permit(:name,:taggings_count)
   end

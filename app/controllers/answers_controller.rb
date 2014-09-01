@@ -3,12 +3,19 @@ class AnswersController < ApplicationController
   
   def new
     @answer = Answer.new
+    @question =  Question.find(params[:question_id])
     question_id = @answer.question
   end
 
   def create
     @answer = Answer.create(answer_params.merge({answerable: current_user}))
-    redirect_to question_path(params[:answer][:question_id])
+    @question = @answer.question
+    if @answer.save
+      redirect_to question_path(params[:answer][:question_id])
+    else
+      flash[:error]= 'Must contain some text'
+      redirect_to question_path(params[:answer][:question_id])
+    end
   end
 
   def edit
