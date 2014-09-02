@@ -15,8 +15,9 @@ class Students::RegistrationsController <  Devise::RegistrationsController
   def create
     @student = build_resource
     @student.save
-    # @student.add_points(10,category: 'answer upvote')
     super
+    badge = Badge.find(1)
+    badge.add(@student)
   end
  def update
     @students = resource # Needed for Merit

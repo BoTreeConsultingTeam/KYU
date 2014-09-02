@@ -23,12 +23,14 @@ class QuestionsController < ApplicationController
   def upvote
      @question = Question.find(params[:id])
      question_liked_by(@question,liked_by)
+     logged_in_user.change_points(5)
     redirect_to :back
   end
 
   def downvote
     @question = Question.find(params[:id])
     question_disliked_by(@question,liked_by)
+    logged_in_user.change_points(-5)
     redirect_to :back
   end
 
@@ -36,7 +38,9 @@ class QuestionsController < ApplicationController
     logged_in_user = current_student ? current_student : current_teacher
     @question = Question.new(question_params.merge({askable: logged_in_user}))
     if @question.save
+      logged_in_user.change_points(2)
       redirect_to questions_path
+
     else
       render 'new'
     end
