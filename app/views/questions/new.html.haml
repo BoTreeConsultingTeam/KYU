@@ -17,7 +17,7 @@
               %div
               = f.label t('questions.basic.content_label')
               %br/
-              = f.cktext_area :content, :extraPlugins => 'mathjax'#:ckeditor => {:uiColor => '#AADC6E', :toolbar => 'mini'}
+              = f.cktext_area :content,:toolbar => 'mini' 
               %div
                 = f.label :tag_list, t('questions.basic.tag_on_new')
                 = f.text_field :tag_list,class: 'submit-input tags-input'
