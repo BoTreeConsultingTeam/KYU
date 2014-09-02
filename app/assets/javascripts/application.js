@@ -15,5 +15,4 @@
 //= require turbolinks
 //= require bootstrap
 //= require bootstrap.min
-//= require ckeditor/init
 //= require ckeditor/config
