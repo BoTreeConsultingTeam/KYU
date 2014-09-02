@@ -10,6 +10,8 @@
  *
  *= require bootstrap-theme.min
  *= require bootstrap.min
+ *= require editor.min
+ *= require editor_content
  *= require sign_in
  *= require style
  *= require font-awesome.min
