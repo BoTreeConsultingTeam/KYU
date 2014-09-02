@@ -14,7 +14,7 @@ config.toolbar_Full =
 	{ name: 'paragraph', items : [ 'NumberedList','BulletedList','-','Outdent','Indent','-','Blockquote','CreateDiv',
 	'-','JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock','-','BidiLtr','BidiRtl' ] },
 	{ name: 'links', items : [ 'Link','Unlink','Anchor' ]},
-	{ name: 'insert', items : [ 'Image','Flash','Table','HorizontalRule','Smiley','SpecialChar','PageBreak','Iframe', 'mathjax' ] },
+	{ name: 'insert', items : [ 'Image','Flash','Table','HorizontalRule','Smiley','SpecialChar','PageBreak','Iframe'] },
 	'/',
 	{ name: 'styles', items : [ 'Styles','Format','Font','FontSize' ] },
 	{ name: 'colors', items : [ 'TextColor','BGColor' ] },
