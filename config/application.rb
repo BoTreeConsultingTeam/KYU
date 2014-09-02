@@ -17,8 +17,6 @@ module KYU
     # config.time_zone = 'Central Time (US & Canada)'
     config.autoload_paths += %W(#{config.root}/lib)
 
-    Rails.application.config.assets.precompile += %w( bootstrap-theme.min.css, bootstrap.min.css, sign_in.css, style.css, font-awesome.min.css, main.css, css.css, custom.css )
-
     config.encoding = 'utf-8'
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]

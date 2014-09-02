@@ -74,7 +74,7 @@ KYU::Application.configure do
 
   # Disable automatic flushing of the log to improve performance.
   # config.autoflush_log = false
-
+  config.assets.precompile += %w( bootstrap-theme.min.css, bootstrap.min.css, sign_in.css, style.css, font-awesome.min.css, main.css, css.css, custom.css )
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new
 end
