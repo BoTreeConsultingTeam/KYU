@@ -14,7 +14,7 @@
  *= require editor_content
  *= require sign_in
  *= require style
- *= require font-awesome.min
+ *= require font-awesome
  *= require main
  *= require css
  *= require custom

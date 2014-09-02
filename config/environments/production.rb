@@ -77,7 +77,7 @@ KYU::Application.configure do
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation can not be found).
-  config.assets.precompile += %w(bootstrap-theme.min.css bootstrap.min.css sign_in.css style.css font-awesome.min.css main.css css.css custom.css editor.min.css editor_content.css ckeditor/config.js.coffee)
+  config.assets.precompile += %w(bootstrap-theme.min.css bootstrap.min.css sign_in.css style.css main.css css.css custom.css editor.min.css editor_content.css ckeditor/config.js.coffee)
 
   config.i18n.fallbacks = true
 
