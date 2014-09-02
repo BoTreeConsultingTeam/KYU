@@ -14,7 +14,8 @@ gem 'devise'
 gem 'rails_config', '~> 0.4.2'
 gem 'kaminari'
 gem 'impressionist'
-gem "ckeditor"
+#gem "ckeditor"
+gem 'ckeditor_rails'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'
 gem 'merit'
