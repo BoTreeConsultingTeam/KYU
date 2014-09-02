@@ -1,5 +1,5 @@
 = form_for (@comment) do |f|
-  = f.text_area :comment, placeholder: "Write a comment...",maxlength: 30
+  = f.text_area :comment,:toolbar => 'mini', :class => 'ckeditor', style: 'width: none !important;'
   - if !(type == 'edit')
     = f.hidden_field :relative, :value => object
   = f.hidden_field :relative_type, :value => object.class.to_s

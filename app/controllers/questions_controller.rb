@@ -36,7 +36,8 @@ class QuestionsController < ApplicationController
     @answer = Answer.new
     impressionist(@question, nil, { unique: [:session_hash] })
     @comment = Comment.new
-    @comments = Comment.relative_comments(@question.id,@question.class)
+    @comments_q = Comment.relative_comments(@question.id,@question.class)
+    @comments_a = Comment.all_comments_of_answers(@answer.class)
   end
 
   def destroy

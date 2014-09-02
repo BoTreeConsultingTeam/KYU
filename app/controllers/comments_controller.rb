@@ -1,30 +1,35 @@
 class CommentsController < ApplicationController
-before_action :user_signed_in?
+
+  before_action :user_signed_in?
   
   def create 
     relative_of_comment = params[:relative]
     @comment = Comment.create(comment_params.merge({commentable: current_user}).merge({relative: relative_of_comment}))
+    @answer = Answer.find_by_id(params[:comment][:relative_id])
     if "Question" == relative_type
       redirect_to question_path(relative_id)
     else
-      redirect_to comment_path(relative_id)
+      redirect_to question_path(@answer.question.id)
     end
   end
    
   def update
     @comment=Comment.find_by_id(params[:id])
+    @comment.update(comment_params)
     if !(@comment.nil?)
       @comment.update(comment_params)
       if "Question" == relative_type
-        redirect_to question_path(relative_id),flash: { success: "Updated Successfully" }
+        redirect_to question_path(params[:comment][:relative_id]),flash: { success: "Updated Successfully" }
       else
-        redirect_to comment_path(relative_id),flash: { success: "Updated Successfully" }
+        @answer = Answer.find_by_id(params[:comment][:relative_id])
+        redirect_to question_path(@answer.question),flash: { success: "Updated Successfully" }
       end
     else
       if "Question" == relative_type
         redirect_to question_path(relative_id),flash: { error: "no such Comment found for Update" }
       else
-        redirect_to comment_path(relative_id),flash: { error: "no such Comment found for Update" }
+        @answer = Answer.find_by_id(params[:comment][:relative_id])
+        redirect_to question_path(@answer.question),flash: { error: "no such Comment found for Update" }
       end
     end
   end
@@ -47,7 +52,7 @@ before_action :user_signed_in?
       if @comment.nil?
         redirect_to question_path(params[:question_id]),flash: { error: "No such Comment found for Edit!" }
       else
-        @comments = Comment.relative_comments(@question.id,@question.class)
+        @comments_q = Comment.relative_comments(@question.id,@question.class)
       end
     else
       @answer = Answer.find_by_id(params[:answer_id])
@@ -65,13 +70,15 @@ before_action :user_signed_in?
     if !(@comment.nil?)
       @comment.delete
       if params[:answer_id].present?
-        redirect_to comment_path(params[:answer_id]),flash: { success: "Deleted Successfully!" }
+        @answer = Answer.find_by_id(params[:answer_id])
+        redirect_to question_path(@answer.question.id),flash: { success: "Deleted Successfully!" }
       else
         redirect_to question_path(params[:question_id]),flash: { success: "Deleted Successfully!" }
       end
     else
       if params[:answer_id].present?
-        redirect_to comment_path(params[:answer_id]),flash: { error: "No such Comment found for Delete!" }
+        @answer = Answer.find_by_id(params[:answer_id])
+        redirect_to question_path(@answer.question.id),flash: { error: "No such Comment found for Delete!" }
       else
         redirect_to question_path(params[:question_id]),flash: { error: "No such Comment found for Delete!" }
       end
