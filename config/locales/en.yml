@@ -16,8 +16,12 @@ en:
       new_question: 'New Question'
       submit: 'Submit'
     link:
-      last_week: 'Last week'
-      last_month: 'Last Month'  
+      last_week: 'Lastweek'
+      last_month: 'LastMonth'
+      newest_questions: 'Newest'  
+      most_viewed: 'MostViewed'
+      most_voted: 'MostVoted'
+      unanswerd_questions: 'Unanswerd'
   answers:
     captions:
     basic:

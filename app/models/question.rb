@@ -15,11 +15,16 @@ class Question < ActiveRecord::Base
   default_scope order("created_at DESC")
   scope :recent_data_month, -> { where(:created_at => (1.month.ago)..(Time.now)).order("created_at desc") }
   scope :recent_data_week, -> { where(:created_at => (1.week.ago)..(Time.now)).order("created_at desc")}
+  scope :recent_data_new, -> { find(:all, :order => "id desc", :limit => 4)}
+  #scope :recent_data_view, -> { find(:all, :order => "id desc")}
+  scope :recent_data_vote, -> { where(id: 5)}
+  scope :recent_data_answer, -> { find(:all, :order => "id desc")}
 
   validates_presence_of :title
   validates_presence_of :content
   validates :title, length: { maximum: 150, minimum: 20 }
   validates :content, length: { maximum: 1000, minimum: 20 }
+  #scope :recent_data_view, -> { where("impressionable_type = ?", 'Question').group('impressionable_type, impressionable_id').order('impressionable_id desc').limit(3)}
   
   def answered?
     answers.where(flag: true).count > 0

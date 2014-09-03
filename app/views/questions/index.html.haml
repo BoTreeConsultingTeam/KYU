@@ -1,6 +1,10 @@
 %div
   = set_link(t('questions.link.last_week'),'week')
   = set_link(t('questions.link.last_month'),'month')
+  = set_link(t('questions.link.newest_questions'), 'newquestion' )
+  = set_link(t('questions.link.most_viewed'), 'mostviewed' )
+  = set_link(t('questions.link.most_voted'), 'mostvoted' )
+  = set_link(t('questions.link.unanswerd_questions'), 'unanswerd' )
 %div
   = link_to  t('questions.btn.new_question'), new_question_path,method: :get, class:" btn btn-primary pull-right" 
 %h2

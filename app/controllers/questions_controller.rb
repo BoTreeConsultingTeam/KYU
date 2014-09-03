@@ -9,6 +9,20 @@ class QuestionsController < ApplicationController
         @questions = Question.recent_data_week.page params[:page]
       when 'month'
         @questions = Question.recent_data_month.page params[:page]
+      when 'newquestion'  
+        @questions = Kaminari.paginate_array(Question.recent_data_new).page params[:page]
+      when 'mostviewed'  
+        @questions = Kaminari.paginate_array(Question.find_all_by_id (recent_data_view)).page params[:page]
+        #impressions = Impression.select("impressionable_id, count(*) as qty").where("impressionable_type = ?", 'Question').group('impressionable_type, impressionable_id').order('qty desc').limit(3)
+        #puts "******************************_#{impressions.inspect}"
+        #impressions = Impression.all.recent_data_view
+        #@questions = Kaminari.paginate_array(Question.joins(:impressions).where(impressions: {impressionable_id: impressions.map(&:impressionable_id)})).page params[:page]
+      when 'mostvoted'  
+        @questions = Kaminari.paginate_array(Question.recent_data_vote).page params[:page] 
+        #votes = Vote.select("votable_id").order('votable_id desc')
+        #@questions = Kaminari.paginate_array(Question.joins(:votes).where(votes: {votable_id: votes.map(&:votable_id)})).page params[:page]
+      when 'unanswerd'  
+        @questions = Kaminari.paginate_array(Question.recent_data_answer).page params[:page]   
       end
     else
       @questions = Question.all.page params[:page]
@@ -91,9 +105,23 @@ class QuestionsController < ApplicationController
 
   def received_tag
       params[:tag]
-    end
+  end
 
-    def received_time
-      params[:time]
+  def received_time
+    params[:time]
+  end
+
+  def recent_data_view
+    #find(:all, :order => "id desc")
+    viewed = Question.all
+    h = {}
+    viewed.each do |q|
+      h[q.impressionist_count]=q.id
     end
+    
+    b = Hash[h.sort_by{|k,v| k}]
+    puts b.values.reverse
+    b.values.reverse
+    
+  end
 end

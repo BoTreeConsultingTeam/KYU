@@ -1,0 +1,4 @@
+%h1 
+  Tags
+  -@tags.each do |t|
+    Tags: #{raw t.tag_list.map { |f| link_to f, tag_path(f) }.join(', ')}

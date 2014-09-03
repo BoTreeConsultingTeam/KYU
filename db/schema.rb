@@ -24,7 +24,7 @@ ActiveRecord::Schema.define(version: 20140826024243) do
     t.datetime "updated_at"
     t.integer  "answerable_id"
     t.string   "answerable_type"
-    t.boolean  "flag", default: false
+    t.boolean  "flag",            default: false
   end
 
   create_table "badges_sashes", force: true do |t|
