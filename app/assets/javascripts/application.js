@@ -17,3 +17,4 @@
 //= require bootstrap.min
 //= require ckeditor-jquery
 //= require ckeditor/config
+//= require common
