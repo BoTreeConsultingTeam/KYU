@@ -25,9 +25,16 @@
                 = student.email
               .question-cat
                 %span.user-badge
-                  = student.badges.last.name
+                  -if student.badges.last.blank?
+                    No Badges
+                  -else
+                    = student.badges.last.name
+                    
                 %span.points 
-                  = "#{student.points} Points" 
+                  -if student.points.nil?
+                    0 Points
+                  - else
+                    = "#{student.points} Points" 
           
     .row.paginations.home
       .col-md-12

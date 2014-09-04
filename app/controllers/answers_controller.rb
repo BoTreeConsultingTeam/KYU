@@ -53,7 +53,7 @@ class AnswersController < ApplicationController
       redirect_to questions_path,flash: { error: "No such Answer found for Vote!" }
     else
       answer_liked_by(@answer,liked_by)
-	  current_user.change_points(15)
+      give_points_to_owner(@answer,15)
       redirect_to question_path(@answer.question)
     end
   end
@@ -64,7 +64,7 @@ class AnswersController < ApplicationController
       redirect_to questions_path,flash: { error: "No such Answer found for Vote!" }
     else
       answer_disliked_by(@answer,liked_by)
-      current_user.change_points(-15)
+      give_points_to_owner(@answer,-15)
       redirect_to question_path(@answer.question)
     end
   end
@@ -76,6 +76,7 @@ class AnswersController < ApplicationController
     else
       @answer.flag = true
       @answer.save
+      give_points_to_owner(@answer,10)
       redirect_to question_path(@answer.question),flash: { success: "Answer Accepted!" }
     end
   end
@@ -92,5 +93,10 @@ class AnswersController < ApplicationController
 
   def answer_disliked_by(answer,user)
     answer.disliked_by(user)
+  end
+
+  def give_points_to_owner(answer,points)
+    answer_owner = answer.answerable
+    answer_owner.change_points(points)
   end
 end

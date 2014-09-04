@@ -76,7 +76,7 @@
             .col-md-4.col-xs-4.question-control
               %ul
                 %li
-                  = link_to 'Comment','#comment',class: 'toggleLink', id: "q#{@question.id}"
+                  = link_to 'Comment','#comment',class: 'toggleLink', id: "q#{@question.id}",'data-no-turbolink' => true
                   (
                   = @question.comments.count
                   )
@@ -162,7 +162,7 @@
                   / share comment , report
                   %ul
                     %li
-                      = link_to 'Comment','#comment',class: 'toggleLink', id: "#{answer.id}"
+                      = link_to 'Comment','#comment',class: 'toggleLink', id: "#{answer.id}",'data-no-turbolink' => true
                       (
                       = answer.comments.count
                       )
