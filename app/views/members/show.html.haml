@@ -1,36 +1,151 @@
-.container-fluid
-  .row
-  / END HEADER
-  #header_sidebar.col-md-12.col-xs-12
-  = render 'layouts/left_sidebar'
-  .col-md-8.main-content
-    = render :partial => "layouts/sub_heading", :locals => {:object => "Welcome, #{@student.username}"}
-    .row
-      .col-md-9.col-md-push-3 
-        =@student.first_name
-        =@student.last_name 
-       
-      .col-md-3.col-md-pull-9 
-        %b Name 
-      
-      .col-md-9.col-md-push-3 
-        %br
-          =@student.birthdate
-      .col-md-3.col-md-pull-9
-        %br/
-        %b Birthdate
-      
-      .col-md-9.col-md-push-3
-        %br/
-        =@student.username
-      .col-md-3.col-md-pull-9  
-        %br/
-        %b Username
 
-      .col-md-9.col-md-push-3
-        %br/
-        =@student.email 
-      .col-md-3.col-md-pull-9
-        %br/
-        %b Email
-  = render 'layouts/right_sidebar'
+/ END HEADER
+#header_sidebar.col-md-12.col-xs-12
+= render 'layouts/left_sidebar'
+.col-md-8.main-content
+  = render :partial => "layouts/sub_heading", :locals => {:object => 'Profile'}
+  .row.user-statistic.highlight
+    .col-md-5.col-xs-5.user-info
+      %span.avatar-80
+        %img.avatar{:alt => "", :src => "http://demo.enginethemes.com/qaengine/wp-content/uploads/2014/08/1282.jpg"}     
+      %ul
+        %li.name 
+          = @student.username
+        %li.email
+          %i.fa.fa-envelope
+          = @student.email
+    .col-md-7.col-xs-7.user-post-count
+      .row
+        .col-md-4.col-xs-4.question-cat
+          %span.user-badge
+            = @student.badges.last.name
+          %br
+            %span.points-count
+              = @student.points
+            %span.star
+              %i.fa.fa-star
+              %br
+                points
+        .col-md-4.col-xs-4
+          %p.questions-count
+            Questions
+            %br
+              %span 
+                = @student.questions.count
+        .col-md-4.col-xs-4
+          %p.answers-count
+            Answers
+            %br
+              %span 
+                = @student.answers.count
+  / END USER-STATISTIC
+  .row.question-filter
+    .col-md-12.sort-questions
+      %ul
+        %li
+          = link_to 'Questions', member_path(@student,:filter => "questions")
+        %li
+          = link_to 'Answers', member_path(@student,:filter => "answers")
+  / END QUESTIONS-FILTER
+  - if params[:filter] == "questions"
+    .main-questions-list    
+      %ul#main_questions_list
+        - @questions.each do |question|
+          %li.post-188.question.type-question.status-publish.hentry.question-item{"data-id" => "188"}
+            .col-md-8.col-xs-8.q-left-content
+              .q-ltop-content
+                %a.question-title
+                  = question.title
+              .q-lbtm-content
+                .question-excerpt
+                  %p 
+                    = raw(question.content)
+                .question-cat
+                  %ul.question-tags
+                    - question.tags.each do |tag|
+                      %li
+                        = link_to tag, tag_path(tag.name),class: 'q-tag'   
+                  .clearfix
+                  %a{:href => "http://demo.enginethemes.com/qaengine/member/admin/"}
+                    %span.author-avatar
+                      %img.avatar{:alt => "", :src => "http://demo.enginethemes.com/qaengine/wp-content/uploads/2014/08/1282.jpg"}      
+                    %span.author-name 
+                      = question.askable.username
+                  %span.user-badge
+                    = question.askable.badges.last.name  
+                  %span.question-time
+                    = "#{time_ago_in_words(question.created_at)} ago."
+            / end left content
+            .col-md-4.col-xs-4.q-right-content
+              %ul.question-statistic
+                %li
+                  %span.question-views
+                    = "#{question.impressionist_count}"
+                  views
+                %li.active
+                  %span.question-answers
+                    = "#{question.answers.count}" 
+                  answers
+                %li
+                  %span.question-upvotes
+                    = question.get_upvotes.size
+                  upvotes
+                %li
+                  %span.question-downvotes
+                    = question.get_downvotes.size
+                  downvotes
+            / end right content
+  - else
+    .main-questions-list
+      %ul#main_questions_list
+        - @answers.each do |answer|
+          %li.post-103.answer.type-answer.status-publish.hentry.answer-item.question-item{"data-id" => "103"}
+            .col-md-8.q-left-content
+              .q-ltop-content.title-answer-style
+                %a.question-title
+                  = answer.question.title
+              .q-lbtm-content
+                .question-cat
+                  %span.author-avatar
+                    %img.avatar{:alt => "", :src => "http://demo.enginethemes.com/qaengine/wp-content/uploads/2014/08/1282.jpg"}      
+                  %span.user-badge
+                    = answer.answerable.badges.last.name
+                  %span.question-time
+                    = "Asked #{time_ago_in_words(answer.question.created_at)} ago."
+                  %ul.question-tags
+                    - answer.question.tags.each do |tag|
+                      %li
+                        = link_to tag, tag_path(tag.name),class: 'q-tag'
+              .quote-answer-style
+                %div
+                  %span.icon-quote
+                  = raw(answer.content)
+                %p.alert-stt-answer-style
+                  %i.fa.fa-check-circle
+                  = "Replied #{time_ago_in_words(answer.created_at)} ago."
+            
+            / end left content
+            .col-md-4.q-right-content
+              %ul.question-statistic
+                %li
+                  %span.question-views
+                    = "#{answer.question.impressionist_count}"
+                  views
+                %li.active
+                  %span.question-answers
+                    = "#{answer.question.answers.count}"
+                  answers
+                %li
+                  %span.question-upvotes
+                    = answer.question.get_upvotes.size
+                  votes
+                %li
+                  %span.question-downvotes
+                    = answer.question.get_downvotes.size
+                  votes  
+          / end right content        
+    / END MAIN-QUESTIONS-LIST
+  .row.paginations.home
+    .col-md-12
+/ END MAIN-PAGINATIONS
+= render 'layouts/right_sidebar'

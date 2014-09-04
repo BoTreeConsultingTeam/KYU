@@ -21,13 +21,15 @@ class QuestionsController < ApplicationController
   end
 
   def upvote
-     @question = Question.find(params[:id])
-     question_liked_by(@question,liked_by)
-     logged_in_user.change_points(5)
+    logged_in_user = current_student ? current_student : current_teacher
+    @question = Question.find(params[:id])
+    question_liked_by(@question,liked_by)   
+    logged_in_user.change_points(5)
     redirect_to :back
   end
 
   def downvote
+    logged_in_user = current_student ? current_student : current_teacher
     @question = Question.find(params[:id])
     question_disliked_by(@question,liked_by)
     logged_in_user.change_points(-5)
@@ -40,7 +42,6 @@ class QuestionsController < ApplicationController
     if @question.save
       logged_in_user.change_points(2)
       redirect_to questions_path
-
     else
       render 'new'
     end
@@ -96,10 +97,10 @@ class QuestionsController < ApplicationController
   end
 
   def received_tag
-      params[:tag]
-    end
+    params[:tag]
+  end
 
-    def received_time
-      params[:time]
-    end
+  def received_time
+    params[:time]
+  end
 end

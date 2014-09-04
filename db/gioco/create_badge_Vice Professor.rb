@@ -1,6 +1,6 @@
 badge = Badge.create({ 
-                      :name => 'new-registered', 
-                      :points => '1',
+                      :name => 'Vice Professor', 
+                      :points => '500',
                       
                       :default => 'false'
                     })

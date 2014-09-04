@@ -19,14 +19,18 @@ class AnswersController < ApplicationController
   end
 
   def upvote
+    logged_in_user = current_student ? current_student : current_teacher
     @answer = Answer.find(params[:id])
     answer_liked_by(@answer,liked_by)
+    logged_in_user.change_points(15)
     redirect_to :back
   end
 
   def downvote
+    logged_in_user = current_student ? current_student : current_teacher
     @answer = Answer.find(params[:id])
     answer_disliked_by(@answer,liked_by)
+    logged_in_user.change_points(-15)
     redirect_to :back
   end
 
@@ -34,6 +38,7 @@ class AnswersController < ApplicationController
     @answer=Answer.find(params[:id])
     @answer.flag = true
     @answer.save
+    
     redirect_to question_path(@answer.question)
   end
   

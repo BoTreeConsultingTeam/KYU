@@ -21,11 +21,13 @@
             %span.display_name 
               = link_to student.username, member_path(student)
             %br
-              %span.location
+              %span.email
                 = student.email
               .question-cat
-                %span.user-badge{:style => "background-color:#780978;", :title => "1543"} studnent.type
-                %span.points 1543 Points
+                %span.user-badge
+                  = student.badges.last.name
+                %span.points 
+                  = "#{student.points} Points" 
           
     .row.paginations.home
       .col-md-12
