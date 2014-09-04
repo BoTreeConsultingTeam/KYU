@@ -4,39 +4,40 @@
       = form_for(resource, :as => resource_name, :url => student_registration_path) do |f|
         %div
         %br
-        = f.label t('common.basic.first_name')
+        = f.label t('common.captions.first_name')
         = f.text_field :first_name,class: 'form-control'
         %br
-        =f.label t('students.basic.middle_name')
+        =f.label t('students.captions.middle_name')
         =f.text_field :middle_name,class: 'form-control'
         %br
-        = f.label t('common.basic.last_name')
+        = f.label t('common.captions.last_name')
         = f.text_field :last_name,class: 'form-control'
         %br
-        = f.label t('common.basic.user_name')
+        = f.label t('common.captions.user_name')
         =f.text_field :username,class: 'form-control'
         %br
-        = f.label t('common.basic.dob')
+        = f.label t('common.captions.dob')
         = f.date_field :birthdate,class: 'form-control'
         %br   
-        = f.label t('common.basic.email')
+        = f.label t('common.captions.email')
 
         = f.email_field :email, :autofocus => true,class: 'form-control'
         %div
         %br/
-        = f.label t('common.basic.password')
+        = f.label t('common.captions.password')
 
         = f.password_field :password,class: 'form-control'
         %div
         %br/
-        = f.label t('common.basic.user_name')
+        = f.label t('common.captions.password_confirmation')
 
         = f.password_field :password_confirmation,class: 'form-control'
         %br/
         %div
 
-        = f.label t('common.basic.current')
+        = f.label t('common.captions.current')
         %i (we need your current password to confirm your changes)
         %br/
         = f.password_field :current_password,class: 'form-control'
+        %br/    
         %div= f.submit "Submit",class: 'btn-submit-question', id: 'btn_submit_question'  

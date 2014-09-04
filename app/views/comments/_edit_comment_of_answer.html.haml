@@ -1,0 +1,11 @@
+%h2
+  Question
+  %h3
+    =@answer.question.title
+  %hr/
+  %h3.strong
+    Answer
+  %h4
+    =@answer.content 
+  = render partial: 'form', locals: {type: 'edit',object: @answer} 
+  = render partial:'show_comments_of_answers', locals: {object: @answer}

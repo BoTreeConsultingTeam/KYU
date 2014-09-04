@@ -40,11 +40,9 @@
           / admin control
           %ul.post-controls
             %li
-              %a.post-edit.action{"data-name" => "edit", "data-original-title" => "Edit", "data-toggle" => "tooltip", :href => "javascript:void(0)"}
-                %i.fa.fa-pencil
+              = link_to '',edit_question_path(@question.id),class: 'post-edit action fa fa-pencil'
             %li
-              %a.post-delete.action{"data-name" => "delete", "data-original-title" => "Delete", "data-toggle" => "tooltip", :href => "javascript:void(0)"}
-                %i.fa.fa-trash-o
+              = link_to '',question_path,method: :delete,data: {confirm:'Are you sure?'},class: 'post-delete action fa fa-trash-o'
             / Follow Action
             %li
               %a.action.follow{"data-name" => "follow", "data-original-title" => "Follow", "data-toggle" => "tooltip", :href => "javascript:void(0)"}
@@ -78,15 +76,20 @@
             .col-md-4.col-xs-4.question-control
               %ul
                 %li
-                  %a.show-comments{:href => "#container_1728"}
-                    Comment(0)
-                    %i.fa.fa-comment
+                  = link_to 'Comment','#comment',class: 'toggleLink', id: "q#{@question.id}"
+                  (
+                  = @question.comments.count
+                  )
+          .comments-container.collapse.hidden_comment-box{id: 'commentq' + "#{@question.id}"}              
+            = render partial:'comments/form',locals: {type: 'new',object: @question}       
+          %br/
+          = render 'comments/show_comments_of_questions'               
           .clearfix
           
             / END SUBMIT FORM COMMENT
           / END COMMENTS CONTAINER
       / END QUESTION-MAIN-CONTENT
-      .sticky-wrapper{:style => ""}
+      .sticky-wrapper
         #answers_filter.row.answers-filter
           .max-col-md-8
             .col-md-6.col-xs-6
@@ -135,11 +138,9 @@
               / control tool for admin, moderate
               %ul.post-controls
                 %li
-                  %a.post-edit.action{"data-name" => "edit", "data-original-title" => "Edit", "data-toggle" => "tooltip", :href => "javascript:void(0)"}
-                    %i.fa.fa-pencil
+                  = link_to '',edit_question_answer_path(@question.id,answer.id),class: 'post-edit action fa fa-pencil'
                 %li
-                  %a.post-delete.action{"data-name" => "delete", "data-original-title" => "Delete", "data-toggle" => "tooltip", :href => "javascript:void(0)"}
-                    %i.fa.fa-trash-o
+                  = link_to '', question_answer_path(@question.id,answer.id),method: :delete,class: 'post-delete action fa fa-trash-o'
               / // control tool for admin, moderate
               .clearfix
               .question-content
@@ -150,7 +151,7 @@
                   %a{:href => "http://demo.enginethemes.com/qaengine/member/admin/"}
                     %span.author-avatar
                       %img.avatar{:alt => "", :src => "http://demo.enginethemes.com/qaengine/wp-content/uploads/2014/08/1282.jpg"}         
-                    %span.author-name 
+                    %span.author-name
                       = answer.answerable.username
                   %span.user-badge{:style => "background-color:#780978;", :title => "1543"} 
                     = answer.answerable_type
@@ -161,11 +162,33 @@
                   / share comment , report
                   %ul
                     %li
-                      %a.show-comments{:href => "#container_74"}
-                        Comment(0)
-                        %i.fa.fa-comment
-                / // share comment , report
-              .clearfix
+                      = link_to 'Comment','#comment',class: 'toggleLink', id: "#{answer.id}"
+                      (
+                      = answer.comments.count
+                      )
+                / // share comment , repor
+              .comments-container.collapse.hidden_comment-box{id: 'comment' + "#{answer.id}"}
+                = form_for (@comment) do |f|
+                  = f.text_area :comment,:toolbar => 'mini', :class => 'ckeditor', style: 'width: none !important;',id: "text" + "#{answer.id}"
+                  = f.hidden_field :relative, :value => answer
+                  = f.hidden_field :relative_type, :value => answer.class.to_s
+                  = f.hidden_field :relative_id, :value => answer.id
+                  %br/
+                  = submit_tag "Post",class: 'btn btn-lg btn-primary'
+                / %a.hide-comment{:href => "javascript:void(0)"} Cancel
+              %br/
+              -@comments_a.each do |c|
+                %div.row
+                  - if c.relative == answer
+                    .col-md-10
+                      = raw(c.comment)
+                      %hr/
+                    .col-md-2    
+                      - if c.is_author?(current_user)
+                        =link_to '',edit_answer_comment_path(answer.id,c.id),class: 'fa fa-pencil'
+                        |
+                        = link_to '',answer_comment_path(answer.id,c),method: :delete,data: {confirm: "are you sure?"},class: 'fa fa-trash-o'
+            / END SUBMIT FORM COMMENT
               
                 
           / END REPLY-ITEM
@@ -183,7 +206,7 @@
             .modal-dialog
               .modal-body 
                 = form_for (@answer) do |f|
-                  = f.cktext_area :content, placeholder: 'Your Answer'
+                  = f.text_area :content,:toolbar => 'mini', :class => 'ckeditor', style: 'width: none !important;'
                   = f.hidden_field :user_id, :value => current_user.id  
                   = f.hidden_field :question_id, :value => @question.id
                   %div
@@ -191,4 +214,11 @@
                          
       / END FORM REPLY
     = render 'layouts/right_sidebar'
-    
+
+
+:javascript
+  $(function(){
+      $('.toggleLink').click(function(){
+          $("#comment" + this.id).slideToggle();
+      });
+  });

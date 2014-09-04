@@ -1,16 +1,14 @@
 class Question < ActiveRecord::Base
-
-  belongs_to :student
-  belongs_to :teacher
+  
+  include Findable
   belongs_to :askable, polymorphic: true
   has_many :answers, dependent: :destroy
   paginates_per 10
   is_impressionable
   acts_as_taggable
   acts_as_votable
-  #accepts_nested_attributes_for :answers
-
-  default_scope order("created_at DESC")
+  has_many :comments,as: :relative,dependent: :destroy
+  accepts_nested_attributes_for :answers
   scope :recent_data_month, -> { where(:created_at => (1.month.ago)..(Time.now)).order("created_at desc") }
   scope :recent_data_week, -> { where(:created_at => (1.week.ago)..(Time.now)).order("created_at desc")}
 
@@ -23,7 +21,7 @@ class Question < ActiveRecord::Base
     answers.where(flag: true).count > 0
   end
 
-  def ans_id
+  def accepted_answer_id
     answers.each do |ans|
       if ans.flag == true
         return ans.id

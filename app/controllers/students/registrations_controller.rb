@@ -11,7 +11,7 @@ class Students::RegistrationsController <  Devise::RegistrationsController
     @teachers_count = Teacher.count
     @questions_count = Question.count
   end
- 
+
   def create
     @student = build_resource
     @student.save

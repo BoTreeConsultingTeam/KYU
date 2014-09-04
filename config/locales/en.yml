@@ -27,15 +27,13 @@ en:
       submit_answer: 'Submit'
   common:
     captions:
-    page_header:     
-      title_sign_up: 'Sign up'
-      title_sign_in: 'Sign in'
-    basic:
       dob: 'Birthdate'      
       first_name: 'First Name'
+      middle_name: 'Middle Name'
       last_name: 'Last Name'
       user_name: 'User Name'
       email: 'Email'
+      qualification: 'Qualification'
       password: 'Password'
       password_confirmation: 'Retype Password'
       current: 'Current Password' 
@@ -50,13 +48,20 @@ en:
       forgot_password: 'Forgot your password?'  
   students:
     captions:
+      middle_name: 'Middle Name' 
     page_header: 
       title_confirmation: 'Resend confirmation instructions'    
     basic:
-      middle_name: 'Middle Name'      
+           
       forgot_password: 'Forgot your password?'
   teachers:
     captions:
     page_header: 
       title_confirmation: 'Resend confirmation instructions'    
+
       title_sign_in: 'Sign in'
+    basic: 
+      salutation: 'Salutations'
+
+      title_sign_in: 'Sign in'
+

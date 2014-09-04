@@ -5,11 +5,11 @@
       .modal-body
         = form_for(resource, :as => resource_name, :url => teacher_session_path) do |f|
           %div
-            = f.label :email
+            = f.label t('common.captions.email')
             %br/
             = f.email_field :email, :autofocus => true, class: 'submit-input'
           %div
-            = f.label :password
+            = f.label t('common.captions.password')
             %br/
             = f.password_field :password, class: 'submit-input'
           - if devise_mapping.rememberable?

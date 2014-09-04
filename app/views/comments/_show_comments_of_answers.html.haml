@@ -1,0 +1,11 @@
+.comments-container 
+  .comments-wrapper
+    -@comments.each do |c|
+      .row
+      .col-md-10
+        %p= raw(c.comment)
+      .col-md-2{style: 'margin-top:8px;'}
+        - if c.is_author?(current_user)
+          =link_to 'Edit',edit_answer_comment_path(object.id,c.id)
+          |
+          = link_to 'Delete',answer_comment_path(object.id,c),method: :delete,data: {confirm: "are you sure?"}

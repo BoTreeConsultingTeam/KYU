@@ -98,7 +98,7 @@ ul {
 	bottom: 0;
 	z-index: 999;
 	opacity: 0.5;
-	filter: alpha(opacity:50);
+	filter: alpha(opacity=50);
 	background: #ffffff;
 }
 #header {
@@ -2766,7 +2766,6 @@ p.et-comment-reply a i{
 h3#reply-title{
 	font-size: 20px;
 	color: #333333;
-	border-bottom: ;
 }
 #submit_comment{
 	background: #1abc9c;

@@ -28,12 +28,12 @@
       %span.expand.dropdown-toggle{"data-toggle" => "dropdown", :type => "span"}
         %a.dropdown-account{:href => "javascript:void(0)"}
           %span.avatar
-            %img.avatar{:alt => "", :src => "http://1.gravatar.com/avatar/3743112a070d24fe4dbd5cb39d6a5e9e?s=30&amp;d=http%3A%2F%2F1.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D30&amp;r=G"}/
-          %span.display_name 
+            %img.avatar
+          %span.display_name
           - if student_signed_in?
             = "Welcome #{current_student.username}"
           - if teacher_signed_in?
             = "Welcome #{current_teacher.username}"
-          
-      
+
+
     / avatar
