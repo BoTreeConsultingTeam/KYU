@@ -1,0 +1,4 @@
+- elementId_upvote = "#upvoteanswer#{@answer.id}"
+$("#{elementId_upvote}").text("#{@answer.get_likes.size}")
+- elementId_downvote = "#downvoteanswer#{@answer.id}"
+$("#{elementId_downvote}").text("#{@answer.get_dislikes.size}")

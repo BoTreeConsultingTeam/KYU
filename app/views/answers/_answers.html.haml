@@ -14,8 +14,4 @@
   = answer.answerable.first_name
   #{time_ago_in_words(answer.created_at)} ago.
   %br/
-  = vote_up_answer_link(answer)
-  = answer.get_upvotes.size 
-  = vote_down_answer_link(answer)
-  = answer.get_downvotes.size
-  %hr
+  

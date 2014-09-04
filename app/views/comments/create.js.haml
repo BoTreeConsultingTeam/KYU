@@ -1,0 +1,7 @@
+- if @question.present?
+  $('#comments_container').html("#{escape_javascript render(:partial=>'comments/question_comments',collection: @comments, as: :c, locals: {question: @question})}")
+  $('#comment_count').text("(#{@question.comments.count})")
+-else
+  - comment_div_id = "#commenta#{@answer.id}"  
+  $("#{comment_div_id}").html("#{escape_javascript render(:partial=>'comments/answer_comments',collection: @comments,as: :ca,locals: {answer: @answer})}")
+  $('#comment_count#{@answer.id}').text("(#{@answer.comments.count})")

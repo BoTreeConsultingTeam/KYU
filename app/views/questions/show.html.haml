@@ -20,19 +20,19 @@
           / vote group
           %ul
             %li{"data-original-title" => "This is useful.", :title => ""}
-              = vote_up_question_link(@question)
+              = vote_question_link(@question, 'up')
             / // vote up
             / vote point
             %li
-              %span.vote-count 
+              %span.vote-count{id: "upvoteq#{@question.id}" }
                 = @question.get_likes.size
             %li
-              %span.vote-count   
+              %span.vote-count{id: "downvoteq#{@question.id}"}  
                 = @question.get_dislikes.size
             / // vote point
             / vote down
             %li{"data-original-title" => "This is useful.", :title => ""}
-              = vote_down_question_link(@question)
+              = vote_question_link(@question, 'down')
               / // vote down
           / // vote group
         / // Vote section
@@ -77,13 +77,22 @@
               %ul
                 %li
                   = link_to 'Comment','#comment',class: 'toggleLink', id: "q#{@question.id}"
-                  (
-                  = @question.comments.count
-                  )
+                  %span{id: "comment_count"}
+                    (
+                    = @question.comments.count
+                    )
           .comments-container.collapse.hidden_comment-box{id: 'commentq' + "#{@question.id}"}              
-            = render partial:'comments/form',locals: {type: 'new',object: @question}       
+            = form_for (@comment),remote: true do |f|
+              = f.text_area :comment,:toolbar => 'mini', :class => 'ckeditor', style: 'width: none !important;',id: 'comment_area'
+              = f.hidden_field :relative, :value => @question
+              = f.hidden_field :relative_type, :value => @question.class.to_s
+              = f.hidden_field :relative_id, :value => @question.id
+              = submit_tag "Post"       
           %br/
-          = render 'comments/show_comments_of_questions'               
+          = render 'comments/show_comments_of_questions'    
+          .row.paginations.home
+            .col-md-12{id:'paginator'}
+              = paginate @comments_q
           .clearfix
           
             / END SUBMIT FORM COMMENT
@@ -116,22 +125,19 @@
               %ul
                 / vote up
                 %li{"data-original-title" => "This is useful.", :title => ""}
-                  = vote_up_answer_link(answer)                    
-                 
-                    
+                  = vote_answer_link(answer,'up')       
                 / // vote up
                 / vote point
-                %li{"data-original-title" => "", :title => ""}
-                  %span.vote-count 
+                %li
+                  %span.vote-count{id: "upvoteanswer#{answer.id}"}
                     = answer.get_likes.size
-                %li{"data-original-title" => "", :title => ""}
-                  %span.vote-count 
-
+                %li
+                  %span.vote-count{id: "downvoteanswer#{answer.id}"}
                     = answer.get_dislikes.size
                 / // vote point
                 / vote down
                 %li{"data-original-title" => "This is useful.", :title => ""}
-                  = vote_down_answer_link(answer)
+                  = vote_answer_link(answer,'down')
                 / // vote down
               / // vote group
             .col-md-9.col-xs-9.q-right-content
@@ -163,31 +169,24 @@
                   %ul
                     %li
                       = link_to 'Comment','#comment',class: 'toggleLink', id: "#{answer.id}"
-                      (
-                      = answer.comments.count
-                      )
+                      %span{id: "comment_count#{answer.id}"}
+                        (
+                        = answer.comments.count
+                        )
                 / // share comment , repor
               .comments-container.collapse.hidden_comment-box{id: 'comment' + "#{answer.id}"}
-                = form_for (@comment) do |f|
-                  = f.text_area :comment,:toolbar => 'mini', :class => 'ckeditor', style: 'width: none !important;',id: "text" + "#{answer.id}"
+                = form_for (@comment),remote: true do |f|
+                  = f.text_area :comment,:toolbar => 'mini', :class => 'ckeditor', style: 'width: none !important;',id: "text#{answer.id}"
                   = f.hidden_field :relative, :value => answer
                   = f.hidden_field :relative_type, :value => answer.class.to_s
                   = f.hidden_field :relative_id, :value => answer.id
-                  %br/
-                  = submit_tag "Post",class: 'btn btn-lg btn-primary'
+                  = submit_tag "Post"
                 / %a.hide-comment{:href => "javascript:void(0)"} Cancel
               %br/
-              -@comments_a.each do |c|
-                %div.row
-                  - if c.relative == answer
-                    .col-md-10
-                      = raw(c.comment)
-                      %hr/
-                    .col-md-2    
-                      - if c.is_author?(current_user)
-                        =link_to '',edit_answer_comment_path(answer.id,c.id),class: 'fa fa-pencil'
-                        |
-                        = link_to '',answer_comment_path(answer.id,c),method: :delete,data: {confirm: "are you sure?"},class: 'fa fa-trash-o'
+              .answer_comments{id: "commentsa#{answer.id}"}
+                = render partial: 'comments/show_comments_of_answers',locals: {answer: answer}
+               
+                  
             / END SUBMIT FORM COMMENT
               
                 
@@ -209,6 +208,7 @@
                   = f.text_area :content,:toolbar => 'mini', :class => 'ckeditor', style: 'width: none !important;'
                   = f.hidden_field :user_id, :value => current_user.id  
                   = f.hidden_field :question_id, :value => @question.id
+                  %br/
                   %div
                     = f.submit t('questions.btn.submit'),class: 'btn-submit-question', id: 'btn_submit_question'               
       / END FORM REPLY
@@ -217,7 +217,7 @@
 
 :javascript
   $(function(){
-      $('.toggleLink').click(function(){
-          $("#comment" + this.id).slideToggle();
-      });
+    $('.toggleLink').click(function(){
+      $("#comment" + this.id).slideToggle();
+    });
   });

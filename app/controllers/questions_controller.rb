@@ -32,12 +32,16 @@ class QuestionsController < ApplicationController
 
   def show
     @question = Question.find_by_id(params[:id])
-    @answers = @question.answers
-    @answer = Answer.new
-    impressionist(@question, nil, { unique: [:session_hash] })
-    @comment = Comment.new
-    @comments_q = Comment.relative_comments(@question.id,@question.class)
-    @comments_a = Comment.all_comments_of_answers(@answer.class)
+    if !(@question.nil?)
+      @answers = @question.answers
+      @answer = Answer.new
+      impressionist(@question, nil, { unique: [:session_hash] })
+      @comment = Comment.new
+      @comments_q = Comment.relative_comments(@question.id,@question.class).page(params[:page]).per(params[:per])
+      @comments_a = Comment.all_comments_of_answers(@answer.class)
+    else
+      redirect_to questions_path,flash: { error: "The question you are searching for is not found!" }
+    end
   end
 
   def destroy
@@ -50,23 +54,19 @@ class QuestionsController < ApplicationController
     end
   end
 
-  def upvote
+  def vote
     @question = Question.find_by_id(params[:id])
     if @question.nil?
       redirect_to questions_path,flash: { error: "No such Question found for Vote!" }
     else
-      question_liked_by(@question,liked_by)
-      redirect_to questions_path
-    end
-  end
-
-  def downvote
-    @question = Question.find_by_id(params[:id])
-    if @question.nil?
-      redirect_to questions_path,flash: { error: "No such Question found for Vote!" }
-    else
-      question_disliked_by(@question,liked_by)
-      redirect_to questions_path
+      if "up" == params[:type]
+        question_liked_by(@question,liked_by)
+      else
+        question_disliked_by(@question,liked_by)
+      end
+      respond_to do |format|
+        format.js        
+      end      
     end
   end
   

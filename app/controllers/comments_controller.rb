@@ -3,13 +3,17 @@ class CommentsController < ApplicationController
   before_action :user_signed_in?
   
   def create 
-    relative_of_comment = params[:relative]
-    @comment = Comment.create(comment_params.merge({commentable: current_user}).merge({relative: relative_of_comment}))
-    @answer = Answer.find_by_id(params[:comment][:relative_id])
+    @comment = Comment.create(comment_params.merge({commentable: current_user}).merge({relative: params[:relative]}))
+    
     if "Question" == relative_type
-      redirect_to question_path(relative_id)
+      @question = Question.find_by_id(params[:comment][:relative_id])
+      @comments = Comment.relative_comments(params[:comment][:relative_id],params[:comment][:relative_type]).page params[:page]
     else
-      redirect_to question_path(@answer.question.id)
+      @answer = Answer.find_by_id(params[:comment][:relative_id])
+      @comments = Comment.relative_comments(params[:comment][:relative_id],params[:comment][:relative_type])
+    end 
+    respond_to do |format|
+      format.js
     end
   end
    
@@ -71,9 +75,13 @@ class CommentsController < ApplicationController
       @comment.delete
       if params[:answer_id].present?
         @answer = Answer.find_by_id(params[:answer_id])
-        redirect_to question_path(@answer.question.id),flash: { success: "Deleted Successfully!" }
+        @comments = Comment.relative_comments(params[:answer_id],"Answer")
       else
-        redirect_to question_path(params[:question_id]),flash: { success: "Deleted Successfully!" }
+        @question = Question.find_by_id(params[:question_id])
+        @comments = Comment.relative_comments(params[:question_id],"Question")
+      end
+      respond_to do |format|
+        format.js
       end
     else
       if params[:answer_id].present?

@@ -1,0 +1,8 @@
+.col-md-10.col-xs-6
+  %p= raw(c.comment)
+  %hr/
+.col-md-2
+  - if c.is_author?(current_user)
+    =link_to '',edit_question_comment_path(question.id,c.id),class: 'edit-comment fa fa-pencil'
+    |
+    =link_to '',question_comment_path(question.id,c.id),method: :delete,data: {confirm: "are you sure?"},remote: true,class: 'delete-comment fa fa-trash-o'

@@ -8,4 +8,4 @@
   %h4
     =@answer.content 
   = render partial: 'form', locals: {type: 'edit',object: @answer} 
-  = render partial:'show_comments_of_answers', locals: {object: @answer}
+  = render partial: 'comments/show_comments_of_answers', locals: {answer: @answer}

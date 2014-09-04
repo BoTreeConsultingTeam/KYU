@@ -47,23 +47,19 @@ class AnswersController < ApplicationController
     end
   end
 
-  def upvote
+  def vote
     @answer = Answer.find_by_id(params[:id])
     if @answer.nil?
       redirect_to questions_path,flash: { error: "No such Answer found for Vote!" }
     else
-      answer_liked_by(@answer,liked_by)
-      redirect_to question_path(@answer.question)
-    end
-  end
-
-  def downvote
-    @answer = Answer.find_by_id(params[:id])
-    if @answer.nil?
-      redirect_to questions_path,flash: { error: "No such Answer found for Vote!" }
-    else
-      answer_disliked_by(@answer,liked_by)
-      redirect_to question_path(@answer.question)
+      if "up" == params[:type]        
+        answer_liked_by(@answer,liked_by)
+      else
+        answer_disliked_by(@answer,liked_by) 
+      end
+      respond_to do |format|
+        format.js        
+      end  
     end
   end
 

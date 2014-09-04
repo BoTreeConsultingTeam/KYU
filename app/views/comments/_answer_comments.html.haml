@@ -1,0 +1,9 @@
+- if ca.relative == answer
+  .col-md-10.col-xs-6
+    = raw(ca.comment)
+    %hr/
+  .col-md-2    
+    - if ca.is_author?(current_user)
+      =link_to '',edit_answer_comment_path(answer.id,ca.id),class: 'fa fa-pencil'
+      |
+      = link_to '',answer_comment_path(answer.id,ca.id),method: :delete,data: {confirm: "are you sure?"},remote: true,class: 'fa fa-trash-o'

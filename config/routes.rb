@@ -21,7 +21,7 @@ Rails.application.routes.draw do
   resources :questions do
     resources :comments
     resources :answers
-    member { post :upvote,:downvote }
+    member { post :vote}
   end
     resources :comments
 
@@ -29,7 +29,7 @@ Rails.application.routes.draw do
   get '/members/:id' => 'members#show', as: :member
 
   resources :answers do
-    member { post :upvote,:downvote }
+    member { post :vote }
     resources :comments
   end
 end
