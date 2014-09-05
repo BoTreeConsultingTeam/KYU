@@ -22,7 +22,8 @@ class QuestionsController < ApplicationController
   end
 
   def create
-    @question = Question.new(question_params.merge({askable: current_user}))
+    @question = Question.new(question_params.merge({askable: current_user}).except!(:tag_list))
+    current_user.tag( @question, :with => question_params[:tag_list], :on => :tags )
     if @question.save
       redirect_to questions_path
     else
@@ -83,14 +84,14 @@ class QuestionsController < ApplicationController
       render 'edit'
     end 
   end
+
   def alltags
     @tags = ActsAsTaggableOn::Tag.all.page(params[:page]).per(5)
-
   end
 
   private
   def question_params
-    params.require(:question).permit(:title,:content, :user_id, :tag_list)
+    params.require(:question).permit(:title,:content, :user_id,:tag_list)
   end
 
   def question_liked_by(question,user)

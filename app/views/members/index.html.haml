@@ -23,6 +23,8 @@
             %br
               %span.location
                 = student.email
+                - if current_teacher.present?
+                  = link_to "Report", report_path(student)
               .question-cat
                 %span.user-badge{:style => "background-color:#780978;", :title => "1543"} studnent.type
                 %span.points 1543 Points
