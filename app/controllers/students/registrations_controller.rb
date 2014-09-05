@@ -1,5 +1,6 @@
 class Students::RegistrationsController <  Devise::RegistrationsController
-  
+   before_filter :configure_permitted_parameters, if: :devise_controller?
+
   def index
     if params[:tag]
       @questions = Question.tagged_with(params[:tag])
@@ -15,22 +16,53 @@ class Students::RegistrationsController <  Devise::RegistrationsController
   def create
     @student = build_resource
     @student.save
-    # @student.add_points(10,category: 'answer upvote')
     super
   end
- def update
-    @students = resource # Needed for Merit
-    super
+
+  def update
+    # puts "#{@student.inspect}"
+    # @student.update_with_password(devise_parameter_sanitizer.sanitize(:account_update))
+    # if @student.save
+
+    #   redirect_to root_path
+    # end
+    # super 
+    account_update_params = devise_parameter_sanitizer.sanitize(:account_update)
+
+    # Allow user to update without using password.
+    if account_update_params[:password].blank?
+      logger.debug "+++++++++++++++++++++++++ debug1"
+      account_update_params.delete("password")
+      account_update_params.delete("password_confirmation")
+    end
+
+    # Set current_user
+    @user = Student.find(current_user.id)
+    if @user.update_attributes(account_update_params)
+      set_flash_message :notice, :updated
+      sign_in @user, :bypass => true
+      redirect_to after_update_path_for(@user)
+    else
+       render "edit"
+    end
+    
   end
+
   def tag_cloud
     @tags = Question.tag_counts_on(:tags).limit(5).order('count desc')
   end
-  private
-  
-  def sign_up_params
-    params.require(:student).permit(:email, :password,:first_name, :middle_name, :last_name, :username,:birthdate)
+
+  protected
+
+  def configure_permitted_parameters
+    devise_parameter_sanitizer.for(:sign_up) << [:first_name, :middle_name, :last_name, :username, :birthdate]
+    devise_parameter_sanitizer.for(:account_update) << [:first_name,:middle_name, :last_name, :username,:birthdate]
+    # devise_parameter_sanitizer.for(:account_update) { |u| u.permit(:first_name,:middle_name, :last_name, :username,:birthdate) }
+    # devise_parameter_sanitizer.for(:sign_up) { |u| u.permit(:first_name,:middle_name, :last_name, :username,:birthdate) }
   end
 
+  private
+  
   def after_sign_in_path_for(resource)
     students_path
   end
