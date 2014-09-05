@@ -1,0 +1,23 @@
+%script{:src => "https://www.google.com/jsapi"}
+
+.container-fluid
+  .row
+  / END HEADER
+  #header_sidebar.col-md-12.col-xs-12
+  = render 'layouts/left_sidebar'
+  .col-md-8.main-content
+    = render :partial => "layouts/sub_heading", :locals => {:object => "Welcome, #{@student.username}"}
+
+    .row
+      .col-md-6
+        - @arr1.each do |row|
+          .row
+            - row.each do |column|
+              .col-md-6
+                %h4
+                  = column
+      .col-md-6    
+        #chart
+          = render_chart(@pie, 'chart') 
+
+  = render 'layouts/right_sidebar'

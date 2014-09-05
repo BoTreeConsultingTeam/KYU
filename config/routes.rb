@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   
+  get "reports/index"
   root :to => 'static_pages#index'
 
   devise_for :students,controllers: { sessions: 'students/sessions', registrations: 'students/registrations', passwords:'students/passwords'}
@@ -32,4 +33,6 @@ Rails.application.routes.draw do
     member { post :upvote,:downvote }
     resources :comments
   end
+
+  resources :reports
 end
