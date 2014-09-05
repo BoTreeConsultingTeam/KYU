@@ -40,13 +40,17 @@
           / admin control
           %ul.post-controls
             %li
-              = link_to '',edit_question_path(@question.id),class: 'post-edit action fa fa-pencil'
+              = link_to '', edit_question_path(@question.id),class: 'post-edit action fa fa-pencil'
             %li
-              = link_to '',question_path,method: :delete,data: {confirm:'Are you sure?'},class: 'post-delete action fa fa-trash-o'
+              = link_to '', question_path, method: :delete,data: {confirm:'Are you sure?'},class: 'post-delete action fa fa-trash-o'
             / Follow Action
-            %li
-              %a.action.follow{"data-name" => "follow", "data-original-title" => "Follow", "data-toggle" => "tooltip", :href => "javascript:void(0)"}
-                %i.fa.fa-plus-square
+            - if (check_bookmark @question).blank?
+              %li
+                = link_to '', bookmarks_path(:question_id => @question.id), method: :post, class: 'post-delete action fa fa-plus'
+            -else
+              %li
+                = link_to '',bookmark_path(:question_id => @question.id), method: :delete,data: {confirm:'Are you sure?'},class: 'post-delete action fa fa-minus-square'    
+
             / // Follow Action
             / report Action
             / // Report Action

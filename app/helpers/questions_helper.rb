@@ -24,4 +24,17 @@ module QuestionsHelper
   def get_tag_counts
     Question.tag_counts
   end
+  def check_bookmark question
+    current_user.bookmarks.where(:question_id => question.id)  
+  end  
+
+  def bookmark_question_ids student
+    question_list = []
+    question_ids =  student.bookmarks.pluck(:question_id)
+    question_ids.each do |id|
+      question = Question.find_by_id(id)
+      question_list << question
+    end
+    question_list
+  end
 end

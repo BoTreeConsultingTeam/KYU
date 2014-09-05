@@ -4,7 +4,7 @@ Rails.application.routes.draw do
 
   devise_for :students,controllers: { sessions: 'students/sessions', registrations: 'students/registrations', passwords:'students/passwords'}
   devise_for :teachers,controllers: { sessions: 'teachers/sessions', registrations: 'teachers/registrations', passwords:'teachers/passwords' }
-
+  resources :bookmarks
   devise_scope :student do
     get "/students" => "students/registrations#index"
   end

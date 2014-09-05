@@ -33,4 +33,20 @@
       .col-md-3.col-md-pull-9
         %br/
         %b Email
+      .col-md-3.col-md-pull-9
+        %br/
+
+    .row
+      .col
+        List Of Bookmarked Questions
+        %br 
+        - question_list = bookmark_question_ids @student
+        
+        %ul
+          - question_list.each do |question|  
+            %li
+              = raw(question.content)
+              %hr
+
+
   = render 'layouts/right_sidebar'
