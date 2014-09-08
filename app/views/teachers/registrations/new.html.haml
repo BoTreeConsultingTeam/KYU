@@ -6,7 +6,7 @@
         = form_for(resource, :as => resource_name, :url => teacher_registration_path) do |f|
           = devise_error_messages!
           %div
-          
+
           %br/
           = f.label  t('common.captions.salutations')
           = f.select(:salutation, options_for_salution,{},{class: 'form-control'})
@@ -25,12 +25,12 @@
           = f.label t('common.captions.email')
           = f.email_field :email, :autofocus => true,class: 'submit-input'
           %div
-          = f.label t('common.captions.email')
+          = f.label t('common.captions.password')
           %br/
           = f.password_field :password,class: 'submit-input'
           %div
           = f.label t('common.captions.password_confirmation')
           %br/
           = f.password_field :password_confirmation,class: 'submit-input'
-          %div= f.submit t('common.btn.submit'),class: 'btn-submit-question', id: 'btn_submit_question' 
+          %div= f.submit t('common.btn.submit'),class: 'btn-submit-question', id: 'btn_submit_question'
         = render "teachers/shared/links"
