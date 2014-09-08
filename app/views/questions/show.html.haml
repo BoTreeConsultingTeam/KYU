@@ -8,10 +8,10 @@
         .col-md-2.col-xs-2
           %span.back
             %i.fa.fa-angle-double-left
-            %a 
+            %a
               = link_to 'Home',questions_path
         .col-md-8.col-xs-8
-          %h3 
+          %h3
             = @question.title
       / END SELECT-CATEGORY
       #question_content.row.question-main-content.question-item{"data-id" => "1728"}
@@ -24,10 +24,10 @@
             / // vote up
             / vote point
             %li
-              %span.vote-count 
+              %span.vote-count
                 = @question.get_likes.size
             %li
-              %span.vote-count   
+              %span.vote-count
                 = @question.get_dislikes.size
             / // vote point
             / vote down
@@ -59,7 +59,7 @@
             %ul.question-tags
               - @question.tag_list.each do |tag|
                 %li
-                  = link_to tag, tag_path(tag),class: 'q-tag'   
+                  = link_to tag, tag_path(tag),class: 'q-tag'
           .clearfix
           .question-content
             = raw(@question.content)
@@ -67,25 +67,25 @@
             .col-md-8.col-xs-9.question-cat
               %a{:href => "http://demo.enginethemes.com/qaengine/member/admindemo/"}
                 %span.author-avatar
-                  %img.avatar{:alt => "", :src => "http://1.gravatar.com/avatar/3743112a070d24fe4dbd5cb39d6a5e9e?s=30&amp;d=http%3A%2F%2F1.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D30&amp;r=G"} 
+                  %img.avatar{:alt => "", :src => "http://1.gravatar.com/avatar/3743112a070d24fe4dbd5cb39d6a5e9e?s=30&amp;d=http%3A%2F%2F1.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D30&amp;r=G"}
                 %span.author-name Admin Demo
-              %span.user-badge{:style => "background-color:#04aad4;"} 
+              %span.user-badge{:style => "background-color:#04aad4;"}
                 = @question.askable.class
               %span.question-time
                 #{time_ago_in_words(@question.created_at)} ago.
             .col-md-4.col-xs-4.question-control
               %ul
                 %li
-                  = link_to 'Comment','#comment',class: 'toggleLink', id: "q#{@question.id}"
+                  = link_to 'Comment','#comment',class: 'toggleLink', id: "q#{@question.id}", 'data-no-turbolink' => true
                   (
                   = @question.comments.count
                   )
-          .comments-container.collapse.hidden_comment-box{id: 'commentq' + "#{@question.id}"}              
-            = render partial:'comments/form',locals: {type: 'new',object: @question}       
+          .comments-container.collapse.hidden_comment-box{id: 'commentq' + "#{@question.id}"}
+            = render partial:'comments/form',locals: {type: 'new',object: @question}
           %br/
-          = render 'comments/show_comments_of_questions'               
+          = render 'comments/show_comments_of_questions'
           .clearfix
-          
+
             / END SUBMIT FORM COMMENT
           / END COMMENTS CONTAINER
       / END QUESTION-MAIN-CONTENT
@@ -94,7 +94,7 @@
           .max-col-md-8
             .col-md-6.col-xs-6
               %span.answers-count
-                %span.number 
+                %span.number
                   = @question.answers.count
                 Answers
             .col-md-6.col-xs-6.sort-questions
@@ -116,16 +116,16 @@
               %ul
                 / vote up
                 %li{"data-original-title" => "This is useful.", :title => ""}
-                  = vote_up_answer_link(answer)                    
-                 
-                    
+                  = vote_up_answer_link(answer)
+
+
                 / // vote up
                 / vote point
                 %li{"data-original-title" => "", :title => ""}
-                  %span.vote-count 
+                  %span.vote-count
                     = answer.get_likes.size
                 %li{"data-original-title" => "", :title => ""}
-                  %span.vote-count 
+                  %span.vote-count
 
                     = answer.get_dislikes.size
                 / // vote point
@@ -150,10 +150,10 @@
                 .col-md-8.col-xs-8.question-cat
                   %a{:href => "http://demo.enginethemes.com/qaengine/member/admin/"}
                     %span.author-avatar
-                      %img.avatar{:alt => "", :src => "http://demo.enginethemes.com/qaengine/wp-content/uploads/2014/08/1282.jpg"}         
+                      %img.avatar{:alt => "", :src => "http://demo.enginethemes.com/qaengine/wp-content/uploads/2014/08/1282.jpg"}
                     %span.author-name
                       = answer.answerable.username
-                  %span.user-badge{:style => "background-color:#780978;", :title => "1543"} 
+                  %span.user-badge{:style => "background-color:#780978;", :title => "1543"}
                     = answer.answerable_type
                   %span.question-time
                     #{time_ago_in_words(answer.created_at)} ago.
@@ -162,7 +162,7 @@
                   / share comment , report
                   %ul
                     %li
-                      = link_to 'Comment','#comment',class: 'toggleLink', id: "#{answer.id}"
+                      = link_to 'Comment','#comment',class: 'toggleLink', id: "#{answer.id}", 'data-no-turbolink' => true
                       (
                       = answer.comments.count
                       )
@@ -183,22 +183,22 @@
                     .col-md-10
                       = raw(c.comment)
                       %hr/
-                    .col-md-2    
+                    .col-md-2
                       - if c.is_author?(current_user)
                         =link_to '',edit_answer_comment_path(answer.id,c.id),class: 'fa fa-pencil'
                         |
                         = link_to '',answer_comment_path(answer.id,c),method: :delete,data: {confirm: "are you sure?"},class: 'fa fa-trash-o'
             / END SUBMIT FORM COMMENT
-              
-                
+
+
           / END REPLY-ITEM
-        
+
         / END REPLY-ITEM
       / ANSWERS LOOP
       .row.paginations.collapse
         .col-md-12
       / END PAGINATIONS
-      
+
       .row.form-reply
         .col-md-12
           %h3 Your Answer
@@ -207,10 +207,10 @@
               .modal-body
                 = form_for (@answer) do |f|
                   = f.text_area :content,:toolbar => 'mini', :class => 'ckeditor', style: 'width: none !important;'
-                  = f.hidden_field :user_id, :value => current_user.id  
+                  = f.hidden_field :user_id, :value => current_user.id
                   = f.hidden_field :question_id, :value => @question.id
                   %div
-                    = f.submit t('questions.btn.submit'),class: 'btn-submit-question', id: 'btn_submit_question'               
+                    = f.submit t('questions.btn.submit'),class: 'btn-submit-question', id: 'btn_submit_question'
       / END FORM REPLY
     = render 'layouts/right_sidebar'
 
