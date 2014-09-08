@@ -1,6 +1,6 @@
 .col-md-2.disable-mobile.left-sidebar
   .widget.widget-btn
-    = link_to  t('questions.btn.new_question'), new_question_path,method: :get, class:" btn btn-primary pull-left", style: 'color: #FFFFFF !important;'  
+    = link_to  t('questions.btn.new_question'), new_question_path,method: :get, class:" btn btn-primary pull-left", style: 'color: #FFFFFF !important;','data-no-turbolink' => true
   .widget.widget-menus
     .menu-left-menu-container
       %ul#menu-left-menu-1.menu
@@ -12,6 +12,10 @@
           %a{:href => "/questions/tags"}
             %i.fa.fa-tags>
             Tags
+        %li.fa-tags.menu-item.menu-item-type-post_type.menu-item-object-page.menu-item-183
+          %a{:href => "/badges"}
+            %i.fa.fa-tags>
+            Badges
         %li.fa-users.menu-item.menu-item-type-post_type.menu-item-object-page.menu-item-1743
           %a{:href => "/members"}
             %i.fa.fa-users>
