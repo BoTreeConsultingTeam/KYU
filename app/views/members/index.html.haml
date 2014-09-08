@@ -1,10 +1,3 @@
-/ %ul
-/   - @students.each do |s|
-/     %li
-/       = link_to s.first_name, member_path(s)
-/ -@tags.each do |tag|
-/   = link_to tag, tag_path(tag.name)
-/   %br 
 .container-fluid
   .row
   / END HEADER
@@ -14,22 +7,50 @@
     = render :partial => "layouts/sub_heading", :locals => {:object => 'Users'}
     %ul#main_users_list.row
       - @students.each do |student|
-        %li.user-item.col-md-4.col-xs-6
+        %li.user-item.col-md-5.col-xs-6
           %span.user-avatar
             %img.avatar{:alt => "", :src => "http://demo.enginethemes.com/qaengine/wp-content/uploads/2014/08/1282.jpg"}
           .left-info
-            %span.display_name 
+            %span.display_name
               = link_to student.username, member_path(student)
-            %br
-              %span.location
-                = student.email
-              .question-cat
-                %span.user-badge{:style => "background-color:#780978;", :title => "1543"} studnent.type
-                %span.points 1543 Points
-          
+            %br/
+            %span.location
+              = student.email
+            .question-cat
+              %span.user-badge{:style => "background-color:#780978;", :title => "1543"} studnent.type
+              %span.points 1543 Points
+
     .row.paginations.home
       .col-md-12
         = render :partial => "shared/pagination", :locals => {:object => @students}
     / END MAIN-PAGINATIONS
   = render 'layouts/right_sidebar'
   / END ROW
+
+%ul#main_users_list.row
+  %li.user-item.col-md-4.col-xs-6
+    %span.user-avatar
+      %img.avatar{:alt => "", :src => "http://demo.enginethemes.com/qaengine/wp-content/uploads/2014/08/1282.jpg"}/
+    .left-info
+      %span.display_name
+        %a{:href => "/members/1"} Nishant
+      %br/
+      %span.location
+        nishantupadhyay26@gmail.com
+      .question-cat
+        %span.user-badge{:style => "background-color:#780978;", :title => "1543"} studnent.type
+        %span.points 1543 Points
+      %br/
+  %li.user-item.col-md-4.col-xs-6
+    %span.user-avatar
+      %img.avatar{:alt => "", :src => "http://demo.enginethemes.com/qaengine/wp-content/uploads/2014/08/1282.jpg"}/
+    .left-info
+      %span.display_name
+        %a{:href => "/members/2"} parthiv
+      %br/
+      %span.location
+        parthiv.patel@gmail.com
+      .question-cat
+        %span.user-badge{:style => "background-color:#780978;", :title => "1543"} studnent.type
+        %span.points 1543 Points
+      %br/
