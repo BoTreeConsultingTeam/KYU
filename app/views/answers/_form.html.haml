@@ -9,7 +9,8 @@
       .modal-dialog
         .modal-body
           = form_for (@answer) do |f|
-            = f.text_area :content,:toolbar => 'mini', :class => 'ckeditor', style: 'width: none !important;'
+            = f.text_area :content,:toolbar => 'mini', :class => 'ckeditor'
             = f.hidden_field :user_id, :value => current_user.id  
             = f.hidden_field :question_id, :value => @question.id
-            = f.submit t('answers.btn.submit_answer')
+            %br 
+            = f.submit t('answers.btn.submit_answer'),class: 'btn-submit-question'
