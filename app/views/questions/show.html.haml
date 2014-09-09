@@ -138,7 +138,7 @@
                     %span.author-avatar
                       %img.avatar{:alt => "", :src => "#"}
                     %span.author-name
-                      = answer.answerable.username
+                      = answer.answerable.username.titleize
                   %span.user-badge{:style => "background-color:#780978;", :title => "1543"}
                     = answer.answerable_type
                   %span.question-time

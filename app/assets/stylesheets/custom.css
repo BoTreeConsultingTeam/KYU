@@ -238,3 +238,9 @@ ul.social-icon{
 .comment_box_border {
 	border: none;
 }
+
+//=============Overrite ckeditor css
+.cke_dialog_ui_button_ok {
+	border: none !important;
+	background: none !important;
+}
