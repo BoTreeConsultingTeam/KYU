@@ -31,9 +31,9 @@
             %img.avatar
           %span.display_name
           - if student_signed_in?
-            = "Welcome #{current_student.username}"
+            = "Welcome #{current_student.username.titleize}"
           - if teacher_signed_in?
-            = "Welcome #{current_teacher.username}"
+            = "Welcome #{current_teacher.username.titleize}"
 
 
     / avatar
