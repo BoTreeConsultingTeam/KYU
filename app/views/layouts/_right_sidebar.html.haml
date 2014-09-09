@@ -20,7 +20,8 @@
     %ul
       - most_used_tags.each do |tag|
         %li
-          = link_to tag, tag_path(tag.name),class: 'q-tag'
+          = link_to tag, tag_path(tag.name), class: 'q-tag'
+          = "x #{tag.taggings_count}"
     = link_to t('right_side_bar.see_more_tags'), tags_path
   .widget.widget-hot-questions
     %h3= t('right_side_bar.hot_questions')
