@@ -8,7 +8,14 @@ class MembersController < ApplicationController
     @student = Student.find(params[:id])
   end
 
-  def show
-    @student = Student.find(params[:id])
-  end
+  def deactivate
+  	@student = Student.find(params[:id])
+  	if @student.update_attributes(enable: false)
+  		flash[:notice] = 'Student is Blocked'
+  		redirect_to members_path
+  	else
+  		redirect_to root_path
+  	end	
+  end	
+
 end

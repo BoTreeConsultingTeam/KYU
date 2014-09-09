@@ -14,7 +14,7 @@ class ApplicationController < ActionController::Base
   
   private
   def current_user
-    current_user = current_student.present? ? current_student : current_teacher
+    current_user = current_student.present? ? current_student : (current_teacher.present? ? current_teacher : current_administrator)
   end
   helper_method :current_user
 end

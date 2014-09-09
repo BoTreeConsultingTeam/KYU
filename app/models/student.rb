@@ -11,6 +11,6 @@ class Student < ActiveRecord::Base
   validates :first_name,:last_name,:middle_name, presence: true
   validates :username,:birthdate, presence: true
   validates :email, format: {with: VALID_EMAIL_REGEX}, uniqueness: {case_sensitive: false}
-  validates :password,presence: true
+  validates :password,presence: true,on: :create
   validates_confirmation_of :password, if: lambda { |m| m.password.present? }
 end

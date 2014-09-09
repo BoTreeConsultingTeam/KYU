@@ -5,3 +5,17 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+def find_or_create_admin(admin_attrs)
+	email = admin_attrs[:email]
+	admin = Administrator.find_by_email(email)
+
+	if admin.nil?
+		admin = Administrator.create(admin_attrs)
+		puts "Created admin having email #{email}"
+	else 
+		puts "Admin having  email #{email} already exists, thus not created"	
+	end
+	admin	
+end	
+
+admin_user = find_or_create_admin({email: 'admin@kyu.com', password: 'password'})

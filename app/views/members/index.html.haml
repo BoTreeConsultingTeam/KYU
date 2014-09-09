@@ -26,6 +26,8 @@
               .question-cat
                 %span.user-badge{:style => "background-color:#780978;", :title => "1543"} studnent.type
                 %span.points 1543 Points
+                - if (administrator_signed_in? && student.enable == true)
+                  = link_to "Block", deactivate_path(student)
           
     .row.paginations.home
       .col-md-12

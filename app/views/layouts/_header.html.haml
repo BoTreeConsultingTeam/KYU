@@ -1,14 +1,15 @@
 %header#header
   #logo.col-md-2.col-xs-2
     KYU
-  -if (student_signed_in? || teacher_signed_in?)
+  -if (student_signed_in? || teacher_signed_in? || administrator_signed_in?)
     .col-md-8.col-xs-8
       .header-menu
         %ul
           %li
             %a{:href => root_path } Home
-          %li
-            %a{:href => members_path} Users
+          - if (student_signed_in? || teacher_signed_in?)  
+            %li
+              %a{:href => members_path} Users
           %li
             %a{:href => questions_path} Questions
           %li
@@ -23,6 +24,13 @@
               = link_to 'Edit profile', edit_teacher_registration_path
             %li
               = link_to "Logout", destroy_teacher_session_path, method: :delete
+          - if administrator_signed_in?
+            %li
+              /= link_to "Teachers", members_path
+            %li
+              = link_to "Students", members_path  
+            %li
+              = link_to "Logout", destroy_administrator_session_path, method: :delete      
       / menu
     .col-md-2.col-xs-2.btn-group.header-avatar
       %span.expand.dropdown-toggle{"data-toggle" => "dropdown", :type => "span"}
@@ -34,6 +42,8 @@
             = "Welcome #{current_student.username}"
           - if teacher_signed_in?
             = "Welcome #{current_teacher.username}"
+          - if administrator_signed_in?
+            = "Welcome #{current_administrator.email}"  
 
 
     / avatar
