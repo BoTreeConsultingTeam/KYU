@@ -42,7 +42,7 @@
             %li
               = link_to '',edit_question_path(@question.id),class: 'post-edit action fa fa-pencil'
             %li
-              = link_to '',question_path,method: :delete,data: {confirm:'Are you sure?'},class: 'post-delete action fa fa-trash-o'
+              = link_to '', question_path,method: :delete,data: {confirm:'Are you sure?'},class: 'post-delete action fa fa-trash-o'
             / Follow Action
             %li
               %a.action.follow{"data-name" => "follow", "data-original-title" => "Follow", "data-toggle" => "tooltip", :href => "javascript:void(0)"}
@@ -67,7 +67,7 @@
             .col-md-8.col-xs-9.question-cat
               %a{:href => "http://demo.enginethemes.com/qaengine/member/admindemo/"}
                 %span.author-avatar
-                  %img.avatar{:alt => "", :src => "http://1.gravatar.com/avatar/3743112a070d24fe4dbd5cb39d6a5e9e?s=30&amp;d=http%3A%2F%2F1.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D30&amp;r=G"}
+                  %img.avatar{:alt => "", :src => "#"}
                 %span.author-name Admin Demo
               %span.user-badge{:style => "background-color:#04aad4;"}
                 = @question.askable.class
@@ -156,8 +156,8 @@
                   = f.hidden_field :relative, :value => answer
                   = f.hidden_field :relative_type, :value => answer.class.to_s
                   = f.hidden_field :relative_id, :value => answer.id
-                .spacer20
-                = submit_tag "Post", class: 'btn btn-primary'
+                  .spacer20
+                  = submit_tag "Post", class: 'btn btn-primary'
               %br/
               -@comments_a.each do |c|
                 %div.row
