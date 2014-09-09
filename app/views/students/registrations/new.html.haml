@@ -1,4 +1,4 @@
-.col-md-8.main-content
+.col-md-12.main-content
   = render :partial => "layouts/sub_heading", :locals => {:object => 'Signup'}
   .modal-submit-questions
     .modal-dialog
@@ -23,5 +23,5 @@
           = f.label t('common.captions.password_confirmation')
           %br/
           = f.password_field :password_confirmation,class: 'submit-input'
-          %div= f.submit t('common.btn.submit'),class: 'btn-submit-question', id: 'btn_submit_question'
+          %div= f.submit t('common.btn.submit'),class: 'btn btn-primary', id: 'btn_submit_question'
         = render "students/shared/links"

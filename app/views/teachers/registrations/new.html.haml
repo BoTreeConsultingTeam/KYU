@@ -1,4 +1,4 @@
-.col-md-8.main-content
+.col-md-12.main-content
   = render :partial => "layouts/sub_heading", :locals => {:object => 'Signup'}
   .modal-submit-questions
     .modal-dialog
@@ -10,17 +10,18 @@
           %br/
           = f.label  t('common.captions.salutations')
           = f.select(:salutation, options_for_salution,{},{class: 'form-control'})
+          %br/
           = f.label t('common.captions.first_name')
           = f.text_field :first_name,class: 'submit-input'
           %br
           = f.label t('common.captions.last_name')
           = f.text_field :last_name,class: 'submit-input'
           %br
-          = f.label t('common.captions.user_name')
-          = f.text_field :username,class: 'submit-input'
-          %br
           = f.label t('common.captions.qualification')
           = f.text_field :qualification,class: 'submit-input'
+          %br
+          = f.label t('common.captions.user_name')
+          = f.text_field :username,class: 'submit-input'
           %br
           = f.label t('common.captions.email')
           = f.email_field :email, :autofocus => true,class: 'submit-input'
