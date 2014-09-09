@@ -1,14 +1,27 @@
 class MembersController < ApplicationController
   
   def index
-    @students = Student.all.page(params[:page]).per(5)
+    @student_manager = Student.where("student_manager = ?",true)
+    @students = Student.all.page(params[:page]).per(6)    
   end
 
   def show
-    @student = Student.find(params[:id])
+    @student = Student.find_by_id(params[:id])
   end
 
-  def show
-    @student = Student.find(params[:id])
+  def studentclass
+
+  end
+
+  def manager
+    if Student.where(student_manager: true).count < 2
+      @student = Student.find_by_id(params[:id])
+      @student.student_manager = true
+      @student.save
+      redirect_to members_path
+    else
+      redirect_to members_path,flash: { error: "Already two Student manager selected" }
+    end
+    
   end
 end

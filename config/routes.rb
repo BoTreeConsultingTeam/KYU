@@ -23,10 +23,13 @@ Rails.application.routes.draw do
     resources :answers
     member { post :vote}
   end
+  get '/questions/disable/:id' => 'questions#disable',as: :disable
+
     resources :comments
 
   get '/members' => 'members#index'
   get '/members/:id' => 'members#show', as: :member
+  get '/members/manager/:id' => 'members#manager',as: :manager
 
   resources :answers do
     member { post :vote }

@@ -87,7 +87,8 @@
               = f.hidden_field :relative, :value => @question
               = f.hidden_field :relative_type, :value => @question.class.to_s
               = f.hidden_field :relative_id, :value => @question.id
-              = submit_tag "Post"       
+              %br/
+              = submit_tag "Post",class: 'btn btn-primary btn-lg'
           %br/
           = render 'comments/show_comments_of_questions'    
           .row.paginations.home
@@ -120,28 +121,40 @@
       #answers_main_list
         -@answers.each do |answer|
           #74.row.question-main-content.question-item.answer-item
-            .col-md-2.col-xs-2.vote-block
+            .col-md-2.col-xs-2
               / vote group
-              %ul
-                / vote up
-                %li{"data-original-title" => "This is useful.", :title => ""}
-                  = vote_answer_link(answer,'up')       
-                / // vote up
-                / vote point
-                %li
-                  %span.vote-count{id: "upvoteanswer#{answer.id}"}
-                    = answer.get_likes.size
-                %li
-                  %span.vote-count{id: "downvoteanswer#{answer.id}"}
-                    = answer.get_dislikes.size
-                / // vote point
-                / vote down
-                %li{"data-original-title" => "This is useful.", :title => ""}
-                  = vote_answer_link(answer,'down')
+              .vote-block
+                %ul
+                  / vote up
+                  %li{"data-original-title" => "This is useful.", :title => ""}
+                    = vote_answer_link(answer,'up')       
+                  / // vote up
+                  / vote point
+                  %li
+                    %span.vote-count{id: "upvoteanswer#{answer.id}"}
+                      = answer.get_likes.size
+                  %li
+                    %span.vote-count{id: "downvoteanswer#{answer.id}"}
+                      = answer.get_dislikes.size
+                  / // vote point
+                  / vote down
+                  %li{"data-original-title" => "This is useful.", :title => ""}
+                    = vote_answer_link(answer,'down')
+                  %br/
+                .accept-answer
+                  -if !@question.answered?
+                    - if @question.user_id == current_user.id
+                      %h3
+                      = link_to '', index_path(answer.id),class: 'img-circle fa fa-check-circle'
+              -if @question.accepted_answer_id == answer.id
+                .top-content  
+                  %span.answered.fa.fa-check
                 / // vote down
               / // vote group
+              
             .col-md-9.col-xs-9.q-right-content
               / control tool for admin, moderate
+              
               %ul.post-controls
                 %li
                   = link_to '',edit_question_answer_path(@question.id,answer.id),class: 'post-edit action fa fa-pencil'
@@ -180,7 +193,8 @@
                   = f.hidden_field :relative, :value => answer
                   = f.hidden_field :relative_type, :value => answer.class.to_s
                   = f.hidden_field :relative_id, :value => answer.id
-                  = submit_tag "Post"
+                  %br/
+                  = submit_tag "Post",class: 'btn btn-primary btn-lg'
                 / %a.hide-comment{:href => "javascript:void(0)"} Cancel
               %br/
               .answer_comments{id: "commentsa#{answer.id}"}

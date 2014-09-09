@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140830204843) do
+ActiveRecord::Schema.define(version: 20140908132805) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -120,6 +120,7 @@ ActiveRecord::Schema.define(version: 20140830204843) do
     t.datetime "updated_at"
     t.integer  "askable_id"
     t.string   "askable_type"
+    t.boolean  "enable",       default: true
   end
 
   create_table "sashes", force: true do |t|
@@ -128,12 +129,12 @@ ActiveRecord::Schema.define(version: 20140830204843) do
   end
 
   create_table "students", force: true do |t|
-    t.string   "email",                  default: "", null: false
-    t.string   "encrypted_password",     default: "", null: false
+    t.string   "email",                  default: "",    null: false
+    t.string   "encrypted_password",     default: "",    null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0,  null: false
+    t.integer  "sign_in_count",          default: 0,     null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
@@ -147,6 +148,8 @@ ActiveRecord::Schema.define(version: 20140830204843) do
     t.date     "birthdate"
     t.integer  "sash_id"
     t.integer  "level",                  default: 0
+    t.boolean  "student_manager",        default: false
+    t.string   "student_class"
   end
 
   add_index "students", ["email"], name: "index_students_on_email", unique: true, using: :btree

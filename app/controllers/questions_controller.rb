@@ -83,9 +83,20 @@ class QuestionsController < ApplicationController
       render 'edit'
     end 
   end
+
+  def disable
+    @question = Question.find_by_id(params[:id])
+    if @question.nil?
+      redirect_to questions_path,flash: { error: "No such Question found for Disable!" }
+    else
+      @question.enable = false
+      @question.save
+      redirect_to questions_path
+    end
+  end
+
   def alltags
     @tags = ActsAsTaggableOn::Tag.all.page(params[:page]).per(5)
-
   end
 
   private
@@ -102,10 +113,10 @@ class QuestionsController < ApplicationController
   end
 
   def received_tag
-      params[:tag]
-    end
+    params[:tag]
+  end
 
-    def received_time
-      params[:time]
-    end
+  def received_time
+    params[:time]
+  end
 end

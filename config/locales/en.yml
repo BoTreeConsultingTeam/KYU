@@ -49,11 +49,13 @@ en:
   students:
     captions:
       middle_name: 'Middle Name' 
+      class: 'Class'
     page_header: 
       title_confirmation: 'Resend confirmation instructions'    
     basic:
-           
       forgot_password: 'Forgot your password?'
+    tooltip:
+      manager: 'Student Manager'
   teachers:
     captions:
     page_header: 
@@ -62,6 +64,6 @@ en:
       title_sign_in: 'Sign in'
     basic: 
       salutation: 'Salutations'
-
       title_sign_in: 'Sign in'
+      student_manager: 'Student Manager'
 

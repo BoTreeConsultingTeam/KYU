@@ -213,3 +213,9 @@ ul.social-icon{
 	top: 130px;
 	z-index:9999;
 }
+.student_manager {
+  background-color: #89d470;
+  border-radius: 2px;
+  padding : 0 10px 0 10px;
+  color: #fff;
+}

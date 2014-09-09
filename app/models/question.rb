@@ -16,7 +16,7 @@ class Question < ActiveRecord::Base
   validates_presence_of :content
   validates :title, length: { maximum: 150, minimum: 20 }
   validates :content, length: { maximum: 1000, minimum: 20 }
-  
+  default_scope where("enable = ?",true)
   def answered?
     answers.where(flag: true).count > 0
   end

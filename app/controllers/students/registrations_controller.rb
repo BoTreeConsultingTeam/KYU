@@ -28,7 +28,7 @@ class Students::RegistrationsController <  Devise::RegistrationsController
   private
   
   def sign_up_params
-    params.require(:student).permit(:email, :password,:first_name, :middle_name, :last_name, :username,:birthdate)
+    params.require(:student).permit(:email, :password,:first_name, :middle_name, :last_name, :username,:birthdate,:student_class)
   end
 
   def after_sign_in_path_for(resource)
