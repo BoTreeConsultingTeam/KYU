@@ -61,10 +61,22 @@ en:
     captions:
     page_header:
       title_confirmation: 'Resend confirmation instructions'
-
       title_sign_in: 'Sign in'
     basic:
       salutation: 'Salutations'
-
       title_sign_in: 'Sign in'
+  header_navigation:
+    home: 'Home'
+    users: 'Users'
+    questions: 'Questions'
+    tags: 'Tags'
+    edit_profile: 'Edit Profile'
+    logout: 'Logout'
+  right_side_bar:
+    questions: 'Questions'
+    students: 'Students'
+    teachers: 'Teachers'
+    most_used_tags: 'MOST USED TAGS'
+    hot_questions: 'HOT QUESTIONS'
+    see_more_tags: 'See more tags'
 

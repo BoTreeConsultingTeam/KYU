@@ -1,57 +1,36 @@
 .container-fluid
   .row
-    / END HEADER
     #header_sidebar.col-md-12.col-xs-12
     = render 'layouts/left_sidebar'
     .col-md-8.main-content.single-content
       .row.select-category.single-head
         .col-md-2.col-xs-2
           %span.back
-            %i.fa.fa-angle-double-left
-            %a
-              = link_to 'Home',questions_path
         .col-md-8.col-xs-8
           %h3
             = @question.title
-      / END SELECT-CATEGORY
       #question_content.row.question-main-content.question-item{"data-id" => "1728"}
-        / Vote section
         .col-md-2.col-xs-2.vote-block
-          / vote group
           %ul
             %li{"data-original-title" => "This is useful.", :title => ""}
               = vote_up_question_link(@question)
-            / // vote up
-            / vote point
             %li
               %span.vote-count
                 = @question.get_likes.size
             %li
               %span.vote-count
                 = @question.get_dislikes.size
-            / // vote point
-            / vote down
             %li{"data-original-title" => "This is useful.", :title => ""}
               = vote_down_question_link(@question)
-              / // vote down
-          / // vote group
-        / // Vote section
         .col-md-9.col-xs-9.q-right-content
-          / admin control
           %ul.post-controls
             %li
               = link_to '',edit_question_path(@question.id),class: 'post-edit action fa fa-pencil', 'data-no-turbolink' => true
             %li
               = link_to '', question_path,method: :delete,data: {confirm:'Are you sure?'},class: 'post-delete action fa fa-trash-o'
-            / Follow Action
             %li
               %a.action.follow{"data-name" => "follow", "data-original-title" => "Follow", "data-toggle" => "tooltip", :href => "javascript:void(0)"}
                 %i.fa.fa-plus-square
-            / // Follow Action
-            / report Action
-            / // Report Action
-          / // admin control
-          / question tag
           .top-content
             %span.answered
               %i.fa.fa-check
@@ -85,10 +64,6 @@
           %br/
           = render 'comments/show_comments_of_questions'
           .clearfix
-
-            / END SUBMIT FORM COMMENT
-          / END COMMENTS CONTAINER
-      / END QUESTION-MAIN-CONTENT
       .sticky-wrapper
         #answers_filter.row.answers-filter
           .max-col-md-8
@@ -107,7 +82,6 @@
                   </li>
                 %li
                   %a{:href => "#"} Oldest
-      / ANSWERS LOOP
       #answers_main_list
         -@answers.each do |answer|
           #74.row.question-main-content.question-item.answer-item
@@ -170,17 +144,8 @@
                         =link_to '',edit_answer_comment_path(answer.id,c.id),class: 'fa fa-pencil'
                         |
                         = link_to '',answer_comment_path(answer.id,c),method: :delete,data: {confirm: "are you sure?"},class: 'fa fa-trash-o'
-            / END SUBMIT FORM COMMENT
-
-
-          / END REPLY-ITEM
-
-        / END REPLY-ITEM
-      / ANSWERS LOOP
       .row.paginations.collapse
         .col-md-12
-      / END PAGINATIONS
-
       .row.form-reply
         .col-md-12
           %h3 Your Answer
@@ -193,7 +158,6 @@
                   = f.hidden_field :question_id, :value => @question.id
                   .spacer20
                   = f.submit t('questions.btn.submit'),class: 'btn btn-primary', id: 'btn_submit_question'
-      / END FORM REPLY
     = render 'layouts/right_sidebar'
 
 
