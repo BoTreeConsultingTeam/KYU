@@ -7,6 +7,9 @@
           = devise_error_messages!
           %div
           %br
+          = f.label t('common.captions.set_avatar')
+          = f.file_field :avatar
+          %br
           = f.label t('common.captions.first_name')
           = f.text_field :first_name,class: 'submit-input'
           %br

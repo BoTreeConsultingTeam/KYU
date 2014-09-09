@@ -55,8 +55,8 @@ class Students::RegistrationsController <  Devise::RegistrationsController
   protected
 
   def configure_permitted_parameters
-    devise_parameter_sanitizer.for(:sign_up) << [:first_name, :middle_name, :last_name, :username, :birthdate]
-    devise_parameter_sanitizer.for(:account_update) << [:first_name,:middle_name, :last_name, :username,:birthdate]
+    devise_parameter_sanitizer.for(:sign_up) << [:first_name, :middle_name, :last_name, :username, :birthdate, :avatar]
+    devise_parameter_sanitizer.for(:account_update) << [:first_name,:middle_name, :last_name, :username,:birthdate, :avatar]
     # devise_parameter_sanitizer.for(:account_update) { |u| u.permit(:first_name,:middle_name, :last_name, :username,:birthdate) }
     # devise_parameter_sanitizer.for(:sign_up) { |u| u.permit(:first_name,:middle_name, :last_name, :username,:birthdate) }
   end

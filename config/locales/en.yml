@@ -39,6 +39,7 @@ en:
       current: 'Current Password' 
       remember: 'Remember me'
       salutations: 'Salutations'
+      set_avatar: 'Set Avatar'
     btn:  
       sign_in: 'Sign in'
       submit: 'Submit'

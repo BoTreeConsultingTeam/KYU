@@ -7,7 +7,7 @@
   .row.user-statistic.highlight
     .col-md-5.col-xs-5.user-info
       %span.avatar-80
-        %img.avatar{:alt => "", :src => "http://demo.enginethemes.com/qaengine/wp-content/uploads/2014/08/1282.jpg"}     
+        = image_tag @student.avatar.url(:medium)     
       %ul
         %li.name 
           = @student.username
@@ -46,12 +46,38 @@
                 = @student.answers.count
   / END USER-STATISTIC
   .row.question-filter
+  - if ( @student.id == current_user.id && current_student.present? )
     .col-md-12.sort-questions
       %ul
+        %li
+          = link_to 'Edit your Info', edit_student_registration_path
+        %li
+          = link_to 'Basic Info', member_path(@student,:filter => "basicinfo")
         %li
           = link_to 'Questions', member_path(@student,:filter => "questions")
         %li
           = link_to 'Answers', member_path(@student,:filter => "answers")
+        %li
+          = link_to 'Tags', member_path(@student,:filter => "tags")
+        %li
+          = link_to 'Badges', member_path(@student,:filter => "badges")
+        %li
+          = link_to 'Votes', member_path(@student,:filter => "votes")
+  - else
+    .col-md-12.sort-questions
+      %ul
+        %li
+          = link_to 'Basic Info', member_path(@student,:filter => "basicinfo")
+        %li
+          = link_to 'Questions', member_path(@student,:filter => "questions")
+        %li
+          = link_to 'Answers', member_path(@student,:filter => "answers")
+        %li
+          = link_to 'Tags', member_path(@student,:filter => "tags")
+        %li
+          = link_to 'Badges', member_path(@student,:filter => "badges")
+        %li
+          = link_to 'Votes', member_path(@student,:filter => "votes")
   / END QUESTIONS-FILTER
   - if params[:filter] == "answers"
     .main-questions-list
@@ -107,7 +133,57 @@
                     votes  
         - else
           You don't  have answered any question yet
-  - else
+  - elsif params[:filter] == "tags"
+    .main-questions-list
+      %ul#main_questions_list
+        -if !(@tags.nil?)
+          .col-md-12
+            .row
+            .col-md-6
+              - @tags.each do |row|
+                .row
+                  - row.each do |column|
+                    .col-md-6
+                      %h4
+                        = column
+          
+        - else
+          You haven't tagged any thing yet!!!
+  - elsif params[:filter] == "badges"
+    .main-questions-list
+      %ul#main_questions_list
+        - if !(@student.badges.last.blank?)
+          - @student.badges.pluck(:name).each do |badge|
+            .col-md-6
+              %h3
+                = badge
+        -else
+          You haven't earned any Badges!!!
+  - elsif params[:filter] == "votes"
+    .main-questions-list
+      %ul#main_questions_list
+        - if !(@questions.nil?)
+          %h3 
+            Total number of questions::
+            = @questions.count
+            %br/
+            Total upvotes on questions::              
+            = @total_upvotes_question
+            %br/
+            Total downvotes on questions::
+            = @total_downvotes_question
+            %br/
+            Total number of answer::
+            = @answers.count
+            %br/
+            Total upvotes on answers::
+            = @total_upvotes_answer
+            %br/
+            Total downvotes on answers::
+            = @total_downvotes_answer
+        -else
+          You haven't got any votes!!!
+  - elsif params[:filter] == "questions"
     .main-questions-list    
       %ul#main_questions_list
         - if !(@questions.nil?)
@@ -156,15 +232,45 @@
                     upvotes
                   %li
                     %span.question-downvotes
-                      = question.get_downvotes.size
+                      = question.get_downvotes.size                      
                     downvotes
               / end right content
-        -else
+        - else
           You don't have asked any questions yet
     
       / end right content        
     / END MAIN-QUESTIONS-LIST
+  - else
+    .row
+      .col-md-9.col-md-push-3 
+        =@student.first_name
+        =@student.last_name 
+       
+      .col-md-3.col-md-pull-9 
+        %b Name 
+      
+      .col-md-9.col-md-push-3 
+        %br
+          =@student.birthdate
+      .col-md-3.col-md-pull-9
+        %br/
+        %b Birthdate
+      
+      .col-md-9.col-md-push-3
+        %br/
+        =@student.username
+      .col-md-3.col-md-pull-9  
+        %br/
+        %b Username
+
+      .col-md-9.col-md-push-3
+        %br/
+        =@student.email 
+      .col-md-3.col-md-pull-9
+        %br/
+        %b Email
+
   .row.paginations.home
-    .col-md-12
+  
 / END MAIN-PAGINATIONS
 = render 'layouts/right_sidebar'

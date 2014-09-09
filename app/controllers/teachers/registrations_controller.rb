@@ -40,14 +40,14 @@ class Teachers::RegistrationsController <  Devise::RegistrationsController
   protected
 
   def configure_permitted_parameters
-    devise_parameter_sanitizer.for(:sign_up) << [:salutation, :first_name,:middle_name, :last_name, :username,:birthdate]
-    devise_parameter_sanitizer.for(:account_update) << [:salutation, :first_name,:middle_name, :last_name, :username,:birthdate]
+    devise_parameter_sanitizer.for(:sign_up) << [:salutation, :first_name,:middle_name, :last_name, :username,:birthdate,:avatar]
+    devise_parameter_sanitizer.for(:account_update) << [:salutation, :first_name,:middle_name, :last_name, :username,:birthdate,:avatar]
   end
 
   private
 
   def sign_up_params
-    params.require(:teacher).permit(:salutation,:name, :email, :password, :first_name, :last_name, :username, :qualification)
+    params.require(:teacher).permit(:salutation,:name, :email, :password, :first_name, :last_name, :username, :qualification, :avatar)
   end
 
   def after_sign_in_path_for(resource)
