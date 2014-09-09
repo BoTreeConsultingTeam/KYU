@@ -40,7 +40,7 @@
           / admin control
           %ul.post-controls
             %li
-              = link_to '',edit_question_path(@question.id),class: 'post-edit action fa fa-pencil'
+              = link_to '',edit_question_path(@question.id),class: 'post-edit action fa fa-pencil', 'data-no-turbolink' => true
             %li
               = link_to '', question_path,method: :delete,data: {confirm:'Are you sure?'},class: 'post-delete action fa fa-trash-o'
             / Follow Action
@@ -65,7 +65,7 @@
             = raw(@question.content)
           .row
             .col-md-8.col-xs-9.question-cat
-              %a{:href => "http://demo.enginethemes.com/qaengine/member/admindemo/"}
+              %a{:href => "#"}
                 %span.author-avatar
                   %img.avatar{:alt => "", :src => "#"}
                 %span.author-name Admin Demo
