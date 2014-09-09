@@ -234,3 +234,7 @@ ul.social-icon{
 .spacer-width {
   width: 100%; font-size: 0; margin: 0; padding: 0; border: 0; display: block;
 }
+
+.comment_box_border {
+	border: none;
+}
