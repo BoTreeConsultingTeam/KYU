@@ -15,7 +15,7 @@
 .user-post-count .questions-count {
 	color: #78829d
 }
-.widget-links ul li a
+.widget-links ul li a {
 	color: #15a4fa;
 }
 .main-questions-list .q-ltop-content a.question-title,
