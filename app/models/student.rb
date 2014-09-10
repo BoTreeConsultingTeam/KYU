@@ -1,4 +1,4 @@
-  class Student < ActiveRecord::Base
+class Student < ActiveRecord::Base
 
   paginates_per 10
   include Gioco_Methods
