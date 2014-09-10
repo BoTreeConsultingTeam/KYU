@@ -40,9 +40,10 @@
               %a.action.follow{"data-name" => "follow", "data-original-title" => "Follow", "data-toggle" => "tooltip",title: 'Importent', :href => "javascript:void(0)"}
                 %i.fa.fa-plus-square
           .top-content
-            %span.answered
-              %i.fa.fa-check
-              Answered
+            - if @question.answers.count > 0
+              %span.answered
+                %i.fa.fa-check
+                Answered
             %ul.question-tags
               - @question.tag_list.each do |tag|
                 %li
@@ -105,6 +106,11 @@
           #74.row.question-main-content.question-item.answer-item
             .col-md-2.col-xs-2
               / vote group
+              .accept-answer
+                -if !@question.answered?
+                  - if @question.user_id == current_user.id
+                    %h3
+                      = link_to '', index_path(answer.id),class: 'fa fa-check pull-right'
               .vote-block
                 %ul
                   / vote up
@@ -123,11 +129,7 @@
                   %li{"data-original-title" => "This is useful.", :title => ""}
                     = vote_answer_link(answer,'down')
                   %br/
-                .accept-answer
-                  -if !@question.answered?
-                    - if @question.user_id == current_user.id
-                      %h3
-                      = link_to '', index_path(answer.id),class: 'img-circle fa fa-check-circle'
+              
               -if @question.accepted_answer_id == answer.id
                 .top-content  
                   %span.answered.fa.fa-check

@@ -12,4 +12,4 @@
       = link_to @question.title,"http://localhost:3000/questions#question#{@question.id}"
       
     %p 
-      "#{@question.content}"
+      =raw(@question.content)
