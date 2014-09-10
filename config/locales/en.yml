@@ -68,6 +68,7 @@ en:
       salutation: 'Salutations'
       title_sign_in: 'Sign in'
       student_manager: 'Student Manager'
+      prompt: '----- Select Class -----'
   mailer:
     subject:
       report_abuse_notification: 'Report Abuse Notification'

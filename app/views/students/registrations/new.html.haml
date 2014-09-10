@@ -16,7 +16,7 @@
           = f.email_field :email,class: 'submit-input'
           %br
           = f.label t('students.captions.class')
-          = f.select(:student_class, options_for_class,{},{class: 'form-control'})
+          = f.select(:student_class, options_for_class,{prompt: t('teachers.basic.prompt')},{class: 'form-control'})
           %br
           %div
           = f.label t('common.captions.password')

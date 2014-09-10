@@ -77,7 +77,8 @@
                     - if current_student.present?
                       - if current_user.student_manager?
                         = link_to 'Disable',disable_path(question.id)
-                    = link_to "report as abuse",report_path(question.id),class: 'pull-right'
+                        |
+                    = link_to "Report as abuse",report_path(question.id)
       .row.paginations.home
         .col-md-12
           =paginate @questions

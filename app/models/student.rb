@@ -11,6 +11,7 @@ class Student < ActiveRecord::Base
   VALID_EMAIL_REGEX=/\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   validates :username,:birthdate, presence: true
   validates :email, format: {with: VALID_EMAIL_REGEX}, uniqueness: {case_sensitive: false}
+  validates :student_class,presence: true
   validates :password,presence: true,on: :create
   validates_confirmation_of :password, if: lambda { |m| m.password.present? } 
 end
