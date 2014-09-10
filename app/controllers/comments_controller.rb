@@ -68,7 +68,7 @@ class CommentsController < ApplicationController
       if @comment.nil?
         redirect_to questions_path,flash: { error: t('flash_massege.error.comment.edit') }
       else       
-        @comments = Comment.relative_comments(@answer.id,@answer.class)
+        @comments_a = Comment.relative_comments(@answer.id,@answer.class)
       end
     end     
   end    

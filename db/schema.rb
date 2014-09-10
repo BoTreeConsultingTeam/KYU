@@ -139,11 +139,6 @@ ActiveRecord::Schema.define(version: 20140909105053) do
     t.boolean  "enable",       default: true
   end
 
-  create_table "sashes", force: true do |t|
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "students", force: true do |t|
     t.string   "email",                  default: "",    null: false
     t.string   "encrypted_password",     default: "",    null: false
@@ -157,9 +152,6 @@ ActiveRecord::Schema.define(version: 20140909105053) do
     t.string   "last_sign_in_ip"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "first_name"
-    t.string   "middle_name"
-    t.string   "last_name"
     t.string   "username"
     t.date     "birthdate"
     t.integer  "sash_id"

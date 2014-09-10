@@ -4,6 +4,6 @@
     %hr/
   .col-md-2
     - if c.is_author?(current_user)
-    =link_to '',edit_question_comment_path(@question.id,c.id),class: 'edit-comment fa fa-pencil'
+    =link_to '',edit_question_comment_path(@question.id,c.id),class: 'edit-comment fa fa-pencil','data-no-turbolink' => true
     |
     =link_to '',question_comment_path(@question.id,c),method: :delete,data: {confirm: "are you sure?"},class: 'delete-comment fa fa-trash-o'

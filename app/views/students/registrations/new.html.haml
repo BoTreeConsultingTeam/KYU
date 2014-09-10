@@ -1,4 +1,4 @@
-.col-md-8.main-content
+.col-md-12.main-content
   = render :partial => "layouts/sub_heading", :locals => {:object => 'Signup'}
   .modal-submit-questions
     .modal-dialog
@@ -6,22 +6,12 @@
         = form_for(resource, :as => resource_name, :url => student_registration_path) do |f|
           = devise_error_messages!
           %div
-          %br
-          = f.label t('common.captions.first_name')
-          = f.text_field :first_name,class: 'submit-input'
-          %br
-          =f.label t('students.captions.middle_name')
-          =f.text_field :middle_name,class: 'submit-input'
-          %br
-          = f.label t('common.captions.last_name')
-          = f.text_field :last_name,class: 'submit-input'
-          %br
           = f.label t('common.captions.user_name')
           =f.text_field :username,class: 'submit-input'
           %br
           = f.label t('common.captions.dob')
           = f.date_field :birthdate,class: 'submit-input'
-          %br   
+          %br
           = f.label t('common.captions.email')
           = f.email_field :email, :autofocus => true,class: 'submit-input'
           %br
@@ -38,4 +28,3 @@
           = f.password_field :password_confirmation,class: 'submit-input'
           %div= f.submit t('common.btn.submit'),class: 'btn-submit-question', id: 'btn_submit_question' 
         = render "students/shared/links"
-        

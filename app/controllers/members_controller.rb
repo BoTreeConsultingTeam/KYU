@@ -1,13 +1,14 @@
 class MembersController < ApplicationController
-  
+
   def index
-    @student_manager = Student.where("student_manager = ?",true)
+    @student_manager = Student.find_all_by_student_manager(true)
     @students = Student.all.page(params[:page]).per(6)    
   end
 
   def show
     @student = Student.find_by_id(params[:id])
   end
+
 
   def studentclass
 
@@ -24,4 +25,5 @@ class MembersController < ApplicationController
     end
     
   end
+
 end

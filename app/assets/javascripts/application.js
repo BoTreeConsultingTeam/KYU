@@ -17,3 +17,5 @@
 //= require bootstrap.min
 //= require ckeditor-jquery
 //= require ckeditor/config
+//= require ckeditor/plugins/eqneditor/plugin.min
+//= require custom

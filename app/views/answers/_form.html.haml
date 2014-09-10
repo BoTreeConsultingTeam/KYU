@@ -6,7 +6,6 @@
       .row.select-category
         .col-md-8.col-xs-6.current-category
           %span  
-            Que.
             =@question.title
       .modal-submit-questions
         .modal-dialog
@@ -15,4 +14,6 @@
               = f.text_area :content,:toolbar => 'mini', :class => 'ckeditor', style: 'width: none !important;'
               = f.hidden_field :user_id, :value => current_user.id  
               = f.hidden_field :question_id, :value => @question.id
-              = f.submit t('answers.btn.submit_answer')
+              = f.submit t('answers.btn.submit_answer'),class: 'btn btn-primary btn-lg'
+
+    = render 'layouts/right_sidebar'

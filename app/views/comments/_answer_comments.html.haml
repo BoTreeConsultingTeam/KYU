@@ -4,6 +4,6 @@
     %hr/
   .col-md-2    
     - if ca.is_author?(current_user)
-      =link_to '',edit_answer_comment_path(answer.id,ca.id),class: 'fa fa-pencil'
+      =link_to '',edit_answer_comment_path(answer.id,ca.id),rel: 'tooltip',title: 'Edit',class: 'fa fa-pencil','data-no-turbolink' => true
       |
-      = link_to '',answer_comment_path(answer.id,ca.id),method: :delete,data: {confirm: "are you sure?"},remote: true,class: 'fa fa-trash-o'
+      = link_to '',answer_comment_path(answer.id,ca.id),rel: 'tooltip',title: 'Delete',method: :delete,data: {confirm: "are you sure?"},remote: true,class: 'fa fa-trash-o'

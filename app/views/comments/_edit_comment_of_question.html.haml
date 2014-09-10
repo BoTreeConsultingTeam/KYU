@@ -1,9 +1,12 @@
-%h3  
-  Que.
-  =@question.title
-  %br
-  %hr
-= render partial: 'form', locals: {type: 'edit',object: @question}
-%hr
-= render 'show_comments_of_questions'
+.row.select-category
+  .col-md-8.col-xs-8
+    %h4 
+      Question
+    = @question.title
+.modal-submit-questions
+  .modal-dialog
+    .modal-body
+      %h4 Comment :
+      = render partial: 'form', locals: {type: 'edit',object: @question}
+    = render 'show_comments_of_questions'
 

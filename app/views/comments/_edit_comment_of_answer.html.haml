@@ -1,11 +1,16 @@
-%h2
-  Question
-  %h3
-    =@answer.question.title
-  %hr/
-  %h3.strong
-    Answer
-  %h4
-    =@answer.content 
-  = render partial: 'form', locals: {type: 'edit',object: @answer} 
-  = render partial: 'comments/show_comments_of_answers', locals: {answer: @answer}
+.row.select-category
+  .col-md-8.col-xs-8
+    %h4
+      Question :
+    =raw(@answer.question.title)
+.row.select-category
+  .col-md-8.col-xs-8
+    %h4
+      Answer :
+    =raw(@answer.content)
+.modal-submit-questions
+  .modal-dialog
+    .modal-body
+      %h4 comment :
+      = render partial: 'form', locals: {type: 'edit',object: @answer} 
+    = render partial: 'comments/show_comments_of_answers', locals: {answer: @answer}

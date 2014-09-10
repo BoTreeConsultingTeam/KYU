@@ -6,30 +6,29 @@
   .col-md-8.main-content
     = render :partial => "layouts/sub_heading", :locals => {:object => "Welcome, #{@student.username}"}
     .row
-      .col-md-9.col-md-push-3 
-        =@student.first_name
-        =@student.last_name 
-       
-      .col-md-3.col-md-pull-9 
-        %b Name 
-      
-      .col-md-9.col-md-push-3 
+      .col-md-9.col-md-push-3
+        = @student.username.titleize
+
+      .col-md-3.col-md-pull-9
+        %b Name
+
+      .col-md-9.col-md-push-3
         %br
           =@student.birthdate
       .col-md-3.col-md-pull-9
         %br/
         %b Birthdate
-      
+
       .col-md-9.col-md-push-3
         %br/
         =@student.username
-      .col-md-3.col-md-pull-9  
+      .col-md-3.col-md-pull-9
         %br/
         %b Username
 
       .col-md-9.col-md-push-3
         %br/
-        =@student.email 
+        =@student.email
       .col-md-3.col-md-pull-9
         %br/
         %b Email
