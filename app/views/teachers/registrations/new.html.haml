@@ -21,10 +21,10 @@
           = f.text_field :qualification,class: 'submit-input'
           %br
           = f.label t('common.captions.user_name')
-          = f.text_field :username,class: 'submit-input'
+          = f.text_field :username,autofocus: true,class: 'submit-input'
           %br
           = f.label t('common.captions.email')
-          = f.email_field :email, :autofocus => true,class: 'submit-input'
+          = f.email_field :email,class: 'submit-input'
           %div
           = f.label t('common.captions.password')
           %br/
