@@ -83,12 +83,9 @@ class QuestionsController < ApplicationController
       render 'edit'
     end 
   end
-  def alltags
-    @tags = ActsAsTaggableOn::Tag.all.page(params[:page]).per(5)
-
-  end
 
   private
+  
   def question_params
     params.require(:question).permit(:title,:content, :user_id, :tag_list)
   end

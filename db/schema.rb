@@ -158,9 +158,6 @@ ActiveRecord::Schema.define(version: 20140909121436) do
     t.string   "last_sign_in_ip"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "first_name"
-    t.string   "middle_name"
-    t.string   "last_name"
     t.string   "username"
     t.date     "birthdate"
     t.integer  "sash_id"
@@ -188,6 +185,7 @@ ActiveRecord::Schema.define(version: 20140909121436) do
   create_table "tags", force: true do |t|
     t.string  "name"
     t.integer "taggings_count", default: 0
+    t.text    "description"
   end
 
   add_index "tags", ["name"], name: "index_tags_on_name", unique: true, using: :btree

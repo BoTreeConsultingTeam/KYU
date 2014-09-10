@@ -1,15 +1,15 @@
 .col-md-2.disable-mobile.left-sidebar
   .widget.widget-btn
-    = link_to  t('questions.btn.new_question'), new_question_path,method: :get, class:" btn btn-primary pull-left", style: 'color: #FFFFFF !important;'  
+    = link_to  t('questions.btn.new_question'), new_question_path,method: :get, class:" btn btn-primary pull-left", style: 'color: #FFFFFF !important;'
   .widget.widget-menus
     .menu-left-menu-container
       %ul#menu-left-menu-1.menu
         %li.fa-question-circle.menu-item.menu-item-type-custom.menu-item-object-custom
-          %a{:href => "/questions"}
+          = link_to questions_path do
             %i.fa.fa-question-circle>
-            Questions
+            = t('header_navigation.questions')
         %li.fa-tags.menu-item.menu-item-type-post_type.menu-item-object-page.menu-item-183
-          %a{:href => "/questions/tags"}
+          = link_to tags_path do
             %i.fa.fa-tags>
             Tags
         - if (student_signed_in? || teacher_signed_in?)    
@@ -17,4 +17,3 @@
             %a{:href => "/members"}
               %i.fa.fa-users>
               Users
-  

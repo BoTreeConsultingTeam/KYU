@@ -6,13 +6,17 @@ class MembersController < ApplicationController
   end
 
   def show
-    @teacher = Teacher.find(params[:id])
+    if params[:user] == 'student'
+      @student
+    else
+      @teacher = Teacher.find(params[:id])
+    end
   end
 
   def deactivate
   	if @student.update_attributes(enable: false)
   		flash[:notice] = 'Student is Blocked'
-  		redirect_to members_path
+  		redirect_to members_path(users: "students")
   	else
   		redirect_to root_path
   	end	
@@ -21,7 +25,7 @@ class MembersController < ApplicationController
   def markreview
     if @student.update_attributes(mark_as_review: true)
       flash[:notice] = 'Marked as review'
-      redirect_to members_path
+      redirect_to members_path(users: "students")
     else
       redirect_to root_path
     end 

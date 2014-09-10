@@ -50,4 +50,8 @@ module ApplicationHelper
     edit_user_registration_path = current_student.present? ? edit_student_registration_path(current_student.id) : edit_teacher_registration_path(current_teacher.id)
   end
 
+  def most_viewed_questions
+    Question.joins(:impressions).group("questions.id").order("count(questions.id) DESC").limit(5)
+  end
+
 end

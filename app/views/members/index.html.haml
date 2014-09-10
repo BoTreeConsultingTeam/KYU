@@ -1,55 +1,48 @@
-/ %ul
-/   - @students.each do |s|
-/     %li
-/       = link_to s.first_name, member_path(s)
-/ -@tags.each do |tag|
-/   = link_to tag, tag_path(tag.name)
-/   %br 
 .container-fluid
   .row
   / END HEADER
   #header_sidebar.col-md-12.col-xs-12
   = render 'layouts/left_sidebar'
   .col-md-8.main-content
-    - if params[:users] == "students"  
+    - if (params[:users] == "students"  || student_signed_in? || teacher_signed_in?) 
       = render :partial => "layouts/sub_heading", :locals => {:object => 'Students'}
       %ul#main_users_list.row
         - @students.each do |student|
-          %li.user-item.col-md-4.col-xs-6
+          %li.user-item.col-md-5.col-xs-6
             %span.user-avatar
               %img.avatar{:alt => "", :src => "http://demo.enginethemes.com/qaengine/wp-content/uploads/2014/08/1282.jpg"}
             .left-info
-              %span.display_name 
-                = link_to student.username, member_path(student,user: "student")
-              %br
-                %span.location
-                  = student.email
-                .question-cat
-                  %span.user-badge{:style => "background-color:#780978;", :title => "1543"} studnent.type
-                  %span.points 1543 Points
-                  - if (administrator_signed_in? && student.enable == true)
-                    = link_to t('students.links.block'), deactivate_path(student) 
-                  |  
-                  - if ((administrator_signed_in? || teacher_signed_in?) && student.mark_as_review == false)
-                    = link_to t('students.links.mark_as_review'), markreview_path(student)
-                  - if ((administrator_signed_in? || teacher_signed_in?) && student.mark_as_review == true)
-                    = link_to t('students.links.review'), member_path(student)   
+              %span.display_name
+                = link_to student.username.titleize, member_path(student,user: "student")
+              %br/
+              / %span.location
+              /   = student.email
+              .question-cat
+                %span.user-badge{:style => "background-color:#780978;", :title => "1543"} studnent.type
+                %span.points 1543 Points
+              - if (administrator_signed_in? && student.enable == true)
+                = link_to t('students.links.block'), deactivate_path(student) 
+                |
+              - if ((administrator_signed_in? || teacher_signed_in?) && student.mark_as_review == false)
+                = link_to t('students.links.mark_as_review'), markreview_path(student)
+              - if ((administrator_signed_in? || teacher_signed_in?) && student.mark_as_review == true)
+                = link_to t('students.links.review'), member_path(student,user: "student")   
     - if params[:users] == "teachers" 
       = render :partial => "layouts/sub_heading", :locals => {:object => 'Teachers'}               
       %ul#main_users_list.row
         - @teachers.each do |teacher|
-          %li.user-item.col-md-4.col-xs-6
+          %li.user-item.col-md-5.col-xs-6
             %span.user-avatar
               %img.avatar{:alt => "", :src => "http://demo.enginethemes.com/qaengine/wp-content/uploads/2014/08/1282.jpg"}
             .left-info
               %span.display_name 
-                = link_to teacher.username, member_path(teacher,user: "teacher")
-              %br
-                %span.location
-                  = teacher.email
-                .question-cat
-                  %span.user-badge{:style => "background-color:#780978;", :title => "1543"} teacher.type
-                  %span.points 1543 Points
+                = link_to teacher.username.titleize, member_path(teacher,user: "teacher")
+              %br/
+              / %span.location
+              /   = teacher.email
+              .question-cat
+                %span.user-badge{:style => "background-color:#780978;", :title => "1543"} teacher.type
+                %span.points 1543 Points
     .row.paginations.home
       .col-md-12
         = render :partial => "shared/pagination", :locals => {:object => @students}

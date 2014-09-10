@@ -6,22 +6,22 @@
       .header-menu
         %ul
           %li
-            %a{:href => root_path } Home
-          - if (student_signed_in? || teacher_signed_in?)  
+            = link_to t('header_navigation.home'), questions_path
+          - if (student_signed_in? || teacher_signed_in?)   
             %li
               %a{:href => members_path} Users
           %li
-            %a{:href => questions_path} Questions
+            = link_to t('header_navigation.questions'), questions_path
           %li
-            %a{:href => tags_path} Tags
+            = link_to t('header_navigation.tags'), tags_path
           - if student_signed_in?
             %li
-              = link_to 'Edit profile', edit_student_registration_path
+              = link_to t('header_navigation.edit_profile'), edit_student_registration_path
             %li
-              = link_to "Logout", destroy_student_session_path, method: :delete
+              = link_to t('header_navigation.logout'), destroy_student_session_path, method: :delete
           - if teacher_signed_in?
             %li
-              = link_to 'Edit profile', edit_teacher_registration_path
+              = link_to t('header_navigation.edit_profile'), edit_teacher_registration_path
             %li
               = link_to "Logout", destroy_teacher_session_path, method: :delete
           - if administrator_signed_in?
@@ -34,12 +34,12 @@
       / menu
     .col-md-2.col-xs-2.btn-group.header-avatar
       %span.expand.dropdown-toggle{"data-toggle" => "dropdown", :type => "span"}
-        %a.dropdown-account{:href => "javascript:void(0)"}
+        %a.dropdown-account{:href => "javascript:void(0);"}
           %span.avatar
             %img.avatar
           %span.display_name
           - if student_signed_in?
-            = "Welcome #{current_student.username}"
+            = "Welcome #{current_student.username.titleize}"
           - if teacher_signed_in?
             = "Welcome #{current_teacher.username}"
           - if administrator_signed_in?
