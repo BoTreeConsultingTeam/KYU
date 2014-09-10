@@ -21,9 +21,14 @@ module ApplicationHelper
   def options_for_salution
     options_for_select(SALUTATIONS)
   end
-  def set_link(title,time)
+
+  def set_link(title, time)
     link_to title, questions_path(:time => "#{time}")
   end
+
+  def set_header_link_for_admin(title, users)
+    link_to title, members_path(users: "#{users}")
+  end  
 
   def questions_count
     Question.count

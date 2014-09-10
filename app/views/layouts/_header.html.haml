@@ -26,9 +26,9 @@
               = link_to "Logout", destroy_teacher_session_path, method: :delete
           - if administrator_signed_in?
             %li
-              = link_to "Teachers", members_path
+              = set_header_link_for_admin("Teachers","teachers")
             %li
-              = link_to "Students", members_path  
+              = set_header_link_for_admin("Students","students")  
             %li
               = link_to "Logout", destroy_administrator_session_path, method: :delete      
       / menu
