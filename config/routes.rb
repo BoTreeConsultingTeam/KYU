@@ -14,16 +14,17 @@ Rails.application.routes.draw do
   end
   
   get 'answers/accept/:id', to: 'answers#accept', as: :index
-  get 'tags/:tag', to: 'questions#index', as: :tag 
-  get 'questions/tags', to: 'questions#alltags', as: :tags
-
   resources :tags
+  
   resources :questions do
     resources :comments
     resources :answers
     member { post :upvote,:downvote }
   end
-    resources :comments
+  get 'questions/:tag', to: 'questions#index', as: :search_by_tag
+  delete 'tags/:id', to: 'tags#destroy', as: :delete_tag
+  
+  resources :comments
 
   get '/members' => 'members#index'
   get '/members/:id' => 'members#show', as: :member
