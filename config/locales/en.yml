@@ -4,11 +4,11 @@ en:
     page_header:
       title: 'Question'
       title_for_new: 'New Question'
-    basic:  
+    basic:
       answer_by: 'Answered by'
-      asked_by: 'Asked By'  
+      asked_by: 'Asked By'
       tag_on_index: 'Tags:'
-      view: 'Views:' 
+      view: 'Views:'
       answers: 'Answers'
       tag_on_new: "Tags (separated by commas)"
       content_label: 'Content:'
@@ -17,7 +17,7 @@ en:
       submit: 'Submit'
     link:
       last_week: 'Last week'
-      last_month: 'Last Month'  
+      last_month: 'Last Month'
   answers:
     captions:
     basic:
@@ -27,7 +27,7 @@ en:
       submit_answer: 'Submit'
   common:
     captions:
-      dob: 'Birthdate'      
+      dob: 'Birthdate'
       first_name: 'First Name'
       middle_name: 'Middle Name'
       last_name: 'Last Name'
@@ -35,33 +35,48 @@ en:
       email: 'Email'
       qualification: 'Qualification'
       password: 'Password'
+      new_password: 'New Password'
       password_confirmation: 'Retype Password'
-      current: 'Current Password' 
+      current: 'Current Password'
       remember: 'Remember me'
       salutations: 'Salutations'
-    btn:  
+      btn:
+        update: 'Update'
+    btn:
       sign_in: 'Sign in'
       submit: 'Submit'
     links:
       sign_in: 'Sign in'
-      sign_up: 'Sign up' 
-      forgot_password: 'Forgot your password?'  
+      sign_up: 'Sign up'
+      forgot_password: 'Forgot your password?'
   students:
     captions:
-      middle_name: 'Middle Name' 
-    page_header: 
-      title_confirmation: 'Resend confirmation instructions'    
+      middle_name: 'Middle Name'
+    page_header:
+      title_confirmation: 'Resend confirmation instructions'
     basic:
-           
+
       forgot_password: 'Forgot your password?'
   teachers:
     captions:
-    page_header: 
-      title_confirmation: 'Resend confirmation instructions'    
-
+    page_header:
+      title_confirmation: 'Resend confirmation instructions'
       title_sign_in: 'Sign in'
-    basic: 
+    basic:
       salutation: 'Salutations'
-
       title_sign_in: 'Sign in'
+  header_navigation:
+    home: 'Home'
+    users: 'Users'
+    questions: 'Questions'
+    tags: 'Tags'
+    edit_profile: 'Edit Profile'
+    logout: 'Logout'
+  right_side_bar:
+    questions: 'Questions'
+    students: 'Students'
+    teachers: 'Teachers'
+    most_used_tags: 'MOST USED TAGS'
+    hot_questions: 'HOT QUESTIONS'
+    see_more_tags: 'See more tags'
 

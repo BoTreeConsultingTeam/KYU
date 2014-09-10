@@ -11,10 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140908102849) do
-
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
+ActiveRecord::Schema.define(version: 20140908125530) do
 
   create_table "answers", force: true do |t|
     t.text     "content"
@@ -22,17 +19,16 @@ ActiveRecord::Schema.define(version: 20140908102849) do
     t.integer  "question_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "flag",            default: false
     t.integer  "answerable_id"
     t.string   "answerable_type"
-    t.boolean  "flag",            default: false
   end
 
-  create_table "badges", force: true do |t|
-    t.string   "name"
-    t.integer  "points"
-    t.boolean  "default"
+  create_table "badges_sashes", force: true do |t|
+    t.integer  "badge_id"
+    t.integer  "sash_id"
+    t.boolean  "notified_user", default: false
     t.datetime "created_at"
-    t.datetime "updated_at"
   end
 
   create_table "bookmarks", force: true do |t|
@@ -85,11 +81,36 @@ ActiveRecord::Schema.define(version: 20140908102849) do
   add_index "impressions", ["impressionable_type", "message", "impressionable_id"], name: "impressionable_type_message_index", using: :btree
   add_index "impressions", ["user_id"], name: "index_impressions_on_user_id", using: :btree
 
-  create_table "levels", force: true do |t|
-    t.integer  "badge_id"
-    t.integer  "student_id"
+  create_table "merit_actions", force: true do |t|
+    t.integer  "user_id"
+    t.string   "action_method"
+    t.integer  "action_value"
+    t.boolean  "had_errors",    default: false
+    t.string   "target_model"
+    t.integer  "target_id"
+    t.boolean  "processed",     default: false
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "merit_activity_logs", force: true do |t|
+    t.integer  "action_id"
+    t.string   "related_change_type"
+    t.integer  "related_change_id"
+    t.string   "description"
+    t.datetime "created_at"
+  end
+
+  create_table "merit_score_points", force: true do |t|
+    t.integer  "score_id"
+    t.integer  "num_points", default: 0
+    t.string   "log"
+    t.datetime "created_at"
+  end
+
+  create_table "merit_scores", force: true do |t|
+    t.integer "sash_id"
+    t.string  "category", default: "default"
   end
 
   create_table "questions", force: true do |t|
@@ -100,6 +121,11 @@ ActiveRecord::Schema.define(version: 20140908102849) do
     t.datetime "updated_at"
     t.integer  "askable_id"
     t.string   "askable_type"
+  end
+
+  create_table "sashes", force: true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "students", force: true do |t|
@@ -115,12 +141,10 @@ ActiveRecord::Schema.define(version: 20140908102849) do
     t.string   "last_sign_in_ip"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "first_name"
-    t.string   "middle_name"
-    t.string   "last_name"
     t.string   "username"
     t.date     "birthdate"
-    t.integer  "points"
+    t.integer  "sash_id"
+    t.integer  "level",                  default: 0
   end
 
   add_index "students", ["email"], name: "index_students_on_email", unique: true, using: :btree
