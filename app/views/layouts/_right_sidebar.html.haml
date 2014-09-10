@@ -24,4 +24,8 @@
           = "x #{tag.taggings_count}"
     = link_to t('right_side_bar.see_more_tags'), tags_path
   .widget.widget-hot-questions
-    %h3= t('right_side_bar.hot_questions')
+    %h3= t('right_side_bar.popular_question')
+    %ul
+      - most_viewed_questions.each do |question|
+        %li
+          = link_to  question.title, question_path(question)

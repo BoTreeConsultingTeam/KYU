@@ -5,7 +5,7 @@ class Teachers::RegistrationsController <  Devise::RegistrationsController
       @questions = Question.tagged_with(params[:tag])
     else
       @questions = Question.all
-    end
+  	end   
   end
   
   def create
