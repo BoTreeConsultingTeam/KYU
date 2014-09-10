@@ -4,7 +4,7 @@ class Students::RegistrationsController <  Devise::RegistrationsController
     if params[:tag]
       @questions = Question.tagged_with(params[:tag])
     else
-      @questions = Question.all
+      @questions = Question.all.page params[:page]
     end
     @most_used_tags = tag_cloud
     @students_count = Student.count
@@ -15,11 +15,10 @@ class Students::RegistrationsController <  Devise::RegistrationsController
   def create
     @student = build_resource
     @student.save
-    # @student.add_points(10,category: 'answer upvote')
     super
   end
  def update
-    @students = resource # Needed for Merit
+    @students = resource
     super
   end
   def tag_cloud

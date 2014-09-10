@@ -59,6 +59,15 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.7.1)
+    daemons (1.1.9)
+    daemons-rails (1.2.1)
+      daemons
+      multi_json (~> 1.0)
+    delayed_job (4.0.3)
+      activesupport (>= 3.0, < 4.2)
+    delayed_job_active_record (4.0.2)
+      activerecord (>= 3.0, < 4.2)
+      delayed_job (>= 3.0, < 4.1)
     devise (3.3.0)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
@@ -296,6 +305,8 @@ DEPENDENCIES
   bootstrap-sass
   ckeditor_rails
   coffee-rails
+  daemons-rails
+  delayed_job_active_record
   devise
   guard
   guard-jasmine

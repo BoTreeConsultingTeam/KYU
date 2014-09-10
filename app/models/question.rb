@@ -28,4 +28,13 @@ class Question < ActiveRecord::Base
       end
     end
   end
+
+  def self.send_question_answer_abuse_report(current_user, question)
+    begin
+      KyuMailer.delay.report_abuse_mailer(current_user, question)
+    rescue Exception => e
+      Rails.logger.error "Failed to send email, email address: #{current_user.email}"
+      Rails.logger.error "#{e.backtrace.first}: #{e.message} (#{e.class})"
+    end
+  end
 end

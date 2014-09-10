@@ -14,6 +14,8 @@ gem 'devise'
 gem 'rails_config', '~> 0.4.2'
 gem 'kaminari'
 gem 'impressionist'
+gem 'delayed_job_active_record'
+gem 'daemons-rails'
 #gem "ckeditor"
 gem 'ckeditor_rails'
 # Use SCSS for stylesheets

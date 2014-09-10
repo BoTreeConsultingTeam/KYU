@@ -13,14 +13,14 @@ class MembersController < ApplicationController
 
   end
 
-  def manager
+  def students_manager
     if Student.where(student_manager: true).count < 2
       @student = Student.find_by_id(params[:id])
       @student.student_manager = true
       @student.save
       redirect_to members_path
     else
-      redirect_to members_path,flash: { error: "Already two Student manager selected" }
+      redirect_to members_path,flash: { error: t('flash_massege.error.student.manager') }
     end
     
   end

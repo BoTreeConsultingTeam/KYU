@@ -1,6 +1,6 @@
 module ApplicationHelper
   SALUTATIONS = %w[Mr Ms Mrs]
-  CLASS = %w[all 8 9 10 11 12]
+  CLASS = %w[8 9 10 11 12]
   def render_css_class(name)
     css_class = ''
     msg_icon_class = ''

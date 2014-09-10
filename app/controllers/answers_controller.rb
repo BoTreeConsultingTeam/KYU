@@ -23,7 +23,7 @@ class AnswersController < ApplicationController
     @answers = @question.answers
     @answer = Answer.find_by_id(params[:id])
     if @answer.nil?
-      redirect_to question_path(params[:question_id]),flash: { error: "No such Answer found for edit!" }
+      redirect_to question_path(params[:question_id]),flash: { error: t('flash_massege.error.answer.edit') }
     end
   end
 
@@ -31,26 +31,26 @@ class AnswersController < ApplicationController
     @answer = Answer.find_by_id(params[:id])
     if !(@answer.nil?)
       @answer.update(answer_params)
-      redirect_to question_path(params[:answer][:question_id]),flash: { success: "Updated Successfully!" }
+      redirect_to question_path(params[:answer][:question_id]),flash: { success: t('flash_massege.success.answer.update') }
     else
-      redirect_to question_path(params[:answer][:question_id]),flash: { error: "No such Answer found for Update!" }
+      redirect_to question_path(params[:answer][:question_id]),flash: { error: t('flash_massege.error.answer.update') }
     end    
   end
 
   def destroy
     @answer = Answer.find_by_id(params[:id])
     if @answer.nil?
-      redirect_to question_path(params[:question_id]), flash: { error: "No such Answer found for delete!" }
+      redirect_to question_path(params[:question_id]), flash: { error: t('flash_massege.error.answer.destroy') }
     else
       @answer.destroy
-      redirect_to question_path(params[:question_id]), flash: { success: "Deleted successfully!" }
+      redirect_to question_path(params[:question_id]), flash: { success: t('flash_massege.success.answer.destroy') }
     end
   end
 
   def vote
     @answer = Answer.find_by_id(params[:id])
     if @answer.nil?
-      redirect_to questions_path,flash: { error: "No such Answer found for Vote!" }
+      redirect_to questions_path,flash: { error: t('flash_massege.error.answer.vote') }
     else
       if "up" == params[:type]        
         answer_liked_by(@answer,liked_by)
@@ -66,11 +66,11 @@ class AnswersController < ApplicationController
   def accept
     @answer=Answer.find_by_id(params[:id])
     if @answer.nil?
-      redirect_to question_path(@answer.question),flash: { error: "No such Answer found for Accept!" }
+      redirect_to question_path(@answer.question),flash: { error: t('flash_massege.error.answer.accept') }
     else
       @answer.flag = true
       @answer.save
-      redirect_to question_path(@answer.question),flash: { success: "Answer Accepted!" }
+      redirect_to question_path(@answer.question),flash: { success: t('flash_massege.success.answer.accept') }
     end
   end
 

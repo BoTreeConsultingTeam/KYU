@@ -40,24 +40,24 @@ class QuestionsController < ApplicationController
       @comments_q = Comment.relative_comments(@question.id,@question.class).page(params[:page]).per(params[:per])
       @comments_a = Comment.all_comments_of_answers(@answer.class)
     else
-      redirect_to questions_path,flash: { error: "The question you are searching for is not found!" }
+      redirect_to questions_path,flash: { error: t('flash_massege.error.question.show') }
     end
   end
 
   def destroy
     @question = Question.find_by_id(params[:id])
     if @question.nil?
-      redirect_to students_path,flash: { error: "No such Question found for Delete!" }
+      redirect_to students_path,flash: { error: t('flash_massege.error.question.destroy') }
     else
       @question.destroy
-      redirect_to students_path,flash: { success: "Deleted Successfuly!" }
+      redirect_to students_path,flash: { success: t('flash_massege.success.question.destroy') }
     end
   end
 
   def vote
     @question = Question.find_by_id(params[:id])
     if @question.nil?
-      redirect_to questions_path,flash: { error: "No such Question found for Vote!" }
+      redirect_to questions_path,flash: { error: t('flash_massege.error.question.vote') }
     else
       if "up" == params[:type]
         question_liked_by(@question,liked_by)
@@ -71,27 +71,41 @@ class QuestionsController < ApplicationController
   end
   
   def edit
-    @question = Question.find(params[:id])
+    @question = Question.find_by_id(params[:id])
+    if @question.nil?
+      redirect_to questions_path,flash: { error: t('flash_massege.error.question.edit') }
+    end
   end
   
   def update
-    @question = Question.find(params[:id])
-    if @question.update(question_params)
-      flash[:success] = "Profile updated"
-      redirect_to questions_path
+    @question = Question.find_by_id(params[:id])
+    if !(@question.nil?) 
+      @question.update(question_params)
+      flash[:success] = t('flash_massege.success.question.update')
+      redirect_to question_path(params[:id])
     else
-      render 'edit'
+      redirect_to questions_path,flash: { error: t('flash_massege.error.question.update') }
     end 
   end
 
   def disable
     @question = Question.find_by_id(params[:id])
     if @question.nil?
-      redirect_to questions_path,flash: { error: "No such Question found for Disable!" }
+      redirect_to questions_path,flash: { error: t('flash_massege.error.question.disable') }
     else
       @question.enable = false
       @question.save
       redirect_to questions_path
+    end
+  end
+
+  def abuse_report
+    @question = Question.find_by_id(params[:id])
+    if @question.nil?
+      redirect_to questions_path,flash: { error: t('flash_massege.error.question.report_abuse') }
+    else
+      Question.send_question_answer_abuse_report(current_user,@question)
+      redirect_to questions_path,flash: { success: t('flash_massege.success.question.report_abuse') }
     end
   end
 

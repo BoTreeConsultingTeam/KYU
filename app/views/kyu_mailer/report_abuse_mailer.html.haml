@@ -1,0 +1,15 @@
+!!!
+%html
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+  %body
+    %h4
+      Dear Aministrator
+    %p
+      Please find question for report abuse.
+      %br
+    %p
+      = link_to @question.title,"http://localhost:3000/questions#question#{@question.id}"
+      
+    %p 
+      "#{@question.content}"
