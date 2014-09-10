@@ -69,14 +69,14 @@
                     (
                     = @question.comments.count
                     )
-          .comments-container.collapse.hidden_comment-box{id: 'commentq' + "#{@question.id}"}              
+          .comments-container.collapse.hidden_comment-box.comment_box_border{id: 'commentq' + "#{@question.id}"}              
             = form_for (@comment),remote: true do |f|
               = f.text_area :comment,:toolbar => 'mini', :class => 'ckeditor', style: 'width: none !important;',id: 'comment_area'
               = f.hidden_field :relative, :value => @question
               = f.hidden_field :relative_type, :value => @question.class.to_s
               = f.hidden_field :relative_id, :value => @question.id
               %br/
-              = submit_tag "Post",class: 'btn btn-primary btn-lg'
+              = submit_tag "Post",class: 'btn btn-primary'
           %br/
           = render 'comments/show_comments_of_questions'    
           .row.paginations.home
@@ -173,14 +173,14 @@
                         = answer.comments.count
                         )
                 / // share comment , repor
-              .comments-container.collapse.hidden_comment-box{id: 'comment' + "#{answer.id}"}
+              .comments-container.collapse.hidden_comment-box.comment_box_border{id: 'comment' + "#{answer.id}"}
                 = form_for (@comment),remote: true do |f|
                   = f.text_area :comment,:toolbar => 'mini', :class => 'ckeditor', style: 'width: none !important;',id: "text#{answer.id}"
                   = f.hidden_field :relative, :value => answer
                   = f.hidden_field :relative_type, :value => answer.class.to_s
                   = f.hidden_field :relative_id, :value => answer.id
                   %br/
-                  = submit_tag "Post",class: 'btn btn-primary btn-lg'
+                  = submit_tag "Post",class: 'btn btn-primary'
                 / %a.hide-comment{:href => "javascript:void(0)"} Cancel
               %br/
               .answer_comments{id: "commentsa#{answer.id}"}
