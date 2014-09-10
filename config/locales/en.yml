@@ -55,6 +55,10 @@ en:
       forgot_password: 'Forgot your password?'
     messages:
       blocked_profile: 'Your account has been blocked. Please contact to administrator'
+    links:
+      block : 'Block' 
+      mark_as_review: 'MarkasReview'
+      review: 'Review' 
   teachers:
     captions:
     page_header: 

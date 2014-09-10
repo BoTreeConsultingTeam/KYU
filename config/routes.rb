@@ -33,6 +33,7 @@ Rails.application.routes.draw do
   get '/members' => 'members#index'
   get '/members/:id' => 'members#show', as: :member
   get 'members/deactivate/:id', to: 'members#deactivate', as: :deactivate
+  get 'members/markreview/:id', to: 'members#markreview', as: :markreview
 
   resources :answers do
     member { post :upvote,:downvote }

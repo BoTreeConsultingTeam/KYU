@@ -18,4 +18,14 @@ class MembersController < ApplicationController
   	end	
   end	
 
+  def markreview
+    @student = Student.find(params[:id])
+    if @student.update_attributes(mark_as_review: true)
+      flash[:notice] = 'Marked as review'
+      redirect_to members_path
+    else
+      redirect_to root_path
+    end 
+  end 
+
 end
