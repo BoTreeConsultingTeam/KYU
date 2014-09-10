@@ -11,34 +11,86 @@
   #header_sidebar.col-md-12.col-xs-12
   = render 'layouts/left_sidebar'
   .col-md-8.main-content
-    = render :partial => "layouts/sub_heading", :locals => {:object => 'Users'}
-    %ul#main_users_list.row
-      - @students.each do |student|
-        %li.user-item.col-md-4.col-xs-6
-          %span.user-avatar
-            = image_tag student.avatar.url(:thumb)
-          .left-info
-            %span.display_name 
-              = link_to student.username, member_path(student)
-            %br
-              %span.email
-                = student.email
-              .question-cat
-                %span.user-badge
-                  -if student.badges.last.blank?
-                    No Badges
-                  -else
-                    = student.badges.last.name
-                    
-                %span.points 
-                  -if student.points.nil?
-                    0 Points
-                  - else
-                    = "#{student.points} Points" 
-          
+    = render :partial => "layouts/sub_heading", :locals => {:object => 'Students'}
+    .row.question-filter
+    - if ( current_teacher.present? )
+      .col-md-12.sort-questions
+        %ul
+          %li
+            = link_to 'Students', :filter => "student"
+          %li
+            = link_to 'Teachers', :filter => "teacher"
+
+    - elsif (current_student.present?)
+      .col-md-12.sort-questions
+        %ul
+          %li
+            = link_to 'Students', :filter => "student"
+
+    - if params[:filter] == "teacher"
+      
+      .main-questions-list
+        %ul#main_users_list.row
+        - @teachers.each do |teacher|
+          - if (teacher != current_user)
+            .user-item.col-md-4.col-xs-6
+              %span.user-avatar
+                = image_tag teacher.avatar.url(:thumb),class: 'img-circle'
+              .left-info
+                %span.display_name 
+                  = link_to teacher.username, teacher_views_profile_path(teacher)
+                %br
+                  %span.email
+                    = teacher.email
+        .row.paginations.home
+          .col-md-12
+            = render :partial => "shared/pagination", :locals => {:object => @teachers}   
+
+    - else
+      .main-questions-list
+        %ul#main_users_list.row
+        - @students.each do |student|
+          -if (student != current_user)
+            .user-item.col-md-4.col-xs-6
+              %span.user-avatar
+                = image_tag student.avatar.url(:thumb),class: 'img-circle'
+              .left-info
+                %span.display_name 
+                  = link_to student.username, student_views_profile_path(student)
+                %br
+                  %span.email
+                    = student.email
+                  .question-cat
+                    %span.user-badge
+                      -if student.badges.last.blank?
+                        No Badges
+                      -else
+                        = student.badges.last.name
+                        
+                    %span.points 
+                      -if student.points.nil?
+                        0 Points
+                      - else
+                        = "#{student.points} Points"
+        .row.paginations.home
+          .col-md-12
+            = render :partial => "shared/pagination", :locals => {:object => @students}   
+    / .col-md-8.main-content
+    / = render :partial => "layouts/sub_heading", :locals => {:object => 'Teachers'}
+    / %ul#main_users_list.row
+    /   - @teachers.each do |teacher|
+    /     %li.user-item.col-md-4.col-xs-6
+    /       %span.user-avatar
+    /         = image_tag teacher.avatar.url(:thumb)
+    /       .left-info
+    /         %span.display_name 
+    /           = link_to teacher.username, member_path(teacher)
+    /         %br
+    /           %span.email
+    /             = teacher.email      
     .row.paginations.home
       .col-md-12
-        = render :partial => "shared/pagination", :locals => {:object => @students}
+        
     / END MAIN-PAGINATIONS
   = render 'layouts/right_sidebar'
   / END ROW

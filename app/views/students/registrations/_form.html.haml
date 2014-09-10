@@ -4,11 +4,6 @@
       = form_for(resource, :as => resource_name, :url => student_registration_path) do |f|
         %div
         %br
-        = f.label t('common.captions.set_avatar')
-        %br
-        = image_tag @student.avatar.url(:medium)
-        = f.file_field :avatar
-        %br
         = f.label t('common.captions.first_name')
         = f.text_field :first_name,class: 'form-control'
         %br
@@ -35,8 +30,12 @@
         %div
         %br/
         = f.label t('common.captions.password_confirmation')
-
         = f.password_field :password_confirmation,class: 'form-control'
+        %br
+        = f.label t('common.captions.set_avatar')
+        %br
+        = image_tag @student.avatar.url(:medium)
+        = f.file_field :avatar
         / %br/
         / %div
 

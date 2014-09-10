@@ -6,7 +6,7 @@
         %div    
           %br/
           = f.label t('common.captions.salutations')
-          = f.select(:salutation, options_for_salution,{},{class: 'form-control'})
+          = f.select(:salutation, options_for_select(%w[Mr Ms Mrs], :selected => f.object.salutation),{},{class: 'form-control'})
           = f.label t('common.captions.first_name')
           = f.text_field :first_name,class: 'form-control'
           %br
@@ -30,6 +30,11 @@
           = f.label t('common.captions.password_confirmation')
           
           = f.password_field :password_confirmation,class: 'form-control'
+          %br
+          = f.label t('common.captions.set_avatar')
+          %br
+          = image_tag @teacher.avatar.url(:medium)
+          = f.file_field :avatar
         / %br/     
         / %div
         / = f.label t('common.captions.current')

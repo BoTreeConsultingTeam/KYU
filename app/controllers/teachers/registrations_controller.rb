@@ -41,7 +41,7 @@ class Teachers::RegistrationsController <  Devise::RegistrationsController
 
   def configure_permitted_parameters
     devise_parameter_sanitizer.for(:sign_up) << [:salutation, :first_name,:middle_name, :last_name, :username,:birthdate,:avatar]
-    devise_parameter_sanitizer.for(:account_update) << [:salutation, :first_name,:middle_name, :last_name, :username,:birthdate,:avatar]
+    devise_parameter_sanitizer.for(:account_update) << [:salutation, :first_name,:middle_name,:qualification, :last_name, :username,:birthdate,:avatar]
   end
 
   private

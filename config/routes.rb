@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
   
+  get 'teacher_views_profile/:id' => 'teacher_views_profile#show', as: :teacher_views_profile
+  get 'student_views_profile/:id' => 'student_views_profile#show', as: :student_views_profile
   root :to => 'static_pages#index'
 
   devise_for :students,controllers: { sessions: 'students/sessions', registrations: 'students/registrations', passwords:'students/passwords'}
@@ -26,7 +28,7 @@ Rails.application.routes.draw do
     resources :comments
 
   get '/members' => 'members#index'
-  get '/members/:id' => 'members#show', as: :member
+  get '/members/:id' => 'members#show' , as: :member
 
   resources :answers do
     member { post :upvote,:downvote }

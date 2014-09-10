@@ -7,9 +7,6 @@
           = devise_error_messages!
           %div
           %br
-          = f.label t('common.captions.set_avatar')
-          = f.file_field :avatar
-          %br
           = f.label t('common.captions.first_name')
           = f.text_field :first_name,class: 'submit-input'
           %br
@@ -36,5 +33,8 @@
           = f.label t('common.captions.password_confirmation')
           %br/
           = f.password_field :password_confirmation,class: 'submit-input'
+          %br
+          = f.label t('common.captions.set_avatar')
+          = f.file_field :avatar
           %div= f.submit t('common.btn.submit'),class: 'btn-submit-question', id: 'btn_submit_question' 
         = render "students/shared/links"
