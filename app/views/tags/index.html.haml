@@ -1,12 +1,25 @@
-%h1 
-  Tags
-
-%hr
-
-.row
-  .col-xs-12
-    -@tags.each do |t|
-      .col-xs-6.col-sm-3 
-        = link_to t.name, tag_path(t.name)
-      
-    
+.container-fluid
+  .row
+    / END HEADER
+    #header_sidebar.col-md-12.col-xs-12
+    = render 'layouts/left_sidebar'
+    .col-md-8.main-content
+      = render :partial => "layouts/sub_heading", :locals => {:object => 'Tags'}
+      = link_to 'Add tag', new_tag_path
+      .main-tag-list
+        .tags-list
+          .wrap-tag-list
+            .clearfix
+            .question-cat
+              %ul.question-tags
+                - @tags.each do |tag|
+                  %li
+                    = link_to tag, questions_path(tag: tag.name),class: 'q-tag'
+                    = link_to 'Edit',edit_tag_path(tag.id)
+                    = link_to 'Delete',delete_tag_path(tag.id), method: :delete
+      .clearfix
+        .row.paginations.home
+          .col-md-12
+            =paginate @tags  
+    = render 'layouts/right_sidebar'
+  / END ROW
