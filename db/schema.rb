@@ -27,6 +27,14 @@ ActiveRecord::Schema.define(version: 20140908125530) do
     t.string   "answerable_type"
   end
 
+  create_table "badges", force: true do |t|
+    t.string   "name"
+    t.integer  "points"
+    t.boolean  "default"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "badges_sashes", force: true do |t|
     t.integer  "badge_id"
     t.integer  "sash_id"
@@ -83,6 +91,13 @@ ActiveRecord::Schema.define(version: 20140908125530) do
   add_index "impressions", ["impressionable_type", "impressionable_id", "session_hash"], name: "poly_session_index", using: :btree
   add_index "impressions", ["impressionable_type", "message", "impressionable_id"], name: "impressionable_type_message_index", using: :btree
   add_index "impressions", ["user_id"], name: "index_impressions_on_user_id", using: :btree
+
+  create_table "levels", force: true do |t|
+    t.integer  "badge_id"
+    t.integer  "student_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "merit_actions", force: true do |t|
     t.integer  "user_id"
@@ -146,6 +161,7 @@ ActiveRecord::Schema.define(version: 20140908125530) do
     t.datetime "updated_at"
     t.string   "username"
     t.date     "birthdate"
+    t.integer  "points"
     t.integer  "sash_id"
     t.integer  "level",                  default: 0
   end

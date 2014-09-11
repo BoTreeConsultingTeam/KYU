@@ -4,12 +4,9 @@
   .col-md-6.col-xs-6.sort-questions
     %ul
       %li
-        %a.active{:href => "#"} Latest
+        %a.active{:href => "http://demo.enginethemes.com/qaengine/questions/"} Latest
       %li
         = set_link(t('questions.link.last_week'),'week')
-
       %li
         = set_link(t('questions.link.last_month'),'month')
-  .col-md-6.col-xs-6
-
 = render :partial => 'questions/questions_list', :locals => { questions: @questions}

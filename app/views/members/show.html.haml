@@ -11,9 +11,6 @@
         = @student.email
   .col-md-7.col-xs-7.user-post-count
     .row
-      .col-md-9.col-md-push-3
-        
-
       .col-md-4.col-xs-4.question-cat
         = render :partial => 'student_badge', :locals => { :object => @student}
         %br
@@ -42,6 +39,8 @@
         = link_to 'Questions', member_path(@student,:filter => "questions")
       %li
         = link_to 'Answers', member_path(@student,:filter => "answers")
+      %li
+        = link_to 'Bookmarks', member_path(@student,:filter => "bookmarks")  
 / END QUESTIONS-FILTER
 - if params[:filter] == "answers"
   - if !(@answers.blank?)
@@ -51,10 +50,14 @@
   - else
     %h2
       = t('member.captions.not_answered')
-- else
+- elsif params[:filter] == "bookmarks"
+  - question_list = bookmark_question_ids @student
+  - if !(question_list.blank?)
+    = render :partial => 'questions/questions_list', :locals => { questions: question_list}
+  - else
+    = t('member.captions.never_asked')
+-else
   - if !(@questions.blank?)
     = render :partial => 'questions/questions_list', :locals => { questions: @questions}
-  -else
-    %h2
-      = t('member.captions.never_ask')
-    
+  - else
+    = t('member.captions.never_asked')
