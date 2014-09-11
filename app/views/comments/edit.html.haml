@@ -1,9 +1,6 @@
-.row
-  .col-md-2.disable-mobile.left-sidebar
-  .col-md-8.main-content
-    .row.select-category
-      .col-md-6.col-xs-6.current-category
-        %span Edit Comment of Question
+.clearfix
+#question_filter.row.question-filter
+  .col-md-12.col-xs-12.sort-questions
     .modal-submit-questions
       .modal-dialog
       - if @question.present?

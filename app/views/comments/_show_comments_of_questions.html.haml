@@ -1,11 +1,13 @@
 %h4.comment-lable Comments
 .raw.comment-line
-  -@comments_q.each do |c|    
-    .col-md-10
-      %p= raw(c.comment)
-      %hr/
-    .col-md-2
-      - if c.is_author?(current_user)
-        =link_to '',edit_question_comment_path(@question.id,c.id),class: 'edit-comment fa fa-pencil'
-        |
-        =link_to '',question_comment_path(@question.id,c),method: :delete,data: {confirm: "are you sure?"},class: 'delete-comment fa fa-trash-o'
+  -@comments_q.each do |c|   
+    .row 
+      .col-md-2
+      .col-md-8.col-xs-10
+        %p= raw(c.comment)
+        %hr/
+      .col-md-2.col-xs-2
+        - if c.is_author?(current_user)
+          =link_to '',edit_question_comment_path(@question.id,c.id),class: 'edit-comment fa fa-pencil'
+          |
+          =link_to '',question_comment_path(@question.id,c),method: :delete,data: {confirm: "are you sure?"},class: 'delete-comment fa fa-trash-o'

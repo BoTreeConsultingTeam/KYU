@@ -1,3 +1,6 @@
 = render :partial => "layouts/sub_heading", :locals => {:object => 'Signup'}
-= render 'form'
-= render "teachers/shared/links"
+.modal-submit-questions
+  .modal-dialog
+    .modal-body
+      = render 'form'
+      = render "teachers/shared/links"

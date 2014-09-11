@@ -10,9 +10,17 @@ class QuestionsController < ApplicationController
         @questions = Question.recent_data_week.page params[:page]
       when 'month'
         @questions = Question.recent_data_month.page params[:page]
+      when 'un_answered'
+        @questions = Kaminari.paginate_array(Question.find_all_by_id(un_answered_questions)).page(params[:page]).per(10)
+      when 'most_viewed'
+        @questions = Question.most_viwed_question.page params[:page]
+      when 'most_voted'
+        @questions = Question.highest_voted.page params[:page]
+      when 'newest'
+        @questions = Question.newest(current_user).page params[:page]
       end
     else
-      @questions = Question.all.page params[:page]
+      @questions = Question.all.order("created_at DESC").page params[:page]
     end
   end
 
@@ -102,6 +110,19 @@ class QuestionsController < ApplicationController
 
   def question_disliked_by(question,user)
     question.disliked_by(user)
+  end
+  def all_questions
+    questions = Question.all
+  end
+
+  def un_answered_questions
+    question = {}
+    all_questions.each do |q| 
+      if q.answers.count == 0
+        question[q.id] = q
+      end
+    end
+    question.keys
   end
 
   def received_tag

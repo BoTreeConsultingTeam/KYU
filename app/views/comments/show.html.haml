@@ -9,7 +9,7 @@
   Answer
   %br/
   %br/
-  =@answer.content
+  = raw(@answer.content)
   
 = render partial: 'form', locals: {type: 'new',object: @answer}
 %hr/

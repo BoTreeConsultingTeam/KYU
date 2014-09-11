@@ -1,6 +1,6 @@
 class MembersController < ApplicationController
   def index
-	@students = Student.all.page(params[:page]).per(5)
+	@students = Student.all.page(params[:page]).per(6)
   end
 
   def show

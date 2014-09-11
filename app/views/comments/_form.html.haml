@@ -5,7 +5,7 @@
         = f.text_area :comment,:toolbar => 'mini', :class => 'ckeditor', style: 'width: none !important;'
         - if !(type == 'edit')
           = f.hidden_field :relative, :value => object
-          = f.hidden_field :relative_type, :value => object.class.to_s
-          = f.hidden_field :relative_id, :value => object.id
-  .spacer20
-  = submit_tag "Post", class: 'btn btn-primary'
+        = f.hidden_field :relative_type, :value => object.class.to_s
+        = f.hidden_field :relative_id, :value => object.id
+        .spacer20
+        = submit_tag "Post", class: 'btn btn-primary'

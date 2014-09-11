@@ -55,7 +55,13 @@
       .col-md-4.col-xs-4.question-control
         = render :partial => 'link_to_comment', :locals => { object: @question, id: "q#{@question.id}"}
     .comments-container.collapse.hidden_comment-box{id: 'commentq' + "#{@question.id}"}              
-      = render partial:'comments/form',locals: {type: 'new',object: @question}       
+      = form_for (@comment) do |f|
+        = f.text_area :comment,:toolbar => 'mini', :class => 'ckeditor', style: 'width: none !important;',id: "text" + "#{@question.id}"
+        = f.hidden_field :relative, :value => @question
+        = f.hidden_field :relative_type, :value => @question.class.to_s
+        = f.hidden_field :relative_id, :value => @question.id
+        %br/
+        = submit_tag "Post",class: 'btn btn-lg btn-primary'      
     %br/
     = render 'comments/show_comments_of_questions'               
     .clearfix
