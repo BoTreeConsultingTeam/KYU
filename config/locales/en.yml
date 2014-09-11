@@ -125,3 +125,7 @@ en:
     most_used_tags: 'MOST USED TAGS'
     hot_questions: 'HOT QUESTIONS'
     see_more_tags: 'See more tags'
+  member:
+    captions:
+      not_answered: You don't  have answered any question yet
+      never_ask: You don't have asked any questions yet

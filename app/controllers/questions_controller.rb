@@ -24,6 +24,7 @@ class QuestionsController < ApplicationController
   def create
     @question = Question.new(question_params.merge({askable: current_user}))
     if @question.save
+      current_student.change_points(2)
       redirect_to questions_path
     else
       render 'new'
@@ -61,8 +62,10 @@ class QuestionsController < ApplicationController
     else
       if "up" == params[:type]
         question_liked_by(@question,liked_by)
+        give_points(@question,5)
       else
         question_disliked_by(@question,liked_by)
+        give_points(@question,-5)
       end
       respond_to do |format|
         format.js        

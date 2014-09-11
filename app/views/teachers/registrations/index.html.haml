@@ -1,1 +1,13 @@
-= render 'questions/questions'
+= render :partial => "layouts/sub_heading", :locals => {:object => 'All Questions'}
+.clearfix
+#question_filter.row.question-filter
+  .col-md-6.col-xs-6.sort-questions
+    %ul
+      %li
+        %a.active{:href => "#"} Latest
+      %li
+        = set_link(t('questions.link.last_week'),'week')
+
+      %li
+        = set_link(t('questions.link.last_month'),'month')
+= render :partial => 'questions/questions_list', :locals => { questions: @questions}

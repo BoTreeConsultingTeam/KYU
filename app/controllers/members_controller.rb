@@ -1,5 +1,4 @@
 class MembersController < ApplicationController
-
   def index
     @student_manager = Student.find_all_by_student_manager(true)
     @students = Student.all.page(params[:page]).per(6)    
@@ -7,11 +6,8 @@ class MembersController < ApplicationController
 
   def show
     @student = Student.find_by_id(params[:id])
-  end
-
-
-  def studentclass
-
+    @questions = @student.questions
+    @answers = @student.answers
   end
 
   def students_manager
@@ -25,5 +21,9 @@ class MembersController < ApplicationController
     end
     
   end
+  private
 
+	def received_filter
+		params[:filter]
+	end
 end

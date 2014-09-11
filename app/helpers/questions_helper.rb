@@ -25,4 +25,11 @@ module QuestionsHelper
   def get_tag_counts
     Question.tag_counts
   end
+  def check_bookmark question
+    current_user.bookmarks.where(:question_id => question.id)  
+  end  
+
+  def bookmark_question_ids student
+    student.bookmarks.map { |bookmark| bookmark.question }
+  end
 end

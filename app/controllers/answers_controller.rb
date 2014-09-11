@@ -54,8 +54,10 @@ class AnswersController < ApplicationController
     else
       if "up" == params[:type]        
         answer_liked_by(@answer,liked_by)
+        give_points(@answer,15)
       else
-        answer_disliked_by(@answer,liked_by) 
+        answer_disliked_by(@answer,liked_by)
+        give_points(@answer,-15)
       end
       respond_to do |format|
         format.js        
@@ -70,6 +72,7 @@ class AnswersController < ApplicationController
     else
       @answer.flag = true
       @answer.save
+      give_points(@answer,10)
       redirect_to question_path(@answer.question),flash: { success: t('flash_massege.success.answer.accept') }
     end
   end

@@ -4,7 +4,7 @@ Rails.application.routes.draw do
 
   devise_for :students,controllers: { sessions: 'students/sessions', registrations: 'students/registrations', passwords:'students/passwords'}
   devise_for :teachers,controllers: { sessions: 'teachers/sessions', registrations: 'teachers/registrations', passwords:'teachers/passwords' }
-
+  resources :bookmarks
   devise_scope :student do
     get "/students" => "students/registrations#index"
   end
@@ -17,6 +17,7 @@ Rails.application.routes.draw do
   get 'tags/:tag', to: 'questions#index', as: :tag 
   get 'questions/tags', to: 'questions#alltags', as: :tags
   get 'questions/abuse_report/:id',to: 'questions#abuse_report',as: :report
+  get '/badges', to: 'badges#index', as: :badges
   resources :tags
   resources :questions do
     resources :comments

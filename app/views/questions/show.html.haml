@@ -1,75 +1,64 @@
-.container-fluid
-  .row
-    #header_sidebar.col-md-12.col-xs-12
-    = render 'layouts/left_sidebar'
-    .col-md-8.main-content.single-content
-      .row.select-category.single-head
-        .col-md-2.col-xs-2
-          %span.back
-            %i.fa.fa-angle-double-left
-            %a 
-              = link_to 'Home',questions_path
-        .col-md-8.col-xs-8
-          %h3
-            = @question.title
-      #question_content.row.question-main-content.question-item
-        .col-md-2.col-xs-2.vote-block
+.row.select-category.single-head
+  .col-md-2.col-xs-2
+    %span.back
+      %i.fa.fa-angle-double-left
+      %a 
+        = link_to 'Home',questions_path
+  .col-md-8.col-xs-8
+    %h3 
+      = @question.title
+/ END SELECT-CATEGORY
+#question_content.row.question-main-content.question-item{"data-id" => "1728"}
+  / Vote section
+  .col-md-2.col-xs-2.vote-block
+    / vote group
           %ul
             %li{"data-original-title" => "This is useful.", :title => ""}
               = vote_question_link(@question, 'up')
-            / // vote up
-            / vote point
-            %li
+      %li
               %span.vote-count{id: "upvoteq#{@question.id}" }
-                = @question.get_likes.size
-            %li
+          = @question.get_likes.size
+      %li
               %span.vote-count{id: "downvoteq#{@question.id}"}  
                 = @question.get_dislikes.size
             %li{"data-original-title" => "This is useful.", :title => ""}
               = vote_question_link(@question, 'down')
-              / // vote down
-          / // vote group
-        / // Vote section
-        .col-md-9.col-xs-9.q-right-content
+  .col-md-9.col-xs-9.q-right-content
+    / admin control
           %ul.post-controls
             %li
               = link_to '',edit_question_path(@question.id),class: 'post-edit action fa fa-pencil',rel: 'tooltip',title: 'Edit', 'data-no-turbolink' => true
             %li
               = link_to '', question_path,method: :delete,data: {confirm:'Are you sure?'},rel: 'tooltip',title: 'Delete',class: 'post-delete action fa fa-trash-o'
-            %li
-              %a.action.follow{"data-name" => "follow", "data-original-title" => "Follow", "data-toggle" => "tooltip",title: 'Importent', :href => "javascript:void(0)"}
-                %i.fa.fa-plus-square
-          .top-content
+      
+      - if (check_bookmark @question).blank?
+        %li
+          = link_to '', bookmarks_path(:question_id => @question.id), method: :post, class: 'post-delete action fa fa-plus'
+      -else
+        %li
+          = link_to '',bookmark_path(:question_id => @question.id), method: :delete,data: {confirm:'Are you sure?'},class: 'post-delete action fa fa-minus-square'    
+    .top-content
             - if @question.answers.count > 0
-              %span.answered
-                %i.fa.fa-check
-                Answered
-            %ul.question-tags
-              - @question.tag_list.each do |tag|
-                %li
-                  = link_to tag, tag_path(tag),class: 'q-tag'
-          .clearfix
-          .question-content
-            = raw(@question.content)
-          .row
-            .col-md-8.col-xs-9.question-cat
-              %a{:href => "#"}
-                %span.author-avatar
-                  %img.avatar{:alt => "", :src => "#"}
-                %span.author-name Admin Demo
-              %span.user-badge{:style => "background-color:#04aad4;"}
-                = @question.askable.class
-              %span.question-time
-                #{time_ago_in_words(@question.created_at)} ago.
-            .col-md-4.col-xs-4.question-control
-              %ul
-                %li
-                  = link_to 'Comment','#comment',class: 'toggleLink', id: "q#{@question.id}"
-                  %span{id: "comment_count"}
-                    (
-                    = @question.comments.count
-                    )
-          .comments-container.collapse.hidden_comment-box.comment_box_border{id: 'commentq' + "#{@question.id}"}              
+      %span.answered
+        %i.fa.fa-check
+        Answered
+      = render :partial => 'question_tags', :locals => { :object => @question}
+    .clearfix
+    .question-content
+      = raw(@question.content)
+    .row
+      .col-md-8.col-xs-9.question-cat
+        %a{:href => "http://demo.enginethemes.com/qaengine/member/admindemo/"}
+          %span.author-avatar
+            %img.avatar{:alt => "", :src => "http://1.gravatar.com/avatar/3743112a070d24fe4dbd5cb39d6a5e9e?s=30&amp;d=http%3A%2F%2F1.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D30&amp;r=G"} 
+          %span.author-name Admin Demo
+        %span.user-badge{:style => "background-color:#04aad4;"} 
+          = @question.askable.class
+        %span.question-time
+          #{time_ago_in_words(@question.created_at)} ago.
+      .col-md-4.col-xs-4.question-control
+        = render :partial => 'link_to_comment', :locals => { object: @question, id: "q#{@question.id}"}
+    .comments-container.collapse.hidden_comment-box{id: 'commentq' + "#{@question.id}"}              
             = form_for (@comment),remote: true do |f|
               = f.text_area :comment,:toolbar => 'mini', :class => 'ckeditor', style: 'width: none !important;',id: 'comment_area'
               = f.hidden_field :relative, :value => @question
@@ -77,130 +66,27 @@
               = f.hidden_field :relative_id, :value => @question.id
               %br/
               = submit_tag "Post",class: 'btn btn-primary'
-          %br/
-          = render 'comments/show_comments_of_questions'    
+    %br/
+    = render 'comments/show_comments_of_questions'               
           .row.paginations.home
             .col-md-12{id:'paginator'}
               = paginate @comments_q
-          .clearfix
-      .sticky-wrapper
-        #answers_filter.row.answers-filter
-          .max-col-md-8
-            .col-md-6.col-xs-6
-              %span.answers-count
-                %span.number
-                  = @question.answers.count
-                Answers
-            .col-md-6.col-xs-6.sort-questions
-              %ul
-                %li
-                  %a.active{:href => "#"} Votes
-                /
-                  <li>
-                  <a class="" href="/qaengine/question/what-are-some-of-your-favorite-deep-awe-inspiring-andor-thought-provoking-movies/?sort=active">Active</a>
-                  </li>
-                %li
-                  %a{:href => "#"} Oldest
-      #answers_main_list
-        -@answers.each do |answer|
-          #74.row.question-main-content.question-item.answer-item
-            .col-md-2.col-xs-2
-              / vote group
-              .accept-answer
-                -if !@question.answered?
-                  - if @question.user_id == current_user.id
-                    %h3
-                      = link_to '', index_path(answer.id),class: 'fa fa-check pull-right'
-              .vote-block
-                %ul
-                  / vote up
-                  %li{"data-original-title" => "This is useful.", :title => ""}
-                    = vote_answer_link(answer,'up')       
-                  / // vote up
-                  / vote point
-                  %li
-                    %span.vote-count{id: "upvoteanswer#{answer.id}"}
-                      = answer.get_likes.size
-                  %li
-                    %span.vote-count{id: "downvoteanswer#{answer.id}"}
-                      = answer.get_dislikes.size
-                  / // vote point
-                  / vote down
-                  %li{"data-original-title" => "This is useful.", :title => ""}
-                    = vote_answer_link(answer,'down')
-                  %br/
-              
-              -if @question.accepted_answer_id == answer.id
-                .top-content  
-                  %span.answered.fa.fa-check
-                / // vote down
-              / // vote group
-              
-            .col-md-9.col-xs-9.q-right-content
-              / control tool for admin, moderate
-              
-              %ul.post-controls
-                %li
-                  = link_to '',edit_question_answer_path(@question.id,answer.id),rel: 'tooltip',title: 'Edit',class: 'post-edit action fa fa-pencil','data-no-turbolink' => true
-                %li
-                  = link_to '', question_answer_path(@question.id,answer.id),method: :delete,rel: 'tooltip',title: 'Delete',class: 'post-delete action fa fa-trash-o'
-              .clearfix
-              .question-content
-                = raw(answer.content)
-              .row.cat-infomation
-                .col-md-8.col-xs-8.question-cat                  
-                  %span.author-avatar
-                    %img.avatar{:alt => "", :src => "http://demo.enginethemes.com/qaengine/wp-content/uploads/2014/08/1282.jpg"}  
-                  %span.author-name       
-                    - if answer.answerable_type != 'Teacher'                      
-                      - if answer.answerable.student_manager?
-                        %a.student_manager{href: "#",rel: "tooltip",title: t('students.tooltip.manager')} 
-                          = answer.answerable.username
-                      - else
-                        = answer.answerable.username
-                    - else                        
-                      = answer.answerable.username
-                  %span.user-badge{:style => "background-color:#780978;", :title => "1543"} 
-                    = answer.answerable_type
-                  %span.question-time
-                    #{time_ago_in_words(answer.created_at)} ago.
-                .col-md-4.col-xs-4.question-control
-                  %ul
-                    %li
-                      = link_to 'Comment','#comment',class: 'toggleLink', id: "#{answer.id}"
-                      %span{id: "comment_count#{answer.id}"}
-                        (
-                        = answer.comments.count
-                        )
-                / // share comment , repor
-              .comments-container.collapse.hidden_comment-box.comment_box_border{id: 'comment' + "#{answer.id}"}
-                = form_for (@comment),remote: true do |f|
-                  = f.text_area :comment,:toolbar => 'mini', :class => 'ckeditor', style: 'width: none !important;',id: "text#{answer.id}"
-                  = f.hidden_field :relative, :value => answer
-                  = f.hidden_field :relative_type, :value => answer.class.to_s
-                  = f.hidden_field :relative_id, :value => answer.id
-                  %br/
-                  = submit_tag "Post",class: 'btn btn-primary'
-                / %a.hide-comment{:href => "javascript:void(0)"} Cancel
-              %br/
-              .answer_comments{id: "commentsa#{answer.id}"}
-                = render partial: 'comments/show_comments_of_answers',locals: {answer: answer}
-            / END SUBMIT FORM COMMENT               
-          / END REPLY-ITEM        
-        / END REPLY-ITEM
-      / ANSWERS LOOP
-      .row.paginations.collapse
-        .col-md-12
-      .row.form-reply
-        .col-md-12
-          %h3 Your Answer
-          .modal-submit-questions
-            .modal-dialog
-              .modal-body
-                = form_for (@answer) do |f|
-                  = f.text_area :content,:toolbar => 'mini', :class => 'ckeditor', style: 'width: none !important;'
-                  = f.hidden_field :user_id, :value => current_user.id
-                  = f.hidden_field :question_id, :value => @question.id
-                  .spacer20
-                  = f.submit t('questions.btn.submit'),class: 'btn btn-primary', id: 'btn_submit_question'
-    = render 'layouts/right_sidebar'
+    .clearfix
+.sticky-wrapper
+  #answers_filter.row.answers-filter
+    .max-col-md-8
+      .col-md-6.col-xs-6
+        %span.answers-count
+          %span.number 
+            = @question.answers.count
+          Answers
+      .col-md-6.col-xs-6.sort-questions
+        %ul
+          %li
+            %a.active{:href => "http://demo.enginethemes.com/qaengine/question/what-are-some-of-your-favorite-deep-awe-inspiring-andor-thought-provoking-movies/"} Votes
+          %li
+            %a{:href => "/qaengine/question/what-are-some-of-your-favorite-deep-awe-inspiring-andor-thought-provoking-movies/?sort=oldest"} Oldest
+/ ANSWERS LOOP
+#answers_main_list
+  = render 'answers_list', locals: { :answers =>  @answer}
+  = render 'answers/form'

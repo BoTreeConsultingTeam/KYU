@@ -1,19 +1,10 @@
-.container-fluid
-  .row
-    #header_sidebar.col-md-12.col-xs-12
-    = render 'layouts/left_sidebar'
-    .col-md-8.main-content
-      .row.select-category
-        .col-md-8.col-xs-6.current-category
-          %span  
-            =@question.title
-      .modal-submit-questions
-        .modal-dialog
-          .modal-body
-            = form_for (@answer) do |f|
-              = f.text_area :content,:toolbar => 'mini', :class => 'ckeditor', style: 'width: none !important;'
-              = f.hidden_field :user_id, :value => current_user.id  
-              = f.hidden_field :question_id, :value => @question.id
-              = f.submit t('answers.btn.submit_answer'),class: 'btn btn-primary btn-lg'
-
-    = render 'layouts/right_sidebar'
+= render :partial => "layouts/sub_heading", :locals => {:object => 'New Answer'}
+.modal-submit-questions
+  .modal-dialog
+    .modal-body
+      = form_for (@answer) do |f|
+        = f.text_area :content,:toolbar => 'mini', :class => 'ckeditor'
+        = f.hidden_field :user_id, :value => current_user.id  
+        = f.hidden_field :question_id, :value => @question.id
+        %br 
+        = f.submit t('answers.btn.submit_answer'),class: 'btn-submit-question'
