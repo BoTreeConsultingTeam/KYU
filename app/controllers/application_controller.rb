@@ -13,6 +13,28 @@ class ApplicationController < ActionController::Base
     end
   end
   
+  def user_profile_update user
+    account_update_params = devise_parameter_sanitizer.sanitize(:account_update)
+    if account_update_params[:password].blank?
+      account_update_params.delete("password")
+      account_update_params.delete("password_confirmation")
+    end
+    if user.update_attributes(account_update_params)
+       set_flash_message :notice, :updated
+       sign_in user, :bypass => true
+       redirect_to after_update_path_for(user)
+    else
+       render "edit"
+    end
+  end
+
+  protected
+
+  def configure_permitted_parameters
+    devise_parameter_sanitizer.for(:sign_up) << [:salutation, :first_name,:middle_name, :last_name, :username,:birthdate]
+    devise_parameter_sanitizer.for(:account_update) << [:salutation, :first_name, :middle_name, :last_name, :username, :birthdate, :qualification]
+  end
+
   private
   def current_user
     current_user = current_student.present? ? current_student : current_teacher

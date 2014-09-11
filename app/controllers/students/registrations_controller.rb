@@ -19,33 +19,9 @@ class Students::RegistrationsController <  Devise::RegistrationsController
     super
   end
 
-  def update
-    # puts "#{@student.inspect}"
-    # @student.update_with_password(devise_parameter_sanitizer.sanitize(:account_update))
-    # if @student.save
-
-    #   redirect_to root_path
-    # end
-    # super 
-    account_update_params = devise_parameter_sanitizer.sanitize(:account_update)
-
-    # Allow user to update without using password.
-    if account_update_params[:password].blank?
-      logger.debug "+++++++++++++++++++++++++ debug1"
-      account_update_params.delete("password")
-      account_update_params.delete("password_confirmation")
-    end
-
-    # Set current_user
+  def update 
     @user = Student.find(current_user.id)
-    if @user.update_attributes(account_update_params)
-      set_flash_message :notice, :updated
-      sign_in @user, :bypass => true
-      redirect_to after_update_path_for(@user)
-    else
-       render "edit"
-    end
-    
+    user_profile_update @user
   end
 
   def tag_cloud
@@ -57,8 +33,6 @@ class Students::RegistrationsController <  Devise::RegistrationsController
   def configure_permitted_parameters
     devise_parameter_sanitizer.for(:sign_up) << [:first_name, :middle_name, :last_name, :username, :birthdate]
     devise_parameter_sanitizer.for(:account_update) << [:first_name,:middle_name, :last_name, :username,:birthdate]
-    # devise_parameter_sanitizer.for(:account_update) { |u| u.permit(:first_name,:middle_name, :last_name, :username,:birthdate) }
-    # devise_parameter_sanitizer.for(:sign_up) { |u| u.permit(:first_name,:middle_name, :last_name, :username,:birthdate) }
   end
 
   private
