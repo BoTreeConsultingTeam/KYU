@@ -12,4 +12,8 @@
       .container-fluid
         .row
           = render partial: 'shared/flash_messages'
-          = yield
+          #header_sidebar.col-md-12.col-xs-12
+          = render 'layouts/left_sidebar'
+          .col-md-8.main-content
+            = yield
+          = render 'layouts/right_sidebar'

@@ -24,7 +24,7 @@ class QuestionsController < ApplicationController
   def create
     @question = Question.new(question_params.merge({askable: current_user}))
     if @question.save
-      current_user.change_points(2)
+      current_student.change_points(2)
       redirect_to questions_path
     else
       render 'new'
@@ -57,7 +57,7 @@ class QuestionsController < ApplicationController
       redirect_to questions_path,flash: { error: "No such Question found for Vote!" }
     else
       question_liked_by(@question,liked_by)
-      give_points_on_vote(@question,5)
+      give_points(@question,5)
       redirect_to questions_path
     end
   end
@@ -68,7 +68,7 @@ class QuestionsController < ApplicationController
       redirect_to questions_path,flash: { error: "No such Question found for Vote!" }
     else
       question_disliked_by(@question,liked_by)
-      give_points_on_vote(@question,-5)
+      give_points(@question,-5)
       redirect_to questions_path
     end
   end
@@ -110,10 +110,5 @@ class QuestionsController < ApplicationController
 
   def received_time
     params[:time]
-  end
-
-  def give_points_on_vote(question,points)
-    question_owner = question.askable
-    question_owner.change_points(points)
   end
 end

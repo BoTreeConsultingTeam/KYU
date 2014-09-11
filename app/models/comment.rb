@@ -11,6 +11,6 @@ class Comment < ActiveRecord::Base
   validates :comment, presence: true
 
   def is_author?(user)
-   self.commentable == user
+    self.commentable == user
   end
 end
