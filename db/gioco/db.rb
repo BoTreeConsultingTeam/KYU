@@ -1,0 +1,8 @@
+require "#{Rails.root}/db/gioco/create_badge_train.rb"
+require "#{Rails.root}/db/gioco/create_badge_Supporter.rb"
+require "#{Rails.root}/db/gioco/create_badge_Reviewer.rb"
+require "#{Rails.root}/db/gioco/create_badge_Doctor.rb"
+require "#{Rails.root}/db/gioco/create_badge_Vice Professor.rb"
+require "#{Rails.root}/db/gioco/create_badge_Professor.rb"
+require "#{Rails.root}/db/gioco/create_badge_new-registered.rb"
+require "#{Rails.root}/db/gioco/remove_badge_new-registered.rb"
