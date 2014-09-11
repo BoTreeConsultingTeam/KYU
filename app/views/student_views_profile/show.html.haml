@@ -52,34 +52,32 @@
         %li
           = link_to 'Edit your Info', edit_student_registration_path
         %li
-          = link_to 'Basic Info', student_views_profile_path(@student,:filter => "basicinfo")
+          = link_to "Basic Info", student_views_profile_path(@student.id, active_tab:'basicinfo'), class: "#{profile_active_tab('basicinfo')}"
         %li
-          = link_to 'Questions', student_views_profile_path(@student,:filter => "questions")
+          = link_to 'Questions', student_views_profile_path(@student.id, active_tab:'questions'), class: "#{profile_active_tab('questions')}"
         %li
-          = link_to 'Answers', student_views_profile_path(@student,:filter => "answers")
+          = link_to 'Answers', student_views_profile_path(@student.id, active_tab:'answers'), class: "#{profile_active_tab('answers')}"
         %li
-          = link_to 'Tags', student_views_profile_path(@student,:filter => "tags")
+          = link_to 'Tags', student_views_profile_path(@student.id, active_tab:'tags'), class: "#{profile_active_tab('tags')}"
+          = link_to 'Badges', student_views_profile_path(@student.id, active_tab:'badges'), class: "#{profile_active_tab('badges')}"
         %li
-          = link_to 'Badges', student_views_profile_path(@student,:filter => "badges")
-        %li
-          = link_to 'Votes', student_views_profile_path(@student,:filter => "votes")
+          = link_to 'Votes', student_views_profile_path(@student.id, active_tab:'votes'), class: "#{profile_active_tab('votes')}"
   - else
     .col-md-12.sort-questions
       %ul
         %li
-          = link_to 'Basic Info', student_views_profile_path(@student,:filter => "basicinfo")
+          = link_to "Basic Info", student_views_profile_path(@student.id, active_tab:'basicinfo'), class: "#{profile_active_tab('basicinfo')}"
         %li
-          = link_to 'Questions', student_views_profile_path(@student,:filter => "questions")
+          = link_to 'Questions', student_views_profile_path(@student.id, active_tab:'questions'), class: "#{profile_active_tab('questions')}"
         %li
-          = link_to 'Answers', student_views_profile_path(@student,:filter => "answers")
+          = link_to 'Answers', student_views_profile_path(@student.id, active_tab:'answers'), class: "#{profile_active_tab('answers')}"
         %li
-          = link_to 'Tags', student_views_profile_path(@student,:filter => "tags")
+          = link_to 'Tags', student_views_profile_path(@student.id, active_tab:'tags'), class: "#{profile_active_tab('tags')}"
+          = link_to 'Badges', student_views_profile_path(@student.id, active_tab:'badges'), class: "#{profile_active_tab('badges')}"
         %li
-          = link_to 'Badges', student_views_profile_path(@student,:filter => "badges")
-        %li
-          = link_to 'Votes', student_views_profile_path(@student,:filter => "votes")
+          = link_to 'Votes', student_views_profile_path(@student.id, active_tab:'votes'), class: "#{profile_active_tab('votes')}"
   / END QUESTIONS-FILTER
-  - if params[:filter] == "answers"
+  - if params[:active_tab] == "answers"
     .main-questions-list
       %ul#main_questions_list
         -if !(@answers.nil?)
@@ -133,7 +131,7 @@
                     votes  
         - else
           You don't  have answered any question yet
-  - elsif params[:filter] == "tags"
+  - elsif params[:active_tab] == "tags"
     .main-questions-list
       %ul#main_questions_list
         -if !(@tags.nil?)
@@ -149,7 +147,7 @@
           
         - else
           You haven't tagged any thing yet!!!
-  - elsif params[:filter] == "badges"
+  - elsif params[:active_tab] == "badges"
     .main-questions-list
       %ul#main_questions_list
         - if !(@student.badges.last.blank?)
@@ -159,40 +157,67 @@
                 = badge
         -else
           You haven't earned any Badges!!!
-  - elsif params[:filter] == "votes"
+  - elsif params[:active_tab] == "votes"
     .main-questions-list
       %ul#main_questions_list
         - if !(@questions.nil?)
-          .row
-            .col-md-2
-            .col-md-3
-              Total count
-            .col-md-3
-              Upvotes count
-            .col-md-3
-              Uownvotes count
-          .row
-            .col-md-2
-              Questions
-            .col-md-3
-              = @questions.count
-            .col-md-3
-              = @total_upvotes_question
-            .col-md-3
-              = @total_downvotes_question
-            .row
-            .col-md-2
-              Answers
-            .col-md-3
-              = @answers.count
-            .col-md-3
-              = @total_upvotes_answer
-            .col-md-3
-              = @total_downvotes_answer
-            
+          .table-responsive
+            %table.table{:style => "border: 1px solid black"}
+              %thead
+                %tr.success
+                  %th.text-center{:style => "border: 1px solid black"}
+                  %th.text-center{:style => "border: 1px solid black"} Total Count 
+                  %th.text-center{:style => "border: 1px solid black"} UpVotes Count
+                  %th.text-center{:style => "border: 1px solid black"} DownVotes Count
+              %tbody
+                %tr
+                  %td.text-center{:style => "border: 1px solid black"} 
+                    Questions
+                  %td.text-center{:style => "border: 1px solid black"} 
+                    = @questions.count
+                  %td.text-center{:style => "border: 1px solid black"} 
+                    = @total_upvotes_question
+                  %td.text-center{:style => "border: 1px solid black"} 
+                    = @total_downvotes_question
+                %tr.success
+                  %td.text-center{:style => "border: 1px solid black"} 
+                    Answers
+                  %td.text-center{:style => "border: 1px solid black"} 
+                    = @answers.count
+                  %td.text-center{:style => "border: 1px solid black"} 
+                    = @total_upvotes_answer
+                  %td.text-center{:style => "border: 1px solid black"} 
+                    = @total_downvotes_answer
+            / .row
+            /   .col-md-2
+            /   .col-md-3
+            /     Total count
+            /   .col-md-3
+            /     Upvotes count
+            /   .col-md-3
+            /     Uownvotes count
+            / .row
+            /   .col-md-2
+            /     Questions
+            /   .col-md-3
+            /     = @questions.count
+            /   .col-md-3
+            /     = @total_upvotes_question
+            /   .col-md-3
+            /     = @total_downvotes_question
+            /   .row
+            /   .col-md-2
+            /     Answers
+            /   .col-md-3
+            /     = @answers.count
+            /   .col-md-3
+            /     = @total_upvotes_answer
+            /   .col-md-3
+            /     = @total_downvotes_answer
+              
         -else
           You haven't got any votes!!!
-  - elsif params[:filter] == "questions"
+  - elsif params[:active_tab] == "questions"
     .main-questions-list    
       %ul#main_questions_list
         - if !(@questions.nil?)

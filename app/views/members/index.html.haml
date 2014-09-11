@@ -17,17 +17,17 @@
       .col-md-12.sort-questions
         %ul
           %li
-            = link_to 'Students', :filter => "student"
+            = link_to "student", members_path(active_tab:'student'), class: "#{profile_active_tab('student')}"
           %li
-            = link_to 'Teachers', :filter => "teacher"
+            = link_to 'Teachers', members_path(active_tab:'teacher'), class: "#{profile_active_tab('teacher')}"
 
     - elsif (current_student.present?)
       .col-md-12.sort-questions
         %ul
           %li
-            = link_to 'Students', :filter => "student"
+            = link_to "student", members_path(active_tab:'student'), class: "#{profile_active_tab('student')}"
 
-    - if params[:filter] == "teacher"
+    - if params[:active_tab] == "teacher"
       
       .main-questions-list
         %ul#main_users_list.row
@@ -38,7 +38,7 @@
                 = image_tag teacher.avatar.url(:thumb),class: 'img-circle'
               .left-info
                 %span.display_name 
-                  = link_to teacher.username, teacher_views_profile_path(teacher)
+                  = link_to teacher.username, teacher_views_profile_path(teacher, active_tab:'basicinfo')
                 %br
                   %span.email
                     = teacher.email
@@ -46,7 +46,7 @@
           .col-md-12
             = render :partial => "shared/pagination", :locals => {:object => @teachers}   
 
-    - else
+    - elsif params[:active_tab] == "student"
       .main-questions-list
         %ul#main_users_list.row
         - @students.each do |student|
@@ -56,7 +56,7 @@
                 = image_tag student.avatar.url(:thumb),class: 'img-circle'
               .left-info
                 %span.display_name 
-                  = link_to student.username, student_views_profile_path(student)
+                  = link_to student.username, student_views_profile_path(student, active_tab:'basicinfo')
                 %br
                   %span.email
                     = student.email

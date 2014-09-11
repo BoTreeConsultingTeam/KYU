@@ -8,7 +8,7 @@
           %li
             %a{:href => root_path } Home
           %li
-            %a{:href => members_path} Users
+            = link_to 'Users', members_path(active_tab:'student')
           %li
             %a{:href => questions_path} Questions
           %li
