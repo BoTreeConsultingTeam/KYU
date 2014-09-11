@@ -28,13 +28,6 @@ class Students::RegistrationsController <  Devise::RegistrationsController
     @tags = Question.tag_counts_on(:tags).limit(5).order('count desc')
   end
 
-  protected
-
-  def configure_permitted_parameters
-    devise_parameter_sanitizer.for(:sign_up) << [:first_name, :middle_name, :last_name, :username, :birthdate]
-    devise_parameter_sanitizer.for(:account_update) << [:first_name,:middle_name, :last_name, :username,:birthdate]
-  end
-
   private
   
   def after_sign_in_path_for(resource)

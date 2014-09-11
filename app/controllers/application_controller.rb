@@ -1,6 +1,5 @@
 class ApplicationController < ActionController::Base
-  # Prevent CSRF attacks by raising an exception.
-  # For APIs, you may want to use :null_session instead.
+
   protect_from_forgery with: :exception
   
   def liked_by
@@ -36,8 +35,20 @@ class ApplicationController < ActionController::Base
   end
 
   private
+  
   def current_user
     current_user = current_student.present? ? current_student : current_teacher
   end
   helper_method :current_user
+
+  def give_points(object, points)
+      if object.is_a? Question
+        user = object.askable  
+      else
+        user = object.answerable
+      end 
+      if user.is_a? Student
+        user.change_points(points)    
+      end
+  end
 end

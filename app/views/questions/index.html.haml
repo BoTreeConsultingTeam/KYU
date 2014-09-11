@@ -1,70 +1,15 @@
-.container-fluid
-  .row
-    / END HEADER
-    #header_sidebar.col-md-12.col-xs-12
-    = render 'layouts/left_sidebar'
-    .col-md-8.main-content
-      = render :partial => "layouts/sub_heading", :locals => {:object => 'All Questions'}
-      / END SELECT-CATEGORY
-      .clearfix
-      #question_filter.row.question-filter
-        .col-md-6.col-xs-6.sort-questions
-          %ul
-            %li
-              %a.active{:href => "http://demo.enginethemes.com/qaengine/questions/"} Latest
-            %li
-              = set_link(t('questions.link.last_week'),'week')
-              
-            %li
-              = set_link(t('questions.link.last_month'),'month')
-      .main-questions-list
-        %ul#main_questions_list
-          - @questions.each do |question|
-            %li.post-1728.question.type-question.status-publish.hentry.question-item{"data-id" => "1728"}
-              .col-md-8.col-xs-8.q-left-content
-                .q-ltop-content
-                  = link_to  question.title, question_path(question),class: 'question-title'
-                .q-lbtm-content
-                  .question-excerpt
-                    %p
-                      = raw(question.content)
-                  .question-cat
-                    %ul.question-tags
-                      - question.tag_list.each do |tag|
-                        %li
-                          = link_to tag, tag_path(tag),class: 'q-tag'
-                    .clearfix
-                    %a{:href => "#"}
-                      %span.author-avatar
-                        %img.avatar
-                      %span.author-name
-                        = question.askable.username
-                    %span.user-badge{:style => "background-color:#04aad4;", :title => "67"}
-                      = question.askable.class
-                    %span.question-time
-                      #{time_ago_in_words(question.created_at)} ago.
-              / end left content
-              .col-md-4.col-xs-4.q-right-content
-                %ul.question-statistic
-                  %li
-                    %span.question-views.question_view_overwrite
-                      #{question.impressionist_count}
-                    views
-                  %li.active
-                    %span.question-answers.question_view_overwrite
-                      #{question.answers.count}
-                    answers
-                  %li
-                    %span.question-views.question_view_overwrite
-                      = question.get_upvotes.size
-                    Upvotes
-                  %li
-                    %span.question-answers.question_view_overwrite
-                      = question.get_downvotes.size
-                    Downvotes
-      .row.paginations.home
-        .col-md-12
-          =paginate @questions
-      / END MAIN-PAGINATIONS
-    = render 'layouts/right_sidebar'
-  / END ROW
+= render :partial => "layouts/sub_heading", :locals => {:object => 'All Questions'}
+.clearfix
+#question_filter.row.question-filter
+  .col-md-6.col-xs-6.sort-questions
+    %ul
+      %li
+        %a.active{:href => "http://demo.enginethemes.com/qaengine/questions/"} Latest
+      %li
+        = set_link(t('questions.link.last_week'),'week')
+      %li
+        = set_link(t('questions.link.last_month'),'month')
+= render :partial => 'questions_list', :locals => { questions: @questions}
+.row.paginations.home
+  .col-md-12
+    =paginate @questions

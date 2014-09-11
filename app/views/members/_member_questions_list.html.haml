@@ -1,0 +1,23 @@
+- @questions.each do |question|
+  %li.post-188.question.type-question.status-publish.hentry.question-item{"data-id" => "188"}
+    .col-md-8.col-xs-8.q-left-content
+      .q-ltop-content
+        %a.question-title
+          = question.title
+      .q-lbtm-content
+        .question-excerpt
+          %p 
+            = raw(question.content)
+        .question-cat
+          = render :partial => 'questions/question_tags', :locals => { :object => question}   
+          .clearfix
+          %a{:href => "http://demo.enginethemes.com/qaengine/member/admin/"}
+            %span.author-avatar
+              %img.avatar{:alt => "", :src => "http://demo.enginethemes.com/qaengine/wp-content/uploads/2014/08/1282.jpg"}      
+            %span.author-name 
+              = question.askable.username
+          = render :partial => 'student_badge', :locals => { :object => question.askable}  
+          %span.question-time
+            = "#{time_ago_in_words(question.created_at)} ago."
+    / end left content
+    = render :partial => 'questions/question_statics',:locals => { :question => question }

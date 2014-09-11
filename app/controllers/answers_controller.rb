@@ -53,6 +53,7 @@ class AnswersController < ApplicationController
       redirect_to questions_path,flash: { error: "No such Answer found for Vote!" }
     else
       answer_liked_by(@answer,liked_by)
+      give_points(@answer,15)
       redirect_to question_path(@answer.question)
     end
   end
@@ -63,6 +64,7 @@ class AnswersController < ApplicationController
       redirect_to questions_path,flash: { error: "No such Answer found for Vote!" }
     else
       answer_disliked_by(@answer,liked_by)
+      give_points(@answer,-15)
       redirect_to question_path(@answer.question)
     end
   end
@@ -74,6 +76,7 @@ class AnswersController < ApplicationController
     else
       @answer.flag = true
       @answer.save
+      give_points(@answer,10)
       redirect_to question_path(@answer.question),flash: { success: "Answer Accepted!" }
     end
   end

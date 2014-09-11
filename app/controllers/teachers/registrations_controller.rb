@@ -1,5 +1,6 @@
 class Teachers::RegistrationsController <  Devise::RegistrationsController
   before_filter :configure_permitted_parameters, if: :devise_controller?
+  
   def index
     if params[:tag]
       @questions = Question.tagged_with(params[:tag])
