@@ -15,7 +15,7 @@
       %span.glyphicon.glyphicon-ok
     =answer.content
   By
-  =answer.answerable.first_name
+  =answer.answerable.username
   = "#{time_ago_in_words(answer.created_at)} ago."
   %br/
   = vote_up_answer_link(answer)

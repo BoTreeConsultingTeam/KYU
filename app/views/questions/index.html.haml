@@ -1,8 +1,15 @@
 %div
-  = set_link(t('questions.link.last_week'),'week')
+  = link_to 'all', questions_path
+  = set_link(t('questions.link.newest'),'newest')
+  = set_link(t('questions.link.last_week'),'week')          
+
   = set_link(t('questions.link.last_month'),'month')
-  = set_link(t('questions.link.un_answered'),'un_answered')
-  = set_link(t('questions.link.most_voted'),'most_voted')
+
+  = set_link(t('question.link.most_viewed'),'most_viewed')
+
+  = set_link(t('question.link.most_voted'),'most_voted')
+
+  = set_link(t('question.link.unanswered'),'un_answered')
 %div
   = link_to  t('questions.btn.new_question'), new_question_path,method: :get, class:" btn btn-primary pull-right" 
 %h2
@@ -17,7 +24,7 @@
     %h3
       = link_to  question.title, question_path(question)
     = t('questions.basic.asked_by')
-    = question.askable.first_name
+    = question.askable.username
     #{time_ago_in_words(question.created_at)} ago.
     
     %br
@@ -30,6 +37,11 @@
     %strong
       = t('questions.basic.answers')
     #{question.answers.count} 
+    %i
+      = vote_up_question_link(question)
+      = question.get_likes.size
+      = vote_down_question_link(question)
+      = question.get_dislikes.size
     -if question.askable == current_user
       =link_to "Edit", edit_question_path(question)
       =link_to "Delete", question_path(question), method: :delete,data: { confirm: "Are you sure?" }

@@ -1,4 +1,4 @@
 %ul
   - @students.each do |s|
     %li
-      = link_to s.first_name, member_path(s)
+      = link_to s.username, member_path(s)

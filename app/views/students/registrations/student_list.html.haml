@@ -2,5 +2,5 @@
 
   - @students.each do |s|
     %li
-      =s.first_name
-      = link_to s.first_name, student_path(s)
+      =s.username
+      = link_to s.username, student_path(s)

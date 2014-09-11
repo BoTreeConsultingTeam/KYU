@@ -7,8 +7,8 @@
   %br/
   = f.label  t('teachers.basic.salutation')
   = f.select :salutation, options_for_select(%w[Mr. Ms. Mrs.])
-  = f.label t('common.basic.first_name')
-  = f.text_field :first_name
+  = f.label t('common.basic.username')
+  = f.text_field :username
   %br
   = f.label t('common.basic.last_name')
   = f.text_field :last_name

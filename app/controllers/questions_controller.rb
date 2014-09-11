@@ -11,12 +11,16 @@ class QuestionsController < ApplicationController
         @questions = Question.recent_data_month.page params[:page]
       when 'un_answered'
         @questions = Kaminari.paginate_array(Question.find_all_by_id(un_answered_questions)).page params[:page]
+      when 'most_viewed'
+        @questions = Question.most_viwed_question.page params[:page]
       when 'most_voted'
-        most_voted_questions
+        @questions = Question.highest_voted.page params[:page]
+      when 'newest'
+        @questions = Question.newest(current_user).page params[:page]
       end
     else
-      @questions = Question.all.page params[:page]
-    end
+      @questions = Question.all.order("created_at desc").page params[:page]
+    end    
   end
 
   def new
@@ -113,12 +117,5 @@ class QuestionsController < ApplicationController
       end
     end
     question.keys
-  end
-
-  def most_voted_questions
-    question = {}
-    all_questions.each do |q|
-      question[q.id] = q.get_likes.size
-    end
   end
 end

@@ -12,10 +12,11 @@ class Question < ActiveRecord::Base
   acts_as_votable
   accepts_nested_attributes_for :answers
 
-  default_scope order("created_at DESC")
+  # default_scope order("created_at DESC")
   scope :recent_data_month, -> { where(:created_at => (1.month.ago)..(Time.now)).order("created_at desc") }
   scope :recent_data_week, -> { where(:created_at => (1.week.ago)..(Time.now)).order("created_at desc")}
-
+  scope :most_viwed_question, -> { joins(:impressions).group("questions.id").order("count(questions.id) DESC").limit(10)}
+  scope :newest, ->(current_user) { where(:created_at => (current_user.last_sign_in_at)..(current_user.current_sign_in_at)).order("created_at desc")}
   validates_presence_of :title
   validates_presence_of :content
   validates :title, length: { maximum: 150, minimum: 20 }
@@ -31,5 +32,8 @@ class Question < ActiveRecord::Base
         return ans.id
       end
     end
+  end
+  def self.highest_voted
+    self.order("cached_votes_score DESC").limit(5)
   end
 end
