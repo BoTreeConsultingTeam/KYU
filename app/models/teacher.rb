@@ -5,10 +5,11 @@ class Teacher < ActiveRecord::Base
   has_many :comments, as: :commentable
   has_many :questions,as: :askable
   has_many :answers,as: :answerable
+  has_many :bookmarks, as: :bookmarkable, dependent: :destroy
   has_many :questions, :through => :bookmarks
-  has_many :bookmarks, as: :bookmarkable
 
-  VALID_EMAIL_REGEX=/\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
+  VALID_EMAIL_REGEX = Student::VALID_EMAIL_REGEX
+
   validates :first_name,:last_name, presence: true
   validates :username,:qualification, presence: true
   validates :email, format: {with: VALID_EMAIL_REGEX}, uniqueness: {case_sensitive: false}

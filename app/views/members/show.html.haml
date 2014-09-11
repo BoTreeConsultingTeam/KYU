@@ -1,52 +1,53 @@
 .container-fluid
   .row
-  / END HEADER
-  #header_sidebar.col-md-12.col-xs-12
-  = render 'layouts/left_sidebar'
-  .col-md-8.main-content
-    = render :partial => "layouts/sub_heading", :locals => {:object => "Welcome, #{@student.username}"}
-    .row
-      .col-md-9.col-md-push-3 
-        =@student.first_name
-        =@student.last_name 
-       
-      .col-md-3.col-md-pull-9 
-        %b Name 
-      
-      .col-md-9.col-md-push-3 
-        %br
-          =@student.birthdate
-      .col-md-3.col-md-pull-9
-        %br/
-        %b Birthdate
-      
-      .col-md-9.col-md-push-3
-        %br/
-        =@student.username
-      .col-md-3.col-md-pull-9  
-        %br/
-        %b Username
+    / END HEADER
+    #header_sidebar.col-md-12.col-xs-12
+    = render 'layouts/left_sidebar'
+    .col-md-8.main-content
 
-      .col-md-9.col-md-push-3
-        %br/
-        =@student.email 
-      .col-md-3.col-md-pull-9
-        %br/
-        %b Email
-      .col-md-3.col-md-pull-9
-        %br/
-
-    .row
-      .col
-        List Of Bookmarked Questions
-        %br 
-        - question_list = bookmark_question_ids @student
+      = render :partial => "layouts/sub_heading", :locals => {:object => "Welcome, #{@student.username}"}
+      .row
+        .col-md-9.col-md-push-3 
+          =@student.first_name
+          =@student.last_name 
+         
+        .col-md-3.col-md-pull-9 
+          %b Name 
         
-        %ul
-          - question_list.each do |question|  
-            %li
-              = raw(question.content)
-              %hr
+        .col-md-9.col-md-push-3 
+          %br
+            =@student.birthdate
+        .col-md-3.col-md-pull-9
+          %br/
+          %b Birthdate
+        
+        .col-md-9.col-md-push-3
+          %br/
+          =@student.username
+        .col-md-3.col-md-pull-9  
+          %br/
+          %b Username
 
+        .col-md-9.col-md-push-3
+          %br/
+          =@student.email 
+        .col-md-3.col-md-pull-9
+          %br/
+          %b Email
+        .col-md-3.col-md-pull-9
+          %br/
 
-  = render 'layouts/right_sidebar'
+      .row
+        .col
+          List Of Bookmarked Questions
+          %br 
+          - question_list = bookmark_question_ids @student
+          - if !(question_list.nil?)
+            %ul
+              - question_list.each do |question|  
+                %li
+                  = raw(question.content)
+                  %hr
+          - else
+            No Bookmarks
+    = render 'layouts/right_sidebar'

@@ -29,12 +29,6 @@ module QuestionsHelper
   end  
 
   def bookmark_question_ids student
-    question_list = []
-    question_ids =  student.bookmarks.pluck(:question_id)
-    question_ids.each do |id|
-      question = Question.find_by_id(id)
-      question_list << question
-    end
-    question_list
+    student.bookmarks.map { |bookmark| bookmark.question }
   end
 end

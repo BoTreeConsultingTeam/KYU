@@ -19,7 +19,7 @@ class Question < ActiveRecord::Base
   validates_presence_of :title
   validates_presence_of :content
   validates :title, length: { maximum: 150, minimum: 20 }
-  validates :content, length: { maximum: 1000, minimum: 20 }
+  validates :content, length: { minimum: 20 }
   
   def answered?
     answers.where(flag: true).count > 0
@@ -33,7 +33,7 @@ class Question < ActiveRecord::Base
     end
   end
 
-  def bookmark!(user)
-    bookmarks.create!(bookmarkable_id: user.id, bookmarkable_type: user.class.to_s)
+  def bookmark(user)
+    bookmarks.create(bookmarkable: user)
   end
 end
