@@ -55,7 +55,6 @@ en:
     page_header:
       title_confirmation: 'Resend confirmation instructions'
     basic:
-
       forgot_password: 'Forgot your password?'
   teachers:
     captions:
@@ -65,6 +64,10 @@ en:
     basic:
       salutation: 'Salutations'
       title_sign_in: 'Sign in'
+  member:
+    captions:
+      not_answered: You don't  have answered any question yet
+      never_ask: You don't have asked any questions yet
   header_navigation:
     home: 'Home'
     users: 'Users'
@@ -79,4 +82,3 @@ en:
     most_used_tags: 'MOST USED TAGS'
     hot_questions: 'HOT QUESTIONS'
     see_more_tags: 'See more tags'
-

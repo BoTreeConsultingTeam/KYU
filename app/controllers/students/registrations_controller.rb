@@ -15,7 +15,6 @@ class Students::RegistrationsController <  Devise::RegistrationsController
   def create
     @student = build_resource
     @student.save
-    # @student.add_points(10,category: 'answer upvote')
     super
   end
  def update

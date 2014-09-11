@@ -1,35 +1,60 @@
-.container-fluid
-  .row
-  / END HEADER
-  #header_sidebar.col-md-12.col-xs-12
-  = render 'layouts/left_sidebar'
-  .col-md-8.main-content
-    = render :partial => "layouts/sub_heading", :locals => {:object => "Welcome, #{@student.username}"}
+= render :partial => "layouts/sub_heading", :locals => {:object => 'Profile'}
+.row.user-statistic.highlight
+  .col-md-5.col-xs-5.user-info
+    %span.avatar-80
+      %img.avatar{:alt => "", :src => "http://demo.enginethemes.com/qaengine/wp-content/uploads/2014/08/1282.jpg"}     
+    %ul
+      %li.name 
+        = @student.username.titleize
+      %li.email
+        %i.fa.fa-envelope
+        = @student.email
+  .col-md-7.col-xs-7.user-post-count
     .row
       .col-md-9.col-md-push-3
-        = @student.username.titleize
+        
 
-      .col-md-3.col-md-pull-9
-        %b Name
-
-      .col-md-9.col-md-push-3
+      .col-md-4.col-xs-4.question-cat
+        = render :partial => 'student_badge', :locals => { :object => @student}
         %br
-          =@student.birthdate
-      .col-md-3.col-md-pull-9
-        %br/
-        %b Birthdate
-
-      .col-md-9.col-md-push-3
-        %br/
-        =@student.username
-      .col-md-3.col-md-pull-9
-        %br/
-        %b Username
-
-      .col-md-9.col-md-push-3
-        %br/
-        =@student.email
-      .col-md-3.col-md-pull-9
-        %br/
-        %b Email
-  = render 'layouts/right_sidebar'
+          = render :partial => 'student_points', :locals => { :object => @student}
+          %span.star
+            %i.fa.fa-star
+            %br
+              points
+      .col-md-4.col-xs-4
+        %p.questions-count
+          Questions
+          %br
+            %span 
+              = @student.questions.count
+      .col-md-4.col-xs-4
+        %p.answers-count
+          Answers
+          %br
+            %span 
+              = @student.answers.count
+/ END USER-STATISTIC
+.row.question-filter
+  .col-md-12.sort-questions
+    %ul
+      %li
+        = link_to 'Questions', member_path(@student,:filter => "questions")
+      %li
+        = link_to 'Answers', member_path(@student,:filter => "answers")
+/ END QUESTIONS-FILTER
+- if params[:filter] == "answers"
+  - if !(@answers.blank?)
+    .main-questions-list
+      %ul#main_questions_list
+        = render :partial => 'member_answers_list', :locals => { :object => @answers}
+  - else
+    %h2
+      = t('member.captions.not_answered')
+- else
+  - if !(@questions.blank?)
+    = render :partial => 'questions/questions_list', :locals => { questions: @questions}
+  -else
+    %h2
+      = t('member.captions.never_ask')
+    

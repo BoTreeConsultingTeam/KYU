@@ -1,9 +1,10 @@
 class Student < ActiveRecord::Base
 
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :registerable,
-   :recoverable, :rememberable, :trackable, :validatable
+  include Gioco_Methods
+
+  devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable
+  has_many :badges, :through => :levels 
+  has_many :levels   
   has_many :comments, as: :commentable
   has_many :questions,as: :askable
   has_many :answers,as: :answerable
