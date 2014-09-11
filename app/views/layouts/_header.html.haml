@@ -1,31 +1,35 @@
-.navbar.navbar-default.navbar-inverse{:role => "navigation"}
-  .container
-    .navbar-header
-      %button.navbar-toggle{"data-target" => ".navbar-collapse", "data-toggle" => "collapse", :type => "button"}
-        %span.sr-only Toggle navigation
-        %span.icon-bar
-        %span.icon-bar
-        %span.icon-bar
-      %a.navbar-brand{:href => "#"} KYU
-    .navbar-collapse.collapse
-      %ul.nav.navbar-nav
-        -if !(current_teacher.nil? && current_student.nil?)
+%header#header
+  #logo.col-md-2.col-xs-2
+    KYU
+  -if (student_signed_in? || teacher_signed_in?)
+    .col-md-8.col-xs-8
+      .header-menu
+        %ul
           %li
-            %a{:href => root_path } Home
+            = link_to t('header_navigation.home'), questions_path
           %li
-            %a{:href => members_path} users
+            = link_to t('header_navigation.users'), members_path
           %li
-            %a{:href => questions_path} Questions
+            = link_to t('header_navigation.questions'), questions_path
           %li
-            %a{:href => tags_path} Tags
-        - if student_signed_in?
-          %li
-            = link_to 'Edit profile', edit_student_registration_path
-          %li
-            = link_to "Logout", destroy_student_session_path, method: :delete
-        - if teacher_signed_in?
-          %li
-            = link_to 'Edit profile', edit_teacher_registration_path
-          %li
-            = link_to "Logout", destroy_teacher_session_path, method: :delete
-              
+            = link_to t('header_navigation.tags'), tags_path
+          - if student_signed_in?
+            %li
+              = link_to t('header_navigation.edit_profile'), edit_student_registration_path
+            %li
+              = link_to t('header_navigation.logout'), destroy_student_session_path, method: :delete
+          - if teacher_signed_in?
+            %li
+              = link_to t('header_navigation.edit_profile'), edit_teacher_registration_path
+            %li
+              = link_to t('header_navigation.logout'), destroy_teacher_session_path, method: :delete
+    .col-md-2.col-xs-2.btn-group.header-avatar
+      %span.expand.dropdown-toggle{"data-toggle" => "dropdown", :type => "span"}
+        %a.dropdown-account{:href => "javascript:void(0);"}
+          %span.avatar
+            %img.avatar
+          %span.display_name
+          - if student_signed_in?
+            = "Welcome #{current_student.username.titleize}"
+          - if teacher_signed_in?
+            = "Welcome #{current_teacher.username.titleize}"

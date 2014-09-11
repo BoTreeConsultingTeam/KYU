@@ -1,0 +1,9 @@
+.clearfix
+#question_filter.row.question-filter
+  .col-md-12.col-xs-12.sort-questions
+    .modal-submit-questions
+      .modal-dialog
+      - if @question.present?
+        = render 'edit_comment_of_question'    
+      -else
+        = render 'edit_comment_of_answer'

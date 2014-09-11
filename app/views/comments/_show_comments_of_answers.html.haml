@@ -1,0 +1,13 @@
+%h4.comment-lable Comments
+.raw.comment-line
+  -@comments.each do |c|
+    .row
+      .col-md-2
+      .col-md-8.col-xs-10
+        %p= raw(c.comment)
+        %hr/
+      .col-md-2{style: 'margin-top:8px;'}
+        - if c.is_author?(current_user)
+          =link_to 'Edit',edit_answer_comment_path(object.id,c.id)
+          |
+          = link_to 'Delete',answer_comment_path(object.id,c),method: :delete,data: {confirm: "are you sure?"}

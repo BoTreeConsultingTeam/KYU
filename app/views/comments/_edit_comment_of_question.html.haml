@@ -1,0 +1,9 @@
+%h3  
+  Que.
+  =@question.title
+  %br
+  %hr
+= render partial: 'form', locals: {type: 'edit',object: @question}
+%hr
+= render 'show_comments_of_questions'
+

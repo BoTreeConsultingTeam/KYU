@@ -1,18 +1,13 @@
-%div
-  = button_to  'New Question', new_question_path,method: :get, class:" btn btn-primary pull-right" 
-%div
-  %h1
-    Latest Questions
-    
-  - @questions.each do |question|
-    %h3  
-      = link_to  question.title, question_path(question)
-    By
-    = question.askable.username
-    %br
-    = "#{time_ago_in_words(question.created_at)} ago."
-    Tags: #{raw question.tag_list.map { |t| link_to t, tag_path(t) }.join(', ')}
-    %br/
-    = vote_up_question_link(question)
-    = vote_down_question_link(question)
-    %hr
+= render :partial => "layouts/sub_heading", :locals => {:object => 'All Questions'}
+.clearfix
+#question_filter.row.question-filter
+  .col-md-6.col-xs-6.sort-questions
+    %ul
+      %li
+        %a.active{:href => "#"} Latest
+      %li
+        = set_link(t('questions.link.last_week'),'week')
+
+      %li
+        = set_link(t('questions.link.last_month'),'month')
+= render :partial => 'questions/questions_list', :locals => { questions: @questions}

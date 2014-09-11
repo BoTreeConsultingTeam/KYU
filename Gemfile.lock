@@ -27,6 +27,7 @@ GEM
       tzinfo (~> 0.3.37)
     acts-as-taggable-on (3.3.0)
       activerecord (>= 3, < 5)
+    acts_as_commentable (4.0.1)
     acts_as_commentable_with_threading (1.2.0)
       activerecord (>= 3.0)
       activesupport (>= 3.0)
@@ -47,6 +48,8 @@ GEM
       timers (~> 1.1.0)
     childprocess (0.5.3)
       ffi (~> 1.0, >= 1.0.11)
+    ckeditor_rails (4.4.3)
+      railties (>= 3.0)
     coderay (1.1.0)
     coffee-rails (4.0.1)
       coffee-script (>= 2.2.0)
@@ -70,6 +73,7 @@ GEM
     execjs (2.2.1)
     ffi (1.9.3)
     formatador (0.2.5)
+    gioco (1.1.1)
     guard (2.6.1)
       formatador (>= 0.2.4)
       listen (~> 2.7)
@@ -283,12 +287,15 @@ PLATFORMS
 
 DEPENDENCIES
   acts-as-taggable-on
+  acts_as_commentable
   acts_as_commentable_with_threading
   acts_as_votable (~> 0.10.0)
   better_errors
   bootstrap-sass
+  ckeditor_rails
   coffee-rails
   devise
+  gioco
   guard
   guard-jasmine
   guard-livereload

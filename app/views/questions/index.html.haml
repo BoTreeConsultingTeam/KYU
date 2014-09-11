@@ -1,50 +1,23 @@
-%div
-  = link_to 'all', questions_path
-  = set_link(t('questions.link.newest'),'newest')
-  = set_link(t('questions.link.last_week'),'week')          
-
-  = set_link(t('questions.link.last_month'),'month')
-
-  = set_link(t('question.link.most_viewed'),'most_viewed')
-
-  = set_link(t('question.link.most_voted'),'most_voted')
-
-  = set_link(t('question.link.unanswered'),'un_answered')
-%div
-  = link_to  t('questions.btn.new_question'), new_question_path,method: :get, class:" btn btn-primary pull-right" 
-%h2
-  = t('questions.page_header.title')
-=paginate @questions  
-%div
-  #tag_cloud
-  - tag_cloud get_tag_counts, %w{s m l} do |tag|
-    = link_to tag.name, tag_path(tag.name)
-  %br/
-  - @questions.each do |question|  
-    %h3
-      = link_to  question.title, question_path(question)
-    = t('questions.basic.asked_by')
-    = question.askable.username
-    #{time_ago_in_words(question.created_at)} ago.
-    
-    %br
-    %strong
-      = t('questions.basic.tag')
-    #{raw question.tag_list.map { |t| link_to t, tag_path(t) }.join(', ')}
-    %strong
-      = t('questions.basic.view')
-    #{question.impressionist_count}
-    %strong
-      = t('questions.basic.answers')
-    #{question.answers.count} 
-    %i
-      = vote_up_question_link(question)
-      = question.get_likes.size
-      = vote_down_question_link(question)
-      = question.get_dislikes.size
-    -if question.askable == current_user
-      =link_to "Edit", edit_question_path(question)
-      =link_to "Delete", question_path(question), method: :delete,data: { confirm: "Are you sure?" }
-    %hr
-.pull-right
-  = render :partial => "shared/pagination", :locals => {:object => @questions}
+= render :partial => "layouts/sub_heading", :locals => {:object => 'All Questions'}
+.clearfix
+#question_filter.row.question-filter
+  .col-md-12.col-xs-12.sort-questions
+    %ul
+      %li
+        = link_to 'all', questions_path
+      %li
+        = set_link(t('questions.link.newest'),'newest')
+      %li        
+        = set_link(t('questions.link.last_week'),'week')      
+      %li
+        = set_link(t('questions.link.last_month'),'month')
+      %li
+        = set_link(t('question.link.most_viewed'),'most_viewed')
+      %li
+        = set_link(t('question.link.most_voted'),'most_voted')
+      %li
+        = set_link(t('question.link.unanswered'),'un_answered')
+= render :partial => 'questions_list', :locals => { questions: @questions}
+.row.paginations.home
+  .col-md-12
+    = paginate @questions

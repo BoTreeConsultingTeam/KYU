@@ -1,15 +1,13 @@
 class Question < ActiveRecord::Base
 
-  belongs_to :user
-  belongs_to :student
-  belongs_to :teacher
+  # include Findable
   belongs_to :askable, polymorphic: true
-  has_many :answers
-  has_many :users, through: :answers, dependent: :destroy
+  has_many :answers, dependent: :destroy
   paginates_per 10
   is_impressionable
   acts_as_taggable
   acts_as_votable
+  has_many :comments,as: :relative,dependent: :destroy
   accepts_nested_attributes_for :answers
 
   # default_scope order("created_at DESC")
@@ -26,7 +24,7 @@ class Question < ActiveRecord::Base
     answers.where(flag: true).count > 0
   end
 
-  def ans_id
+  def accepted_answer_id
     answers.each do |ans|
       if ans.flag == true
         return ans.id

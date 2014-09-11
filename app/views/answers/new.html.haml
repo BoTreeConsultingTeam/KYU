@@ -1,15 +1,5 @@
 %div
-  
   %h2
     Que.
     = @question.title
-  = form_for (@answer) do |f|
-    = render 'shared/error_messages', object: f.object
-    =f.label :content, t('answers.basic.answer_label')
-    =f.text_area :content
-    -if current_student
-      = f.hidden_field :user_id, value: current_student.id
-    -elsif current_teacher
-      = f.hidden_field :user_id, value: current_teacher.id
-    = f.hidden_field :question_id, value: params[:question_id]
-    = f.submit t('answers.btn.submit_answer')
+  = render 'form'

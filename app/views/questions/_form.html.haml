@@ -1,0 +1,23 @@
+= render :partial => "layouts/sub_heading", :locals => {:object => 'New Question'}
+.modal-submit-questions
+  .modal-dialog
+    .modal-body
+      = form_for(@question) do |f|
+        = render 'shared/error_messages', object: f.object
+        %div
+        = f.label :title
+        %br/
+        = f.text_field :title, autofocus: true, class: 'submit-input'
+        %div
+        = f.label t('questions.basic.content_label')
+        %br/
+        = f.text_area :content,:toolbar => 'mini', :class => 'ckeditor', style: 'width: none !important;'
+        %br/
+        = f.label :tag_list, t('questions.basic.tag_on_new')
+        %br/
+        = f.text_field :tag_list,class: 'submit-input tags-input'
+        -if current_student
+          = f.hidden_field :user_id, :value => current_student.id
+        -elsif current_teacher
+          = f.hidden_field :user_id, :value => current_teacher.id
+        = f.submit t('questions.btn.submit'),class: 'btn btn-primary', id: 'btn_submit_question'

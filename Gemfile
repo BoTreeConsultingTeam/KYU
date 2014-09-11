@@ -8,17 +8,20 @@ gem 'haml-rails'
 gem 'bootstrap-sass'
 gem 'acts_as_votable', '~> 0.10.0'
 gem 'acts-as-taggable-on'
+gem 'acts_as_commentable'
 gem 'acts_as_commentable_with_threading'
 gem 'devise'
 gem 'rails_config', '~> 0.4.2'
 gem 'kaminari'
 gem 'impressionist'
-
+#gem "ckeditor"
+gem 'ckeditor_rails'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
+gem 'gioco'
 
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'

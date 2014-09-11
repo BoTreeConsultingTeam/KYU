@@ -1,19 +1,14 @@
-%div
-  = link_to  t('questions.btn.new_question') , new_question_path ,method: :get, class:" btn btn-primary pull-right" 
-%div
-  %h1
-    = t('questions.page_header.title')
-  - @questions.each do |question|
-    %h3
-      = link_to  question.title, question_path(question)
-    By
-    = question.askable.username
-    %br
-    = "#{time_ago_in_words(question.created_at)} ago."
-    Tags: #{raw question.tag_list.map { |t| link_to t, tag_path(t) }.join(', ')}
-    %br/
-    = vote_up_question_link(question)
-    = question.get_likes.size
-    = vote_down_question_link(question)
-    = question.get_dislikes.size
-    %hr
+= render :partial => "layouts/sub_heading", :locals => {:object => 'All Questions'}
+.clearfix
+#question_filter.row.question-filter
+  .col-md-6.col-xs-6.sort-questions
+    %ul
+      %li
+        %a.active{:href => "#"} Latest
+      %li
+        = set_link(t('questions.link.last_week'),'week')
+
+      %li
+        = set_link(t('questions.link.last_month'),'month')
+  .col-md-6.col-xs-6
+

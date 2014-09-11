@@ -1,0 +1,10 @@
+= render :partial => "layouts/sub_heading", :locals => {:object => 'New Answer'}
+.modal-submit-questions
+  .modal-dialog
+    .modal-body
+      = form_for (@answer) do |f|
+        = f.text_area :content,:toolbar => 'mini', :class => 'ckeditor'
+        = f.hidden_field :user_id, :value => current_user.id  
+        = f.hidden_field :question_id, :value => @question.id
+        %br 
+        = f.submit t('answers.btn.submit_answer'),class: 'btn-submit-question'

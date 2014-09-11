@@ -16,15 +16,20 @@ Rails.application.routes.draw do
   get 'answers/accept/:id', to: 'answers#accept', as: :index
   get 'tags/:tag', to: 'questions#index', as: :tag 
   get 'questions/tags', to: 'questions#alltags', as: :tags
-
+  get '/badges', to: 'badges#index', as: :badges
+  resources :tags
   resources :questions do
+    resources :comments
+    resources :answers
     member { post :upvote,:downvote }
   end
+    resources :comments
 
   get '/members' => 'members#index'
   get '/members/:id' => 'members#show', as: :member
 
   resources :answers do
     member { post :upvote,:downvote }
+    resources :comments
   end
 end

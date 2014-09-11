@@ -1,5 +1,6 @@
 class QuestionsController < ApplicationController
-  
+  before_action :user_signed_in?
+    
   def index
     if received_tag
       @questions = Question.tagged_with(received_tag).page params[:page]
@@ -10,7 +11,7 @@ class QuestionsController < ApplicationController
       when 'month'
         @questions = Question.recent_data_month.page params[:page]
       when 'un_answered'
-        @questions = Kaminari.paginate_array(Question.find_all_by_id(un_answered_questions)).page params[:page]
+        @questions = Kaminari.paginate_array(Question.find_all_by_id(un_answered_questions)).page(params[:page]).per(10)
       when 'most_viewed'
         @questions = Question.most_viwed_question.page params[:page]
       when 'most_voted'
@@ -19,8 +20,8 @@ class QuestionsController < ApplicationController
         @questions = Question.newest(current_user).page params[:page]
       end
     else
-      @questions = Question.all.order("created_at desc").page params[:page]
-    end    
+      @questions = Question.all.order("created_at DESC").page params[:page]
+    end
   end
 
   def new
@@ -28,22 +29,10 @@ class QuestionsController < ApplicationController
     @question.user_id = session[:id]
   end
 
-  def upvote
-     @question = Question.find(params[:id])
-     question_liked_by(@question,liked_by)
-    redirect_to :back
-  end
-
-  def downvote
-    @question = Question.find(params[:id])
-    question_disliked_by(@question,liked_by)
-    redirect_to :back
-  end
-
   def create
-    logged_in_user = current_student ? current_student : current_teacher
-    @question = Question.new(question_params.merge({askable: logged_in_user}))
+    @question = Question.new(question_params.merge({askable: current_user}))
     if @question.save
+      current_student.change_points(2)
       redirect_to questions_path
     else
       render 'new'
@@ -51,21 +40,51 @@ class QuestionsController < ApplicationController
   end
 
   def show
-    @question = Question.find(params[:id])
+    @question = Question.find_by_id(params[:id])
     @answers = @question.answers
+    @answer = Answer.new
     impressionist(@question, nil, { unique: [:session_hash] })
+    @comment = Comment.new
+    @comments_q = Comment.relative_comments(@question.id,@question.class)
+    @comments_a = Comment.all_comments_of_answers(@answer.class)
+  end
+
+  def destroy
+    @question = Question.find_by_id(params[:id])
+    if @question.nil?
+      redirect_to students_path,flash: { error: "No such Question found for Delete!" }
+    else
+      @question.destroy
+      redirect_to students_path,flash: { success: "Deleted Successfuly!" }
+    end
+  end
+
+  def upvote
+    @question = Question.find_by_id(params[:id])
+    if @question.nil?
+      redirect_to questions_path,flash: { error: "No such Question found for Vote!" }
+    else
+      question_liked_by(@question,liked_by)
+      give_points(@question,5)
+      redirect_to questions_path
+    end
+  end
+
+  def downvote
+    @question = Question.find_by_id(params[:id])
+    if @question.nil?
+      redirect_to questions_path,flash: { error: "No such Question found for Vote!" }
+    else
+      question_disliked_by(@question,liked_by)
+      give_points(@question,-5)
+      redirect_to questions_path
+    end
   end
   
   def edit
     @question = Question.find(params[:id])
   end
-
-  def destroy
-    @question = Question.find(params[:id])
-    @question.delete
-    redirect_to questions_path
-  end
-
+  
   def update
     @question = Question.find(params[:id])
     if @question.update(question_params)
@@ -76,11 +95,11 @@ class QuestionsController < ApplicationController
     end 
   end
   def alltags
-    @tags = ActsAsTaggableOn::Tag.all
+    @tags = ActsAsTaggableOn::Tag.all.page(params[:page]).per(5)
+
   end
 
   private
-  
   def question_params
     params.require(:question).permit(:title,:content, :user_id, :tag_list)
   end
@@ -92,19 +111,6 @@ class QuestionsController < ApplicationController
   def question_disliked_by(question,user)
     question.disliked_by(user)
   end
-
-  def liked_by
-    liked_by = current_student.present? ? current_student : current_teacher
-  end
-
-  def received_tag
-    params[:tag]
-  end
-
-  def received_time
-    params[:time]
-  end
-
   def all_questions
     questions = Question.all
   end
@@ -117,5 +123,13 @@ class QuestionsController < ApplicationController
       end
     end
     question.keys
+  end
+
+  def received_tag
+    params[:tag]
+  end
+
+  def received_time
+    params[:time]
   end
 end

@@ -12,8 +12,10 @@
 //
 //= require jquery
 //= require jquery_ujs
-
 //= require turbolinks
 //= require bootstrap
 //= require bootstrap.min
-//= require_tree .
+//= require ckeditor-jquery
+//= require ckeditor/config
+//= require ckeditor/plugins/eqneditor/plugin.min
+//= require common

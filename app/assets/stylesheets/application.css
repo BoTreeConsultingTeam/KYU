@@ -8,11 +8,15 @@
  * You're free to add application-wide styles to this file and they'll appear at the top of the
  * compiled file, but it's generally better to create a new file per style scope.
  *
- *= require bootstrap-theme
  *= require bootstrap-theme.min
- *= require bootstrap
  *= require bootstrap.min
+ *= require editor.min
+ *= require editor_content
  *= require sign_in
+ *= require style
+ *= require font-awesome
+ *= require main
+ *= require css
  *= require custom
  *= require_self
  */
