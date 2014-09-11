@@ -1,2 +1,2 @@
 %span.user-badge
-  - object.badges.last.blank? ? No Badges : object.badges.last.name
+  = object.badges.last.blank? ? "No Badges" : object.badges.last.name
