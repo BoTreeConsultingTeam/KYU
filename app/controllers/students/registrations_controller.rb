@@ -1,4 +1,5 @@
 class Students::RegistrationsController <  Devise::RegistrationsController
+   before_filter :configure_permitted_parameters, if: :devise_controller?
 
   def index
     if params[:tag]
@@ -17,19 +18,18 @@ class Students::RegistrationsController <  Devise::RegistrationsController
     @student.save
     super
   end
- def update
-    @students = resource # Needed for Merit
-    super
+
+  def update 
+    @user = Student.find(current_user.id)
+    user_profile_update @user
   end
+
   def tag_cloud
     @tags = Question.tag_counts_on(:tags).limit(5).order('count desc')
   end
+
   private
-
-  def sign_up_params
-    params.require(:student).permit(:email, :password, :username, :birthdate)
-  end
-
+  
   def after_sign_in_path_for(resource)
     students_path
   end
