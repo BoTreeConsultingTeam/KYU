@@ -1,5 +1,5 @@
 class Students::RegistrationsController <  Devise::RegistrationsController
-  
+
   def index
     if params[:tag]
       @questions = Question.tagged_with(params[:tag])
@@ -25,9 +25,9 @@ class Students::RegistrationsController <  Devise::RegistrationsController
     @tags = Question.tag_counts_on(:tags).limit(5).order('count desc')
   end
   private
-  
+
   def sign_up_params
-    params.require(:student).permit(:email, :password,:first_name, :middle_name, :last_name, :username,:birthdate)
+    params.require(:student).permit(:email, :password, :username, :birthdate)
   end
 
   def after_sign_in_path_for(resource)
