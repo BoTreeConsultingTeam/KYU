@@ -1,0 +1,18 @@
+.col-md-4.col-xs-4.q-right-content
+  %ul.question-statistic
+    %li
+      %span.question-views
+        = "#{question.impressionist_count}"
+      = t('questions.captions.views')
+    %li.active
+      %span.question-answers
+        = "#{question.answers.count}" 
+      = t('questions.captions.answers')
+    %li
+      %span.question-upvotes
+        = question.get_upvotes.size
+      = t('questions.captions.upvotes')
+    %li
+      %span.question-downvotes
+        = question.get_downvotes.size
+      = t('questions.captions.downvotes')

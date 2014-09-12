@@ -1,9 +1,2 @@
-.container-fluid
-  .row
-  / END HEADER
-  #header_sidebar.col-md-12.col-xs-12
-  = render 'layouts/left_sidebar'
-  .col-md-8.main-content
-    = render partial: 'show_student', locals: {object: @students}
-    = render partial: 'show_teacher', locals: {object: @teachers}
-  = render 'layouts/right_sidebar'
+= render partial: 'show_student', locals: {object: @students}
+= render partial: 'show_teacher', locals: {object: @teachers}

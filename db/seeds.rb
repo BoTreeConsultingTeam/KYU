@@ -19,3 +19,4 @@ def find_or_create_admin(admin_attrs)
 end	
 
 admin_user = find_or_create_admin({email: 'admin@kyu.com', password: 'password'})
+require "#{Rails.root}/db/gioco/db.rb"

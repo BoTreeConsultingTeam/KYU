@@ -8,6 +8,8 @@ class MembersController < ApplicationController
   def show
     if params[:user] == 'student'
       @student
+      @questions = @student.questions
+      @answers = @student.answers
     else
       @teacher = Teacher.find(params[:id])
     end
@@ -36,5 +38,9 @@ class MembersController < ApplicationController
   def find_student_by_id
     @student = Student.find(params[:id])
   end  
+
+  def received_filter
+    params[:filter]
+  end
 
 end

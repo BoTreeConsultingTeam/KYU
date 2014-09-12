@@ -1,29 +1,18 @@
-.container-fluid
-  .row
-    / END HEADER
-    #header_sidebar.col-md-12.col-xs-12
-    = render 'layouts/left_sidebar'
-    .col-md-8.main-content
-      = render :partial => "layouts/sub_heading", :locals => {:object => 'All Questions'}
-      / END SELECT-CATEGORY
-      .clearfix
-      #question_filter.row.question-filter
-        .col-md-6.col-xs-6.sort-questions
-          %ul
-            %li
-              %a.active{:href => "http://demo.enginethemes.com/qaengine/questions/"} Latest
-            %li
-              = set_link(t('questions.link.last_week'),'week')
-
-            %li
-              = set_link(t('questions.link.last_month'),'month')
-      .main-questions-list
-        %ul#main_questions_list
-          - @questions.each do |question|
-            = render :partial => "questions_list", :locals => {:question => question}
-      .row.paginations.home
-        .col-md-12
-          =paginate @questions
-      / END MAIN-PAGINATIONS
-    = render 'layouts/right_sidebar'
-  / END ROW
+= render :partial => "layouts/sub_heading", :locals => {:object => 'All Questions'}
+.clearfix
+#question_filter.row.question-filter
+  .col-md-6.col-xs-6.sort-questions
+    %ul
+      %li
+        %a.active{:href => "http://demo.enginethemes.com/qaengine/questions/"} Latest
+      %li
+        = set_link(t('questions.link.last_week'),'week')
+      %li
+        = set_link(t('questions.link.last_month'),'month')
+-if !(@questions.nil?)
+  = render :partial => 'questions_list', :locals => { questions: @questions}
+-else
+  No Questions Available
+.row.paginations.home
+  .col-md-12
+    =paginate @questions

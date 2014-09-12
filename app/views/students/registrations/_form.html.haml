@@ -12,11 +12,6 @@
         = f.label t('common.captions.email')
         = f.email_field :email, :autofocus => true,class: 'form-control'
         %br/
-        = f.label t('common.captions.current')
-        %i (we need your current password to confirm your changes)
-        %br/
-        = f.password_field :current_password,class: 'form-control'
-        %br/
         = f.label t('common.captions.new_password')
         = f.password_field :password,class: 'form-control'
         %br/

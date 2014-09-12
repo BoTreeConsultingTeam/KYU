@@ -3,7 +3,8 @@
   .col-md-8.main-content
     .row.select-category
       .col-md-6.col-xs-6.current-category
-        %span Edit Comment of Question
+        %span 
+          = t('comments.captions.edit_comment_of_question')
     .modal-submit-questions
       .modal-dialog
       - if @question.present?

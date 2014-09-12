@@ -1,4 +1,5 @@
 class Teachers::RegistrationsController <  Devise::RegistrationsController
+  before_filter :configure_permitted_parameters, if: :devise_controller?
   
   def index
     if params[:tag]
@@ -11,6 +12,12 @@ class Teachers::RegistrationsController <  Devise::RegistrationsController
   def create
     super
   end
+  
+  def update 
+    @user = Teacher.find(current_user.id)
+    user_profile_update @user
+  end
+  
 
   private
 

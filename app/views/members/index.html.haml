@@ -1,14 +1,5 @@
-.container-fluid
-  .row
-  / END HEADER
-  #header_sidebar.col-md-12.col-xs-12
-  = render 'layouts/left_sidebar'
-  .col-md-8.main-content
-    = render partial: 'student_member', locals: {object: @students}
-    = render partial: 'teacher_member', locals: {object: @teachers}
-    .row.paginations.home
-      .col-md-12
-        = render :partial => "shared/pagination", :locals => {:object => @students}
-    / END MAIN-PAGINATIONS
-  = render 'layouts/right_sidebar'
-  / END ROW
+= render partial: 'student_member', locals: {object: @students}
+= render partial: 'teacher_member', locals: {object: @teachers}
+.row.paginations.home
+  .col-md-12
+    = render :partial => "shared/pagination", :locals => {:object => @students}

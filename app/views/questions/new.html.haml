@@ -1,8 +1,2 @@
-.container-fluid
-  .row
-    #header_sidebar.col-md-12.col-xs-12
-    = render 'layouts/left_sidebar'
-    .col-md-8.main-content
-      = render :partial => "layouts/sub_heading", :locals => {:object => 'New Question'}
-      = render partial: 'form'
-    = render 'layouts/right_sidebar'
+= render :partial => "layouts/sub_heading", :locals => {:object => 'New Question'}
+= render 'form'

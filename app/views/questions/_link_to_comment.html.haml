@@ -1,0 +1,6 @@
+%ul
+  %li
+    = link_to t('common.links.comment'),'#comment',class: 'toggleLink', id: id,'data-no-turbolink' => true
+    (
+    = object.comments.count
+    )
