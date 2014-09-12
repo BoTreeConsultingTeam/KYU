@@ -25,7 +25,9 @@ class QuestionsController < ApplicationController
     @question = Question.new(question_params.merge({askable: current_user}).except!(:tag_list))
     current_user.tag( @question, :with => question_params[:tag_list], :on => :tags )
     if @question.save
-      current_student.change_points(2)
+      if current_student
+        current_student.change_points(2)
+      end
       redirect_to questions_path
     else
       render 'new'

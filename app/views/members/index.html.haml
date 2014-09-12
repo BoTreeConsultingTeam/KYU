@@ -7,9 +7,12 @@
       .left-info
         %span.display_name 
           = link_to student.username, member_path(student)
+
         %br
           %span.email
             = student.email
+            -if current_teacher
+              = link_to 'Report', report_path(student)
           .question-cat
             %span.user-badge
               = render :partial => 'student_badge', :locals => { :object => student}  
