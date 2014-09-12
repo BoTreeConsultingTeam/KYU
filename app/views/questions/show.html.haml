@@ -30,13 +30,13 @@
         = link_to '',edit_question_path(@question.id),class: 'post-edit action fa fa-pencil','data-no-turbolink' => true
       %li
         = link_to '',question_path,method: :delete,data: {confirm:'Are you sure?'},class: 'post-delete action fa fa-trash-o'
-      
-      - if (check_bookmark @question).blank?
-        %li
-          = link_to '', bookmarks_path(:question_id => @question.id), method: :post, class: 'post-delete action fa fa-plus'
-      -else
-        %li
-          = link_to '',bookmark_path(:question_id => @question.id), method: :delete,data: {confirm:'Are you sure?'},class: 'post-delete action fa fa-minus-square'    
+      -if !(current_administrator)
+        - if (check_bookmark @question).blank?
+          %li
+            = link_to '', bookmarks_path(:question_id => @question.id), method: :post, class: 'post-delete action fa fa-plus'
+        -else
+          %li
+            = link_to '',bookmark_path(:question_id => @question.id), method: :delete,data: {confirm:'Are you sure?'},class: 'post-delete action fa fa-minus-square'    
     .top-content
       %span.answered
         %i.fa.fa-check
