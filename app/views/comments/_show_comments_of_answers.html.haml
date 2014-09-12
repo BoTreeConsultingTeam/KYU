@@ -1,3 +1,3 @@
 %h4.comment-lable Comments :
-.row.comment-line{id: "commenta#{answer.id}"}
-  = render partial: 'comments/answer_comments', collection: @comments_a, as: :ca, locals: {answer: answer }
+.row.comment-line{id: "answer_comment#{answer.id}"}
+  = render partial: 'comments/answer_comments', collection: @answer_comments, as: :answer_comment, locals: {answer: answer }

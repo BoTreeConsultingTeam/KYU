@@ -22,7 +22,7 @@ class Question < ActiveRecord::Base
   validates :title, length: { maximum: 150, minimum: 20 }
   validates :content, length: { minimum: 20 }
   validates_presence_of :standard_id
-  default_scope where("enable = ?",true)
+  default_scope where("enabled = ?",true)
   def answered?
     answers.where(flag: true).count > 0
   end

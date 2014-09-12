@@ -33,33 +33,34 @@ class QuestionsController < ApplicationController
   end
 
   def show
-    @question = Question.find_by_id(params[:id])
+    @question = question_find_by_id
     if !(@question.nil?)
       @answers = @question.answers
       @answer = Answer.new
       impressionist(@question, nil, { unique: [:session_hash] })
       @comment = Comment.new
-      @comments_q = Comment.relative_comments(@question.id,@question.class).page(params[:page]).per(params[:per])
-      @comments_a = Comment.all_comments_of_answers(@answer.class)
+      @question_comments = Comment.relative_comments(@question.id,@question.class).page(params[:page]).per(params[:per])
+      @answer_comments = Comment.all_comments_of_answers(@answer.class)
     else
-      redirect_to questions_path,flash: { error: t('flash_massege.error.question.show') }
+      redirect_to questions_path,flash: { error: t('flash_message.error.question.show') }
     end
   end
 
   def destroy
-    @question = Question.find_by_id(params[:id])
-    if @question.nil?
-      redirect_to students_path,flash: { error: t('flash_massege.error.question.destroy') }
+    @question = question_find_by_id
+    if question_find_by_id.nil?
+      flash[:error] = t('flash_message.error.question.destroy')
     else
       @question.destroy
-      redirect_to students_path,flash: { success: t('flash_massege.success.question.destroy') }
+      flash[:success] = t('flash_message.success.question.destroy')
     end
+    redirect_to students_path
   end
 
   def vote
-    @question = Question.find_by_id(params[:id])
-    if @question.nil?
-      redirect_to questions_path,flash: { error: t('flash_massege.error.question.vote') }
+    @question = question_find_by_id
+    if question_find_by_id.nil?
+      redirect_to questions_path,flash: { error: t('flash_message.error.question.vote') }
     else
       if "up" == params[:type]
         question_liked_by(@question,liked_by)
@@ -75,42 +76,43 @@ class QuestionsController < ApplicationController
   end
   
   def edit
-    @question = Question.find_by_id(params[:id])
-    if @question.nil?
-      redirect_to questions_path,flash: { error: t('flash_massege.error.question.edit') }
+    @question = question_find_by_id
+    if question_find_by_id.nil?
+      redirect_to questions_path,flash: { error: t('flash_message.error.question.edit') }
     end
   end
   
   def update
-    @question = Question.find_by_id(params[:id])
+    @question = question_find_by_id
     if !(@question.nil?) 
       @question.update(question_params)
-      flash[:success] = t('flash_massege.success.question.update')
+      flash[:success] = t('flash_message.success.question.update')
       redirect_to question_path(params[:id])
     else
-      redirect_to questions_path,flash: { error: t('flash_massege.error.question.update') }
+      redirect_to questions_path,flash: { error: t('flash_message.error.question.update') }
     end 
   end
 
   def disable
-    @question = Question.find_by_id(params[:id])
+    @question = question_find_by_id
     if @question.nil?
-      redirect_to questions_path,flash: { error: t('flash_massege.error.question.disable') }
+      flash[:error] = t('flash_message.error.question.disable')
     else
       @question.enable = false
       @question.save
-      redirect_to questions_path
     end
+    redirect_to questions_path
   end
 
   def abuse_report
-    @question = Question.find_by_id(params[:id])
-    if @question.nil?
-      redirect_to questions_path,flash: { error: t('flash_massege.error.question.report_abuse') }
+    question_find_by_id
+    if question_find_by_id.nil?
+      flash[:error] =  t('flash_message.error.question.report_abuse') 
     else
       Question.send_question_answer_abuse_report(current_user,@question)
-      redirect_to questions_path,flash: { success: t('flash_massege.success.question.report_abuse') }
+      flash[:success] = t('flash_message.success.question.report_abuse')
     end
+    redirect_to questions_path
   end
 
   def alltags
@@ -136,5 +138,9 @@ class QuestionsController < ApplicationController
 
   def received_time
     params[:time]
+  end
+
+  def question_find_by_id
+    Question.find_by_id(params[:id])
   end
 end

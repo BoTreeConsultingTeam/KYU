@@ -1,9 +1,9 @@
-- if ca.relative == answer
-  .col-md-10.col-xs-6
-    = raw(ca.comment)
+- if answer_comment.relative == answer
+  .col-md-10.col-xs-10
+    = raw(answer_comment.comment)
     %hr/
-  .col-md-2    
-    - if ca.is_author?(current_user)
-      =link_to '',edit_answer_comment_path(answer.id,ca.id),rel: 'tooltip',title: 'Edit',class: 'fa fa-pencil','data-no-turbolink' => true
+  .col-md-2.col-xs-2    
+    - if answer_comment.is_author?(current_user)
+      =link_to '',edit_answer_comment_path(answer.id,answer_comment.id),rel: 'tooltip',title: 'Edit',class: 'fa fa-pencil','data-no-turbolink' => true
       |
-      = link_to '',answer_comment_path(answer.id,ca.id),rel: 'tooltip',title: 'Delete',method: :delete,data: {confirm: "are you sure?"},remote: true,class: 'fa fa-trash-o'
+      = link_to '',answer_comment_path(answer.id,answer_comment.id),rel: 'tooltip',title: 'Delete',method: :delete,data: {confirm: "are you sure?"},remote: true,class: 'fa fa-trash-o'

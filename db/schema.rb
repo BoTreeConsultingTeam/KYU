@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140912062013) do
+ActiveRecord::Schema.define(version: 20140912082905) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -155,9 +155,18 @@ ActiveRecord::Schema.define(version: 20140912062013) do
     t.datetime "updated_at"
     t.integer  "askable_id"
     t.string   "askable_type"
-    t.boolean  "enable",       default: true
+    t.boolean  "enabled",      default: true
     t.integer  "standard_id"
+    t.integer  "cached_votes_total", default: 0
+    t.integer  "cached_votes_score", default: 0
+    t.integer  "cached_votes_up",    default: 0
+    t.integer  "cached_votes_down",  default: 0
   end
+
+  add_index "questions", ["cached_votes_down"], name: "index_questions_on_cached_votes_down", using: :btree
+  add_index "questions", ["cached_votes_score"], name: "index_questions_on_cached_votes_score", using: :btree
+  add_index "questions", ["cached_votes_total"], name: "index_questions_on_cached_votes_total", using: :btree
+  add_index "questions", ["cached_votes_up"], name: "index_questions_on_cached_votes_up", using: :btree
 
   create_table "standards", force: true do |t|
     t.string   "class_no"
