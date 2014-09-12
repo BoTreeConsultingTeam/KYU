@@ -7,10 +7,9 @@
   = render 'layouts/left_sidebar'
   .col-md-8.main-content
     = render :partial => "layouts/sub_heading", :locals => {:object => "Welcome, #{@student.username}"}
-
     .row
       .col-md-6
-        - @arr1.each do |row|
+        - @tags_table.each do |row|
           .row
             - row.each do |column|
               .col-md-6
@@ -18,6 +17,5 @@
                   = column
       .col-md-6    
         #chart
-          = render_chart(@pie, 'chart') 
-
+          = render_chart(@tags_pie_chart, 'chart') 
   = render 'layouts/right_sidebar'

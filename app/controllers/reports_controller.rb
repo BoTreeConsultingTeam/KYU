@@ -5,13 +5,10 @@ class ReportsController < ApplicationController
 
   def show
     @student = Student.find(params[:id])
-    @arr = @student.owned_tags
-    @arr1 = @arr.map { |obj| [obj.name, obj.taggings_count]  }
-    data_table = GoogleVisualr::DataTable.new
-    data_table.new_column('string', 'Tag' )
-    data_table.new_column('number', 'Count')
-    data_table.add_rows(@arr.map { |obj| [obj.name, obj.taggings_count]  })
-    option = { width: 400, height: 240, title: "Student's tag ratio" }
-    @pie = GoogleVisualr::Interactive::PieChart.new(data_table, option)
+    @tags = @student.owned_tags
+    @tags_table = @tags.map { |obj| [obj.name, obj.taggings_count]  }
+    @tags_pie_chart = GoogleChartService.render_reports_charts(data_for_chart: @tags_table,chart_type: :bar,chart_name: "Student's tag ration", required_formatter: :true,col_x: 'Tag',_col_y: 'Count')
+
   end
 end
+
