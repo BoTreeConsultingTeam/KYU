@@ -54,4 +54,11 @@ module ApplicationHelper
     Question.joins(:impressions).group("questions.id").order("count(questions.id) DESC").limit(5)
   end
 
+  def user_signed_in
+    student_signed_in? || teacher_signed_in? || administrator_signed_in?
+  end  
+
+  def teacher_student_signed_in
+    student_signed_in? || teacher_signed_in?
+  end  
 end

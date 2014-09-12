@@ -14,11 +14,7 @@
             .question-cat
               %ul.question-tags
                 - @tags.each do |tag|
-                  %li
-                    = link_to tag, questions_path(tag: tag.name),class: 'q-tag'
-                    - if (administrator_signed_in?)
-                      = link_to 'Edit',edit_tag_path(tag.id),'data-no-turbolink' => true
-                      = link_to 'Delete',delete_tag_path(tag.id), method: :delete
+                  = render :partial => "tag_links", :locals => {:tag => tag}
       .clearfix
         .row.paginations.home
           .col-md-12

@@ -19,7 +19,8 @@
               = set_link(t('questions.link.last_month'),'month')
       .main-questions-list
         %ul#main_questions_list
-          = render :partial => "questions_list"
+          - @questions.each do |question|
+            = render :partial => "questions_list", :locals => {:question => question}
       .row.paginations.home
         .col-md-12
           =paginate @questions

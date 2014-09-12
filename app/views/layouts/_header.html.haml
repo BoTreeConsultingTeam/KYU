@@ -1,13 +1,13 @@
 %header#header
   #logo.col-md-2.col-xs-2
     KYU
-  -if (student_signed_in? || teacher_signed_in? || administrator_signed_in?)
+  -if (user_signed_in)
     .col-md-8.col-xs-8
       .header-menu
         %ul
           %li
             = link_to t('header_navigation.home'), questions_path
-          - if (student_signed_in? || teacher_signed_in?)   
+          - if (teacher_student_signed_in)   
             %li
               %a{:href => members_path} Users
           %li

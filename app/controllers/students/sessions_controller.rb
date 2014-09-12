@@ -8,14 +8,14 @@ class Students::SessionsController <  Devise::SessionsController
   		students_path
   end
 
-
   private
 
-  	def student_authorize
-	  	if current_student.enable == false
-				sign_out	
-				flash[:error] = t('students.messages.blocked_profile')
-				redirect_to student_session_path
-	    end		
-  	end
+	def student_authorize
+  	if current_student.enable == false
+			sign_out	
+			flash[:error] = t('students.messages.blocked_profile')
+			redirect_to student_session_path
+    end		
+	end
+  
 end

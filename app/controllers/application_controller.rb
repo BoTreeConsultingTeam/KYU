@@ -14,7 +14,13 @@ class ApplicationController < ActionController::Base
   
   private
   def current_user
-    current_user = current_student.present? ? current_student : (current_teacher.present? ? current_teacher : current_administrator)
+    if(current_administrator.present?)
+      current_user = current_administrator
+    elsif(current_teacher.present?)
+      current_user = current_teacher
+    else
+      current_user = current_student   
+    end      
   end
   helper_method :current_user
 end

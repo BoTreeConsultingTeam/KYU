@@ -1,5 +1,5 @@
 class MembersController < ApplicationController
-  before_filter :find_student_by_id, only: [:show, :deactivate, :markreview]
+  before_filter :find_student_by_id, only: [:show, :deactivate, :mark_review]
   def index
     @students = Student.all.page(params[:page]).per(5)
     @teachers = Teacher.all.page(params[:page]).per(5)
@@ -22,7 +22,7 @@ class MembersController < ApplicationController
   	end	
   end	
 
-  def markreview
+  def mark_review
     if @student.update_attributes(mark_as_review: true)
       flash[:notice] = 'Marked as review'
       redirect_to members_path(users: "students")
