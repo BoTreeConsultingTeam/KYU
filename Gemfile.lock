@@ -33,7 +33,6 @@ GEM
       activesupport (>= 3.0)
       awesome_nested_set (>= 2.0)
     acts_as_votable (0.10.0)
-    ambry (0.3.1)
     arel (4.0.2)
     awesome_nested_set (3.0.1)
       activerecord (>= 4.0.0, < 5)
@@ -74,6 +73,7 @@ GEM
     execjs (2.2.1)
     ffi (1.9.3)
     formatador (0.2.5)
+    gioco (1.1.1)
     google_visualr (2.3.0)
     guard (2.6.1)
       formatador (>= 0.2.4)
@@ -132,8 +132,6 @@ GEM
     mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
-    merit (2.1.2)
-      ambry (~> 0.3.0)
     method_source (0.8.2)
     mime-types (1.25.1)
     mini_portile (0.6.0)
@@ -245,6 +243,7 @@ DEPENDENCIES
   ckeditor_rails
   coffee-rails
   devise
+  gioco
   google_visualr (>= 2.1)
   guard
   guard-jasmine
@@ -258,7 +257,6 @@ DEPENDENCIES
   jbuilder (~> 1.2)
   jquery-rails
   kaminari
-  merit
   pg
   pry-rails
   quiet_assets

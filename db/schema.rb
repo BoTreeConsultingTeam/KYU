@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140902083100) do
+ActiveRecord::Schema.define(version: 20140908125530) do
 
   create_table "answers", force: true do |t|
     t.text     "content"
@@ -19,9 +19,9 @@ ActiveRecord::Schema.define(version: 20140902083100) do
     t.integer  "question_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "flag",            default: false
     t.integer  "answerable_id"
     t.string   "answerable_type"
-    t.boolean  "flag",            default: false
   end
 
   create_table "badges", force: true do |t|
@@ -39,9 +39,19 @@ ActiveRecord::Schema.define(version: 20140902083100) do
     t.datetime "created_at"
   end
 
+<<<<<<< HEAD
   add_index "badges_sashes", ["badge_id", "sash_id"], name: "index_badges_sashes_on_badge_id_and_sash_id", using: :btree
   add_index "badges_sashes", ["badge_id"], name: "index_badges_sashes_on_badge_id", using: :btree
   add_index "badges_sashes", ["sash_id"], name: "index_badges_sashes_on_sash_id", using: :btree
+=======
+  create_table "bookmarks", force: true do |t|
+    t.integer "question_id"
+    t.integer "bookmarkable_id"
+    t.string  "bookmarkable_type"
+  end
+
+  add_index "bookmarks", ["question_id", "bookmarkable_id", "bookmarkable_type"], name: "bookmarks_index", unique: true, using: :btree
+>>>>>>> development_phase_1_pull_requests
 
   create_table "comments", force: true do |t|
     t.string   "title",            limit: 50
@@ -152,12 +162,11 @@ ActiveRecord::Schema.define(version: 20140902083100) do
     t.string   "last_sign_in_ip"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "first_name"
-    t.string   "middle_name"
-    t.string   "last_name"
     t.string   "username"
     t.date     "birthdate"
     t.integer  "points"
+    t.integer  "sash_id"
+    t.integer  "level",                  default: 0
   end
 
   add_index "students", ["email"], name: "index_students_on_email", unique: true, using: :btree
@@ -179,6 +188,7 @@ ActiveRecord::Schema.define(version: 20140902083100) do
   create_table "tags", force: true do |t|
     t.string  "name"
     t.integer "taggings_count", default: 0
+    t.text    "description"
   end
 
   add_index "tags", ["name"], name: "index_tags_on_name", unique: true, using: :btree

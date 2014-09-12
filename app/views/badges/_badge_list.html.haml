@@ -1,0 +1,36 @@
+- @badges.each do |badge|
+  .border
+    .col-md-3.question-cat
+      %span.user-badge
+        = badge.name    
+      %br
+        %span.points-count
+          = badge.points
+        %span.star
+          %i.fa.fa-star
+          %br
+            = t('badges.captions.points_require')
+    .col-md-4
+      %span 
+        = t('badges.captions.with_you_can')
+      %p
+        %i.fa.fa-ban
+        = t('badges.captions.edit_other_people')
+      %p
+        %i.fa.fa-check
+        = t('badges.captions.vote_to_close')
+        
+    .col-md-3
+      %p
+        %i.fa.fa-ban
+        = t('badges.captions.edit_others_answer')  
+      %p
+        %i.fa.fa-check
+        = t('badges.captions.vote_down')  
+    .col-md-2
+      %p
+        %i.fa.fa-check
+        = t('badges.captions.leave_comment')  
+      %p
+        %i.fa.fa-check
+          = t('badges.captions.vote_up')  

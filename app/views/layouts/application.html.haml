@@ -9,6 +9,11 @@
   %body.archive.author.author-admindemo.author-11.logged-in.cbp-spmenu-push
     #wrap
       = render partial: 'layouts/header'
-      .container
-        = render partial: 'shared/flash_messages'
-        = yield
+      .container-fluid
+        .row
+          = render partial: 'shared/flash_messages'
+          #header_sidebar.col-md-12.col-xs-12
+          = render 'layouts/left_sidebar'
+          .col-md-8.main-content
+            = yield
+          = render 'layouts/right_sidebar'

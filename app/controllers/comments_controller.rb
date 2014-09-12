@@ -19,17 +19,17 @@ class CommentsController < ApplicationController
     if !(@comment.nil?)
       @comment.update(comment_params)
       if "Question" == relative_type
-        redirect_to question_path(params[:comment][:relative_id]),flash: { success: "Updated Successfully" }
+        redirect_to question_path(params[:comment][:relative_id]),flash: { success: t('comments.messages.update_success') }
       else
         @answer = Answer.find_by_id(params[:comment][:relative_id])
-        redirect_to question_path(@answer.question),flash: { success: "Updated Successfully" }
+        redirect_to question_path(@answer.question),flash: { success: t('comments.messages.update_success') }
       end
     else
       if "Question" == relative_type
-        redirect_to question_path(relative_id),flash: { error: "no such Comment found for Update" }
+        redirect_to question_path(relative_id),flash: { error: t('comments.messages.comment_not_found') }
       else
         @answer = Answer.find_by_id(params[:comment][:relative_id])
-        redirect_to question_path(@answer.question),flash: { error: "no such Comment found for Update" }
+        redirect_to question_path(@answer.question),flash: { error: t('comments.messages.comment_not_found') }
       end
     end
   end
@@ -37,7 +37,7 @@ class CommentsController < ApplicationController
   def show
     @answer = Answer.find_by_id(params[:id])
     if @answer.nil?
-      redirect_to question_path(params[:question_id]),flash: { error: "no such Answer found for Comment" }
+      redirect_to question_path(params[:question_id]),flash: { error: t('answers.messages.answer_not_found') }
     else
       @comment = Comment.new
       @comments = Comment.relative_comments(@answer.id,@answer.class)
@@ -50,7 +50,7 @@ class CommentsController < ApplicationController
       @answers = @question.answers
       @comment = Comment.find_by_id(params[:id])
       if @comment.nil?
-        redirect_to question_path(params[:question_id]),flash: { error: "No such Comment found for Edit!" }
+        redirect_to question_path(params[:question_id]),flash: { error: t('comments.messages.comment_not_found') }
       else
         @comments_q = Comment.relative_comments(@question.id,@question.class)
       end
@@ -58,7 +58,7 @@ class CommentsController < ApplicationController
       @answer = Answer.find_by_id(params[:answer_id])
       @comment = Comment.find_by_id(params[:id])
       if @comment.nil?
-        redirect_to comment_path(params[:answer_id]),flash: { error: "No such Comment found for Edit!" }
+        redirect_to comment_path(params[:answer_id]),flash: { error: t('comments.messages.comment_not_found') }
       else       
         @comments = Comment.relative_comments(@answer.id,@answer.class)
       end
@@ -71,16 +71,16 @@ class CommentsController < ApplicationController
       @comment.delete
       if params[:answer_id].present?
         @answer = Answer.find_by_id(params[:answer_id])
-        redirect_to question_path(@answer.question.id),flash: { success: "Deleted Successfully!" }
+        redirect_to question_path(@answer.question.id),flash: { success: t('comments.messages.successful_delete') }
       else
-        redirect_to question_path(params[:question_id]),flash: { success: "Deleted Successfully!" }
+        redirect_to question_path(params[:question_id]),flash: { success: t('comments.messages.successful_delete') }
       end
     else
       if params[:answer_id].present?
         @answer = Answer.find_by_id(params[:answer_id])
-        redirect_to question_path(@answer.question.id),flash: { error: "No such Comment found for Delete!" }
+        redirect_to question_path(@answer.question.id),flash: { error: t('comments.messages.comment_not_found') }
       else
-        redirect_to question_path(params[:question_id]),flash: { error: "No such Comment found for Delete!" }
+        redirect_to question_path(params[:question_id]),flash: { error: t('comments.messages.comment_not_found') }
       end
     end
   end

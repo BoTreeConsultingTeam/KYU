@@ -6,7 +6,7 @@ module QuestionsHelper
   end
   
   def ask_question
-    button_to  'Ask Question', new_question_path,method: :get, class:" btn btn-primary pull-right"
+    button_to  t('common.btn.ask_question'), new_question_path,method: :get, class:" btn btn-primary pull-right"
   end
 
   def vote_up_question_link(question)
@@ -23,5 +23,12 @@ module QuestionsHelper
   
   def get_tag_counts
     Question.tag_counts
+  end
+  def check_bookmark question
+    current_user.bookmarks.where(:question_id => question.id)  
+  end  
+
+  def bookmark_question_ids student
+    student.bookmarks.map { |bookmark| bookmark.question }
   end
 end

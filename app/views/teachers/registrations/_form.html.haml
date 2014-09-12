@@ -3,37 +3,34 @@
     .modal-body
       = form_for(resource, :as => resource_name, :url => teacher_registration_path) do |f|
         = devise_error_messages!
-        %div    
+        %div
           %br/
           = f.label t('common.captions.salutations')
           = f.select(:salutation, options_for_salution,{},{class: 'form-control'})
+          %br
           = f.label t('common.captions.first_name')
-          = f.text_field :first_name,class: 'form-control'
+          = f.text_field :first_name, class: 'form-control'
           %br
           = f.label t('common.captions.last_name')
-          = f.text_field :last_name,class: 'form-control'
+          = f.text_field :last_name, class: 'form-control'
           %br
           = f.label t('common.captions.user_name')
-          = f.text_field :username,class: 'form-control'
+          = f.text_field :username, class: 'form-control'
           %br
           = f.label t('common.captions.qualification')
-          = f.text_field :qualification,class: 'form-control'
+          = f.text_field :qualification, class: 'form-control'
           %br
           = f.label t('common.captions.email')
-          = f.email_field :email, :autofocus => true,class: 'form-control'
+          = f.email_field :email, :autofocus => true, class: 'form-control'
+          %br/
         %div
           %br/
-          = f.label t('common.captions.password')
-          = f.password_field :password,class: 'form-control'
+          = f.label t('common.captions.new_password')
+          = f.password_field :password, class: 'form-control'
         %div
           %br/
           = f.label t('common.captions.password_confirmation')
-          
-          = f.password_field :password_confirmation,class: 'form-control'
-        %br/     
-        %div
-        = f.label t('common.captions.current')
-        %i (we need your current password to confirm your changes)
-        %br/
-        = f.password_field :current_password
-        %div= f.submit "Submit"
+
+          = f.password_field :password_confirmation, class: 'form-control'
+        %br
+        %div= f.submit t('common.captions.btn.update'), title: t('common.captions.btn.update'), class: 'btn btn-primary'

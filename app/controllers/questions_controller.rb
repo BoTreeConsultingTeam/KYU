@@ -25,6 +25,7 @@ class QuestionsController < ApplicationController
     @question = Question.new(question_params.merge({askable: current_user}).except!(:tag_list))
     current_user.tag( @question, :with => question_params[:tag_list], :on => :tags )
     if @question.save
+      current_student.change_points(2)
       redirect_to questions_path
     else
       render 'new'
@@ -44,19 +45,20 @@ class QuestionsController < ApplicationController
   def destroy
     @question = Question.find_by_id(params[:id])
     if @question.nil?
-      redirect_to students_path,flash: { error: "No such Question found for Delete!" }
+      redirect_to students_path,flash: { error: t('questions.messages.question_not_found') }
     else
       @question.destroy
-      redirect_to students_path,flash: { success: "Deleted Successfuly!" }
+      redirect_to students_path,flash: { success: t('questions.messages.delete_success') }
     end
   end
 
   def upvote
     @question = Question.find_by_id(params[:id])
     if @question.nil?
-      redirect_to questions_path,flash: { error: "No such Question found for Vote!" }
+      redirect_to questions_path,flash: { error: t('questions.messages.question_not_found') }
     else
       question_liked_by(@question,liked_by)
+      give_points(@question,5)
       redirect_to questions_path
     end
   end
@@ -64,9 +66,10 @@ class QuestionsController < ApplicationController
   def downvote
     @question = Question.find_by_id(params[:id])
     if @question.nil?
-      redirect_to questions_path,flash: { error: "No such Question found for Vote!" }
+      redirect_to questions_path,flash: { error: t('questions.messages.question_not_found') }
     else
       question_disliked_by(@question,liked_by)
+      give_points(@question,-5)
       redirect_to questions_path
     end
   end
@@ -78,7 +81,7 @@ class QuestionsController < ApplicationController
   def update
     @question = Question.find(params[:id])
     if @question.update(question_params)
-      flash[:success] = "Profile updated"
+      flash[:success] = t('questions.messages.profile_update')
       redirect_to questions_path
     else
       render 'edit'
@@ -103,10 +106,10 @@ class QuestionsController < ApplicationController
   end
 
   def received_tag
-      params[:tag]
-    end
+    params[:tag]
+  end
 
-    def received_time
-      params[:time]
-    end
+  def received_time
+    params[:time]
+  end
 end
