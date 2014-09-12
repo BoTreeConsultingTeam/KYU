@@ -3,7 +3,7 @@
     .col-md-2.col-xs-2.vote-block
       %ul
         %li{"data-original-title" => "This is useful.", :title => ""}
-          = vote_up_answer_link(answer)                    
+          = vote_answer_link(answer, 'up')                    
         %li{"data-original-title" => "", :title => ""}
           %span.vote-count 
             = answer.get_likes.size
@@ -11,7 +11,7 @@
           %span.vote-count 
             = answer.get_dislikes.size
         %li{"data-original-title" => "This is useful.", :title => ""}
-          = vote_down_answer_link(answer)
+          = vote_answer_link(answer, 'down')
     .col-md-9.col-xs-9.q-right-content
       %ul.post-controls
         %li

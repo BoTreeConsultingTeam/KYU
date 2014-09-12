@@ -7,6 +7,7 @@ class Question < ActiveRecord::Base
   has_many :teachers, :through => :bookmarks, :source => :bookmarkable, :source_type => "Teacher" 
   has_many :bookmarks
   has_many :comments,as: :relative,dependent: :destroy
+  belongs_to :standard
   paginates_per 10
   is_impressionable
   acts_as_taggable
@@ -20,6 +21,7 @@ class Question < ActiveRecord::Base
   validates_presence_of :content
   validates :title, length: { maximum: 150, minimum: 20 }
   validates :content, length: { minimum: 20 }
+  validates_presence_of :standard_id
   default_scope where("enable = ?",true)
   def answered?
     answers.where(flag: true).count > 0

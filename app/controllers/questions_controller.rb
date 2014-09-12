@@ -17,6 +17,7 @@ class QuestionsController < ApplicationController
   end
 
   def new
+    @standards = Standard.all
     @question = Question.new
     @question.user_id = session[:id]
   end
@@ -118,7 +119,7 @@ class QuestionsController < ApplicationController
 
   private
   def question_params
-    params.require(:question).permit(:title,:content, :user_id, :tag_list)
+    params.require(:question).permit(:standard_id, :title, :content, :user_id, :tag_list)
   end
 
   def question_liked_by(question,user)

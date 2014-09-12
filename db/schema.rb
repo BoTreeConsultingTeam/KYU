@@ -11,10 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140909105053) do
-
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
+ActiveRecord::Schema.define(version: 20140912062013) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -159,6 +156,13 @@ ActiveRecord::Schema.define(version: 20140909105053) do
     t.integer  "askable_id"
     t.string   "askable_type"
     t.boolean  "enable",       default: true
+    t.integer  "standard_id"
+  end
+
+  create_table "standards", force: true do |t|
+    t.string   "class_no"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "students", force: true do |t|
@@ -180,7 +184,7 @@ ActiveRecord::Schema.define(version: 20140909105053) do
     t.integer  "sash_id"
     t.integer  "level",                  default: 0
     t.boolean  "student_manager",        default: false
-    t.string   "student_class"
+    t.integer  "standard_id"
   end
 
   add_index "students", ["email"], name: "index_students_on_email", unique: true, using: :btree

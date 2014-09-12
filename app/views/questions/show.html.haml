@@ -11,26 +11,25 @@
 #question_content.row.question-main-content.question-item{"data-id" => "1728"}
   / Vote section
   .col-md-2.col-xs-2.vote-block
-    / vote group
-          %ul
-            %li{"data-original-title" => "This is useful.", :title => ""}
-              = vote_question_link(@question, 'up')
+    %ul
+      %li{"data-original-title" => "This is useful.", :title => ""}
+        = vote_question_link(@question, 'up')
       %li
-              %span.vote-count{id: "upvoteq#{@question.id}" }
+        %span.vote-count{id: "upvoteq#{@question.id}" }
           = @question.get_likes.size
       %li
-              %span.vote-count{id: "downvoteq#{@question.id}"}  
-                = @question.get_dislikes.size
-            %li{"data-original-title" => "This is useful.", :title => ""}
-              = vote_question_link(@question, 'down')
+        %span.vote-count{id: "downvoteq#{@question.id}"}  
+          = @question.get_dislikes.size
+      %li{"data-original-title" => "This is useful.", :title => ""}
+        = vote_question_link(@question, 'down')
   .col-md-9.col-xs-9.q-right-content
     / admin control
-          %ul.post-controls
-            %li
-              = link_to '',edit_question_path(@question.id),class: 'post-edit action fa fa-pencil',rel: 'tooltip',title: 'Edit', 'data-no-turbolink' => true
-            %li
-              = link_to '', question_path,method: :delete,data: {confirm:'Are you sure?'},rel: 'tooltip',title: 'Delete',class: 'post-delete action fa fa-trash-o'
-      
+    %ul.post-controls
+      %li
+        = link_to '',edit_question_path(@question.id),class: 'post-edit action fa fa-pencil',rel: 'tooltip',title: 'Edit', 'data-no-turbolink' => true
+      %li
+        = link_to '', question_path,method: :delete,data: {confirm:'Are you sure?'},rel: 'tooltip',title: 'Delete',class: 'post-delete action fa fa-trash-o'
+
       - if (check_bookmark @question).blank?
         %li
           = link_to '', bookmarks_path(:question_id => @question.id), method: :post, class: 'post-delete action fa fa-plus'
@@ -38,7 +37,7 @@
         %li
           = link_to '',bookmark_path(:question_id => @question.id), method: :delete,data: {confirm:'Are you sure?'},class: 'post-delete action fa fa-minus-square'    
     .top-content
-            - if @question.answers.count > 0
+      - if @question.answers.count > 0
       %span.answered
         %i.fa.fa-check
         Answered
@@ -59,18 +58,18 @@
       .col-md-4.col-xs-4.question-control
         = render :partial => 'link_to_comment', :locals => { object: @question, id: "q#{@question.id}"}
     .comments-container.collapse.hidden_comment-box{id: 'commentq' + "#{@question.id}"}              
-            = form_for (@comment),remote: true do |f|
-              = f.text_area :comment,:toolbar => 'mini', :class => 'ckeditor', style: 'width: none !important;',id: 'comment_area'
-              = f.hidden_field :relative, :value => @question
-              = f.hidden_field :relative_type, :value => @question.class.to_s
-              = f.hidden_field :relative_id, :value => @question.id
-              %br/
-              = submit_tag "Post",class: 'btn btn-primary'
+      = form_for (@comment),remote: true do |f|
+        = f.text_area :comment,:toolbar => 'mini', :class => 'ckeditor', style: 'width: none !important;',id: 'comment_area'
+        = f.hidden_field :relative, :value => @question
+        = f.hidden_field :relative_type, :value => @question.class.to_s
+        = f.hidden_field :relative_id, :value => @question.id
+        %br/
+        = submit_tag "Post",class: 'btn btn-primary'
     %br/
     = render 'comments/show_comments_of_questions'               
-          .row.paginations.home
-            .col-md-12{id:'paginator'}
-              = paginate @comments_q
+      .row.paginations.home
+        .col-md-12{id:'paginator'}
+          = paginate @comments_q
     .clearfix
 .sticky-wrapper
   #answers_filter.row.answers-filter
