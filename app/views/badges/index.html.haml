@@ -1,8 +1,10 @@
 = render :partial => "layouts/sub_heading", :locals => {:object => 'Badges'}
 .row.points-system
   .col-md-12
-    %h3 Points System
-    %p You earn reputation when people vote on your posts
+    %h3 
+      = t('badges.captions.point_system')  
+    %p 
+      = t('badges.captions.earn_reputaion')  
   .clearfix
   %ul.points-define
     %li.col-md-3
@@ -12,7 +14,7 @@
         %span.star
           %i.fa.fa-star
           %br
-            create a question
+            = t('badges.captions.create_a_question')  
     %li.col-md-3
       %div
         %span.points-count
@@ -20,7 +22,7 @@
         %span.star
           %i.fa.fa-star
           %br
-            question is voted up
+            = t('badges.captions.question_vote_up')     
     %li.col-md-3
       %div
         %span.points-count
@@ -28,7 +30,7 @@
         %span.star
           %i.fa.fa-star
           %br
-            answer is voted up
+            = t('badges.captions.answer_vote_up')     
     %li.col-md-3
       %div
         %span.points-count
@@ -36,11 +38,13 @@
         %span.star
           %i.fa.fa-star
           %br
-            answer is accepted
+            
 .row.badges-system
   .col-md-12
-    %h3 Badges System
-    %p You earn reputation when people vote on your posts
+    %h3 
+      = t('badges.captions.badge_system')      
+    %p 
+      = t('badges.captions.earn_reputaion')  
   .col-md-12.badge-content
     = render 'badge_list'  
 

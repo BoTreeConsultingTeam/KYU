@@ -43,7 +43,7 @@
           = f.hidden_field :relative_type, :value => answer.class.to_s
           = f.hidden_field :relative_id, :value => answer.id
           %br/
-          = submit_tag "Post",class: 'btn btn-lg btn-primary'
+          = submit_tag t('common.btn.post'),class: 'btn btn-lg btn-primary'
         / %a.hide-comment{:href => "javascript:void(0)"} Cancel
       %br/
       -@comments_a.each do |comment|

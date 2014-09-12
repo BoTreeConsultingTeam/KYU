@@ -7,5 +7,5 @@
           = f.hidden_field :relative, :value => object
           = f.hidden_field :relative_type, :value => object.class.to_s
           = f.hidden_field :relative_id, :value => object.id
-  .spacer20
-  = submit_tag "Post", class: 'btn btn-primary'
+        .spacer20
+        = submit_tag t('common.btn.post'), class: 'btn btn-primary'

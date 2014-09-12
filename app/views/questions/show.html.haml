@@ -27,7 +27,7 @@
     / admin control
     %ul.post-controls
       %li
-        = link_to '',edit_question_path(@question.id),class: 'post-edit action fa fa-pencil'
+        = link_to '',edit_question_path(@question.id),class: 'post-edit action fa fa-pencil','data-no-turbolink' => true
       %li
         = link_to '',question_path,method: :delete,data: {confirm:'Are you sure?'},class: 'post-delete action fa fa-trash-o'
       
@@ -70,12 +70,6 @@
           %span.number 
             = @question.answers.count
           Answers
-      .col-md-6.col-xs-6.sort-questions
-        %ul
-          %li
-            %a.active{:href => "http://demo.enginethemes.com/qaengine/question/what-are-some-of-your-favorite-deep-awe-inspiring-andor-thought-provoking-movies/"} Votes
-          %li
-            %a{:href => "/qaengine/question/what-are-some-of-your-favorite-deep-awe-inspiring-andor-thought-provoking-movies/?sort=oldest"} Oldest
 / ANSWERS LOOP
 #answers_main_list
   = render 'answers_list', locals: { :answers =>  @answer}

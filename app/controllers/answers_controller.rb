@@ -13,7 +13,7 @@ class AnswersController < ApplicationController
     if @answer.save
       redirect_to question_path(params[:answer][:question_id])
     else
-      flash[:error]= 'Must contain some text'
+      flash[:error]= t('answers.messages.contains_error')
       redirect_to question_path(params[:answer][:question_id])
     end
   end
@@ -23,7 +23,7 @@ class AnswersController < ApplicationController
     @answers = @question.answers
     @answer = Answer.find_by_id(params[:id])
     if @answer.nil?
-      redirect_to question_path(params[:question_id]),flash: { error: "No such Answer found for edit!" }
+      redirect_to question_path(params[:question_id]),flash: { error: t('answers.messages.answer_not_found') }
     end
   end
 
@@ -31,26 +31,26 @@ class AnswersController < ApplicationController
     @answer = Answer.find_by_id(params[:id])
     if !(@answer.nil?)
       @answer.update(answer_params)
-      redirect_to question_path(params[:answer][:question_id]),flash: { success: "Updated Successfully!" }
+      redirect_to question_path(params[:answer][:question_id]),flash: { success: t('answers.messages.update_success') }
     else
-      redirect_to question_path(params[:answer][:question_id]),flash: { error: "No such Answer found for Update!" }
+      redirect_to question_path(params[:answer][:question_id]),flash: { error: t('answers.messages.answer_not_found') }
     end    
   end
 
   def destroy
     @answer = Answer.find_by_id(params[:id])
     if @answer.nil?
-      redirect_to question_path(params[:question_id]), flash: { error: "No such Answer found for delete!" }
+      redirect_to question_path(params[:question_id]), flash: { error: t('answers.messages.answer_not_found') }
     else
       @answer.destroy
-      redirect_to question_path(params[:question_id]), flash: { success: "Deleted successfully!" }
+      redirect_to question_path(params[:question_id]), flash: { success: t('answers.messages.delete_success') }
     end
   end
 
   def upvote
     @answer = Answer.find_by_id(params[:id])
     if @answer.nil?
-      redirect_to questions_path,flash: { error: "No such Answer found for Vote!" }
+      redirect_to questions_path,flash: { error: t('answers.messages.answer_not_found') }
     else
       answer_liked_by(@answer,liked_by)
       give_points(@answer,15)
@@ -61,7 +61,7 @@ class AnswersController < ApplicationController
   def downvote
     @answer = Answer.find_by_id(params[:id])
     if @answer.nil?
-      redirect_to questions_path,flash: { error: "No such Answer found for Vote!" }
+      redirect_to questions_path,flash: { error: t('answers.messages.answer_not_found') }
     else
       answer_disliked_by(@answer,liked_by)
       give_points(@answer,-15)
@@ -72,12 +72,12 @@ class AnswersController < ApplicationController
   def accept
     @answer=Answer.find_by_id(params[:id])
     if @answer.nil?
-      redirect_to question_path(@answer.question),flash: { error: "No such Answer found for Accept!" }
+      redirect_to question_path(@answer.question),flash: { error: t('answers.messages.answer_not_found') }
     else
       @answer.flag = true
       @answer.save
       give_points(@answer,10)
-      redirect_to question_path(@answer.question),flash: { success: "Answer Accepted!" }
+      redirect_to question_path(@answer.question),flash: { success: t('answers.messages.answer_accepted')   }
     end
   end
 

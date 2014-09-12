@@ -1,2 +1,0 @@
-=================Importatnt Notes ==========================
-1) to change the width in ckeditor please check it's ckeditor/config.js.coffee file and remove default width given there
