@@ -1,6 +1,5 @@
 class MembersController < ApplicationController
   def index
-    @student_manager = Student.find_all_by_student_manager(true)
     @students = Student.all.page(params[:page]).per(6)    
   end
 
@@ -10,16 +9,15 @@ class MembersController < ApplicationController
     @answers = @student.answers
   end
 
-  def students_manager
+  def select_students_manager
     if Student.where(student_manager: true).count < 2
       @student = Student.find_by_id(params[:id])
       @student.student_manager = true
-      @student.save
-      redirect_to members_path
+      @student.save      
     else
-      redirect_to members_path,flash: { error: t('flash_massege.error.student.manager') }
+      flash[:error] = t('flash_message.error.student.manager')
     end
-    
+    redirect_to members_path
   end
   private
 

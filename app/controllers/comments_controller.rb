@@ -3,15 +3,13 @@ class CommentsController < ApplicationController
   before_action :user_signed_in?
   
   def create 
-    @comment = Comment.create(comment_params.merge({commentable: current_user}).merge({relative: params[:relative]}))
-    
+    @comment = Comment.new(comment_params.merge({commentable: current_user}).merge({relative: params[:relative]}))
+    @comments = Comment.relative_comments(comment_relative_id,comment_relative_type).page params[:page]
     if @comment.save
       if "Question" == relative_type
-        @question = Question.find_by_id(params[:comment][:relative_id])
-        @comments = Comment.relative_comments(params[:comment][:relative_id],params[:comment][:relative_type]).page params[:page]
+        @question = Question.find_by_id(comment_relative_id)
       else
-        @answer = Answer.find_by_id(params[:comment][:relative_id])
-        @comments = Comment.relative_comments(params[:comment][:relative_id],params[:comment][:relative_type])
+        @answer = find_by_answer_id(comment_relative_id)  
       end 
       respond_to do |format|
         format.js
@@ -22,33 +20,28 @@ class CommentsController < ApplicationController
   end
    
   def update
-    @comment=Comment.find_by_id(params[:id])
-    @comment.update(comment_params)
+    comment_find_by_id
     if !(@comment.nil?)
       @comment.update(comment_params)
-      if "Question" == relative_type
-        redirect_to question_path(params[:comment][:relative_id]),flash: { success: t('flash_massege.success.comment.update') }
-      else
-        @answer = Answer.find_by_id(params[:comment][:relative_id])
-        redirect_to question_path(@answer.question),flash: { success: t('flash_massege.success.comment.update') }
-      end
+      flash[:success] = t('flash_message.success.comment.update')
     else
-      if "Question" == relative_type
-        redirect_to question_path(relative_id),flash: { error: t('flash_massege.error.comment.update') }
-      else
-        @answer = Answer.find_by_id(params[:comment][:relative_id])
-        redirect_to question_path(@answer.question),flash: { error: t('flash_massege.error.comment.update') }  
-      end
+      flash[:error] = t('flash_message.error.comment.update')
+    end
+    if "Question" == relative_type        
+      redirect_to question_path(relative_id)
+    else
+      @answer = find_by_answer_id(comment_relative_id)
+      redirect_to question_path(@answer.question) 
     end
   end
 
   def show
-    @answer = Answer.find_by_id(params[:id])
+    AnswersController.answer_find_by_id
     if @answer.nil?
-      redirect_to question_path(params[:question_id]),flash: { error: t('flash_massege.error.answer.comment') }
+      redirect_to question_path(params[:question_id]),flash: { error: t('flash_message.error.answer.comment') }
     else
       @comment = Comment.new
-      @comments = Comment.relative_comments(@answer.id,@answer.class)
+      @comments = Comment.relative_comments(comment_find_by_id.id,comment_find_by_id.class)
     end
   end
   
@@ -56,40 +49,41 @@ class CommentsController < ApplicationController
     if params[:question_id]
       @question = Question.find_by_id(params[:question_id])
       @answers = @question.answers
-      @comment = Comment.find_by_id(params[:id])
+      comment_find_by_id
       if @comment.nil?
-        redirect_to question_path(params[:question_id]),flash: { error: t('flash_massege.error.comment.edit') }
+        redirect_to question_path(params[:question_id]),flash: { error: t('flash_message.error.comment.edit') }
       else
-        @comments_q = Comment.relative_comments(@question.id,@question.class)
+        @question_comments = Comment.relative_comments(@question.id,@question.class)
       end
     else
-      @answer = Answer.find_by_id(params[:answer_id])
-      @comment = Comment.find_by_id(params[:id])
+      @answer = find_by_answer_id(params[:answer_id])
+      comment_find_by_id
       if @comment.nil?
-        redirect_to questions_path,flash: { error: t('flash_massege.error.comment.edit') }
+        redirect_to questions_path,flash: { error: t('flash_message.error.comment.edit') }
       else       
-        @comments_a = Comment.relative_comments(@answer.id,@answer.class)
+        find_by_answer_id(params[:id])
+        @answer_comments = Comment.relative_comments(@answer.id,@answer.class)
       end
     end     
   end    
 
   def destroy
-    @comment = Comment.find_by_id(params[:id])
-    if !(@comment.nil?)
+    comment_find_by_id
+    if !(comment_find_by_id.nil?)
       @comment.delete
       if params[:answer_id].present?
-        @answer = Answer.find_by_id(params[:answer_id])
+        @answer = find_by_answer_id(params[:answer_id])
         @comments = Comment.relative_comments(params[:answer_id],"Answer")
       else
         @question = Question.find_by_id(params[:question_id])
-        @comments = Comment.relative_comments(params[:question_id],"Question")
+        @comments = Comment.relative_comments(params[:question_id],"Question").page params[:page]
       end
       respond_to do |format|
         format.js
       end
     else
       if params[:answer_id].present?
-        @answer = Answer.find_by_id(params[:answer_id])
+        @answer = find_by_answer_id(params[:id])
         @comments = Comment.all
         redirect_to question_path(@answer.question.id),flash: { error: "No such Comment found for Delete!" }
       else
@@ -114,4 +108,21 @@ class CommentsController < ApplicationController
   def relative_type
     params[:comment][:relative_type]
   end
+
+  def find_by_answer_id(id)
+    Answer.find_by_id(id)
+  end
+
+  def comment_relative_id
+    params[:comment][:relative_id]
+  end
+
+  def comment_relative_type
+    params[:comment][:relative_type]
+  end
+
+  def comment_find_by_id
+    @comment = Comment.find_by_id(params[:id])
+  end
+
 end

@@ -30,7 +30,7 @@ Rails.application.routes.draw do
 
   get '/members' => 'members#index'
   get '/members/:id' => 'members#show', as: :member
-  get '/members/students_manager/:id' => 'members#students_manager',as: :students_manager
+  get '/members/select_students_manager/:id' => 'members#select_students_manager',as: :select_students_manager
 
   resources :answers do
     member { post :vote }

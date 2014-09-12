@@ -11,10 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140909105053) do
-
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
+ActiveRecord::Schema.define(version: 20140912082905) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -44,6 +41,10 @@ ActiveRecord::Schema.define(version: 20140909105053) do
     t.boolean  "notified_user", default: false
     t.datetime "created_at"
   end
+
+  add_index "badges_sashes", ["badge_id", "sash_id"], name: "index_badges_sashes_on_badge_id_and_sash_id", using: :btree
+  add_index "badges_sashes", ["badge_id"], name: "index_badges_sashes_on_badge_id", using: :btree
+  add_index "badges_sashes", ["sash_id"], name: "index_badges_sashes_on_sash_id", using: :btree
 
   create_table "bookmarks", force: true do |t|
     t.integer "question_id"
@@ -158,7 +159,21 @@ ActiveRecord::Schema.define(version: 20140909105053) do
     t.datetime "updated_at"
     t.integer  "askable_id"
     t.string   "askable_type"
-    t.boolean  "enable",       default: true
+    t.boolean  "enabled",            default: true
+    t.integer  "cached_votes_total", default: 0
+    t.integer  "cached_votes_score", default: 0
+    t.integer  "cached_votes_up",    default: 0
+    t.integer  "cached_votes_down",  default: 0
+  end
+
+  add_index "questions", ["cached_votes_down"], name: "index_questions_on_cached_votes_down", using: :btree
+  add_index "questions", ["cached_votes_score"], name: "index_questions_on_cached_votes_score", using: :btree
+  add_index "questions", ["cached_votes_total"], name: "index_questions_on_cached_votes_total", using: :btree
+  add_index "questions", ["cached_votes_up"], name: "index_questions_on_cached_votes_up", using: :btree
+
+  create_table "sashes", force: true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "students", force: true do |t|
@@ -176,11 +191,11 @@ ActiveRecord::Schema.define(version: 20140909105053) do
     t.datetime "updated_at"
     t.string   "username"
     t.date     "birthdate"
-    t.integer  "points"
     t.integer  "sash_id"
     t.integer  "level",                  default: 0
     t.boolean  "student_manager",        default: false
     t.string   "student_class"
+    t.integer  "points"
   end
 
   add_index "students", ["email"], name: "index_students_on_email", unique: true, using: :btree
@@ -202,7 +217,6 @@ ActiveRecord::Schema.define(version: 20140909105053) do
   create_table "tags", force: true do |t|
     t.string  "name"
     t.integer "taggings_count", default: 0
-    t.text    "description"
   end
 
   add_index "tags", ["name"], name: "index_tags_on_name", unique: true, using: :btree

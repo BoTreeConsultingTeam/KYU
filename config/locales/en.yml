@@ -72,7 +72,7 @@ en:
   mailer:
     subject:
       report_abuse_notification: 'Report Abuse Notification'
-  flash_massege:
+  flash_message:
     error:
       teacher:
       student:

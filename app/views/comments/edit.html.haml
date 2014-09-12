@@ -1,12 +1,7 @@
-.container-fluid
-  .row
-    #header_sidebar.col-md-12.col-xs-12
-    = render 'layouts/left_sidebar'
-    .col-md-8.main-content.single-content
-      .modal-submit-questions
-        .modal-dialog
-        - if @question.present?
-          = render 'edit_comment_of_question'    
-        -else
-          = render 'edit_comment_of_answer'
-    = render 'layouts/right_sidebar'
+.main-content.single-content
+  .modal-submit-questions
+    .modal-dialog
+    - if @question.present?
+      = render 'edit_comment_of_question'    
+    -else
+      = render 'edit_comment_of_answer'

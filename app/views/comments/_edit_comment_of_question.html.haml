@@ -2,10 +2,6 @@
   .col-md-8.col-xs-8
     %h4
       = @question.title
-.modal-submit-questions
-  .modal-dialog
-    .modal-body
-      %h4 Comment :
-      = render partial: 'form', locals: {type: 'edit',object: @question}
-    = render 'show_comments_of_questions'
 
+= render partial: 'form', locals: {type: 'edit',object: @question}
+= render 'show_comments_of_questions'
