@@ -22,6 +22,7 @@ gem 'sass-rails', '~> 4.0.0'
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 gem 'gioco'
+gem "google_visualr", ">= 2.1"
 
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'

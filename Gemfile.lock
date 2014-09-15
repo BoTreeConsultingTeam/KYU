@@ -74,6 +74,7 @@ GEM
     ffi (1.9.3)
     formatador (0.2.5)
     gioco (1.1.1)
+    google_visualr (2.3.0)
     guard (2.6.1)
       formatador (>= 0.2.4)
       listen (~> 2.7)
@@ -245,6 +246,7 @@ DEPENDENCIES
   coffee-rails
   devise
   gioco
+  google_visualr (>= 2.1)
   guard
   guard-jasmine
   guard-livereload
