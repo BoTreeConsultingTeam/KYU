@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
   
   def user_signed_in?
     if current_user.nil?
-      redirect_to root_path, flash: { error: "Sign in First" }
+      redirect_to root_path, flash: { error: t('common.messages.sign_in') }
     end
   end
   
