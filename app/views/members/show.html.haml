@@ -38,13 +38,14 @@
         = link_to t('common.links.questions'), member_path(@student,:filter => "questions")
       %li
         = link_to t('common.links.answers'), member_path(@student,:filter => "answers")
-      %li
-        = link_to t('common.links.bookmarks'), member_path(@student,:filter => "bookmarks")  
+      - if @student == current_user
+        %li
+          = link_to t('common.links.bookmarks'), member_path(@student,:filter => "bookmarks")  
 - if params[:filter] == "answers"
   - if !(@answers.blank?)
     .main-questions-list
       %ul#main_questions_list
-        = render :partial => 'member_answers_list', :locals => { :object => @answers}
+        = render :partial => 'member_answers_list', locals: { answers: @answers}
   - else
     %h2
       = t('member.captions.not_answered')

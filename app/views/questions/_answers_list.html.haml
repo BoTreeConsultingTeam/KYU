@@ -39,7 +39,7 @@
             %span.author-name
               - if answer.answerable_type != 'Teacher'                      
                 - if answer.answerable.student_manager?
-                  %a.student_manager{href: "#",rel: "tooltip",title: t('students.tooltip.manager')} 
+                  .student_manager{href: "#",rel: "tooltip",title: t('students.tooltip.manager')} 
                     = answer.answerable.username
                 - else
                   = answer.answerable.username

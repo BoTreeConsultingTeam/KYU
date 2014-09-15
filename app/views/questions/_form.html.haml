@@ -5,7 +5,10 @@
         = render 'shared/error_messages', object: f.object
         %div
         = f.label t('students.captions.class')
-        = f.select(:standard_id, options_from_collection_for_select(@standards, 'id', 'class_no'),{prompt: t('teachers.basic.prompt')},{class: 'form-control'})
+        - if form_type == 'edit'
+          = f.select(:standard_id, options_from_collection_for_select(@standards, 'id', 'class_no',@question.standard_id),{},{class: 'form-control'})
+        -else
+          = f.select(:standard_id, options_from_collection_for_select(@standards, 'id', 'class_no'),{prompt: t('teachers.basic.prompt')},{class: 'form-control'})
         %div
         = f.label :title
         %br/
