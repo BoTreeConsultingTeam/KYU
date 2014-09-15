@@ -14,7 +14,7 @@ Rails.application.routes.draw do
   end
   
   get 'answers/accept/:id', to: 'answers#accept', as: :index
-  get 'tags/:tag', to: 'questions#index', as: :tag 
+  get 'tags/:tag', to: 'questions#index', as: :tag
   get 'questions/tags', to: 'questions#alltags', as: :tags
   get 'questions/abuse_report/:id',to: 'questions#abuse_report',as: :report
   get '/badges', to: 'badges#index', as: :badges
@@ -26,7 +26,7 @@ Rails.application.routes.draw do
   end
   get '/questions/disable/:id' => 'questions#disable',as: :disable
 
-    resources :comments
+  resources :comments
 
   get '/members' => 'members#index'
   get '/members/:id' => 'members#show', as: :member

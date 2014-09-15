@@ -26,8 +26,8 @@
             %li
               = link_to t('header_navigation.logout'), destroy_teacher_session_path, method: :delete
     .col-md-2.col-xs-2.btn-group.header-avatar
-      %span.expand.dropdown-toggle{"data-toggle" => "dropdown", :type => "span"}
-        %a.dropdown-account{:href => "javascript:void(0);"}
+      %span.expand
+        %a{:href => member_path(current_user)}
           %span.avatar
             %img.avatar
           %span.display_name
