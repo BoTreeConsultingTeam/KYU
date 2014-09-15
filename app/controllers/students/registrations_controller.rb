@@ -1,11 +1,16 @@
 class Students::RegistrationsController <  Devise::RegistrationsController
    before_filter :configure_permitted_parameters, if: :devise_controller?
 
+  def new
+    @standard = Standard.all
+    super
+  end 
+
   def index
     if params[:tag]
       @questions = Question.tagged_with(params[:tag])
     else
-      @questions = Question.all
+      @questions = Question.all.page params[:page]
     end
     @most_used_tags = tag_cloud
     @students_count = Student.count
@@ -14,6 +19,7 @@ class Students::RegistrationsController <  Devise::RegistrationsController
   end
 
   def create
+    @standard = Standard.all
     @student = build_resource
     @student.save
     super
@@ -30,10 +36,15 @@ class Students::RegistrationsController <  Devise::RegistrationsController
 
   private
   def sign_up_params
-    params.require(:student).permit(:email, :password, :username, :birthdate, :student_class)
+    params.require(:student).permit(:email, :password, :username, :birthdate, :standard_id)
   end
 
   def after_sign_in_path_for(resource)
     students_path
   end
+
+  def def sign_up_params
+    params.require(:student).permit(:email, :password, :username, :birthdate, :standard_id)
+  end
+
 end

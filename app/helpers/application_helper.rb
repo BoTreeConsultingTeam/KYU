@@ -21,6 +21,7 @@ module ApplicationHelper
   def options_for_salution
     options_for_select(SALUTATIONS)
   end
+  
   def set_link(title,time)
     link_to title, questions_path(:time => "#{time}")
   end

@@ -1,0 +1,12 @@
+.col-md-8.main-content
+  .row
+    .col-md-6
+      - @tags_usage_table.each do |row|
+        .row
+          - row.each do |column|
+            .col-md-6
+              %h4
+                = column
+    .col-md-6    
+      #chart
+        = render_chart(@tags_usage_chart, 'chart') 

@@ -1,13 +1,7 @@
-.row
-  .col-md-2.disable-mobile.left-sidebar
-  .col-md-8.main-content
-    .row.select-category
-      .col-md-6.col-xs-6.current-category
-        %span 
-          = t('comments.captions.edit_comment_of_question')
-    .modal-submit-questions
-      .modal-dialog
-      - if @question.present?
-        = render 'edit_comment_of_question'    
-      -else
-        = render 'edit_comment_of_answer'
+.main-content.single-content
+  .modal-submit-questions
+    .modal-dialog
+    - if @question.present?
+      = render 'edit_comment_of_question'    
+    -else
+      = render 'edit_comment_of_answer'

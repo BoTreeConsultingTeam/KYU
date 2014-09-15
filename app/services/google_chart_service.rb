@@ -1,21 +1,28 @@
 class GoogleChartService
-  def self.render_reports_charts(opts = {})
+  def self.render_reports_charts(data_for_chart, chart_type, chart_name, required_formatter, col_x, col_y, interactive)
     data_table = GoogleVisualr::DataTable.new
-    data_table.new_column('string', opts[:col_x])
-    data_table.new_column('number', opts[:col_y])
-    data_table.add_rows(opts[:data_for_chart])
-    option = { width: 400, height: 240, title: opts[:chart_name] }
-    if opts[:required_formatter]
+    data_table.new_column('string', col_x)
+    data_table.new_column('number', col_y)
+    data_table.add_rows(data_for_chart)
+    if required_formatter
       formatter = GoogleVisualr::ArrowFormat.new
       formatter.columns(1)
       data_table.format(formatter)
     end
-    case opts[:chart_type]
-    when :pie
-      chart = GoogleVisualr::Interactive::PieChart.new(data_table, option)
-
-    when :bar
-      chart = GoogleVisualr::Interactive::BarChart.new(data_table, option)
+    opts = { :width => 400, :height => 240, :title => chart_name, :legend => 'bottom'}
+    if chart_type == :pie
+      if !interactive.present?
+        chart = GoogleVisualr::Interactive::PieChart.new(data_table, opts)
+      else
+        chart = GoogleVisualr::Image::PieChart.new(data_table, opts)
+      end
+    elsif chart_type == :bar
+      if !interactive.present?
+        chart = GoogleVisualr::Interactive::ColumnChart.new(data_table, opts)
+      else
+        chart = GoogleVisualr::Image::BarChart.new(data_table, opts)
+      end
     end
+    chart
   end
 end

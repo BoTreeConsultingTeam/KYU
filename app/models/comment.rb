@@ -2,6 +2,7 @@ class Comment < ActiveRecord::Base
   
   include Findable
   include ActsAsCommentable::Comment
+  paginates_per 3
   belongs_to :question
   belongs_to :answer
   belongs_to :relative, :polymorphic => true
