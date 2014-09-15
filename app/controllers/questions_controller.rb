@@ -12,7 +12,7 @@ class QuestionsController < ApplicationController
         @questions = Question.recent_data_month.page params[:page]
       end
     else
-      @questions = Question.all.page params[:page]
+      @questions = Question.where("enabled = ?",true).page params[:page]
     end
   end
 
@@ -80,6 +80,7 @@ class QuestionsController < ApplicationController
   
   def edit
     @question = question_find_by_id
+    @standards = Standard.all
     if question_find_by_id.nil?
       redirect_to questions_path,flash: { error: t('flash_message.error.question.edit') }
     end
