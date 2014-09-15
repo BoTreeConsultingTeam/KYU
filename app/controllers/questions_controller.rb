@@ -81,8 +81,8 @@ class QuestionsController < ApplicationController
         give_points(@question,-5)
       end
       respond_to do |format|
-        format.js        
-      end      
+        format.js
+      end
     end
   end
   

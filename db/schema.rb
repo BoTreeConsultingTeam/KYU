@@ -13,9 +13,6 @@
 
 ActiveRecord::Schema.define(version: 20140912082905) do
 
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
-
   create_table "answers", force: true do |t|
     t.text     "content"
     t.integer  "user_id"
@@ -42,6 +39,10 @@ ActiveRecord::Schema.define(version: 20140912082905) do
     t.datetime "created_at"
   end
 
+  add_index "badges_sashes", ["badge_id", "sash_id"], name: "index_badges_sashes_on_badge_id_and_sash_id", using: :btree
+  add_index "badges_sashes", ["badge_id"], name: "index_badges_sashes_on_badge_id", using: :btree
+  add_index "badges_sashes", ["sash_id"], name: "index_badges_sashes_on_sash_id", using: :btree
+
   create_table "bookmarks", force: true do |t|
     t.integer "question_id"
     t.integer "bookmarkable_id"
@@ -49,6 +50,7 @@ ActiveRecord::Schema.define(version: 20140912082905) do
   end
 
   add_index "bookmarks", ["question_id", "bookmarkable_id", "bookmarkable_type"], name: "bookmarks_index", unique: true, using: :btree
+
 
   create_table "comments", force: true do |t|
     t.string   "title",            limit: 50, default: ""
