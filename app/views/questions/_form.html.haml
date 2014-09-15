@@ -4,6 +4,9 @@
       = form_for(@question) do |f|
         = render 'shared/error_messages', object: f.object
         %div
+        = f.label t('students.captions.class')
+        = f.select(:standard_id, options_from_collection_for_select(@standards, 'id', 'class_no'),{prompt: t('teachers.basic.prompt')},{class: 'form-control'})
+        %div
         = f.label :title
         %br/
         = f.text_field :title, autofocus: true, class: 'submit-input'

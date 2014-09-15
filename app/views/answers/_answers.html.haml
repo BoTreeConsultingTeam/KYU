@@ -8,14 +8,10 @@
     = answer.content
     - if answer.answerable == current_user
       = link_to t('answers.links.delete'), question_answer_path(@question.id,answer.id), method: :delete,data: {confirm: "are you sure?"}, class: 'pull-right'
-      = link_to t('answers.links.edit'), edit_question_answer_path(@question.id,answer.id), class: 'pull-right'
+      = link_to t('answers.links.edit'), edit_question_answer_path(@question.id,answer.id), class: 'pull-right','data-no-turbolink' => true
     = link_to t('answers.links.add_comment'), answer_comment_path(@question.id,answer.id),class: 'pull-right'
   By
   = answer.answerable.username
   #{time_ago_in_words(answer.created_at)} ago.
   %br/
-  = vote_up_answer_link(answer)
-  = answer.get_upvotes.size
-  = vote_down_answer_link(answer)
-  = answer.get_downvotes.size
-  %hr
+ 

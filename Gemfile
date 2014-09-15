@@ -7,7 +7,7 @@ gem 'haml'
 gem 'haml-rails'
 gem 'bootstrap-sass'
 gem 'acts_as_votable', '~> 0.10.0'
-gem 'acts-as-taggable-on'
+gem 'acts-as-taggable-on', '3.3.0'
 gem 'acts_as_commentable'
 gem 'acts_as_commentable_with_threading'
 gem 'devise'
@@ -22,6 +22,7 @@ gem 'sass-rails', '~> 4.0.0'
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 gem 'gioco'
+gem "google_visualr", ">= 2.1"
 
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'
@@ -76,3 +77,4 @@ end
 
 # Use debugger
 # gem 'debugger', group: [:development, :test]
+

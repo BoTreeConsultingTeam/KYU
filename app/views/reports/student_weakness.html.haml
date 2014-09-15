@@ -1,0 +1,13 @@
+.col-md-8.main-content
+  .row
+    .col-md-6
+      
+      - @student_weakness_table.each do |row|
+        .row
+          - row.each do |column|
+            .col-md-6
+              %h4
+                = column
+    .col-md-6    
+      #chart
+        = render_chart(@student_weakness_chart, 'chart') 
