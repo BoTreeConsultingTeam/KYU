@@ -1,6 +1,14 @@
 en:
   questions:
     captions:
+      views: 'views'
+      answers: 'answers'
+      upvotes: 'upvotes'
+      downvotes: 'downvotes'
+    messages:
+      question_not_found: 'No such Question found for Delete!'
+      delete_success: 'Deleted Successfuly!'
+      profile_update: 'Profile updated'
     page_header:
       title: 'Question'
       title_for_new: 'New Question'
@@ -15,17 +23,53 @@ en:
     btn:
       new_question: 'New Question'
       submit: 'Submit'
-    link:
-      last_week: 'Last week'
-      last_month: 'Last Month'
   answers:
-    captions:
+    messages:
+      contains_error: 'Must contain some text'
+      answer_not_found: 'No such Answer found!'
+      update_success: 'Updated Successfully!'
+      delete_success: 'Deleted successfully!'
+      answer_accepted: 'Answer Accepted!'
     basic:
       answer_label: 'Your answer'
       new_answer: 'New Answer'
     btn:
       submit_answer: 'Submit'
+    links:
+      accept: 'Accept'
+      delete: '| Delete'
+      edit: '| Edit'
+      add_comment: 'Add Comment'
+  comments:
+    captions:
+      edit_comment_of_question: 'Edit Comment of Question'
+    messages:
+      update_success: 'Updated Successfully'
+      comment_not_found: 'No such Comment found'
+      successful_delete: 'Deleted Successfully!'
+  badges:
+    captions:
+      points_require: 'points require'
+      with_you_can: 'With you can do'
+      edit_other_people: "Edit other people's questions"
+      vote_to_close: 'Vote to close, reopen, or migrate questions'
+      edit_others_answer: "Edit other people's answers"
+      vote_down: 'Vote down (costs 1 point on answers)'
+      leave_comment: 'Leave comments'
+      vote_up: 'Vote up'
+      point_system: 'Points System'
+      earn_reputaion: 'You earn reputation when people vote on your posts'
+      create_a_question: 'create a question'
+      question_vote_up: 'question is voted up'
+      answer_vote_up: 'answer is voted up'
+      answer_accepted: 'answer is Accepted'
+      badge_system: 'Badges System'
   common:
+    messages:
+      sign_in: 'Sign in First'
+      create_bookmark: 'You have bookmark this question'
+      delete_bookmark: 'Successfully delete bookmark'
+      confirm_message: 'Are you sure?'
     captions:
       dob: 'Birthdate'
       first_name: 'First Name'
@@ -43,12 +87,20 @@ en:
       btn:
         update: 'Update'
     btn:
+      ask_question: 'Ask Question'
       sign_in: 'Sign in'
       submit: 'Submit'
+      post: 'Post'
     links:
       sign_in: 'Sign in'
       sign_up: 'Sign up'
       forgot_password: 'Forgot your password?'
+      last_week: 'Last week'
+      last_month: 'Last Month'
+      questions: 'Questions'     
+      answers: 'Answers'
+      bookmarks: 'Bookmarks'
+      comment: 'Comment'
   students:
     captions:
       middle_name: 'Middle Name' 

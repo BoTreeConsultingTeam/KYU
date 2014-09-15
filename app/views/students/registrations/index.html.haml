@@ -6,7 +6,7 @@
       %li
         %a.active{:href => "http://demo.enginethemes.com/qaengine/questions/"} Latest
       %li
-        = set_link(t('questions.link.last_week'),'week')
+        = set_link(t('common.links.last_week'),'week')
       %li
-        = set_link(t('questions.link.last_month'),'month')
+        = set_link(t('common.links.last_month'),'month')
 = render :partial => 'questions/questions_list', :locals => { questions: @questions}

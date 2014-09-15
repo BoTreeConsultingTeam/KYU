@@ -3,16 +3,22 @@
     %li
       %span.question-views
         = "#{question.impressionist_count}"
-      views
+      = t('questions.captions.views')
     %li.active
       %span.question-answers
         = "#{question.answers.count}" 
-      answers
+      = t('questions.captions.answers')
     %li
       %span.question-upvotes
         = question.get_upvotes.size
-      upvotes
+      = t('questions.captions.upvotes')
     %li
       %span.question-downvotes
         = question.get_downvotes.size
-      downvotes
+      = t('questions.captions.downvotes')
+    %li
+      - if current_student.present?
+        - if current_user.student_manager?
+          = link_to 'Disable',disable_path(question.id)
+        |
+        = link_to "report as abuse",report_path(question.id),class: 'pull-right'

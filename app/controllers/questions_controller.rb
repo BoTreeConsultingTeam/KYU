@@ -98,7 +98,7 @@ class QuestionsController < ApplicationController
     if @question.nil?
       flash[:error] = t('flash_message.error.question.disable')
     else
-      @question.enable = false
+      @question.enabled = false
       @question.save
     end
     redirect_to questions_path

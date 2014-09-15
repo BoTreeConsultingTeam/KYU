@@ -87,7 +87,7 @@ class CommentsController < ApplicationController
         @comments = Comment.all
         redirect_to question_path(@answer.question.id),flash: { error: "No such Comment found for Delete!" }
       else
-        redirect_to question_path(params[:question_id]),flash: { error: "No such Comment found for Delete!" }
+        redirect_to question_path(params[:question_id]),flash: { error: t('comments.messages.comment_not_found') }
       end
         respond_to do |format|
           format.js
