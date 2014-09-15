@@ -25,7 +25,7 @@
     .col-md-9.col-xs-9.q-right-content
       %ul.post-controls
         %li
-          = link_to '',edit_question_answer_path(@question.id,answer.id),class: 'post-edit action fa fa-pencil'
+          = link_to '',edit_question_answer_path(@question.id,answer.id),class: 'post-edit action fa fa-pencil','data-no-turbolink' => true
         %li
           = link_to '', question_answer_path(@question.id,answer.id),method: :delete,data: {confirm:'Are you sure?'},class: 'post-delete action fa fa-trash-o'
       .clearfix

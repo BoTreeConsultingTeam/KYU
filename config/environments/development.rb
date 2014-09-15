@@ -36,7 +36,7 @@ KYU::Application.configure do
       port: 587,
       domain: 'gmail.com',
       user_name: 'demo4582@gmail.com',
-      password: 'demo123123123',
+      password: 'priyam4582',
       authentication: 'plain'
   }
 

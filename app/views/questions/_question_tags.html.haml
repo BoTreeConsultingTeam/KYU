@@ -1,4 +1,4 @@
 %ul.question-tags
   - object.tags.each do |tag|
     %li
-      = link_to tag, tag_path(tag),class: 'q-tag'
+      = link_to tag, tag_path(tag.name),class: 'q-tag'

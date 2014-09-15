@@ -29,10 +29,10 @@
       
       - if (check_bookmark @question).blank?
         %li
-          = link_to '', bookmarks_path(:question_id => @question.id), method: :post, class: 'post-delete action fa fa-plus'
+          = link_to '', bookmarks_path(:question_id => @question.id), method: :post,rel: 'tooltip',title: 'Add to Boolmarks', class: 'post-delete action fa fa-plus'
       -else
         %li
-          = link_to '',bookmark_path(:question_id => @question.id), method: :delete,data: {confirm:'Are you sure?'},class: 'post-delete action fa fa-minus-square'    
+          = link_to '',bookmark_path(:question_id => @question.id), method: :delete,data: {confirm:'Are you sure?'},rel: 'tooltip',title: 'Delete from Boolmarks',class: 'post-delete action fa fa-minus-square'    
     .top-content
     - if @question.answers.count > 0
       %span.answered

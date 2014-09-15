@@ -79,6 +79,7 @@ class QuestionsController < ApplicationController
   end
   
   def edit
+    @standards = Standard.all
     @question = question_find_by_id
     if question_find_by_id.nil?
       redirect_to questions_path,flash: { error: t('flash_message.error.question.edit') }
@@ -108,8 +109,8 @@ class QuestionsController < ApplicationController
   end
 
   def abuse_report
-    question_find_by_id
-    if question_find_by_id.nil?
+    @question = question_find_by_id
+    if @question.nil?
       flash[:error] =  t('flash_message.error.question.report_abuse') 
     else
       Question.send_question_answer_abuse_report(current_user,@question)
