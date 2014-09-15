@@ -19,3 +19,4 @@
 //= require ckeditor/config
 //= require ckeditor/plugins/eqneditor/plugin.min
 //= require common
+//= require jsapi

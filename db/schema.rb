@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140909121436) do
+ActiveRecord::Schema.define(version: 20140912082905) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -73,7 +73,7 @@ ActiveRecord::Schema.define(version: 20140909121436) do
   add_index "bookmarks", ["question_id", "bookmarkable_id", "bookmarkable_type"], name: "bookmarks_index", unique: true, using: :btree
 
   create_table "comments", force: true do |t|
-    t.string   "title",            limit: 50
+    t.string   "title",            limit: 50, default: ""
     t.text     "comment"
     t.integer  "commentable_id"
     t.string   "commentable_type"
@@ -88,6 +88,22 @@ ActiveRecord::Schema.define(version: 20140909121436) do
   add_index "comments", ["commentable_id"], name: "index_comments_on_commentable_id", using: :btree
   add_index "comments", ["commentable_type"], name: "index_comments_on_commentable_type", using: :btree
   add_index "comments", ["user_id"], name: "index_comments_on_user_id", using: :btree
+
+  create_table "delayed_jobs", force: true do |t|
+    t.integer  "priority",   default: 0, null: false
+    t.integer  "attempts",   default: 0, null: false
+    t.text     "handler",                null: false
+    t.text     "last_error"
+    t.datetime "run_at"
+    t.datetime "locked_at"
+    t.datetime "failed_at"
+    t.string   "locked_by"
+    t.string   "queue"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
 
   create_table "impressions", force: true do |t|
     t.string   "impressionable_type"
@@ -161,9 +177,21 @@ ActiveRecord::Schema.define(version: 20140909121436) do
     t.datetime "updated_at"
     t.integer  "askable_id"
     t.string   "askable_type"
+    t.boolean  "enabled",      default: true
+    t.integer  "standard_id"
+    t.integer  "cached_votes_total", default: 0
+    t.integer  "cached_votes_score", default: 0
+    t.integer  "cached_votes_up",    default: 0
+    t.integer  "cached_votes_down",  default: 0
   end
 
-  create_table "sashes", force: true do |t|
+  add_index "questions", ["cached_votes_down"], name: "index_questions_on_cached_votes_down", using: :btree
+  add_index "questions", ["cached_votes_score"], name: "index_questions_on_cached_votes_score", using: :btree
+  add_index "questions", ["cached_votes_total"], name: "index_questions_on_cached_votes_total", using: :btree
+  add_index "questions", ["cached_votes_up"], name: "index_questions_on_cached_votes_up", using: :btree
+
+  create_table "standards", force: true do |t|
+    t.string   "class_no"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -188,6 +216,8 @@ ActiveRecord::Schema.define(version: 20140909121436) do
     t.boolean  "enable",                 default: true
     t.boolean  "mark_as_review",         default: false
     t.integer  "points"
+    t.boolean  "student_manager",        default: false
+    t.integer  "standard_id"
   end
 
   add_index "students", ["email"], name: "index_students_on_email", unique: true, using: :btree

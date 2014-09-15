@@ -21,11 +21,15 @@
               = link_to t('header_navigation.logout'), destroy_student_session_path, method: :delete
           - if teacher_signed_in?
             %li
+              = link_to 'Report', reports_path
+            %li
               = link_to t('header_navigation.edit_profile'), edit_teacher_registration_path
             %li
               = link_to "Logout", destroy_teacher_session_path, method: :delete
           - if administrator_signed_in?
-            %li
+            %li       
+              = link_to 'Report', reports_path
+            %li       
               = set_header_link_for_admin("Teachers","teachers")
             %li
               = set_header_link_for_admin("Students","students")  

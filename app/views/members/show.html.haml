@@ -1,2 +1,4 @@
-= render partial: 'show_student', locals: {object: @students}
-= render partial: 'show_teacher', locals: {object: @teachers}
+- if params[:user] == "student"  
+  = render partial: 'show_student', locals: {object: @students}
+- if params[:user] == "teacher"  
+  = render partial: 'show_teacher', locals: {object: @teachers}

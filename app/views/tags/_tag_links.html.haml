@@ -2,4 +2,4 @@
 = link_to tag, questions_path(tag: tag.name),class: 'q-tag'
 - if (administrator_signed_in?)
   = link_to 'Edit',edit_tag_path(tag.id),'data-no-turbolink' => true
-  = link_to 'Delete',delete_tag_path(tag.id), method: :delete
+  = link_to 'Delete',delete_tag_path(tag.id), method: :delete, data: {confirm: 'Are you sure?'}

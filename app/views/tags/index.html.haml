@@ -1,6 +1,11 @@
-= render :partial => "layouts/sub_heading", :locals => {:object => 'Tags'}
-- if (administrator_signed_in?)
-  = link_to 'Add tag', new_tag_path
+.row.select-category
+  .col-md-6.col-xs-6.current-category
+    %span
+      Tags
+  .col-md-6.col-xs-6.current-category    
+    %span
+      - if (administrator_signed_in?)
+        = link_to 'Add tag', new_tag_path,'data-no-turbolink' => true, class: 'pull-right'
 .main-tag-list
   .tags-list
     .wrap-tag-list

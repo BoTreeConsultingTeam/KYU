@@ -1,4 +1,7 @@
 class Teacher < ActiveRecord::Base
+  # Include default devise modules. Others available are:
+  # :confirmable, :lockable, :timeoutable and :omniauthable
+  paginates_per 10
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable
   has_many :comments, as: :commentable
   has_many :questions,as: :askable
@@ -14,4 +17,5 @@ class Teacher < ActiveRecord::Base
   validates :password,length: {minimum: 8}, on: :create
   validates_confirmation_of :password, if: lambda { |m| m.password.present? }
   attr_accessor :current_password
+  acts_as_tagger
 end

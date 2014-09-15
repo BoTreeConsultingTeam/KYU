@@ -103,9 +103,10 @@ en:
       comment: 'Comment'
   students:
     captions:
-      middle_name: 'Middle Name'
-    page_header:
-      title_confirmation: 'Resend confirmation instructions'
+      middle_name: 'Middle Name' 
+      class: 'Class'
+    page_header: 
+      title_confirmation: 'Resend confirmation instructions'    
     basic:
       forgot_password: 'Forgot your password?'
     messages:
@@ -113,7 +114,9 @@ en:
     links:
       block : 'Block' 
       mark_as_review: 'MarkasReview'
-      review: 'Review' 
+      review: 'Review'
+    tooltip:
+      manager: 'Student Manager'
   teachers:
     captions:
     page_header:
@@ -122,10 +125,50 @@ en:
     basic:
       salutation: 'Salutations'
       title_sign_in: 'Sign in'
-  member:
-    captions:
-      not_answered: You don't  have answered any question yet
-      never_ask: You don't have asked any questions yet
+      student_manager: 'Student Manager'
+      prompt: '----- Select Class -----'
+  mailer:
+    subject:
+      report_abuse_notification: 'Report Abuse Notification'
+  flash_message:
+    error:
+      teacher:
+      student:
+        manager: 'Already two Student manager selected.'
+      question:
+        edit: 'No such Question found for Edit!'
+        update: 'No such Question found for Update!'
+        destroy: 'No such Question found for Delete!'
+        vote: 'No such Question found for Vote!'
+        show: 'The question you are searching for is not found!'
+        disable: 'No such Question found for Disable!'
+        report_abuse: 'No such Question found for Report!'
+      answer:
+        edit: 'No such Answer found for edit!'
+        update: 'No such Answer found for Update!'
+        destroy: 'No such Answer found for delete!'
+        comment: 'no such Answer found for Comment!'
+        vote: 'No such Answer found for Vote!'
+        accept: 'No such Answer found for Accept!'
+      comment:
+        edit: 'No such Comment found for Edit!'
+        update: 'no such Comment found for Update!'
+        destroy:
+    success:
+      question:
+        update: 'Question successfully updated!'
+        destroy: 'Question Successfuly Deleted!'
+        comment:
+        report_abuse: 'Report Abuse mail successfully sent!'
+      answer:
+        update: 'Answer Successfully Updated.'
+        destroy: 'Answer successfully Deleted.'
+        comment:
+        accept: 'Answer Accepted!'
+      comment:
+        edit:
+        update: 'Comment Successfully Updated!'
+        destroy:
   header_navigation:
     home: 'Home'
     users: 'Users'
@@ -142,4 +185,9 @@ en:
     see_more_tags: 'See more tags'
   administrators:
     btn:
-      sign_in: 'Administrator'    
+      sign_in: 'Administrator'
+  member:
+    captions:
+      not_answered: You don't  have answered any question yet
+      never_ask: You don't have asked any questions yet
+

@@ -16,3 +16,12 @@
       %span.question-downvotes
         = question.get_downvotes.size
       = t('questions.captions.downvotes')
+    %li
+      - if current_student.present?
+        - if current_student.student_manager?
+          = link_to 'Disable',disable_path(question.id)
+          |
+      - else current_teacher.present?
+        = link_to 'Disable',disable_path(question.id)
+        |
+      = link_to "report as abuse",report_path(question.id),class: 'pull-right'

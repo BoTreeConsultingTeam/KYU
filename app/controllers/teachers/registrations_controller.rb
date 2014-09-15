@@ -5,8 +5,8 @@ class Teachers::RegistrationsController <  Devise::RegistrationsController
     if params[:tag]
       @questions = Question.tagged_with(params[:tag])
     else
-      @questions = Question.all
-  	end   
+      @questions = Question.all.page params[:page]
+    end
   end
   
   def create

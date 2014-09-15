@@ -7,27 +7,23 @@
   .col-md-8.col-xs-8
     %h3 
       = @question.title
-/ END SELECT-CATEGORY
 #question_content.row.question-main-content.question-item{"data-id" => "1728"}
-  / Vote section
   .col-md-2.col-xs-2.vote-block
-    / vote group
     %ul
       %li{"data-original-title" => "This is useful.", :title => ""}
-        = vote_up_question_link(@question)
+        = vote_link(@question, 'up')
       %li
-        %span.vote-count 
+        %span.vote-count{id: "upvote_question#{@question.id}" }
           = @question.get_likes.size
       %li
-        %span.vote-count   
+        %span.vote-count{id: "downvote_question#{@question.id}"}  
           = @question.get_dislikes.size
       %li{"data-original-title" => "This is useful.", :title => ""}
-        = vote_down_question_link(@question)
+        = vote_link(@question, 'down')
   .col-md-9.col-xs-9.q-right-content
-    / admin control
     %ul.post-controls
       %li
-        = link_to '',edit_question_path(@question.id),class: 'post-edit action fa fa-pencil','data-no-turbolink' => true
+        = link_to '',edit_question_path(@question.id),class: 'post-edit action fa fa-pencil',rel: 'tooltip',title: 'Edit', 'data-no-turbolink' => true
       %li
         = link_to '',question_path,method: :delete,data: {confirm:'Are you sure?'},class: 'post-delete action fa fa-trash-o'
       -if !(current_administrator)
@@ -38,9 +34,10 @@
           %li
             = link_to '',bookmark_path(:question_id => @question.id), method: :delete,data: {confirm:'Are you sure?'},class: 'post-delete action fa fa-minus-square'    
     .top-content
-      %span.answered
-        %i.fa.fa-check
-        Answered
+      - if @question.answers.count > 0
+        %span.answered
+          %i.fa.fa-check
+          Answered
       = render :partial => 'question_tags', :locals => { :object => @question}
     .clearfix
     .question-content
@@ -56,11 +53,18 @@
         %span.question-time
           #{time_ago_in_words(@question.created_at)} ago.
       .col-md-4.col-xs-4.question-control
-        = render :partial => 'link_to_comment', :locals => { object: @question, id: "q#{@question.id}"}
-    .comments-container.collapse.hidden_comment-box{id: 'commentq' + "#{@question.id}"}              
-      = render partial:'comments/form',locals: {type: 'new',object: @question}       
+        = render :partial => 'link_to_comment', :locals => { object: @question, id: "question#{@question.id}"}
+        %span{id: "comment_count"}
+          (
+          = @question.comments.count
+          )
+    .comments-container.collapse.hidden_comment-box{id: 'commentquestion' + "#{@question.id}"}              
+      = render partial: 'comments/create_comment',locals: {commentable: @question}
     %br/
     = render 'comments/show_comments_of_questions'               
+    .row.paginations.home
+      .col-md-12{id:'paginator'}
+        = paginate @question_comments
     .clearfix
 .sticky-wrapper
   #answers_filter.row.answers-filter

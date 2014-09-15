@@ -5,6 +5,8 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+require "#{Rails.root}/db/gioco/db.rb"
+
 def find_or_create_admin(admin_attrs)
 	email = admin_attrs[:email]
 	admin = Administrator.find_by_email(email)
@@ -19,4 +21,10 @@ def find_or_create_admin(admin_attrs)
 end	
 
 admin_user = find_or_create_admin({email: 'admin@kyu.com', password: 'password'})
-require "#{Rails.root}/db/gioco/db.rb"
+
+standard_arr = ['VIII','IX','X', 'XI', 'XII']
+
+standard_arr.each do |standard|
+  Standard.create(class_no: standard)
+end
+

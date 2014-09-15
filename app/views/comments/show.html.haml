@@ -13,4 +13,4 @@
   
 = render partial: 'form', locals: {type: 'new',object: @answer}
 %hr/
-= render 'comments/show_comments_of_answers'
+= render partial: 'comments/show_comments_of_answers',locals: {answer: @answer}
