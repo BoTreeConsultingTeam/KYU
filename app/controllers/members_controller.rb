@@ -1,6 +1,6 @@
 class MembersController < ApplicationController
   def index
-    @students = Student.all.page(params[:page]).per(6)    
+    @students = Student.all.page(params[:page]).per(6)
   end
 
   def show
@@ -19,6 +19,7 @@ class MembersController < ApplicationController
     end
     redirect_to members_path
   end
+
   private
 
 	def received_filter
