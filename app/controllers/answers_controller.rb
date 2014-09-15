@@ -13,7 +13,7 @@ class AnswersController < ApplicationController
     if @answer.save
       redirect_to_question(params[:answer][:question_id])
     else
-      flash[:error] = 'Must contain some text'
+      flash[:error] = t('answers.messages.contains_error')
       redirect_to_question(params[:answer][:question_id])
     end
   end
