@@ -31,7 +31,6 @@
           %br
             %span 
               = @student.answers.count
-/ END USER-STATISTIC
 .row.question-filter
   .col-md-12.sort-questions
     %ul
@@ -41,7 +40,6 @@
         = link_to t('common.links.answers'), member_path(@student,:filter => "answers")
       %li
         = link_to t('common.links.bookmarks'), member_path(@student,:filter => "bookmarks")  
-/ END QUESTIONS-FILTER
 - if params[:filter] == "answers"
   - if !(@answers.blank?)
     .main-questions-list

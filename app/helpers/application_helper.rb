@@ -1,5 +1,6 @@
 module ApplicationHelper
   SALUTATIONS = %w[Mr Ms Mrs]
+  CLASS = %w[8 9 10 11 12]
   def render_css_class(name)
     css_class = ''
     msg_icon_class = ''
@@ -20,6 +21,9 @@ module ApplicationHelper
 
   def options_for_salution
     options_for_select(SALUTATIONS)
+  end
+  def options_for_class
+    options_for_select(CLASS)
   end
   def set_link(title,time)
     link_to title, questions_path(:time => "#{time}")

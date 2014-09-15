@@ -16,20 +16,26 @@ Rails.application.routes.draw do
   get 'answers/accept/:id', to: 'answers#accept', as: :index
   get 'tags/:tag', to: 'questions#index', as: :tag 
   get 'questions/tags', to: 'questions#alltags', as: :tags
+  get 'questions/abuse_report/:id',to: 'questions#abuse_report',as: :report
   get '/badges', to: 'badges#index', as: :badges
   resources :tags
   resources :questions do
     resources :comments
     resources :answers
-    member { post :upvote,:downvote }
+    member { post :vote}
   end
+  get '/questions/disable/:id' => 'questions#disable',as: :disable
+
     resources :comments
 
   get '/members' => 'members#index'
   get '/members/:id' => 'members#show', as: :member
+  get '/members/select_students_manager/:id' => 'members#select_students_manager',as: :select_students_manager
 
   resources :answers do
-    member { post :upvote,:downvote }
+    member { post :vote }
     resources :comments
   end
+
+  get 'kyu_mailer/mailer' => 'kyu_mailer#mailer'
 end

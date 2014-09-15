@@ -1,5 +1,6 @@
   class Student < ActiveRecord::Base
 
+  paginates_per 10
   include Gioco_Methods
 
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
@@ -18,11 +19,16 @@
   has_many :levels   
   validates :username,:birthdate, presence: true
   validates :email, format: {with: VALID_EMAIL_REGEX}, uniqueness: {case_sensitive: false}
-  validates :password,presence: true
+  validates :student_class,presence: true
+  validates :password,presence: true,on: :create
   validates_confirmation_of :password, if: lambda { |m| m.password.present? }  
    
 
-   def delete_bookmarks
-      self.bookmarks.destroy_all
-   end
+  def delete_bookmarks
+    self.bookmarks.destroy_all
+  end
+
+  def self.student_manager_selected?
+    self.where(student_manager: true).count
+  end
 end

@@ -7,6 +7,13 @@
       .left-info
         %span.display_name 
           = link_to student.username, member_path(student)
+          - if current_teacher.present?
+            - if @students.student_manager_selected? < 2
+              - if !(student.student_manager)
+                = link_to t('teachers.basic.student_manager'),select_students_manager_path(student.id), class: 'pull-right'
+          -if (student.student_manager)
+            %a.action.pull-right{href: "#", rel: "tooltip", title: t('students.tooltip.manager')}
+              %i.fa.fa-user.fa-fw
         %br
           %span.email
             = student.email
