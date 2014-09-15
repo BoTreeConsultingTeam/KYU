@@ -23,7 +23,7 @@ module QuestionsHelper
   end
   
   def tags_of_this_question(question)
-    raw question.tag_list.map { |t| link_to t, tag_path(t) }.join(', ')
+    raw question.tags.map { |t| link_to t, tag_path(t) }.join(', ')
   end
   
   def get_tag_counts

@@ -22,7 +22,7 @@
   validates :standard_id,presence: true
   validates :password,presence: true,on: :create
   validates_confirmation_of :password, if: lambda { |m| m.password.present? }  
-
+  acts_as_tagger
    
 
   def delete_bookmarks

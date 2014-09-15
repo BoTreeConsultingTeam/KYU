@@ -36,6 +36,15 @@ Rails.application.routes.draw do
     member { post :vote }
     resources :comments
   end
-
+  
   get 'kyu_mailer/mailer' => 'kyu_mailer#mailer'
+  get 'reports/class_activity', to: 'reports#class_activity', as: :class_activity
+  get 'reports/tags_usage', to: 'reports#tags_usage', as: :tags_usage
+  post 'reports/student_weakness', to: 'reports#student_weakness', as: :student_weakness
+  post 'reports/student_strength', to: 'reports#student_strength', as: :student_strength
+  post 'reports/student_activeness', to: 'reports#student_activeness', as: :student_activeness
+  post 'reports/students_questions_compare', to: 'reports#students_questions_compare', as: :students_questions_compare
+  post 'reports/students_answers_compare', to: 'reports#students_answers_compare', as: :students_answers_compare
+
+  resources :reports
 end

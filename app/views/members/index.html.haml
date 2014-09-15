@@ -17,6 +17,8 @@
         %br
           %span.email
             = student.email
+            -if current_teacher
+              = link_to 'Report', reports_path
           .question-cat
             %span.user-badge
               = render :partial => 'student_badge', :locals => { :object => student}  
