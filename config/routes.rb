@@ -24,7 +24,7 @@ Rails.application.routes.draw do
     resources :answers
     member { post :vote}
   end
-  get '/questions/disable/:question' => 'questions#disable',as: :disable
+  get '/questions/disable/:id' => 'questions#disable',as: :disable
 
     resources :comments
 
