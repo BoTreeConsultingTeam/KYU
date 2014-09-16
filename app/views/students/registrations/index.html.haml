@@ -1,12 +1,3 @@
 = render :partial => "layouts/sub_heading", :locals => {:object => 'All Questions'}
-.clearfix
-#question_filter.row.question-filter
-  .col-md-6.col-xs-6.sort-questions
-    %ul
-      %li
-        %a.active{:href => "http://demo.enginethemes.com/qaengine/questions/"} Latest
-      %li
-        = set_link(t('common.links.last_week'),'week')
-      %li
-        = set_link(t('common.links.last_month'),'month')
+= render :partial => "questions/questions_filter_links"
 = render :partial => 'questions/questions_list', :locals => { questions: @questions}
