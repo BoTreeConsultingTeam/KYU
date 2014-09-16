@@ -2,6 +2,7 @@ class Comment < ActiveRecord::Base
   
   include Findable
   include ActsAsCommentable::Comment
+  paginates_per 3
   belongs_to :question
   belongs_to :answer
   belongs_to :relative, :polymorphic => true
@@ -11,6 +12,6 @@ class Comment < ActiveRecord::Base
   validates :comment, presence: true
 
   def is_author?(user)
-   self.commentable == user
+    self.commentable == user
   end
 end

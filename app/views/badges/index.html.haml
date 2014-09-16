@@ -1,92 +1,50 @@
-.container-fluid
-  .row
-  / END HEADER
-  #header_sidebar.col-md-12.col-xs-12
-  = render 'layouts/left_sidebar'
-  .col-md-8.main-content
-    = render :partial => "layouts/sub_heading", :locals => {:object => 'Badges'}
-    .row.points-system
-      .col-md-12
-        %h3 Points System
-        %p You earn reputation when people vote on your posts
-      .clearfix
-      %ul.points-define
-        %li.col-md-3
-          %div
-            %span.points-count
-              +2
-            %span.star
-              %i.fa.fa-star
-              %br
-                create a question
-        %li.col-md-3
-          %div
-            %span.points-count
-              +5
-            %span.star
-              %i.fa.fa-star
-              %br
-                question is voted up
-        %li.col-md-3
-          %div
-            %span.points-count
-              +5
-            %span.star
-              %i.fa.fa-star
-              %br
-                answer is voted up
-        %li.col-md-3
-          %div
-            %span.points-count
-              +15
-            %span.star
-              %i.fa.fa-star
-              %br
-                answer is accepted
-    .row.badges-system
-      .col-md-12
-        %h3 Badges System
-        %p You earn reputation when people vote on your posts
-      
-      .col-md-12.badge-content
-        - @badges.each do |badge|
-          .border
-            .col-md-3.question-cat
-              %span.user-badge
-                = badge.name    
-              %br
-                %span.points-count
-                  = badge.points
-                %span.star
-                  %i.fa.fa-star
-                  %br
-                    points require
-            .col-md-4
-              %span With you can do:
-              %p
-                %i.fa.fa-ban
-                Edit other people's questions
-              %p
-                %i.fa.fa-check
-                Vote to close, reopen, or migrate questions
-            .col-md-3
-              %p
-                %i.fa.fa-ban
-                Edit other people's answers
-              %p
-                %i.fa.fa-check
-                Vote down (costs 1 point on answers)
-            .col-md-2
-              %p
-                %i.fa.fa-check
-                Leave comments
-              %p
-                %i.fa.fa-check
-                Vote up
-      
-      
-      
-    
-      
-  = render 'layouts/right_sidebar'
+= render :partial => "layouts/sub_heading", :locals => {:object => 'Badges'}
+.row.points-system
+  .col-md-12
+    %h3 
+      = t('badges.captions.point_system')  
+    %p 
+      = t('badges.captions.earn_reputaion')  
+  .clearfix
+  %ul.points-define
+    %li.col-md-3
+      %div
+        %span.points-count
+          +2
+        %span.star
+          %i.fa.fa-star
+          %br
+            = t('badges.captions.create_a_question')  
+    %li.col-md-3
+      %div
+        %span.points-count
+          +5
+        %span.star
+          %i.fa.fa-star
+          %br
+            = t('badges.captions.question_vote_up')     
+    %li.col-md-3
+      %div
+        %span.points-count
+          +5
+        %span.star
+          %i.fa.fa-star
+          %br
+            = t('badges.captions.answer_vote_up')     
+    %li.col-md-3
+      %div
+        %span.points-count
+          +15
+        %span.star
+          %i.fa.fa-star
+          %br
+            
+.row.badges-system
+  .col-md-12
+    %h3 
+      = t('badges.captions.badge_system')      
+    %p 
+      = t('badges.captions.earn_reputaion')  
+  .col-md-12.badge-content
+    = render 'badge_list'  
 

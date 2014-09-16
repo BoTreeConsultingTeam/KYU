@@ -11,7 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140909055343) do
+ActiveRecord::Schema.define(version: 20140912082905) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "answers", force: true do |t|
     t.text     "content"
@@ -39,12 +42,16 @@ ActiveRecord::Schema.define(version: 20140909055343) do
     t.datetime "created_at"
   end
 
-  add_index "badges_sashes", ["badge_id", "sash_id"], name: "index_badges_sashes_on_badge_id_and_sash_id", using: :btree
-  add_index "badges_sashes", ["badge_id"], name: "index_badges_sashes_on_badge_id", using: :btree
-  add_index "badges_sashes", ["sash_id"], name: "index_badges_sashes_on_sash_id", using: :btree
+  create_table "bookmarks", force: true do |t|
+    t.integer "question_id"
+    t.integer "bookmarkable_id"
+    t.string  "bookmarkable_type"
+  end
+
+  add_index "bookmarks", ["question_id", "bookmarkable_id", "bookmarkable_type"], name: "bookmarks_index", unique: true, using: :btree
 
   create_table "comments", force: true do |t|
-    t.string   "title",            limit: 50
+    t.string   "title",            limit: 50, default: ""
     t.text     "comment"
     t.integer  "commentable_id"
     t.string   "commentable_type"
@@ -59,6 +66,22 @@ ActiveRecord::Schema.define(version: 20140909055343) do
   add_index "comments", ["commentable_id"], name: "index_comments_on_commentable_id", using: :btree
   add_index "comments", ["commentable_type"], name: "index_comments_on_commentable_type", using: :btree
   add_index "comments", ["user_id"], name: "index_comments_on_user_id", using: :btree
+
+  create_table "delayed_jobs", force: true do |t|
+    t.integer  "priority",   default: 0, null: false
+    t.integer  "attempts",   default: 0, null: false
+    t.text     "handler",                null: false
+    t.text     "last_error"
+    t.datetime "run_at"
+    t.datetime "locked_at"
+    t.datetime "failed_at"
+    t.string   "locked_by"
+    t.string   "queue"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
 
   create_table "impressions", force: true do |t|
     t.string   "impressionable_type"
@@ -132,9 +155,26 @@ ActiveRecord::Schema.define(version: 20140909055343) do
     t.datetime "updated_at"
     t.integer  "askable_id"
     t.string   "askable_type"
+    t.boolean  "enabled",            default: true
+    t.integer  "standard_id"
+    t.integer  "cached_votes_total", default: 0
+    t.integer  "cached_votes_score", default: 0
+    t.integer  "cached_votes_up",    default: 0
+    t.integer  "cached_votes_down",  default: 0
   end
 
+  add_index "questions", ["cached_votes_down"], name: "index_questions_on_cached_votes_down", using: :btree
+  add_index "questions", ["cached_votes_score"], name: "index_questions_on_cached_votes_score", using: :btree
+  add_index "questions", ["cached_votes_total"], name: "index_questions_on_cached_votes_total", using: :btree
+  add_index "questions", ["cached_votes_up"], name: "index_questions_on_cached_votes_up", using: :btree
+
   create_table "sashes", force: true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "standards", force: true do |t|
+    t.string   "class_no"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -152,12 +192,11 @@ ActiveRecord::Schema.define(version: 20140909055343) do
     t.string   "last_sign_in_ip"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "first_name"
-    t.string   "middle_name"
-    t.string   "last_name"
     t.string   "username"
     t.date     "birthdate"
     t.integer  "points"
+    t.integer  "standard_id"
+    t.boolean   "student_manager" 
     t.string   "avatar_file_name"
     t.string   "avatar_content_type"
     t.integer  "avatar_file_size"
@@ -183,6 +222,7 @@ ActiveRecord::Schema.define(version: 20140909055343) do
   create_table "tags", force: true do |t|
     t.string  "name"
     t.integer "taggings_count", default: 0
+    t.text    "description"
   end
 
   add_index "tags", ["name"], name: "index_tags_on_name", unique: true, using: :btree

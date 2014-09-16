@@ -1,0 +1,74 @@
+.row
+  .col-xs-6
+    = link_to "Class Activity", class_activity_path, class: 'report-link'
+.spacer20
+
+.row
+  .col-xs-6 
+    = link_to "Tags Usage", tags_usage_path, class: 'report-link'
+.spacer20
+.modal-submit-questions
+  .modal-dialog
+    .modal-body
+      .row  
+        %strong.h3
+          Check Student's Weakness
+        .col-md-6
+          = form_tag student_weakness_path do 
+            .spacer20
+            = text_field_tag :id, nil,:class => 'form-control'
+            .spacer20
+            = submit_tag "Check", class: 'btn btn-primary'
+.spacer20
+.modal-submit-questions
+  .modal-dialog
+    .modal-body
+      .row  
+        %strong.h3
+          Check Student's Strength
+        .col-md-6
+          = form_tag student_strength_path do 
+            .spacer20
+            = text_field_tag :id, nil,:class => 'form-control'
+            .spacer20
+            = submit_tag "Check", class: 'btn btn-primary'
+
+.spacer20
+.modal-submit-questions
+  .modal-dialog
+    .modal-body
+      .row
+        %strong.h3
+          Check Student's Activeness
+        .col-md-6
+          = form_tag student_activeness_path do 
+            = select_tag 'standard_id', content_tag(:option,'select one...',:value=>"")+options_from_collection_for_select( @standards, :id, :class_no), class: 'form-control'
+            .spacer20
+            = submit_tag "Check", class: 'btn btn-primary'
+
+.spacer20
+.modal-submit-questions
+  .modal-dialog
+    .modal-body
+      .row
+        %strong.h3
+          Check Students' Questions Comparision
+        .col-md-6
+          = form_tag students_questions_compare_path do 
+            = select_tag 'standard_id', content_tag(:option,'select one...',:value=>"")+options_from_collection_for_select( @standards, :id, :class_no), class: 'form-control'
+            .spacer20
+            = submit_tag "Check", class: 'btn btn-primary'
+
+.spacer20
+.modal-submit-questions
+  .modal-dialog
+    .modal-body
+      .row
+        %strong.h3
+          Check Students' Answers Comparision
+        .col-md-6
+          = form_tag students_answers_compare_path do 
+            = select_tag 'standard_id', content_tag(:option,'select one...',:value=>"")+options_from_collection_for_select( @standards, :id, :class_no), class: 'form-control'
+            .spacer20
+            = submit_tag "Check", class: 'btn btn-primary'
+            

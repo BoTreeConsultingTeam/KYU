@@ -1,10 +1,11 @@
 class Teachers::RegistrationsController <  Devise::RegistrationsController
   before_filter :configure_permitted_parameters, if: :devise_controller?
+  
   def index
     if params[:tag]
       @questions = Question.tagged_with(params[:tag])
     else
-      @questions = Question.all
+      @questions = Question.all.page params[:page]
     end
   end
   
@@ -42,36 +43,10 @@ class Teachers::RegistrationsController <  Devise::RegistrationsController
   end
   
   def update 
-    # @teacher.update_with_password(devise_parameter_sanitizer.sanitize(:account_update))
-    # if @teacher.save
-    #   redirect_to root_path
-    # end
-    # super
-    account_update_params = devise_parameter_sanitizer.sanitize(:account_update)
-
-    # Allow user to update without using password.
-    if account_update_params[:password].blank?
-      account_update_params.delete("password")
-      account_update_params.delete("password_confirmation")
-    end
-
-    # Set current_user
     @user = Teacher.find(current_user.id)
-    if @user.update_attributes(account_update_params)
-       set_flash_message :notice, :updated
-       sign_in @user, :bypass => true
-       redirect_to after_update_path_for(@user)
-    else
-       render "edit"
-    end
-    
+    user_profile_update @user
   end
-  protected
-
-  def configure_permitted_parameters
-    devise_parameter_sanitizer.for(:sign_up) << [:salutation, :first_name,:middle_name, :last_name, :username,:birthdate,:avatar]
-    devise_parameter_sanitizer.for(:account_update) << [:salutation, :first_name,:middle_name,:qualification, :last_name, :username,:birthdate,:avatar]
-  end
+  
 
   private
 

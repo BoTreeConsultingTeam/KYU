@@ -1,5 +1,4 @@
 class Answer < ActiveRecord::Base
-  
   include Findable
   acts_as_votable
   belongs_to :question

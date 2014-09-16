@@ -1,0 +1,24 @@
+- answers.each do |answer|
+  %li.post-103.answer.type-answer.status-publish.hentry.answer-item.question-item{"data-id" => "103"}
+    .col-md-8.q-left-content
+      .q-ltop-content.title-answer-style
+        %a.question-title
+          = answer.question.title
+      .q-lbtm-content
+        .question-cat
+          %span.author-avatar
+            %img.avatar
+              = image_tag @teacher.avatar.url(:medium) ,class: 'img-circle user-thumb-img'    
+          -if current_student
+            = render :partial => 'members/student_badge', :locals => { :object => answer.answerable}
+          %span.question-time
+            = "Asked #{time_ago_in_words(answer.question.created_at)} ago."
+          = render :partial => 'questions/question_tags', :locals => { :object => answer.question}
+      .quote-answer-style
+        %div
+          %span.icon-quote
+          = raw(answer.content)
+        %p.alert-stt-answer-style
+          %i.fa.fa-check-circle
+          = "Replied #{time_ago_in_words(answer.created_at)} ago."
+    = render :partial => 'questions/question_statics', :locals => { question: answer.question}

@@ -17,3 +17,8 @@
 //= require bootstrap.min
 //= require ckeditor-jquery
 //= require ckeditor/config
+//= require ckeditor/plugins/eqneditor/plugin.min
+//= require common
+//= require jsapi
+//= require chosen.proto.min
+//= require chosen.jquery.min

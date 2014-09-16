@@ -1,28 +1,27 @@
 .col-md-2.right-sidebar
   .widget.widget-statistic
     %p.questions-count
-      Questions
+      = t('right_side_bar.questions')
       %br
-        %span 
+        %span
           = questions_count
     %p.students-count
-      Students
+      = t('right_side_bar.students')
       %br
-        %span 
+        %span
           = students_count
     %p.teachers-count
-      Teachers
+      = t('right_side_bar.teachers')
       %br
-        %span 
-          = teachers_count    
-  / END widget-statistic
+        %span
+          = teachers_count
   .widget.widget-related-tags
-    %h3 MOST USED TAGS
+    %h3= t('right_side_bar.most_used_tags')
     %ul
       - most_used_tags.each do |tag|
         %li
-          = link_to tag, tag_path(tag.name),class: 'q-tag'   
-    %a{:href => tags_path} See more tags
-  / END widget-related-tags
+          = link_to tag, tag_path(tag.name), class: 'q-tag'
+          = "x #{tag.taggings_count}"
+    = link_to t('right_side_bar.see_more_tags'), tags_path
   .widget.widget-hot-questions
-    %h3 HOT QUESTIONS
+    %h3= t('right_side_bar.hot_questions')

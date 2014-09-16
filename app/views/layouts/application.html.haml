@@ -12,4 +12,13 @@
       .container-fluid
         .row
           = render partial: 'shared/flash_messages'
-          = yield
+          -if current_user.present?
+            #header_sidebar.col-md-12.col-xs-12
+            = render 'layouts/left_sidebar'
+            .col-md-8.main-content
+              = yield
+            = render 'layouts/right_sidebar'
+          -else
+            .col-md-2
+            .col-md-8.main-content
+              = yield

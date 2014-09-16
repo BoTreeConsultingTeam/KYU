@@ -1,12 +1,7 @@
-.row
-  .col-md-2.disable-mobile.left-sidebar
-  .col-md-8.main-content
-    .row.select-category
-      .col-md-6.col-xs-6.current-category
-        %span Edit Comment of Question
-    .modal-submit-questions
-      .modal-dialog
-      - if @question.present?
-        = render 'edit_comment_of_question'    
-      -else
-        = render 'edit_comment_of_answer'
+.main-content.single-content
+  .modal-submit-questions
+    .modal-dialog
+    - if @question.present?
+      = render 'edit_comment_of_question'    
+    -else
+      = render 'edit_comment_of_answer'
