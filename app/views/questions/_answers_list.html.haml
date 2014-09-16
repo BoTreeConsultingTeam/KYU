@@ -3,31 +3,33 @@
     .col-md-2.col-xs-2
       .accept-answer
         -if !@question.answered?
-          - if @question.user_id == current_user.id
+          - if @question.askable == current_user
             %h3
             = link_to '', index_path(answer.id),rel: 'tooltip',title: 'Make Right',class: 'tooltip-inner img-circle fa fa-check pull-left'
-      .vote-block
-        %ul
-          %li{"data-original-title" => "This is useful.", :title => ""}
-            = vote_link(answer, 'up')                    
-          %li{"data-original-title" => "", :title => ""}
-            %span.vote-count{id: "up_vote_answer#{answer.id}"}
-              = answer.get_likes.size
-          %li{"data-original-title" => "", :title => ""}
-            %span.vote-count{id: "down_vote_answer#{answer.id}"}
-              = answer.get_dislikes.size
-          %li{"data-original-title" => "This is useful.", :title => ""}
-            = vote_link(answer, 'down')
-          %li
+      - if !current_administrator
+        .vote-block
+          %ul
+            %li{"data-original-title" => "This is useful.", :title => ""}
+              = vote_link(answer, 'up')                    
+            %li{"data-original-title" => "", :title => ""}
+              %span.vote-count{id: "up_vote_answer#{answer.id}"}
+                = answer.get_likes.size
+            %li{"data-original-title" => "", :title => ""}
+              %span.vote-count{id: "down_vote_answer#{answer.id}"}
+                = answer.get_dislikes.size
+            %li{"data-original-title" => "This is useful.", :title => ""}
+              = vote_link(answer, 'down')
+            %li
       -if @question.accepted_answer_id == answer.id
         .top-content
           %span.answered.fa.fa-check      
     .col-md-9.col-xs-9.q-right-content
-      %ul.post-controls
-        %li
-          = link_to '',edit_question_answer_path(@question.id,answer.id),class: 'post-edit action fa fa-pencil','data-no-turbolink' => true
-        %li
-          = link_to '', question_answer_path(@question.id,answer.id),method: :delete,data: {confirm:'Are you sure?'},class: 'post-delete action fa fa-trash-o'
+      - if !current_administrator
+        %ul.post-controls
+          %li
+            = link_to '',edit_question_answer_path(@question.id,answer.id),class: 'post-edit action fa fa-pencil','data-no-turbolink' => true
+          %li
+            = link_to '', question_answer_path(@question.id,answer.id),method: :delete,data: {confirm:'Are you sure?'},class: 'post-delete action fa fa-trash-o'
       .clearfix
       .question-content
         = raw(answer.content)
@@ -49,12 +51,13 @@
             = answer.answerable_type
           %span.question-time
             #{time_ago_in_words(answer.created_at)} ago.
-        .col-md-4.col-xs-4.question-control
-          = render :partial => 'link_to_comment', :locals => { object: answer, id: "#{answer.id}"}
-          %span{id: "comment_count#{answer.id}"}
-            (
-            = answer.comments.count
-            )
+        - if !current_administrator
+          .col-md-4.col-xs-4.question-control
+            = render :partial => 'link_to_comment', :locals => { object: answer, id: "#{answer.id}"}
+            %span{id: "comment_count#{answer.id}"}
+              (
+              = answer.comments.count
+              )
       .comments-container.collapse.hidden_comment-box{id: 'comment' + "#{answer.id}"}
         = render partial: 'comments/create_comment',locals: {commentable: answer}
       %br/

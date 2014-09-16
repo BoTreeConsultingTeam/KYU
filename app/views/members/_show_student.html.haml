@@ -36,11 +36,11 @@
   .col-md-12.sort-questions
     %ul
       %li
-        = link_to t('common.links.questions'), member_path(@student,:filter => "questions")
+        = link_to t('common.links.questions'), member_path(@student,:filter => "questions",user: 'Student')
       %li
-        = link_to t('common.links.answers'), member_path(@student,:filter => "answers")
+        = link_to t('common.links.answers'), member_path(@student,:filter => "answers",user: 'Student')
       %li
-        = link_to t('common.links.bookmarks'), member_path(@student,:filter => "bookmarks")  
+        = link_to t('common.links.bookmarks'), member_path(@student,:filter => "bookmarks",user: 'Student')  
 / END QUESTIONS-FILTER
 - if params[:filter] == "answers"
   - if !(@answers.blank?)

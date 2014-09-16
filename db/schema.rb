@@ -177,18 +177,23 @@ ActiveRecord::Schema.define(version: 20140912082905) do
     t.datetime "updated_at"
     t.integer  "askable_id"
     t.string   "askable_type"
-    t.boolean  "enabled",      default: true
-    t.integer  "standard_id"
+    t.boolean  "enabled",            default: true
     t.integer  "cached_votes_total", default: 0
     t.integer  "cached_votes_score", default: 0
     t.integer  "cached_votes_up",    default: 0
     t.integer  "cached_votes_down",  default: 0
+    t.integer  "standard_id"
   end
 
   add_index "questions", ["cached_votes_down"], name: "index_questions_on_cached_votes_down", using: :btree
   add_index "questions", ["cached_votes_score"], name: "index_questions_on_cached_votes_score", using: :btree
   add_index "questions", ["cached_votes_total"], name: "index_questions_on_cached_votes_total", using: :btree
   add_index "questions", ["cached_votes_up"], name: "index_questions_on_cached_votes_up", using: :btree
+
+  create_table "sashes", force: true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "standards", force: true do |t|
     t.string   "class_no"
@@ -213,11 +218,12 @@ ActiveRecord::Schema.define(version: 20140912082905) do
     t.date     "birthdate"
     t.integer  "sash_id"
     t.integer  "level",                  default: 0
+    t.boolean  "student_manager",        default: false
+    t.string   "student_class"
+    t.integer  "points"
+    t.integer  "standard_id"
     t.boolean  "enable",                 default: true
     t.boolean  "mark_as_review",         default: false
-    t.integer  "points"
-    t.boolean  "student_manager",        default: false
-    t.integer  "standard_id"
   end
 
   add_index "students", ["email"], name: "index_students_on_email", unique: true, using: :btree

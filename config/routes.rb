@@ -20,7 +20,7 @@ Rails.application.routes.draw do
   get 'answers/accept/:id', to: 'answers#accept', as: :index
   get 'questions/abuse_report/:id',to: 'questions#abuse_report',as: :report
   get '/badges', to: 'badges#index', as: :badges
-  
+  get 'questions/disabled_questions',to: 'questions#disabled_questions',as: :disabled_questions
   resources :questions do
     resources :comments
     resources :answers
@@ -31,6 +31,7 @@ Rails.application.routes.draw do
   delete 'tags/:id', to: 'tags#destroy', as: :delete_tag
   get 'tags/:tag', to: 'questions#index', as: :tag_search
   get '/questions/disable/:id' => 'questions#disable',as: :disable
+  get '/questions/enable/:id' => 'questions#enable',as: :enable
   resources :tags
     resources :comments
 
@@ -39,7 +40,8 @@ Rails.application.routes.draw do
   get '/members/select_students_manager/:id' => 'members#select_students_manager',as: :select_students_manager
   get 'members/deactivate/:id', to: 'members#deactivate', as: :deactivate
   get 'members/mark_review/:id', to: 'members#mark_review', as: :markreview
-
+  get 'members/unmark_student_review/:id',to: 'members#unmark_student_review',as: :unmark_student_review
+  get 'mambers/activate_student/:id',to: 'members#activate_student',as: :activate_student
 
   resources :answers do
     member { post :vote }

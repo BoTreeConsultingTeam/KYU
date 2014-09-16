@@ -6,10 +6,9 @@
       .header-menu
         %ul
           %li
-            = link_to t('header_navigation.home'), questions_path
-          - if (teacher_student_signed_in)   
-            %li
-              %a{:href => members_path} Users
+            = link_to t('header_navigation.home'), questions_path   
+          %li
+            %a{:href => members_path(active_tab: 'Students')} Users
           %li
             = link_to t('header_navigation.questions'), questions_path
           %li
@@ -27,12 +26,10 @@
             %li
               = link_to "Logout", destroy_teacher_session_path, method: :delete
           - if administrator_signed_in?
+            %li
+              = link_to 'Desabled Question', disabled_questions_path
             %li       
               = link_to 'Report', reports_path
-            %li       
-              = set_header_link_for_admin("Teachers","teachers")
-            %li
-              = set_header_link_for_admin("Students","students")  
             %li
               = link_to "Logout", destroy_administrator_session_path, method: :delete      
       / menu

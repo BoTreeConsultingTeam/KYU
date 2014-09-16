@@ -26,8 +26,8 @@ module ApplicationHelper
     link_to title, questions_path(:time => "#{time}")
   end
 
-  def set_header_link_for_admin(title, users)
-    link_to title, members_path(users: "#{users}")
+  def set_header_link_for_admin(users_type)
+    link_to users_type, members_path(active_tab: "#{users_type}"),class: profile_active_tab("#{users_type}")
   end  
 
   def questions_count
@@ -61,4 +61,43 @@ module ApplicationHelper
   def teacher_student_signed_in
     student_signed_in? || teacher_signed_in?
   end  
+
+  def active_pill(time=nil)
+    css_class = ''
+    filter_status = params[:time]
+    if time.present? && filter_status.present? && filter_status == time
+      css_class = 'active'
+    elsif time.blank? && filter_status.present? && !REGISTRATION_STATUSES.include?(filter_status)
+      css_class = 'active'
+    elsif time.blank? && filter_status.blank?
+      css_class = 'active'
+    end
+    css_class
+  end
+
+  def profile_active_tab(active_tab=nil)
+    css_class = ''
+    active_tab_param = params[:active_tab]
+    if active_tab.present? && active_tab_param.present? && active_tab_param == active_tab
+      css_class = 'active'
+    elsif active_tab.blank? && active_tab_param.present? && !PAGE_FILTERS.include?(active_tab_param)
+      css_class = 'active'
+    elsif active_tab.blank? && active_tab_param.blank?
+      css_class = 'active'
+    end
+      css_class
+  end
+
+  def list_of_users(user_type_tab,user)  
+    case user_type_tab
+    when "Teachers"
+      render partial: 'members/teacher_member',locals: {teachers: user}
+    when 'Students','Managers','Students for Review','Blocked Students'
+      if !(user.blank?)
+        render partial: 'members/student_member',locals: {students: user}
+      else
+        render partial: 'members/blank_messages',locals: {type: user_type_tab}
+      end
+    end
+  end
 end

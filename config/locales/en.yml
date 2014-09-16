@@ -115,6 +115,8 @@ en:
       block : 'Block' 
       mark_as_review: 'MarkasReview'
       review: 'Review'
+      unblock: 'Unblock'
+      unmark_review: 'Unmark Review'
     tooltip:
       manager: 'Student Manager'
   teachers:
