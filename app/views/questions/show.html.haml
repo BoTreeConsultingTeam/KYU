@@ -8,31 +8,35 @@
     %h3 
       = @question.title
 #question_content.row.question-main-content.question-item{"data-id" => "1728"}
-  .col-md-2.col-xs-2.vote-block
-    %ul
-      %li{"data-original-title" => "This is useful.", :title => ""}
-        = vote_link(@question, 'up')
-      %li
-        %span.vote-count{id: "upvote_question#{@question.id}" }
-          = @question.get_likes.size
-      %li
-        %span.vote-count{id: "downvote_question#{@question.id}"}  
-          = @question.get_dislikes.size
-      %li{"data-original-title" => "This is useful.", :title => ""}
-        = vote_link(@question, 'down')
+  - if !current_administrator
+    .col-md-2.col-xs-2.vote-block
+      %ul
+        %li{"data-original-title" => "This is useful.", :title => ""}
+          = vote_link(@question, 'up')
+        %li
+          %span.vote-count{id: "upvote_question#{@question.id}" }
+            = @question.get_likes.size
+        %li
+          %span.vote-count{id: "downvote_question#{@question.id}"}  
+            = @question.get_dislikes.size
+        %li{"data-original-title" => "This is useful.", :title => ""}
+          = vote_link(@question, 'down')
+  - else 
+    .col-md-1
   .col-md-9.col-xs-9.q-right-content
     %ul.post-controls
-      %li
-        = link_to '',edit_question_path(@question.id),class: 'post-edit action fa fa-pencil',rel: 'tooltip',title: 'Edit', 'data-no-turbolink' => true
-      %li
-        = link_to '', question_path,method: :delete,data: {confirm:'Are you sure?'},rel: 'tooltip',title: 'Delete',class: 'post-delete action fa fa-trash-o'
-      
-      - if (check_bookmark @question).blank?
+      -if !(current_administrator)
         %li
-          = link_to '', bookmarks_path(:question_id => @question.id), method: :post,rel: 'tooltip',title: 'Add to Boolmarks', class: 'post-delete action fa fa-plus'
-      -else
+          = link_to '',edit_question_path(@question.id),class: 'post-edit action fa fa-pencil',rel: 'tooltip',title: 'Edit', 'data-no-turbolink' => true
         %li
-          = link_to '',bookmark_path(:question_id => @question.id), method: :delete,data: {confirm:'Are you sure?'},rel: 'tooltip',title: 'Delete from Boolmarks',class: 'post-delete action fa fa-minus-square'    
+          = link_to '',question_path,method: :delete,data: {confirm:'Are you sure?'},rel: 'tooltip',title: 'Delete',class: 'post-delete action fa fa-trash-o'
+        
+        - if (check_bookmark @question).blank?
+          %li
+            = link_to '', bookmarks_path(:question_id => @question.id), method: :post,rel: 'tooltip',title: 'Add to Boolmarks', class: 'post-delete action fa fa-plus'
+        -else
+          %li
+            = link_to '',bookmark_path(:question_id => @question.id), method: :delete,data: {confirm:'Are you sure?'},rel: 'tooltip',title: 'Delete from Boolmarks',class: 'post-delete action fa fa-minus-square'    
     .top-content
       - if @question.answers.count > 0
         %span.answered
@@ -60,19 +64,21 @@
           = @question.askable.class
         %span.question-time
           #{time_ago_in_words(@question.created_at)} ago.
-      .col-md-4.col-xs-4.question-control
-        = render :partial => 'link_to_comment', :locals => { object: @question, id: "question#{@question.id}"}
-        %span{id: "comment_count"}
-          (
-          = @question.comments.count
-          )
+      - if !current_administrator
+        .col-md-4.col-xs-4.question-control
+          = render :partial => 'link_to_comment', :locals => { object: @question, id: "question#{@question.id}"}
+          %span{id: "comment_count"}
+            (
+            = @question.comments.count
+            )
     .comments-container.collapse.hidden_comment-box{id: 'commentquestion' + "#{@question.id}"}              
       = render partial: 'comments/create_comment',locals: {commentable: @question}
     %br/
-    = render 'comments/show_comments_of_questions'               
-    .row.paginations.home
-      .col-md-12{id:'paginator'}
-        = paginate @question_comments
+    = render 'comments/show_comments_of_questions'
+    - if @question_comments.present?           
+      .row.paginations.home
+        .col-md-12{id:'paginator'}
+          = paginate @question_comments
     .clearfix
 .sticky-wrapper
   #answers_filter.row.answers-filter
@@ -85,4 +91,5 @@
 / ANSWERS LOOP
 #answers_main_list
   = render 'answers_list', locals: { :answers =>  @answer}
-  = render 'answers/form'
+  - if !current_administrator
+    = render 'answers/form'

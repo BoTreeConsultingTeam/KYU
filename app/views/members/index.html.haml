@@ -1,32 +1,33 @@
-= render :partial => "layouts/sub_heading", :locals => {:object => 'Users'}
-%ul#main_users_list.row
-  - @students.each do |student|
-    %li.user-item.col-md-4.col-xs-6
-      %span.user-avatar
-        %img.avatar{:alt => "", :src => "http://demo.enginethemes.com/qaengine/wp-content/uploads/2014/08/1282.jpg"}
-      .left-info
-        %span.display_name 
-          = link_to student.username, member_path(student)
-          - if current_teacher.present?
-            - if @students.student_manager_selected? < 2
-              - if !(student.student_manager)
-                = link_to t('teachers.basic.student_manager'),select_students_manager_path(student.id), class: 'pull-right'
-          -if (student.student_manager)
-            .action.pull-right{ rel: "tooltip", title: t('students.tooltip.manager')}
-              %i.fa.fa-user.fa-fw
-        %br
-          %span.email
-            = student.email
-            -if current_teacher
-              = link_to 'Report', reports_path
-          .question-cat
-            %span.user-badge
-              = render :partial => 'student_badge', :locals => { :object => student}  
-            %span.points 
-              -if student.points.nil?
-                0 Points
-              - else
-                = "#{student.points} Points"
-.row.paginations.home
-  .col-md-12
-    = render :partial => "shared/pagination", :locals => {:object => @students}
+.col-md-12.col.xs-12.main-content
+  = render :partial => "layouts/sub_heading", :locals => {:object => 'Users'}
+  .row.question-filter
+  - if ( current_teacher.present? )
+    .col-md-12.sort-questions
+      %ul
+        %li
+          = set_header_link_for_admin("Students") 
+        %li       
+          = set_header_link_for_admin("Teachers")
+
+  - elsif (current_student.present?)
+    .col-md-12.sort-questions
+      %ul
+        %li
+          = set_header_link_for_admin("Students")
+  - else 
+    .col-md-12.sort-questions
+      %ul
+        %li
+          = set_header_link_for_admin("Students") 
+        %li       
+          = set_header_link_for_admin("Teachers")
+        %li 
+          = set_header_link_for_admin("Managers")
+        %li
+          = set_header_link_for_admin("Students for Review")   
+        %li 
+          = set_header_link_for_admin("Blocked Students")
+
+  = list_of_users(params[:active_tab], @students.present? ? @students : @teachers)
+  - if ( !@student.blank? || !@teachers.blank?)
+    = render partial: "shared/pagination", locals: {object: @students.present? ? @students : @teachers}

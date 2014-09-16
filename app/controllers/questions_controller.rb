@@ -24,6 +24,10 @@ class QuestionsController < ApplicationController
     end
   end
 
+  def disabled_questions
+    @questions = Question.find_all_by_enabled(false).sort.reverse
+  end
+
   def new
     @standards = Standard.all
     @question = Question.new
@@ -59,13 +63,18 @@ class QuestionsController < ApplicationController
 
   def destroy
     @question = question_find_by_id
+    title = @question.title
     if question_find_by_id.nil?
       flash[:error] = t('flash_message.error.question.destroy')
     else
       @question.destroy
-      flash[:success] = t('flash_message.success.question.destroy')
+      flash[:notice] = "#{title} "+ t('flash_message.success.question.destroy')
     end
-    redirect_to students_path
+    if current_administrator.present?
+      redirect_to disabled_questions_path
+    else
+      redirect_to students_path
+    end
   end
 
   def vote
@@ -106,6 +115,13 @@ class QuestionsController < ApplicationController
     end 
   end
 
+  def enable 
+    @question = Question.find_by_id(params[:id])
+    @question.update_attributes(enabled: true)
+
+    redirect_to disabled_questions_path
+  end
+
   def disable
     @question = question_find_by_id
     if @question.nil?
@@ -133,6 +149,7 @@ class QuestionsController < ApplicationController
   end
 
   private
+  
   def question_params
     params.require(:question).permit(:standard_id, :title, :content, :user_id, :tag_list)
   end

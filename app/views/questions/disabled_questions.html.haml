@@ -1,0 +1,19 @@
+= render :partial => "layouts/sub_heading", :locals => {:object => 'Disabled Questions'}
+.row.select-category.single-head
+  .col-md-10.col-xs-12
+    .table-responsive
+      %table.table.table-bordered.table-striped
+        %thead
+          %tr
+            %td Question Title
+            %td.text-center Action
+        %tbody
+          - @questions.each do |question|
+            %tr
+              %td 
+                = question.title
+              %td.text-center
+                = link_to '', enable_path(question),rel: 'tooltip',title: 'Enable', class: 'fa fa-check'
+                |
+                = link_to '', question_path(question), method: :delete, data: {confirm: "are you sure?"},rel: 'tooltip',title: 'Delete', class: 'fa fa-trash-o'
+

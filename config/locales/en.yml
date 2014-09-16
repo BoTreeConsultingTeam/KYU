@@ -109,6 +109,14 @@ en:
       title_confirmation: 'Resend confirmation instructions'    
     basic:
       forgot_password: 'Forgot your password?'
+    messages:
+      blocked_profile: 'Your account has been blocked. Please contact to administrator'
+    links:
+      block : 'Block' 
+      mark_as_review: 'MarkasReview'
+      review: 'Review'
+      unblock: 'Unblock'
+      unmark_review: 'Unmark Review'
     tooltip:
       manager: 'Student Manager'
   teachers:
@@ -175,9 +183,13 @@ en:
     students: 'Students'
     teachers: 'Teachers'
     most_used_tags: 'MOST USED TAGS'
-    hot_questions: 'HOT QUESTIONS'
+    popular_question: 'Most Popular'
     see_more_tags: 'See more tags'
+  administrators:
+    btn:
+      sign_in: 'Administrator'
   member:
     captions:
       not_answered: You don't  have answered any question yet
       never_ask: You don't have asked any questions yet
+
