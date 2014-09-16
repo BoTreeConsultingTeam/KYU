@@ -1,7 +1,7 @@
 class Administrators::SessionsController <  Devise::SessionsController
 
   def after_sign_in_path_for(resource)
-    administrators_path
+    members_path(active_tab: 'Students')
   end
 
   def destroy

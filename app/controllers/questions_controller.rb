@@ -29,9 +29,14 @@ class QuestionsController < ApplicationController
   end
 
   def new
-    @standards = Standard.all
-    @question = Question.new
-    @question.user_id = session[:id]
+    if !(current_administrator)
+      @standards = Standard.all
+      @question = Question.new
+      @question.user_id = session[:id]
+    else
+      flash[:error] = "not_permitted: 'You are not authorized to access this page'"
+      redirect_to members_path(active_tab: 'Students')
+    end
   end
 
   def create
