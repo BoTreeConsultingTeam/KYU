@@ -1,6 +1,9 @@
--if current_teacher.nil? && current_student.nil?
+-if current_user.nil?
   .row
-    .spacer65
-    .col-xs-12.text-center
-      = link_to  t('teacher.btn.student'), new_student_registration_path, class: "btn btn-primary btn-lg"
-      = link_to  t('student.btn.teacher'), new_teacher_registration_path, class: "btn btn-primary btn-lg"
+  .spacer65
+  .col-xs-12.text-center
+    = link_to  t('teacher.btn.student'), new_student_registration_path, class: "btn btn-primary btn-lg"
+
+    = link_to  t('student.btn.teacher'), new_teacher_registration_path, class: "btn btn-primary btn-lg"
+
+    = link_to  t('administrators.btn.sign_in'), new_administrator_session_path, class: "btn btn-primary btn-lg"

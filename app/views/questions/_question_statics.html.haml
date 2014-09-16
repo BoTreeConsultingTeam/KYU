@@ -23,5 +23,6 @@
           |
       - else current_teacher.present?
         = link_to 'Disable',disable_path(question.id)
+      -if !(current_administrator)
         |
-      = link_to "report as abuse",report_path(question.id),class: 'pull-right'
+        = link_to "report as abuse",report_path(question.id),class: 'pull-right'

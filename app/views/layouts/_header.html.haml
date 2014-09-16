@@ -1,14 +1,14 @@
 %header#header
   #logo.col-md-2.col-xs-2
     KYU
-  -if (student_signed_in? || teacher_signed_in?)
+  -if (user_signed_in)
     .col-md-8.col-xs-8
       .header-menu
         %ul
           %li
-            = link_to t('header_navigation.home'), questions_path
+            = link_to t('header_navigation.home'), questions_path   
           %li
-            = link_to t('header_navigation.users'), members_path(active_tab:'student')
+            %a{:href => members_path(active_tab: 'Students')} Users
           %li
             = link_to t('header_navigation.questions'), questions_path
           %li
@@ -24,6 +24,13 @@
             %li
               = link_to 'Profile', teacher_views_profile_path(current_user)
             %li
+              = link_to "Logout", destroy_teacher_session_path, method: :delete
+          - if administrator_signed_in?
+            %li
+              = link_to 'Desabled Question', disabled_questions_path
+            %li       
+              = link_to 'Report', reports_path
+            %li
               = link_to t('header_navigation.logout'), destroy_teacher_session_path, method: :delete
     .col-md-2.col-xs-2.btn-group.header-avatar
       %span.expand
@@ -34,4 +41,6 @@
           - if student_signed_in?
             = "Welcome #{current_student.username.titleize}"
           - if teacher_signed_in?
-            = "Welcome #{current_teacher.username.titleize}"
+            = "Welcome #{current_teacher.username}"
+          - if administrator_signed_in?
+            = "Welcome #{current_administrator.email}"

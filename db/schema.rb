@@ -16,6 +16,24 @@ ActiveRecord::Schema.define(version: 20140912082905) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "administrators", force: true do |t|
+    t.string   "email",                  default: "", null: false
+    t.string   "encrypted_password",     default: "", null: false
+    t.string   "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer  "sign_in_count",          default: 0,  null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.inet     "current_sign_in_ip"
+    t.inet     "last_sign_in_ip"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "administrators", ["email"], name: "index_administrators_on_email", unique: true, using: :btree
+  add_index "administrators", ["reset_password_token"], name: "index_administrators_on_reset_password_token", unique: true, using: :btree
+
   create_table "answers", force: true do |t|
     t.text     "content"
     t.integer  "user_id"
@@ -41,6 +59,10 @@ ActiveRecord::Schema.define(version: 20140912082905) do
     t.boolean  "notified_user", default: false
     t.datetime "created_at"
   end
+
+  add_index "badges_sashes", ["badge_id", "sash_id"], name: "index_badges_sashes_on_badge_id_and_sash_id", using: :btree
+  add_index "badges_sashes", ["badge_id"], name: "index_badges_sashes_on_badge_id", using: :btree
+  add_index "badges_sashes", ["sash_id"], name: "index_badges_sashes_on_sash_id", using: :btree
 
   create_table "bookmarks", force: true do |t|
     t.integer "question_id"
@@ -156,11 +178,11 @@ ActiveRecord::Schema.define(version: 20140912082905) do
     t.integer  "askable_id"
     t.string   "askable_type"
     t.boolean  "enabled",            default: true
-    t.integer  "standard_id"
     t.integer  "cached_votes_total", default: 0
     t.integer  "cached_votes_score", default: 0
     t.integer  "cached_votes_up",    default: 0
     t.integer  "cached_votes_down",  default: 0
+    t.integer  "standard_id"
   end
 
   add_index "questions", ["cached_votes_down"], name: "index_questions_on_cached_votes_down", using: :btree
@@ -201,6 +223,8 @@ ActiveRecord::Schema.define(version: 20140912082905) do
     t.string   "avatar_content_type"
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
+    t.boolean  "enable",                 default: true
+    t.boolean  "mark_as_review",         default: false
   end
 
   add_index "students", ["email"], name: "index_students_on_email", unique: true, using: :btree
@@ -228,12 +252,12 @@ ActiveRecord::Schema.define(version: 20140912082905) do
   add_index "tags", ["name"], name: "index_tags_on_name", unique: true, using: :btree
 
   create_table "teachers", force: true do |t|
-    t.string   "email",                  default: "", null: false
-    t.string   "encrypted_password",     default: "", null: false
+    t.string   "email",                  default: "",   null: false
+    t.string   "encrypted_password",     default: "",   null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0,  null: false
+    t.integer  "sign_in_count",          default: 0,    null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
@@ -249,6 +273,7 @@ ActiveRecord::Schema.define(version: 20140912082905) do
     t.string   "avatar_content_type"
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
+    t.boolean  "enable",                 default: true
   end
 
   add_index "teachers", ["email"], name: "index_teachers_on_email", unique: true, using: :btree

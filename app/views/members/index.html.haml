@@ -1,12 +1,13 @@
-= render :partial => "layouts/sub_heading", :locals => {:object => 'Users'}
-.row.question-filter
+.col-md-12.col.xs-12.main-content
+  = render :partial => "layouts/sub_heading", :locals => {:object => 'Users'}
+  .row.question-filter
   - if ( current_teacher.present? )
     .col-md-12.sort-questions
       %ul
         %li
-          = link_to "student", members_path(active_tab:'student'), class: "#{profile_active_tab('student')}"
-        %li
-          = link_to 'Teachers', members_path(active_tab:'teacher'), class: "#{profile_active_tab('teacher')}"
+          = set_header_link_for_admin("Students") 
+        %li       
+          = set_header_link_for_admin("Teachers")
 
   - elsif (current_student.present?)
     .col-md-12.sort-questions
@@ -59,8 +60,20 @@
                 %span.points 
                   -if student.points.nil?
                     0 Points
-                  - else
-                    = "#{student.points} Points"
-.row.paginations.home
-  .col-md-12
-    = render :partial => "shared/pagination", :locals => {:object => @students}
+  - else 
+    .col-md-12.sort-questions
+      %ul
+        %li
+          = set_header_link_for_admin("Students") 
+        %li       
+          = set_header_link_for_admin("Teachers")
+        %li 
+          = set_header_link_for_admin("Managers")
+        %li
+          = set_header_link_for_admin("Students for Review")   
+        %li 
+          = set_header_link_for_admin("Blocked Students")
+
+  = list_of_users(params[:active_tab], @students.present? ? @students : @teachers)
+  - if ( !@student.blank? || !@teachers.blank?)
+    = render partial: "shared/pagination", locals: {object: @students.present? ? @students : @teachers}
