@@ -1,4 +1,4 @@
-class Tagging < ActsAsTaggableOn
+class Tagging < ActsAsTaggableOn::Tagging
 before_save :set_tag_owner
 def set_tag_owner
     # Set the owner of some tags based on the current tag_list
