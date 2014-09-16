@@ -11,6 +11,35 @@ class Teachers::RegistrationsController <  Devise::RegistrationsController
   def create
     super
   end
+
+  def view_profile
+    @total_downvotes_question = 0
+    @total_upvotes_question = 0
+    @total_upvotes_answer = 0
+    @total_downvotes_answer = 0
+    @teacher = Teacher.find(params[:id])
+    @questions = @teacher.questions
+    @answers = @teacher.answers
+    @tag = @teacher.owned_tags
+    @tags = @tag.map { |obj| [obj.name, obj.taggings_count]  }
+
+    @questions.each do |question|
+      @total_upvotes_question = @total_upvotes_question + question.get_upvotes.size
+    end
+
+    @questions.each do |question|
+      @total_downvotes_question = @total_downvotes_question + question.get_downvotes.size
+    end
+
+    @answers.each do |answer|
+      @total_upvotes_answer = @total_upvotes_answer + answer.get_upvotes.size
+    end
+
+    @answers.each do |answer|
+      @total_downvotes_answer = @total_downvotes_answer + answer.get_downvotes.size
+    end
+
+  end
   
   def update 
     # @teacher.update_with_password(devise_parameter_sanitizer.sanitize(:account_update))

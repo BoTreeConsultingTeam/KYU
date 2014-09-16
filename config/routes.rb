@@ -1,7 +1,5 @@
 Rails.application.routes.draw do
-  
-  get 'teacher_views_profile/:id' => 'teacher_views_profile#show', as: :teacher_views_profile
-  get 'student_views_profile/:id' => 'student_views_profile#show', as: :student_views_profile
+
   root :to => 'static_pages#index'
 
   devise_for :students,controllers: { sessions: 'students/sessions', registrations: 'students/registrations', passwords:'students/passwords'}
@@ -9,9 +7,11 @@ Rails.application.routes.draw do
 
   devise_scope :student do
     get "/students" => "students/registrations#index"
+    get 'student_views_profile/:id' => 'students/registrations#view_profile', as: :student_views_profile
   end
 
   devise_scope :teacher do
+    get 'teacher_views_profile/:id' => 'teachers/registrations#view_profile', as: :teacher_views_profile
     get "/teachers" => "teachers/registrations#index"
   end
   

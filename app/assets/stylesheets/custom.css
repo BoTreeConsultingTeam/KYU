@@ -7,7 +7,7 @@
 #header_search input,
 #submit_question input, 
 .paginations ul li a{
-	color: #8c97b2;
+	color: #2c3e50;
 }
 .widget-links ul li i, 
 .widget-menus ul li a, 
@@ -212,4 +212,12 @@ ul.social-icon{
 	position: absolute;
 	top: 130px;
 	z-index:9999;
+}
+.profile-img{
+	width: 100px;
+	height: 100px;
+}
+.user-thumb-img{
+	width:30px;
+	height:30px;
 }

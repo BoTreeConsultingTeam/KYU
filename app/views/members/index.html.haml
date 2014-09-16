@@ -35,7 +35,7 @@
           - if (teacher != current_user)
             .user-item.col-md-4.col-xs-6
               %span.user-avatar
-                = image_tag teacher.avatar.url(:thumb),class: 'img-circle'
+                = image_tag teacher.avatar.url(:thumb),class: 'img-circle user-thumb-img'
               .left-info
                 %span.display_name 
                   = link_to teacher.username, teacher_views_profile_path(teacher, active_tab:'basicinfo')
@@ -53,7 +53,7 @@
           -if (student != current_user)
             .user-item.col-md-4.col-xs-6
               %span.user-avatar
-                = image_tag student.avatar.url(:thumb),class: 'img-circle'
+                = image_tag student.avatar.url(:thumb),class: 'img-circle user-thumb-img'
               .left-info
                 %span.display_name 
                   = link_to student.username, student_views_profile_path(student, active_tab:'basicinfo')

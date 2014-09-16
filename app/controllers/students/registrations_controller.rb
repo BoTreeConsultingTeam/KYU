@@ -19,14 +19,32 @@ class Students::RegistrationsController <  Devise::RegistrationsController
     super
   end
 
-  def update
-    # puts "#{@student.inspect}"
-    # @student.update_with_password(devise_parameter_sanitizer.sanitize(:account_update))
-    # if @student.save
+  def view_profile
+    @total_downvotes_question = 0
+    @total_upvotes_question = 0
+    @total_upvotes_answer = 0
+    @total_downvotes_answer = 0
+    @student = Student.find(params[:id])
+    @questions = @student.questions
+    @answers = @student.answers
+    @tag = @student.owned_tags
+    @tags = @tag.map { |obj| [obj.name, obj.taggings_count]  }
+    @questions.each do |question|
+      @total_upvotes_question = @total_upvotes_question + question.get_upvotes.size
+    end
+    @questions.each do |question|
+      @total_downvotes_question = @total_downvotes_question + question.get_downvotes.size
+    end
+    @answers.each do |answer|
+      @total_upvotes_answer = @total_upvotes_answer + answer.get_upvotes.size
+    end
 
-    #   redirect_to root_path
-    # end
-    # super 
+    @answers.each do |answer|
+      @total_downvotes_answer = @total_downvotes_answer + answer.get_downvotes.size
+    end
+  end
+
+  def update 
     account_update_params = devise_parameter_sanitizer.sanitize(:account_update)
 
     # Allow user to update without using password.
