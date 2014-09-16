@@ -16,13 +16,13 @@
                   %li
                     = link_to tag, tag_path(tag.name),class: 'q-tag'
               .clearfix
-              %a{:href => "#"}
+              %a{:href => member_path(question.askable.id)}
                 %span.author-avatar
                   %img.avatar
                 %span.author-name              
                   - if question.askable_type != 'Teacher'                      
                     - if question.askable.student_manager?
-                      .student_manager{href: "#",rel: "tooltip",title: t('students.tooltip.manager')} 
+                      .student_manager{rel: "tooltip",title: t('students.tooltip.manager')} 
                         = question.askable.username
                     - else
                       = question.askable.username

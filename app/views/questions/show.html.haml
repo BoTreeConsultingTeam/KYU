@@ -25,29 +25,37 @@
       %li
         = link_to '',edit_question_path(@question.id),class: 'post-edit action fa fa-pencil',rel: 'tooltip',title: 'Edit', 'data-no-turbolink' => true
       %li
-        = link_to '',question_path,method: :delete,data: {confirm:'Are you sure?'},class: 'post-delete action fa fa-trash-o'
+        = link_to '',question_path,method: :delete,data: {confirm:'Are you sure?'},rel: 'tooltip',title: 'Delete',class: 'post-delete action fa fa-trash-o'
       -if !(current_administrator)
         - if (check_bookmark @question).blank?
           %li
-            = link_to '', bookmarks_path(:question_id => @question.id), method: :post, class: 'post-delete action fa fa-plus'
+            = link_to '', bookmarks_path(:question_id => @question.id), method: :post,rel: 'tooltip',title: 'Add to Boolmarks', class: 'post-delete action fa fa-plus'
         -else
           %li
-            = link_to '',bookmark_path(:question_id => @question.id), method: :delete,data: {confirm:'Are you sure?'},class: 'post-delete action fa fa-minus-square'    
+            = link_to '',bookmark_path(:question_id => @question.id), method: :delete,data: {confirm:'Are you sure?'},rel: 'tooltip',title: 'Delete from Boolmarks',class: 'post-delete action fa fa-minus-square'    
     .top-content
       - if @question.answers.count > 0
         %span.answered
           %i.fa.fa-check
-          Answered
+            Answered
       = render :partial => 'question_tags', :locals => { :object => @question}
     .clearfix
     .question-content
       = raw(@question.content)
     .row
       .col-md-8.col-xs-9.question-cat
-        %a{:href => "http://demo.enginethemes.com/qaengine/member/admindemo/"}
+        %a{:href => member_path(@question.askable.id)}
           %span.author-avatar
             %img.avatar{:alt => "", :src => "http://1.gravatar.com/avatar/3743112a070d24fe4dbd5cb39d6a5e9e?s=30&amp;d=http%3A%2F%2F1.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D30&amp;r=G"} 
-          %span.author-name Admin Demo
+          %span.author-name 
+            - if @question.askable_type != 'Teacher'                      
+              - if @question.askable.student_manager?
+                .student_manager{rel: "tooltip",title: t('students.tooltip.manager')} 
+                  = @question.askable.username
+              - else
+                = @question.askable.username
+            - else                        
+              = @question.askable.username
         %span.user-badge{:style => "background-color:#04aad4;"} 
           = @question.askable.class
         %span.question-time
