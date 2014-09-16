@@ -20,3 +20,5 @@
 //= require ckeditor/plugins/eqneditor/plugin.min
 //= require common
 //= require jsapi
+//= require chosen.proto.min
+//= require chosen.jquery.min
