@@ -27,7 +27,7 @@ module ApplicationHelper
   end
 
   def set_header_link_for_admin(users_type)
-    link_to title, questions_path(:time => "#{time}"), {class: "#{active_pill("#{time}")}"}
+    link_to users_type, members_path(active_tab: users_type), {class: profile_active_tab("#{users_type}")}
   end
 
   def questions_count

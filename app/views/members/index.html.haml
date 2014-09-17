@@ -1,11 +1,10 @@
-.col-md-12.col.xs-12.main-content
-  = render :partial => "layouts/sub_heading", :locals => {:object => 'Users'}
-  .row.question-filter
+= render :partial => "layouts/sub_heading", :locals => {:object => 'Users'}
+.row.question-filter
   - if ( current_teacher.present? )
     .col-md-12.sort-questions
       %ul
         %li
-          = set_header_link_for_admin("Students") 
+          = set_header_link_for_admin("Students")
         %li       
           = set_header_link_for_admin("Teachers")
 
@@ -13,58 +12,12 @@
     .col-md-12.sort-questions
       %ul
         %li
-          = link_to "student", members_path(active_tab:'student'), class: "#{profile_active_tab('student')}"
-- if params[:active_tab] == "teacher"
-      
-  .main-questions-list
-    %ul#main_users_list.row
-    - @teachers.each do |teacher|
-      - if (teacher != current_user)
-        .user-item.col-md-4.col-xs-6
-          %span.user-avatar
-            = image_tag teacher.avatar.url(:thumb),class: 'img-circle user-thumb-img'
-          .left-info
-            %span.display_name 
-              = link_to teacher.username, teacher_views_profile_path(teacher, active_tab:'basicinfo')
-            %br
-              %span.email
-                = teacher.email
-    .row.paginations.home
-      .col-md-12
-        = render :partial => "shared/pagination", :locals => {:object => @teachers}       
-
-- elsif params[:active_tab] == "student"
-  %ul#main_users_list.row
-    - @students.each do |student|
-      -if (student != current_user)
-        %li.user-item.col-md-4.col-xs-6
-          %span.user-avatar
-            = image_tag student.avatar.url(:thumb),class: 'img-circle user-thumb-img'
-          .left-info
-            %span.display_name 
-              = link_to student.username, student_views_profile_path(student, active_tab:'basicinfo')
-              - if current_teacher.present?
-                - if @students.student_manager_selected? < 2
-                  - if !(student.student_manager)
-                    = link_to t('teachers.basic.student_manager'),select_students_manager_path(student.id), class: 'pull-right'
-              -if (student.student_manager)
-                .action.pull-right{ rel: "tooltip", title: t('students.tooltip.manager')}
-                  %i.fa.fa-user.fa-fw
-            %br
-              %span.email
-                = student.email
-              .question-cat
-                %span.user-badge
-                  = render :partial => 'student_badge', :locals => { :object => student} 
-                    
-                %span.points 
-                  -if student.points.nil?
-                    0 Points
+          = set_header_link_for_admin("Students")
   - else 
     .col-md-12.sort-questions
       %ul
         %li
-          = set_header_link_for_admin("Students") 
+          = set_header_link_for_admin("Students")
         %li       
           = set_header_link_for_admin("Teachers")
         %li 
@@ -74,6 +27,8 @@
         %li 
           = set_header_link_for_admin("Blocked Students")
 
-  = list_of_users(params[:active_tab], @students.present? ? @students : @teachers)
-  - if ( !@student.blank? || !@teachers.blank?)
-    = render partial: "shared/pagination", locals: {object: @students.present? ? @students : @teachers}
+  
+
+= list_of_users(params[:active_tab], @students.present? ? @students : @teachers)
+- if ( !@student.blank? || !@teachers.blank?)
+  = render partial: "shared/pagination", locals: {object: @students.present? ? @students : @teachers}

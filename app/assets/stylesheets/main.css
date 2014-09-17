@@ -2125,6 +2125,7 @@ a.hiddenanchor{
 	float: left;
 	margin-top: 7px;
 	max-width: 30px;
+	max-height: 30px;
 }
 #main_users_list li.user-item .user-avatar img,
 .author-avatar img,
@@ -2133,7 +2134,7 @@ a.hiddenanchor{
 	-moz-border-radius: 50%;
 	-webkit-border-radius: 50%;
 	max-width: 100%;
-	height: auto;
+	/*height: auto;*/
 
 } 
 #main_users_list li.user-item .left-info {

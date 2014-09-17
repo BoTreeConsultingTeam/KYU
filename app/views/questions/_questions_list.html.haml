@@ -11,14 +11,13 @@
                 = raw(question.content)
             .question-cat
               %ul.question-tags
-                / question.tag_list .map { |t| link_to t, tag_path(t) }.join(', ')}
                 - question.tags.each do |tag|
                   %li
-                    = link_to tag, tag_path(tag.name),class: 'q-tag'
+                    = link_to tag, questions_path(tag: tag.name),class: 'q-tag'
               .clearfix
               %a{:href => member_path(question.askable.id)}
-                %span.author-avatar
-                  %img.avatar
+                %span.avatar
+                  = image_tag question.askable.avatar.url(:thumb),class: 'img-circle user-thumb-img'
                 %span.author-name              
                   - if question.askable_type != 'Teacher'                      
                     - if question.askable.student_manager?
