@@ -10,11 +10,12 @@
  *
  *= require bootstrap-theme.min
  *= require bootstrap.min
+ *= require font-awesome
+ *= require datepicker
  *= require editor.min
  *= require editor_content
  *= require sign_in
  *= require style
- *= require font-awesome
  *= require main
  *= require css
  *= require custom

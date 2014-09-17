@@ -7,7 +7,7 @@
         =f.text_field :username,class: 'form-control'
         %br
         = f.label t('common.captions.dob')
-        = f.date_field :birthdate,class: 'form-control'
+        = f.date_field :birthdate,class: 'form-control date-picker', id: 'datepicker1'
         %br
         = f.label t('common.captions.email')
         = f.email_field :email, :autofocus => true,class: 'form-control'
