@@ -20,9 +20,10 @@
   - if current_student.present?
     - if current_student.student_manager?
       = link_to 'Disable',disable_path(question.id)
-      |
-  - else current_teacher.present?
+      
+  - else
     = link_to 'Disable',disable_path(question.id)
-    |
+    
   -if !(current_administrator)
+    |
     = link_to "report as abuse",report_path(question.id)

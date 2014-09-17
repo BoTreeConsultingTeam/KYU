@@ -46,7 +46,7 @@ class QuestionsController < ApplicationController
       if current_student
         current_student.change_points(2)
       end
-      redirect_to questions_path
+      redirect_to questions_path(active_tab: 'all')
     else
       @standards = Standard.all
       render new_question_path
@@ -63,7 +63,7 @@ class QuestionsController < ApplicationController
       @question_comments = Comment.relative_comments(@question.id,@question.class).page(params[:page]).per(params[:per])
       @answer_comments = Comment.all_comments_of_answers(@answer.class)
     else
-      redirect_to questions_path,flash: { error: t('flash_message.error.question.show') }
+      redirect_to questions_path(active_tab: 'all'),flash: { error: t('flash_message.error.question.show') }
     end
   end
 
@@ -107,7 +107,7 @@ class QuestionsController < ApplicationController
     @tags = @question.tags
     @standards = Standard.all
     if question_find_by_id.nil?
-      redirect_to questions_path,flash: { error: t('flash_message.error.question.edit') }
+      redirect_to questions_path(active_tab: 'all'),flash: { error: t('flash_message.error.question.edit') }
     end
   end
   
@@ -118,7 +118,7 @@ class QuestionsController < ApplicationController
       flash[:success] = t('flash_message.success.question.update')
       redirect_to question_path(params[:id])
     else
-      redirect_to questions_path,flash: { error: t('flash_message.error.question.update') }
+      redirect_to questions_path(active_tab: 'all'),flash: { error: t('flash_message.error.question.update') }
     end 
   end
 
@@ -137,7 +137,7 @@ class QuestionsController < ApplicationController
       @question.enabled = false
       @question.save
     end
-    redirect_to questions_path
+    redirect_to questions_path(active_tab: 'all')
   end
 
   def abuse_report
@@ -148,7 +148,7 @@ class QuestionsController < ApplicationController
       Question.send_question_answer_abuse_report(current_user,@question)
       flash[:success] = t('flash_message.success.question.report_abuse')
     end
-    redirect_to questions_path
+    redirect_to questions_path(active_tab: 'all')
   end
 
   def alltags

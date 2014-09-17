@@ -53,7 +53,7 @@ class AnswersController < ApplicationController
   def vote
     answer_find_by_id
     if answer_find_by_id.nil?
-      redirect_to questions_path,flash: { error: t('flash_message.error.answer.vote') }
+      redirect_to questions_path(active_tab: 'all'),flash: { error: t('flash_message.error.answer.vote') }
     else
       if "up" == params[:type]        
         answer_liked_by(@answer,liked_by)

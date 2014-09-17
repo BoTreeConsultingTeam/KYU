@@ -15,7 +15,7 @@ class CommentsController < ApplicationController
         format.js
       end
     else
-      redirect_to questions_path
+      redirect_to questions_path(active_tab: 'all')
     end
   end
    
@@ -59,7 +59,7 @@ class CommentsController < ApplicationController
       @answer = find_by_answer_id(params[:answer_id])
       comment_find_by_id
       if @comment.nil?
-        redirect_to questions_path,flash: { error: t('flash_message.error.comment.edit') }
+        redirect_to questions_path(active_tab: 'all'),flash: { error: t('flash_message.error.comment.edit') }
       else       
         find_by_answer_id(params[:id])
         @answer_comments = Comment.relative_comments(@answer.id,@answer.class)

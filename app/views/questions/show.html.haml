@@ -3,7 +3,7 @@
     %span.back
       %i.fa.fa-angle-double-left
       %a 
-        = link_to 'Home',questions_path
+        = link_to 'Home',questions_path(active_tab: 'all')
   .col-md-8.col-xs-8
     %h3 
       = @question.title
