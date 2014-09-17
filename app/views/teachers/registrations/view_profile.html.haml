@@ -25,30 +25,32 @@
               = @teacher.answers.count
 / END USER-STATISTIC
 .row.question-filter
-- if ( @teacher == current_user )
-  .col-md-12.sort-questions
-    %ul
-      %li
-        = link_to 'Edit your Info', edit_teacher_registration_path
-      %li
-        = link_to 'Basic Info', teacher_views_profile_path(@teacher.id, active_tab:'basicinfo'), class: "#{profile_active_tab('basicinfo')}"
-      %li
-        = link_to 'Questions', teacher_views_profile_path(@teacher.id, active_tab:'questions'), class: "#{profile_active_tab('questions')}"
-      %li
-        = link_to 'Answers', teacher_views_profile_path(@teacher.id, active_tab:'answers'), class: "#{profile_active_tab('answers')}"
-      %li
-        = link_to 'Votes', teacher_views_profile_path(@teacher.id, active_tab:'votes'), class: "#{profile_active_tab('votes')}"
-- else
-  .col-md-12.sort-questions
-    %ul
-      %li
-        = link_to 'Basic Info', teacher_views_profile_path(@teacher.id, active_tab:'basicinfo'), class: "#{profile_active_tab('basicinfo')}"
-      %li
-        = link_to 'Questions', teacher_views_profile_path(@teacher.id, active_tab:'questions'), class: "#{profile_active_tab('questions')}"
-      %li
-        = link_to 'Answers', teacher_views_profile_path(@teacher.id, active_tab:'answers'), class: "#{profile_active_tab('answers')}"
-      %li
-        = link_to 'Votes', teacher_views_profile_path(@teacher.id, active_tab:'votes'), class: "#{profile_active_tab('votes')}"
+  - if ( @teacher == current_user )
+    .col-md-12.sort-questions
+      %ul
+        %li
+          = link_to 'Edit your Info', edit_teacher_registration_path
+        %li
+          = link_to 'Basic Info', teacher_views_profile_path(@teacher.id, active_tab:'basicinfo'), class: "#{profile_active_tab('basicinfo')}"
+        %li
+          = link_to 'Questions', teacher_views_profile_path(@teacher.id, active_tab:'questions'), class: "#{profile_active_tab('questions')}"
+        %li
+          = link_to 'Answers', teacher_views_profile_path(@teacher.id, active_tab:'answers'), class: "#{profile_active_tab('answers')}"
+        %li
+          = link_to 'Bookmarks', teacher_views_profile_path(@teacher.id, active_tab:'bookmarks'), class: "#{profile_active_tab('bookmarks')}"
+        %li
+          = link_to 'Votes', teacher_views_profile_path(@teacher.id, active_tab:'votes'), class: "#{profile_active_tab('votes')}"
+  - else
+    .col-md-12.sort-questions
+      %ul
+        %li
+          = link_to 'Basic Info', teacher_views_profile_path(@teacher.id, active_tab:'basicinfo'), class: "#{profile_active_tab('basicinfo')}"
+        %li
+          = link_to 'Questions', teacher_views_profile_path(@teacher.id, active_tab:'questions'), class: "#{profile_active_tab('questions')}"
+        %li
+          = link_to 'Answers', teacher_views_profile_path(@teacher.id, active_tab:'answers'), class: "#{profile_active_tab('answers')}"
+        %li
+          = link_to 'Votes', teacher_views_profile_path(@teacher.id, active_tab:'votes'), class: "#{profile_active_tab('votes')}"
 / END QUESTIONS-FILTER
 - if params[:active_tab] == "answers"
   .main-questions-list
@@ -57,6 +59,13 @@
         = render :partial => 'members/member_answers_list', locals: { answers: @answers}
       - else
         You don't  have answered any question yet
+- elsif params[:active_tab] == "bookmarks"
+  - question_list = bookmark_question_ids @teacher
+  - if !(question_list.blank?)
+    = render :partial => 'questions/questions_list', :locals => { questions: question_list}
+  - else
+    = t('member.captions.never_asked')
+
 - elsif params[:active_tab] == "votes"
   .main-questions-list
     %ul#main_questions_list
@@ -100,9 +109,6 @@
     = render partial: 'questions/questions_list', locals: {questions: @teacher.questions}
   - else
     You don't have asked any questions yet
-  
-    / end right content        
-  / END MAIN-QUESTIONS-LIST
 - else
   .row
     .col-md-9.col-md-push-3 
