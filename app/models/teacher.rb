@@ -4,10 +4,11 @@ class Teacher < ActiveRecord::Base
   paginates_per 10
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable
   has_many :comments, as: :commentable
-  has_many :questions,as: :askable
+  
   has_many :answers,as: :answerable
   has_many :bookmarks, as: :bookmarkable, dependent: :destroy
   has_many :questions, :through => :bookmarks
+  has_many :questions,as: :askable
 
   VALID_EMAIL_REGEX = Student::VALID_EMAIL_REGEX
 
@@ -19,6 +20,6 @@ class Teacher < ActiveRecord::Base
   attr_accessor :current_password
   acts_as_tagger
   acts_as_voter
-  has_attached_file :avatar, :styles => { :medium => "300x300>", :thumb => "50x50>" }, :default_url => "/images/:style/missing.png"
+  has_attached_file :avatar, :styles => { :medium => "300x300>", :thumb => "50x50>" }, :default_url => "missing.jpeg"
   validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/
 end

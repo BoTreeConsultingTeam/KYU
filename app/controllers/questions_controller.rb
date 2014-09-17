@@ -29,8 +29,8 @@ class QuestionsController < ApplicationController
   end
 
   def new
+    @standards = Standard.all
     if !(current_administrator)
-      @standards = Standard.all
       @question = Question.new
       @question.user_id = session[:id]
     else
@@ -104,6 +104,7 @@ class QuestionsController < ApplicationController
   def edit
     @standards = Standard.all
     @question = question_find_by_id
+    @tags = @question.tags
     @standards = Standard.all
     if question_find_by_id.nil?
       redirect_to questions_path,flash: { error: t('flash_message.error.question.edit') }

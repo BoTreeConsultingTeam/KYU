@@ -50,4 +50,8 @@ class Question < ActiveRecord::Base
   def self.highest_voted
     self.order("cached_votes_score DESC").limit(5)
   end
+
+  def tag_list
+    self.tags.map { |t| t.name}.join(', ')
+  end
 end
