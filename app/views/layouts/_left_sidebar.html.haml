@@ -15,6 +15,6 @@
             Tags
         - if (student_signed_in? || teacher_signed_in?)    
           %li.fa-users.menu-item.menu-item-type-post_type.menu-item-object-page.menu-item-1743
-            %a{:href => "/members"}
+            %a{:href => members_path(active_tab: 'Students')}
               %i.fa.fa-users>
               Users

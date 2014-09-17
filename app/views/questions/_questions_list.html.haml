@@ -1,7 +1,7 @@
 .main-questions-list
   %ul#main_questions_list
     - questions.each do |question|
-      %li.post-1728.question.type-question.status-publish.hentry.question-item{"data-id" => "1728"}
+      %li.post-1728.question.type-question.status-publish.hentry.question-item{id: "question#{question.id}"}
         .col-md-8.col-xs-8.q-left-content
           .q-ltop-content
             = link_to  question.title, question_path(question),class: 'question-title', 'data-no-turbolink' => true
@@ -16,7 +16,7 @@
                   %li
                     = link_to tag, tag_path(tag.name),class: 'q-tag'
               .clearfix
-              %a{:href => member_path(question.askable.id)}
+              %a{:href => member_path(question.askable.id,user: 'Student')}
                 %span.author-avatar
                   %img.avatar
                 %span.author-name              

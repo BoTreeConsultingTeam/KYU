@@ -73,18 +73,7 @@ class MembersController < ApplicationController
     else
       flash[:error] = t('flash_message.error.student.manager')
     end
-    redirect_to members_path
-  end
-
-  def select_students_manager
-    if Student.find_all_by_student_manager(true).count < 2
-      @student = Student.find_by_id(params[:id])
-      @student.student_manager = true
-      @student.save      
-    else
-      flash[:error] = t('flash_message.error.student.manager')
-    end
-    redirect_to members_path
+    redirect_to members_path(active_tab: "Students")
   end
 
   private

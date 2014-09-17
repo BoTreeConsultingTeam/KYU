@@ -7,5 +7,4 @@ class Answer < ActiveRecord::Base
   acts_as_votable
   belongs_to :answerable, polymorphic: true
   validates_presence_of :content
-  validates :content, length: { maximum: 1000 }
 end

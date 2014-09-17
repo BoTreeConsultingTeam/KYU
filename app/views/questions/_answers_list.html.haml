@@ -21,7 +21,7 @@
               = vote_link(answer, 'down')
             %li
       -if @question.accepted_answer_id == answer.id
-        .top-content
+        .top-content{rel: 'tooltip',title: 'Correct Answer'}
           %span.answered.fa.fa-check      
     .col-md-9.col-xs-9.q-right-content
       - if !current_administrator
