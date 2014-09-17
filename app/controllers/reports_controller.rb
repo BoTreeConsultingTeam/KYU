@@ -82,7 +82,7 @@ class ReportsController < ApplicationController
     end
 
     def set_standard
-      @standard = Standard.find_by_standard_id(params[:standard_id])
+      @standard = Standard.find_by_id(params[:standard_id])
       if @standard.nil?
         flash[:error] = 'No Standard Found'
         redirect_to reports_path
