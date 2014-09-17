@@ -21,8 +21,6 @@ class Question < ActiveRecord::Base
   scope :newest, ->(current_user) { where(:created_at => (current_user.last_sign_in_at)..(current_user.current_sign_in_at)).order("created_at desc")}
   validates_presence_of :title
   validates_presence_of :content
-  validates :title, length: { maximum: 150, minimum: 20 }
-  validates :content, length: { minimum: 1000, minimum: 20 }
   validates_presence_of :standard_id
 
   def answered?

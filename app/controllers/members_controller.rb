@@ -1,6 +1,6 @@
 class MembersController < ApplicationController
   before_filter :find_student_by_id, only: [:deactivate, :mark_review, :unmark_student_review, :activate_student]
-  
+  before_action :user_signed_in?
   def index
     if params[:active_tab] == 'Students'
       @students = Student.all.page(params[:page]).per(5)
@@ -73,18 +73,7 @@ class MembersController < ApplicationController
     else
       flash[:error] = t('flash_message.error.student.manager')
     end
-    redirect_to members_path
-  end
-
-  def select_students_manager
-    if Student.find_all_by_student_manager(true).count < 2
-      @student = Student.find_by_id(params[:id])
-      @student.student_manager = true
-      @student.save      
-    else
-      flash[:error] = t('flash_message.error.student.manager')
-    end
-    redirect_to members_path
+    redirect_to members_path(active_tab: "Students")
   end
 
   private
@@ -96,5 +85,4 @@ class MembersController < ApplicationController
   def received_filter
     params[:filter]
   end
-
 end

@@ -1,6 +1,6 @@
 class Teachers::RegistrationsController <  Devise::RegistrationsController
   before_filter :configure_permitted_parameters, if: :devise_controller?
-  
+  before_action :user_signed_in?, only:[:index,:view_profile,:update]
   def index
     if params[:tag]
       @questions = Question.tagged_with(params[:tag])

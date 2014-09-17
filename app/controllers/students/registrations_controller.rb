@@ -1,6 +1,6 @@
 class Students::RegistrationsController <  Devise::RegistrationsController
    before_filter :configure_permitted_parameters, if: :devise_controller?
-
+   before_action :user_signed_in?, only:[:index,:view_profile,:update]
   def new
     @standard = Standard.all
     super

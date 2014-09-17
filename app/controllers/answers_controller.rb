@@ -8,7 +8,7 @@ class AnswersController < ApplicationController
   end
 
   def create
-    @answer = Answer.create(answer_params.merge({answerable: current_user}))
+    @answer = Answer.new(answer_params.merge({answerable: current_user}))
     @question = @answer.question
     if @answer.save
       redirect_to_question(params[:answer][:question_id])

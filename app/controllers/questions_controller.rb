@@ -48,7 +48,8 @@ class QuestionsController < ApplicationController
       end
       redirect_to questions_path
     else
-      render 'new'
+      @standards = Standard.all
+      render new_question_path
     end
   end
 
