@@ -14,7 +14,7 @@
           %li
             = link_to t('header_navigation.tags'), tags_path
           - if student_signed_in?
-            %link_to
+            %li
               = link_to 'Profile', student_views_profile_path(current_user)
             %li
               = link_to t('header_navigation.logout'), destroy_student_session_path, method: :delete

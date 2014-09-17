@@ -74,22 +74,21 @@ class ReportsController < ApplicationController
   private
 
     def set_student
-      if !params[:id].blank?
-        @student  = Student.find(params[:id])
-      else
+      @student  = Student.find_by_id(params[:id])
+      if @student.nil?
         flash[:error] = 'No Student Found'
-        redirect_to reports_path
+        redirect_to reports_path        
       end
     end
 
     def set_standard
-      if !params[:standard_id].blank?
-        @standard = Standard.find(params[:standard_id])
-      else
+      @standard = Standard.find_by_standard_id(params[:standard_id])
+      if @standard.nil?
         flash[:error] = 'No Standard Found'
         redirect_to reports_path
       end
     end
+    
     def error_message
       flash[:error] = 'No Record Found'
       redirect_to reports_path
