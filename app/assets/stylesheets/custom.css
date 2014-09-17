@@ -284,3 +284,24 @@ ul.social-icon{
 	width:20px;
 	height:20px;
 }
+
+.question-views {
+	background-color: #780978 !important;
+  border: medium none !important;
+  border-radius: 22px !important;
+  color: #fff !important;
+}
+
+.question-upvotes {
+	background-color: #a35429 !important;
+  border: medium none !important;
+  border-radius: 22px !important;
+  color: #fff !important;
+}
+
+.question-downvotes {
+	background-color: #ffbf00 !important;
+  border: medium none !important;
+  border-radius: 22px !important;
+  color: #fff !important;
+}
