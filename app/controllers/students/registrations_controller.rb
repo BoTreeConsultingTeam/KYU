@@ -66,7 +66,7 @@ class Students::RegistrationsController <  Devise::RegistrationsController
   end
 
   def after_sign_in_path_for(resource)
-    students_path
+    students_path(active_tab: 'all')
   end
 
   

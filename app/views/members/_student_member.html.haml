@@ -3,7 +3,7 @@
   - students.each do |student|
     %li.user-item.col-md-4.col-xs-6
       %span.user-avatar
-        = image_tag student.avatar.url(:medium), alt: '',class: 'img-circle user-thumb-img'
+        = image_tag student.avatar.url(:medium), alt: 'Image',class: 'img-circle user-thumb-img'
       .left-info
         %span.display_name 
           = link_to student.username,  student_views_profile_path(student,user: 'Student')

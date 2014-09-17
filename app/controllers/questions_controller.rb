@@ -4,8 +4,10 @@ class QuestionsController < ApplicationController
   def index
     if received_tag
       @questions = Question.tagged_with(received_tag).enabled.page params[:page]
-    elsif received_time
-      case received_time
+    else received_active_tab
+      case received_active_tab
+      when 'all'
+        @questions = all_questions.page params[:page]  
       when 'week'
         @questions = Question.recent_data_week.enabled.page params[:page]
       when 'month'
@@ -19,8 +21,6 @@ class QuestionsController < ApplicationController
       when 'newest'
         @questions = Question.newest(current_user).enabled.page params[:page]
       end
-    else
-      @questions = all_questions.page params[:page]
     end
   end
 
@@ -173,8 +173,8 @@ class QuestionsController < ApplicationController
     params[:tag]
   end
 
-  def received_time
-    params[:time]
+  def received_active_tab
+    params[:active_tab]
   end
 
   def question_find_by_id

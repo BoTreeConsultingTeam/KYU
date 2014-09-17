@@ -6,11 +6,11 @@
       .header-menu
         %ul
           %li
-            = link_to t('header_navigation.home'), questions_path   
+            = link_to t('header_navigation.home'), questions_path(active_tab: 'all')   
           %li
             %a{:href => members_path( active_tab: 'Students')} Users
           %li
-            = link_to t('header_navigation.questions'), questions_path
+            = link_to t('header_navigation.questions'), questions_path(active_tab: 'all')
           %li
             = link_to t('header_navigation.tags'), tags_path
           - if student_signed_in?

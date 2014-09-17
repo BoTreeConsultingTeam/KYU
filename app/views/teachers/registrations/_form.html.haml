@@ -35,7 +35,7 @@
           %br
           = f.label t('common.captions.set_avatar')
         %br
-          = image_tag @teacher.avatar.url(:medium)
+          = image_tag @teacher.avatar.url(:medium), alt: 'Image'
           = f.file_field :avatar
         %br/
         %div= f.submit t('common.btn.submit'), class: 'btn-submit-question'

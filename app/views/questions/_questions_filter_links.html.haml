@@ -3,7 +3,7 @@
   .col-md-12.col-xs-12.sort-questions
     %ul
       %li
-        = link_to 'all', questions_path
+        = set_link(t('questions.link.all'),'all')
       %li
         = set_link(t('questions.link.newest'),'newest')
       %li

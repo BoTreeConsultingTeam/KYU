@@ -22,8 +22,8 @@ module ApplicationHelper
     options_for_select(SALUTATIONS)
   end
 
-  def set_link(title, time)
-    link_to title, questions_path(:time => "#{time}")
+  def set_link(title, active_tab)
+    link_to title, questions_path(:active_tab => "#{active_tab}"),{class: profile_active_tab("#{active_tab}")}
   end
 
   def set_header_link_for_admin(users_type)

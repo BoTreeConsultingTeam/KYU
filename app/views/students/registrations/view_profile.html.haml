@@ -2,7 +2,7 @@
 .row.user-statistic.highlight
   .col-md-5.col-xs-5.user-info
     %span.avatar
-      = image_tag @student.avatar.url(:medium) ,class: 'img-circle profile-img'
+      = image_tag @student.avatar.url(:medium), alt: 'Image' ,class: 'img-circle profile-img'
     %ul
       %li.name 
         = @student.username
@@ -72,7 +72,7 @@
               .q-lbtm-content
                 .question-cat
                   %span.avatar
-                    = image_tag answer.answerable.avatar.url(:medium) ,class: 'img-circle user-thumb-img'
+                    = image_tag answer.answerable.avatar.url(:medium), alt: 'Image' ,class: 'img-circle user-thumb-img'
                   %span.user-badge
                     - if answer.answerable.badges.last.blank?
                       No Badges
@@ -83,7 +83,7 @@
                   %ul.question-tags
                     - answer.question.tags.each do |tag|
                       %li
-                        = link_to tag, tag_path(tag.name),class: 'q-tag'
+                        = link_to tag, questions_path(tag: tag.name),class: 'q-tag'
               .quote-answer-style
                 %div
                   %span.icon-quote
@@ -202,11 +202,11 @@
                   %ul.question-tags
                     - question.tags.each do |tag|
                       %li
-                        = link_to tag, tag_path(tag.name),class: 'q-tag'   
+                        = link_to tag, questions_path(tag: tag.name),class: 'q-tag'   
                   .clearfix
                   %a{:href => "http://demo.enginethemes.com/qaengine/member/admin/"}
                     %span.avatar
-                      = image_tag question.askable.avatar.url(:medium) ,class: 'img-circle user-thumb-img'
+                      = image_tag question.askable.avatar.url(:medium), alt: 'Image' ,class: 'img-circle user-thumb-img'
                     %span.author-name 
                       = question.askable.username
                   %span.user-badge

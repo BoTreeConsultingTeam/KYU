@@ -5,5 +5,4 @@ $( document ).ready(function() {
   jQuery(".chosen").data("placeholder","Select Frameworks...").chosen();
 
   $('#datepicker1').datepicker();
-  
 });

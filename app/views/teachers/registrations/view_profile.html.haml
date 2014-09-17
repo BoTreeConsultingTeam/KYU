@@ -2,7 +2,7 @@
 .row.user-statistic.highlight
   .col-md-5.col-xs-5.user-info
     %span.avatar
-      = image_tag @teacher.avatar.url(:medium) ,class: 'img-circle profile-img'    
+      = image_tag @teacher.avatar.url(:medium), alt: 'Image' ,class: 'img-circle profile-img'    
     %ul
       %li.name 
         = @teacher.username
