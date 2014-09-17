@@ -26,9 +26,4 @@
           = set_header_link_for_admin("Students for Review")   
         %li 
           = set_header_link_for_admin("Blocked Students")
-
-  
-
 = list_of_users(params[:active_tab], @students.present? ? @students : @teachers)
-- if ( !@student.blank? || !@teachers.blank?)
-  = render partial: "shared/pagination", locals: {object: @students.present? ? @students : @teachers}
