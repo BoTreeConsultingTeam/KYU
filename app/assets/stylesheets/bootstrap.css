@@ -49,10 +49,11 @@ template {
 a {
   background: transparent;
 }
-a:active,
+a:link,
 a:hover {
   outline: 0;
 }
+a:active,
 abbr[title] {
   border-bottom: 1px dotted;
 }
@@ -4247,7 +4248,7 @@ fieldset[disabled] .navbar-default .btn-link:focus {
     background-color: transparent;
   }
   .navbar-inverse .navbar-nav .open .dropdown-menu > .active > a,
-  .navbar-inverse .navbar-nav .open .dropdown-menu > .active > a:hover,
+  .navbar-inverse .navbar-nav .open .dropdown-menu > .active > a:hovera,
   .navbar-inverse .navbar-nav .open .dropdown-menu > .active > a:focus {
     color: #ffffff;
     background-color: #080808;

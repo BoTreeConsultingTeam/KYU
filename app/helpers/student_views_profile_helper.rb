@@ -1,0 +1,2 @@
+module StudentViewsProfileHelper
+end

@@ -1,0 +1,2 @@
+module TeacherViewsProfileHelper
+end

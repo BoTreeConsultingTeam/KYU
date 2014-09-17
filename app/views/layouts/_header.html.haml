@@ -8,21 +8,21 @@
           %li
             = link_to t('header_navigation.home'), questions_path   
           %li
-            %a{:href => members_path(active_tab: 'Students')} Users
+            %a{:href => members_path( active_tab: 'Students')} Users
           %li
             = link_to t('header_navigation.questions'), questions_path
           %li
             = link_to t('header_navigation.tags'), tags_path
           - if student_signed_in?
-            %li
-              = link_to t('header_navigation.edit_profile'), edit_student_registration_path
+            %link_to
+              = link_to 'Profile', student_views_profile_path(current_user)
             %li
               = link_to t('header_navigation.logout'), destroy_student_session_path, method: :delete
           - if teacher_signed_in?
             %li
               = link_to 'Report', reports_path
             %li
-              = link_to t('header_navigation.edit_profile'), edit_teacher_registration_path
+              = link_to 'Profile', teacher_views_profile_path(current_user)
             %li
               = link_to "Logout", destroy_teacher_session_path, method: :delete
           - if administrator_signed_in?
@@ -31,8 +31,7 @@
             %li       
               = link_to 'Report', reports_path
             %li
-              = link_to "Logout", destroy_administrator_session_path, method: :delete      
-      / menu
+              = link_to t('header_navigation.logout'), destroy_teacher_session_path, method: :delete
     .col-md-2.col-xs-2.btn-group.header-avatar
       %span.expand
         %a{:href => member_path(current_user)}
@@ -44,7 +43,4 @@
           - if teacher_signed_in?
             = "Welcome #{current_teacher.username}"
           - if administrator_signed_in?
-            = "Welcome #{current_administrator.email}"  
-
-
-    / avatar
+            = "Welcome #{current_administrator.email}"

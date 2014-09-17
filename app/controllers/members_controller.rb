@@ -1,8 +1,8 @@
 class MembersController < ApplicationController
   before_filter :find_student_by_id, only: [:deactivate, :mark_review, :unmark_student_review, :activate_student]
-  
+  before_action :user_signed_in?
   def index
-    if "#{params[:active_tab]}" == 'Students'
+    if params[:active_tab] == 'Students'
       @students = Student.all.page(params[:page]).per(5)
     elsif params[:active_tab] == 'Teachers'
       @teachers = Teacher.all.page(params[:page]).per(5)
@@ -17,9 +17,9 @@ class MembersController < ApplicationController
 
   def show
     if params[:user] == 'Student' 
-      @student = Student.find(params[:id])
-      @questions = @student.questions
-      @answers = @student.answers
+    @student = Student.find_by_id(params[:id])
+    @questions = @student.questions
+    @answers = @student.answers
     else
       @teacher = Teacher.find(params[:id])
       @questions = @teacher.questions
@@ -85,5 +85,4 @@ class MembersController < ApplicationController
   def received_filter
     params[:filter]
   end
-
 end

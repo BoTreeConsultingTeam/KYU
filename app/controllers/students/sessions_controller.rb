@@ -16,8 +16,8 @@ class Students::SessionsController <  Devise::SessionsController
   			sign_out	
   			flash[:error] = t('students.messages.blocked_profile')
   			redirect_to student_session_path
-      end		
-    end
+      end	
+    end	
 	end
   
 end

@@ -224,6 +224,10 @@ ActiveRecord::Schema.define(version: 20140912082905) do
     t.integer  "standard_id"
     t.boolean  "enable",                 default: true
     t.boolean  "mark_as_review",         default: false
+    t.string   "avatar_file_name"
+    t.string   "avatar_content_type"
+    t.integer  "avatar_file_size"
+    t.datetime "avatar_updated_at"
   end
 
   add_index "students", ["email"], name: "index_students_on_email", unique: true, using: :btree
@@ -269,6 +273,10 @@ ActiveRecord::Schema.define(version: 20140912082905) do
     t.string   "qualification"
     t.string   "salutation"
     t.boolean  "enable",                 default: true
+    t.string   "avatar_file_name"
+    t.string   "avatar_content_type"
+    t.integer  "avatar_file_size"
+    t.datetime "avatar_updated_at"
   end
 
   add_index "teachers", ["email"], name: "index_teachers_on_email", unique: true, using: :btree
