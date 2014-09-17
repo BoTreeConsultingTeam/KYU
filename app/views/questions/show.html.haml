@@ -49,8 +49,8 @@
     .row
       .col-md-8.col-xs-9.question-cat
         %a{:href => member_path(@question.askable.id)}
-          %span.author-avatar
-            %img.avatar{:alt => "", :src => "http://1.gravatar.com/avatar/3743112a070d24fe4dbd5cb39d6a5e9e?s=30&amp;d=http%3A%2F%2F1.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D30&amp;r=G"} 
+          %span.avatar
+            = image_tag @question.askable.avatar.url(:medium) ,class: 'img-circle user-thumb-img'
           %span.author-name 
             - if @question.askable_type != 'Teacher'                      
               - if @question.askable.student_manager?

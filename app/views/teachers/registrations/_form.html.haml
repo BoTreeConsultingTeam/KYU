@@ -32,5 +32,10 @@
           = f.label t('common.captions.password_confirmation')
 
           = f.password_field :password_confirmation, class: 'form-control'
+          %br
+          = f.label t('common.captions.set_avatar')
         %br
+          = image_tag @teacher.avatar.url(:medium)
+          = f.file_field :avatar
+        %br/
         %div= f.submit t('common.captions.btn.update'), title: t('common.captions.btn.update'), class: 'btn btn-primary'

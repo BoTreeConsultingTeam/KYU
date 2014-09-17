@@ -271,3 +271,16 @@ ul.social-icon{
   -webkit-box-shadow: inset 0 -2px #22303f;
   box-shadow: inset 0 -2px #22303f;
 }
+
+.profile-img{
+	width: 100px;
+	height: 100px;
+}
+.user-thumb-img{
+	width:30px;
+	height:30px;
+}
+.user-small-thumb-img{
+	width:20px;
+	height:20px;
+}

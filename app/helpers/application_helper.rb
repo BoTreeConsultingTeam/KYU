@@ -1,5 +1,6 @@
 module ApplicationHelper
   SALUTATIONS = %w[Mr Ms Mrs]
+  PAGE_FILTERS = %w[student teacher basicinfo questions answers votes badges tags]
   def render_css_class(name)
     css_class = ''
     msg_icon_class = ''
@@ -13,7 +14,6 @@ module ApplicationHelper
     when :alert
       css_class = 'alert-danger'
       msg_icon_class = 'icon-remove'
-    else
     end
     {css_class: css_class, msg_icon_class: msg_icon_class}
   end
@@ -27,8 +27,8 @@ module ApplicationHelper
   end
 
   def set_header_link_for_admin(users_type)
-    link_to users_type, members_path(active_tab: "#{users_type}"),class: profile_active_tab("#{users_type}")
-  end  
+    link_to users_type, members_path(active_tab: users_type), {class: profile_active_tab("#{users_type}")}
+  end
 
   def questions_count
     Question.count

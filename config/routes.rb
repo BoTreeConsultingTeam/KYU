@@ -8,9 +8,11 @@ Rails.application.routes.draw do
   resources :bookmarks
   devise_scope :student do
     get "/students" => "students/registrations#index"
+    get 'student_views_profile/:id' => 'students/registrations#view_profile', as: :student_views_profile
   end
 
   devise_scope :teacher do
+    get 'teacher_views_profile/:id' => 'teachers/registrations#view_profile', as: :teacher_views_profile
     get "/teachers" => "teachers/registrations#index"
   end
   devise_scope :administrator do
@@ -29,11 +31,12 @@ Rails.application.routes.draw do
 
   get 'questions/:tag', to: 'questions#index', as: :search_by_tag
   delete 'tags/:id', to: 'tags#destroy', as: :delete_tag
+  resources :tags
   get 'tags/:tag', to: 'questions#index', as: :tag_search
   get '/questions/disable/:id' => 'questions#disable',as: :disable
   get '/questions/enable/:id' => 'questions#enable',as: :enable
-  resources :tags
-    resources :comments
+  
+  resources :comments
 
   get '/members' => 'members#index'
   get '/members/:id' => 'members#show', as: :member

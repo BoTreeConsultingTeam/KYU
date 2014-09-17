@@ -1,0 +1,18 @@
+.col-md-12.sort-questions
+  %ul
+    %li
+      = link_to 'Edit your Info', edit_student_registration_path
+    %li
+      = link_to "Basic Info", student_views_profile_path(student.id, active_tab:'basicinfo'), class: "#{profile_active_tab('basicinfo')}"
+    %li
+      = link_to 'Questions', student_views_profile_path(student.id, active_tab:'questions'), class: "#{profile_active_tab('questions')}"
+    %li
+      = link_to 'Answers', student_views_profile_path(student.id, active_tab:'answers'), class: "#{profile_active_tab('answers')}"
+    %li
+      = link_to 'Bookmarks', student_views_profile_path(student.id, active_tab:'bookmarks'), class: "#{profile_active_tab('bookmarks')}"
+    %li
+      = link_to 'Tags', student_views_profile_path(student.id, active_tab:'tags'), class: "#{profile_active_tab('tags')}"
+    %li
+      = link_to 'Badges', student_views_profile_path(student.id, active_tab:'badges'), class: "#{profile_active_tab('badges')}"
+    %li
+      = link_to 'Votes', student_views_profile_path(student.id, active_tab:'votes'), class: "#{profile_active_tab('votes')}"
