@@ -32,7 +32,7 @@ class AnswersController < ApplicationController
     answer_find_by_id
     if !(answer_find_by_id.nil?)
       @answer.update(answer_params)
-      flash[:success] = t('flash_message.success.answer.update')
+      flash[:notice] = t('flash_message.success.answer.update')
     else
       flash[:error] = t('flash_message.error.answer.update')      
     end   
@@ -45,7 +45,7 @@ class AnswersController < ApplicationController
       flash[:error] = t('flash_message.error.answer.destroy')
     else
       @answer.destroy
-      flash[:success] = t('flash_message.success.answer.destroy')      
+      flash[:notice] = t('flash_message.success.answer.destroy')      
     end
     redirect_to_question(params[:question_id])
   end
@@ -76,7 +76,7 @@ class AnswersController < ApplicationController
       @answer.flag = true
       @answer.save
       give_points(@answer,10)
-      flash[:success] = t('flash_message.success.answer.accept')      
+      flash[:notice] = t('flash_message.success.answer.accept')      
     end
     redirect_to_question(@answer.question)
   end

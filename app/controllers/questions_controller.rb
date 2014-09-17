@@ -115,7 +115,7 @@ class QuestionsController < ApplicationController
     @question = question_find_by_id
     if !(@question.nil?) 
       @question.update(question_params)
-      flash[:success] = t('flash_message.success.question.update')
+      flash[:notice] = t('flash_message.success.question.update')
       redirect_to question_path(params[:id])
     else
       redirect_to questions_path(active_tab: 'all'),flash: { error: t('flash_message.error.question.update') }
@@ -146,7 +146,7 @@ class QuestionsController < ApplicationController
       flash[:error] =  t('flash_message.error.question.report_abuse') 
     else
       Question.send_question_answer_abuse_report(current_user,@question)
-      flash[:success] = t('flash_message.success.question.report_abuse')
+      flash[:notice] = t('flash_message.success.question.report_abuse')
     end
     redirect_to questions_path(active_tab: 'all')
   end

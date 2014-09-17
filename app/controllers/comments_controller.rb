@@ -23,7 +23,7 @@ class CommentsController < ApplicationController
     comment_find_by_id
     if !(@comment.nil?)
       @comment.update(comment_params)
-      flash[:success] = t('flash_message.success.comment.update')
+      flash[:notice] = t('flash_message.success.comment.update')
     else
       flash[:error] = t('flash_message.error.comment.update')
     end

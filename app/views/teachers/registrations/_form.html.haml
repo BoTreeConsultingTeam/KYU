@@ -38,3 +38,5 @@
           = f.file_field :avatar
         %br/
         %div= f.submit t('common.btn.submit'), class: 'btn-submit-question'
+      - if !current_teacher.present?
+        = render "teachers/shared/links"
