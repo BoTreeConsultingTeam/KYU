@@ -84,11 +84,10 @@ en:
       current: 'Current Password'
       remember: 'Remember me'
       salutations: 'Salutations'
-      set_avatar: 'Set Avatar'
-      btn:
-        update: 'Update'
-        ask_question: 'Ask Question'
-
+      set_avatar: 'Photo'
+    btn:
+      update: 'Update'
+      ask_question: 'Ask Question'
       sign_in: 'Sign in'
       submit: 'Submit'
       post: 'Post'
