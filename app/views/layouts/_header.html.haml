@@ -27,7 +27,7 @@
               = link_to "Logout", destroy_teacher_session_path, method: :delete
           - if administrator_signed_in?
             %li
-              = link_to 'Desabled Question', disabled_questions_path
+              = link_to 'Disabled Question', disabled_questions_path
             %li       
               = link_to 'Report', reports_path
             %li

@@ -58,13 +58,22 @@
       -if !(@answers.blank?)
         = render :partial => 'members/member_answers_list', locals: { answers: @answers}
       - else
-        You don't  have answered any question yet
+        .spacer50
+        .col-md-2
+        .col-md-6.col-xs-12
+          %h4
+            You don't  have answered any question yet
 - elsif params[:active_tab] == "bookmarks"
   - question_list = bookmark_question_ids @teacher
   - if !(question_list.blank?)
     = render :partial => 'questions/questions_list', :locals => { questions: question_list}
   - else
-    = t('member.captions.never_asked')
+    .spacer50
+    .col-md-2
+    .col-md-6.col-xs-12
+      %h4
+        No Bookmarks yet
+    
 
 - elsif params[:active_tab] == "votes"
   .main-questions-list
@@ -103,12 +112,20 @@
                   %td.text-center
                     = @answers.count
       -else
-        You haven't got any votes!!!
+        .spacer50
+        .col-md-2
+        .col-md-6.col-xs-12
+          %h4
+            You haven't got any votes!!!
 - elsif params[:active_tab] == "questions"
   - if !(@teacher.questions.blank?)
     = render partial: 'questions/questions_list', locals: {questions: @teacher.questions}
   - else
-    You don't have asked any questions yet
+    .spacer50
+    .col-md-2
+    .col-md-6.col-xs-12
+      %h4
+        You don't have asked any questions yet
 - else
   .row
     .col-md-9.col-md-push-3 

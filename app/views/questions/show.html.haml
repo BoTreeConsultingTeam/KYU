@@ -52,17 +52,21 @@
           %a{:href => student_views_profile_path(@question.askable.id,user: 'Student')}
             %span.avatar
               = image_tag @question.askable.avatar.url(:medium) ,class: 'img-circle user-thumb-img'
-          %span.author-name 
-            - if @question.askable_type != 'Teacher'                     
-              - if @question.askable.student_manager?
-                .student_manager{rel: "tooltip",title: t('students.tooltip.manager')} 
-                  = @question.askable.username
-              - else
+          %span.author-name                
+            - if @question.askable.student_manager?
+              .student_manager{rel: "tooltip",title: t('students.tooltip.manager')} 
                 = @question.askable.username
-            - else                        
+            - else
               = @question.askable.username
-        %span.user-badge{:style => "background-color:#04aad4;"} 
-          = @question.askable.class
+          %span.user-badge{:style => "background-color:#04aad4;"} 
+            = @question.askable.class
+        - else                    
+          %span.avatar
+            = image_tag @question.askable.avatar.url(:medium) ,class: 'img-circle user-thumb-img' 
+          %span.author-name   
+            = @question.askable.username
+          %span.user-badge{:style => "background-color:#780978;"} 
+            = @question.askable.class
         %span.question-time
           #{time_ago_in_words(@question.created_at)} ago.
       - if !current_administrator

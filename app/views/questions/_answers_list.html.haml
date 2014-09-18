@@ -35,20 +35,25 @@
         = raw(answer.content)
       .row.cat-infomation
         .col-md-8.col-xs-8.question-cat
-          %a{:href => member_path(answer.answerable.id)}
-            %span.author-avatar
-              = image_tag answer.answerable.avatar.url(:medium) ,class: 'img-circle user-thumb-img'
-            %span.author-name
-              - if answer.answerable_type == 'Student'                      
+          - if answer.answerable_type == 'Student'
+            %a{:href => student_views_profile_path(answer.answerable.id,user: 'Student')}
+              %span.author-avatar
+                = image_tag answer.answerable.avatar.url(:medium) ,class: 'img-circle user-thumb-img'
+              %span.author-name                                      
                 - if answer.answerable.student_manager?
                   .student_manager{href: "#",rel: "tooltip",title: t('students.tooltip.manager')} 
                     = answer.answerable.username
                 - else
                   = answer.answerable.username
-              - else                        
-                = answer.answerable.username
-          %span.user-badge{:style => "background-color:#780978;", :title => "1543"} 
-            = answer.answerable_type
+            %span.user-badge{:style => "background-color:#04aad4;", :title => "1543"} 
+              = answer.answerable_type
+          - else
+            %span.author-avatar
+              = image_tag answer.answerable.avatar.url(:medium) ,class: 'img-circle user-thumb-img'
+            %span.author-name
+              = answer.answerable.username
+            %span.user-badge{:style => "background-color:#780978;", :title => "1543"} 
+              = answer.answerable_type
           %span.question-time
             #{time_ago_in_words(answer.created_at)} ago.
         - if !current_administrator
