@@ -70,7 +70,7 @@
             .col-md-8.q-left-content
               .q-ltop-content.title-answer-style
                 %a.question-title
-                  = answer.question.title
+                  = link_to  answer.question.title, question_path(answer.question),class: 'question-title', 'data-no-turbolink' => true
               .q-lbtm-content
                 .question-cat
                   %span.avatar
@@ -219,7 +219,7 @@
             .col-md-8.col-xs-8.q-left-content
               .q-ltop-content
                 %a.question-title
-                  = question.title
+                  = link_to  question.title, question_path(question),class: 'question-title', 'data-no-turbolink' => true
               .q-lbtm-content
                 .question-excerpt
                   %p 
@@ -230,7 +230,7 @@
                       %li
                         = link_to tag, questions_path(tag: tag.name),class: 'q-tag'   
                   .clearfix
-                  %a{:href => "http://demo.enginethemes.com/qaengine/member/admin/"}
+                  %a{:href => '#'}
                     %span.avatar
                       = image_tag question.askable.avatar.url(:medium), alt: 'Image' ,class: 'img-circle user-thumb-img'
                     %span.author-name 
