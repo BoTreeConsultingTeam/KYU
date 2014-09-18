@@ -19,9 +19,13 @@ class ApplicationController < ActionController::Base
       account_update_params.delete("password_confirmation")
     end
     if user.update_attributes(account_update_params)
-       set_flash_message :notice, :updated
-       sign_in user, :bypass => true
-       redirect_to after_update_path_for(user)
+      set_flash_message :notice, :updated
+      sign_in user, :bypass => true
+      if current_student
+        redirect_to student_views_profile_path(user)
+      else
+        redirect_to teacher_views_profile_path(user)
+      end
     else
        render "edit"
     end

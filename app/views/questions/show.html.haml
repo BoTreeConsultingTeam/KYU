@@ -48,11 +48,12 @@
       = raw(@question.content)
     .row
       .col-md-8.col-xs-9.question-cat
-        %a{:href => member_path(@question.askable.id)}
-          %span.avatar
-            = image_tag @question.askable.avatar.url(:medium) ,class: 'img-circle user-thumb-img'
+        - if @question.askable_type != 'Teacher'
+          %a{:href => student_views_profile_path(@question.askable.id,user: 'Student')}
+            %span.avatar
+              = image_tag @question.askable.avatar.url(:medium) ,class: 'img-circle user-thumb-img'
           %span.author-name 
-            - if @question.askable_type != 'Teacher'                      
+            - if @question.askable_type != 'Teacher'                     
               - if @question.askable.student_manager?
                 .student_manager{rel: "tooltip",title: t('students.tooltip.manager')} 
                   = @question.askable.username
