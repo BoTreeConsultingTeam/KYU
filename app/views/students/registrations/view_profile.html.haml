@@ -64,7 +64,6 @@
 - if params[:active_tab] == "answers"
   .main-questions-list
     %ul#main_questions_list
-    @question.liked_by current_user
       -if !(@answers.blank?)
         - @answers.each do |answer|
           %li.question-item
