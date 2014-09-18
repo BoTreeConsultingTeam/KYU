@@ -36,7 +36,7 @@
           - if ((administrator_signed_in? || teacher_signed_in?) && student.mark_as_review == false)
             = link_to t('students.links.mark_as_review'), markreview_path(student)
           - if ((administrator_signed_in? || teacher_signed_in?) && student.mark_as_review == true)
-            = link_to t('students.links.review'), member_path(student,user: "Student")
+            = link_to t('students.links.review'), student_views_profile_path(student,user: "Student")
             - if params[:active_tab] == 'Students for Review'
               |
               = link_to t('students.links.unmark_review'), unmark_student_review_path(student)
