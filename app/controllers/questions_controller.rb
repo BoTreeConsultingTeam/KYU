@@ -89,11 +89,15 @@ class QuestionsController < ApplicationController
       redirect_to questions_path,flash: { error: t('flash_message.error.question.vote') }
     else
       if "up" == params[:type]
-        question_liked_by(@question,liked_by)
-        give_points(@question,5)
+        if !@question.get_likes.map{|vote| vote.voter_id}.include?current_user.id 
+          question_liked_by(@question,liked_by)
+          give_points(@question,5)
+        end
       else
-        question_disliked_by(@question,liked_by)
-        give_points(@question,-5)
+        if !@question.get_dislikes.map{|vote| vote.voter_id}.include?current_user.id 
+          question_disliked_by(@question,liked_by)
+          give_points(@question,-5)
+        end
       end
       respond_to do |format|
         format.js        
