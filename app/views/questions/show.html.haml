@@ -28,8 +28,8 @@
       -if !(current_administrator)
         %li
           = link_to '',edit_question_path(@question.id),class: 'post-edit action fa fa-pencil',rel: 'tooltip',title: 'Edit', 'data-no-turbolink' => true
-        %li
-          = link_to '',question_path,method: :delete,data: {confirm:'Are you sure?'},rel: 'tooltip',title: 'Delete',class: 'post-delete action fa fa-trash-o'
+          %li
+            = link_to '',question_path,method: :delete,data: {confirm:'Are you sure?'},rel: 'tooltip',title: 'Delete',class: 'post-delete action fa fa-trash-o'
         
         - if (check_bookmark @question).blank?
           %li
