@@ -64,7 +64,8 @@
 - if params[:active_tab] == "answers"
   .main-questions-list
     %ul#main_questions_list
-      -if !(@answers.nil?)
+    @question.liked_by current_user
+      -if !(@answers.blank?)
         - @answers.each do |answer|
           %li.question-item
             .col-md-8.q-left-content
@@ -114,18 +115,27 @@
                     = answer.question.get_downvotes.size
                   votes  
       - else
-        You don't  have answered any question yet
+        .spacer50
+        .col-md-2
+        .col-md-6.col-xs-12
+          %h4
+            = @student.username
+            don't  have answered any question yet
 -elsif params[:active_tab] == "bookmarks"
   - question_list = bookmark_question_ids @student
   - if !(question_list.blank?)
     = render :partial => 'questions/questions_list', :locals => { questions: question_list}
   - else
-    = t('member.captions.never_asked')
-          
+    .spacer50
+    .col-md-2
+    .col-md-6.col-xs-12
+      %h4
+        = @student.username 
+        don't have Bookmarked any Question
 - elsif params[:active_tab] == "tags"
   .main-questions-list
     %ul#main_questions_list
-      -if !(@tags.nil?)
+      -if !(@tags.blank?)
         .col-md-12
           .row
           .col-md-6
@@ -137,7 +147,12 @@
                       = column
         
       - else
-        You haven't tagged any thing yet!!!
+        .spacer50
+        .col-md-2
+        .col-md-6.col-xs-12
+          %h4
+            = @student.username
+            You haven't tagged any thing yet!!!
 - elsif params[:active_tab] == "badges"
   .main-questions-list
     %ul#main_questions_list
@@ -147,11 +162,16 @@
             %h3
               = badge
       -else
-        You haven't earned any Badges!!!
+        .spacer50
+        .col-md-2
+        .col-md-6.col-xs-12
+          %h4
+            = @student.username
+            haven't earned any Badges!!!
 - elsif params[:active_tab] == "votes"
   .main-questions-list
     %ul#main_questions_list
-      - if !(@questions.nil?)
+      - if !(@questions.blank?)
         .row.select-category.single-head
           .col-md-12.col-xs-12
             .table-responsive
@@ -185,11 +205,16 @@
                     %td.text-center
                       = @answers.count
       -else
-        You haven't got any votes!!!
+        .spacer50
+        .col-md-2
+        .col-md-6.col-xs-12
+          %h4
+            = @student.username
+            haven't got any votes!!!
 - elsif params[:active_tab] == "questions"
   .main-questions-list    
     %ul#main_questions_list
-      - if !(@questions.nil?)
+      - if !(@questions.blank?)
         - @questions.each do |question|
           %li.post-188.question.type-question.status-publish.hentry.question-item{"data-id" => "188"}
             .col-md-8.col-xs-8.q-left-content
@@ -201,7 +226,7 @@
                   %p 
                     = raw(question.content)
                 .question-cat
-                  %ul.question-tags
+                  %ul.question-statisticgs
                     - question.tags.each do |tag|
                       %li
                         = link_to tag, questions_path(tag: tag.name),class: 'q-tag'   
@@ -239,7 +264,12 @@
                   downvotes
             / end right content
       - else
-        You don't have asked any questions yet
+        .spacer50
+        .col-md-2
+        .col-md-6.col-xs-12
+          %h4
+            = @student.username 
+            don't have asked any questions yet
 - else
   .row
     .col-md-9.col-md-push-3 

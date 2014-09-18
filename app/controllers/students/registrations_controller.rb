@@ -25,7 +25,6 @@ class Students::RegistrationsController <  Devise::RegistrationsController
     super
   end
 
-
   def view_profile
     @total_downvotes_question = 0
     @total_upvotes_question = 0
@@ -68,7 +67,4 @@ class Students::RegistrationsController <  Devise::RegistrationsController
   def after_sign_in_path_for(resource)
     students_path(active_tab: 'all')
   end
-
-  
-
 end
