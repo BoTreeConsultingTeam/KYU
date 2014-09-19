@@ -5,7 +5,6 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
-require "#{Rails.root}/db/gioco/db.rb"
 
 def find_or_create_admin(admin_attrs)
 	email = admin_attrs[:email]
@@ -20,11 +19,25 @@ def find_or_create_admin(admin_attrs)
 	admin	
 end	
 
+def find_or_create_class(class_atrs)
+	standard_no = class_atrs[:class_no]
+
+	standard = Standard.find(class_no: standard_no)
+
+	if standard.nil?
+		standard = Standard.create(class_atrs)
+		puts "Created admin having email #{email}"
+	else 
+		puts "Admin having  email #{email} already exists, thus not created"	
+	end
+	standard
+end	
+
 admin_user = find_or_create_admin({email: 'admin@kyu.com', password: 'password'})
 
 standard_arr = ['VIII','IX','X', 'XI', 'XII']
 
 standard_arr.each do |standard|
-  Standard.create(class_no: standard)
+  find_or_create_class(standard)
 end
 

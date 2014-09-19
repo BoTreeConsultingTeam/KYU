@@ -1,7 +1,7 @@
 - @badges.each do |badge|
   .border
     .col-md-3.question-cat
-      %span.user-badge
+      %span{class: student_badge_color("#{badge.name}")}
         = badge.name    
       %br
         %span.points-count

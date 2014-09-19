@@ -719,7 +719,72 @@ ul.q-f-sort li a:hover {
 	-webkit-border-radius: 3px;
 	border-radius: 3px; /* border radius */
 	background-color: #00adef; /* layer fill content */
-
+}
+.question-cat span.user-badge-train{
+	padding:0 10px;
+	color: #fff;
+	/*margin-left: 10px;*/
+	margin-right: 15px;
+	line-height: 20px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px; /* border radius */
+	background-color: #f60e0e; /* layer fill content */
+}
+.question-cat span.user-badge-reviewer{
+	padding:0 10px;
+	color: #fff;
+	/*margin-left: 10px;*/
+	margin-right: 15px;
+	line-height: 20px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px; /* border radius */
+	background-color: #0ef612; /* layer fill content */
+}
+.question-cat span.user-badge-supporter{
+	padding:0 10px;
+	color: #fff;
+	/*margin-left: 10px;*/
+	margin-right: 15px;
+	line-height: 20px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px; /* border radius */
+	background-color: #f60ec9; /* layer fill content */
+}
+.question-cat span.user-badge-doctor{
+	padding:0 10px;
+	color: #fff;
+	/*margin-left: 10px;*/
+	margin-right: 15px;
+	line-height: 20px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px; /* border radius */
+	background-color: #f4f60e; /* layer fill content */
+}
+.question-cat span.user-badge-vice-professor{
+	padding:0 10px;
+	color: #fff;
+	/*margin-left: 10px;*/
+	margin-right: 15px;
+	line-height: 20px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px; /* border radius */
+	background-color: #a016ba; /* layer fill content */
+}
+.question-cat span.user-badge-professor{
+	padding:0 10px;
+	color: #fff;
+	/*margin-left: 10px;*/
+	margin-right: 15px;
+	line-height: 20px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px; /* border radius */
+	background-color: #135163; /* layer fill content */
 }
 ul.question-tags {
 	display: inline-block;
