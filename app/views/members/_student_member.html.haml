@@ -27,17 +27,17 @@
                 = "#{student.points} Points"
           - if administrator_signed_in? 
             -if student.enable == true
-              = link_to t('students.links.block'), deactivate_path(student) 
+              = link_to '', deactivate_path(student), rel: "tooltip", title: 'Block', class: 'fa fa-lock'
               |
             -else
               - if params[:active_tab] == 'Blocked Students'
-                = link_to t('students.links.unblock'),activate_student_path(student)
+                = link_to '',activate_student_path(student), rel: "tooltip", title: 'Unblock', class: 'fa fa-unlock-alt'
                 |
           - if ((administrator_signed_in? || teacher_signed_in?) && student.mark_as_review == false)
-            = link_to t('students.links.mark_as_review'), markreview_path(student)
+            = link_to '', markreview_path(student), rel: "tooltip", title: 'Mark as Review', class: 'fa fa-flag-checkered'
           - if ((administrator_signed_in? || teacher_signed_in?) && student.mark_as_review == true)
-            = link_to t('students.links.review'), student_views_profile_path(student,user: "Student")
+            = link_to '', student_views_profile_path(student,user: "Student"), rel: "tooltip", title: 'Review', class: 'fa fa-check-square-o'
             - if params[:active_tab] == 'Students for Review'
               |
-              = link_to t('students.links.unmark_review'), unmark_student_review_path(student)
+              = link_to '', unmark_student_review_path(student), rel: "tooltip", title: 'Unmark review', class: 'fa fa-check'
 = render partial: "shared/pagination", locals: {object: students}

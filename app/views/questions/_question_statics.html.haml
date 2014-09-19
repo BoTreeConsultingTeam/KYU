@@ -1,29 +1,33 @@
 .col-md-4.col-xs-4.q-right-content
   %ul.question-statistic
     %li
-      %span.question-views
+      %span.question-views{rel: 'tooltip', title: 'Views'}
         = "#{question.impressionist_count}"
-      = t('questions.captions.views')
+      %h4
+        %i.view.fa.fa-eye
     %li.active
-      %span.question-answers
+      %span.question-answers{rel: 'tooltip', title: 'Answers'}
         = "#{question.answers.count}" 
-      = t('questions.captions.answers')
+      %h4
+        %i.answer.fa.fa-pencil-square-o
     %li
-      %span.question-upvotes
+      %span.question-upvotes{rel: 'tooltip', title: 'Likes'}
         = question.get_upvotes.size
-      = t('questions.captions.upvotes')
+      %h4
+        %i.like.fa.fa-thumbs-up
     %li
-      %span.question-downvotes
+      %span.question-downvotes{rel: 'tooltip', title: 'Dislikes'}
         = question.get_downvotes.size
-      = t('questions.captions.downvotes')
+      %h4
+        %i.dislike.fa.fa-thumbs-down
   .spacer30
   - if current_student.present?
     - if current_student.student_manager?
-      = link_to 'Disable',disable_path(question.id)
+      = link_to '',disable_path(question.id), class: 'fa fa-ban'
       
   - else
     = link_to 'Disable',disable_path(question.id)
     
   -if !(current_administrator)
     |
-    = link_to "Report Abuse",report_path(question.id)
+    = link_to '',report_path(question.id), class: 'fa fa-envelope-o'
