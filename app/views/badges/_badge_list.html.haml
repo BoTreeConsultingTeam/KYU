@@ -1,16 +1,16 @@
 - @badges.each do |badge|
   .border
     .col-md-3.question-cat
+      .spacer20
+      %span{class: student_badge_color("#{badge.name}")}
+        = badge.name    
       %br
-        %span{class: student_badge_color("#{badge.name}")}
-          = badge.name    
-        %br
-          %span.points-count
-            = badge.points
-          %span.star
-            %i.fa.fa-star
-            %br
-              = t('badges.captions.points_require')
+        %span.points-count
+          = badge.points
+        %span.star
+          %i.fa.fa-star
+          %br
+            = t('badges.captions.points_require')
     .col-md-4
       %span 
         = t('badges.captions.with_you_can')
