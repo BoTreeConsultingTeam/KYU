@@ -16,3 +16,7 @@
 /tmp
 .idea/
 /config/database.yml
+solr/test
+solr/development
+solr/default/data
+/log/
