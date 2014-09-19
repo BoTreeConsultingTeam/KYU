@@ -2,7 +2,7 @@ class TagsController < ApplicationController
   before_filter :find_tag_by_id, only: [:edit, :update, :destroy]
   # after_filter :tag_redirection, only: [:create, :destroy]
   def index
-    @tags = ActsAsTaggableOn::Tag.all.page(params[:page]).per(6)
+    @tags = ActsAsTaggableOn::Tag.all.page(params[:page]).per(15)
   end 
 
   def show 
