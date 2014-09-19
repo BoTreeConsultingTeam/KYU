@@ -14,6 +14,8 @@ gem 'devise'
 gem 'rails_config', '~> 0.4.2'
 gem 'kaminari'
 gem 'impressionist'
+gem 'sunspot_rails'
+gem 'sunspot_solr' 
 #gem for images
 gem "paperclip", "~> 4.2"
 

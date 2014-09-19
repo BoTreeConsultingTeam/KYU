@@ -6,6 +6,11 @@ class ReportsController < ApplicationController
     @standards = Standard.all
   end
 
+  def update_students
+    standard = Standard.find(params[:standard_id])
+    @students = standard.students.map{|a| [a.username, a.id]}.insert(0, "Select an Artist")
+  end
+
   def class_activity
     @standards =Standard.all
     if @standards.nil?

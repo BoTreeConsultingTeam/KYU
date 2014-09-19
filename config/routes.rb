@@ -60,6 +60,6 @@ Rails.application.routes.draw do
   post 'reports/student_activeness', to: 'reports#student_activeness', as: :student_activeness
   post 'reports/students_questions_compare', to: 'reports#students_questions_compare', as: :students_questions_compare
   post 'reports/students_answers_compare', to: 'reports#students_answers_compare', as: :students_answers_compare
-
+  get 'reports/update_students', to: 'reports#update_students', as: 'update_students'
   resources :reports
 end

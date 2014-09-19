@@ -4,7 +4,7 @@ class QuestionsController < ApplicationController
   def index
     if received_tag
       @questions = Question.tagged_with(received_tag).enabled.page params[:page]
-    else received_active_tab
+    elsif received_active_tab
       case received_active_tab
       when 'all'
         @questions = all_questions.page params[:page]  
@@ -21,7 +21,13 @@ class QuestionsController < ApplicationController
       when 'newest'
         @questions = Question.newest(current_user).enabled.page params[:page]
       end
+    else
+      @search = Sunspot.search(Question) do
+        fulltext params[:search]
+      end
+      @questions = @search.results
     end
+
   end
 
   def disabled_questions
