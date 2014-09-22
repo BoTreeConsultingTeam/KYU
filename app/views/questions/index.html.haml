@@ -11,7 +11,7 @@
 - if !(@questions.nil?)
   = render :partial => 'questions_list', :locals => { questions: @questions}
 -else
-  No Questions Available
+  = t('questions.error.message')
 .row.paginations.home
   .col-md-12
     =paginate @questions

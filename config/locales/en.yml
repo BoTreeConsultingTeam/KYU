@@ -9,6 +9,11 @@ en:
       question_not_found: 'No such Question found for Delete!'
       delete_success: 'Deleted Successfuly!'
       profile_update: 'Profile updated'
+      block_list_empty: 'No Questions are Blocked'
+    table: 
+      header:
+        title: 'Question Title'
+        action: 'Action'
     page_header:
       title: 'Question'
       title_for_new: 'New Question'
@@ -20,6 +25,7 @@ en:
       answers: 'Answers'
       tag_on_new: "Tags (separated by commas)"
       content_label: 'Content:'
+      answered: 'Answered'
     btn:
       new_question: 'New Question'
       submit: 'Submit'
@@ -27,7 +33,8 @@ en:
       add_bookmark: 'Add to Bookmark'
       delete_bookmark: 'Remove from Bookmark'
       report_abuse: 'Report Abuse'
-
+    error:
+      message: 'No Questions Available'
   answers:
     messages:
       contains_error: 'Must contain some text'
@@ -53,6 +60,9 @@ en:
       update_success: 'Updated Successfully'
       comment_not_found: 'No such Comment found'
       successful_delete: 'Deleted Successfully!'
+  tag: 
+    header:
+      title: 'Tags'
   badges:
     captions:
       points_require: 'points require'
@@ -71,6 +81,8 @@ en:
       answer_accepted: 'answer is Accepted'
       badge_system: 'Badges System'
   common:
+    error:
+      messages: 'No Record Found'
     messages:
       sign_in: 'Sign in First'
       create_bookmark: 'You have bookmark this question'

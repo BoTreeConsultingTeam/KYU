@@ -6,14 +6,16 @@
       .col-md-6.col-xs-12
         .spacer50
           %h3
-            No Questions are Blocked
+            = t('questions.messages.block_list_empty')
     - else
       .table-responsive
         %table.table.table-bordered.table-striped
           %thead
             %tr
-              %td Question Title
-              %td.text-center Action
+              %td.text-center
+                = t('questions.table.header.title')
+              %td.text-center 
+                = t('questions.table.header.action')
           %tbody
             - @questions.each do |question|
               %tr
