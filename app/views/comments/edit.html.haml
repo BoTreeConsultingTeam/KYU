@@ -1,0 +1,7 @@
+.main-content.single-content
+  .modal-submit-questions
+    .modal-dialog
+    - if @question.present?
+      = render 'edit_comment_of_question'    
+    -else
+      = render 'edit_comment_of_answer'

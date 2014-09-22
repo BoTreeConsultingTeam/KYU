@@ -1,0 +1,9 @@
+= render :partial => "layouts/sub_heading", :locals => {:object => 'All Questions'}
+= render :partial => "questions_filter_links"
+-if !(@questions.nil?)
+  = render :partial => 'questions_list', :locals => { questions: @questions}
+-else
+  No Questions Available
+.row.paginations.home
+  .col-md-12
+    =paginate @questions

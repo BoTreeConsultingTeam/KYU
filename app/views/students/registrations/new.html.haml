@@ -1,0 +1,34 @@
+.col-md-12
+  = render :partial => "layouts/sub_heading", :locals => {:object => 'Signup'}
+  .modal-submit-questions
+    .modal-dialog
+      .modal-body
+        = form_for(resource, :as => resource_name, :url => student_registration_path) do |f|
+          = devise_error_messages!
+          %div
+          = f.label t('common.captions.user_name')
+          = f.text_field :username,autofocus: true,class: 'submit-input'
+          %br
+          = f.label t('common.captions.dob')
+          = f.date_field :birthdate, class: 'form-control date-picker', id: 'datepicker1'
+          %br
+          = f.label t('common.captions.email')
+          = f.email_field :email,class: 'submit-input'
+          %br
+          = f.label t('students.captions.class')
+          = f.select(:standard_id, options_from_collection_for_select(@standard, 'id', 'class_no'),{prompt: t('teachers.basic.prompt')},{class: 'form-control'})
+          %br
+          %div
+          = f.label t('common.captions.password')
+          %br/
+          = f.password_field :password,class: 'submit-input'
+          %div
+          = f.label t('common.captions.password_confirmation')
+          %br/
+          = f.password_field :password_confirmation,class: 'submit-input'
+          %br
+          = f.label t('common.captions.set_avatar')
+          = f.file_field :avatar
+          .spacer20
+          = f.submit t('common.btn.submit'),class: 'btn-submit-question', id: 'btn_submit_question'
+        = render "students/shared/links"

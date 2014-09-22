@@ -1,0 +1,29 @@
+.col-md-4.col-xs-4.q-right-content
+  %ul.question-statistic
+    %li
+      %span.question-views
+        = "#{question.impressionist_count}"
+      = t('questions.captions.views')
+    %li.active
+      %span.question-answers
+        = "#{question.answers.count}" 
+      = t('questions.captions.answers')
+    %li
+      %span.question-upvotes
+        = question.get_upvotes.size
+      = t('questions.captions.upvotes')
+    %li
+      %span.question-downvotes
+        = question.get_downvotes.size
+      = t('questions.captions.downvotes')
+  .spacer30
+  - if current_student.present?
+    - if current_student.student_manager?
+      = link_to 'Disable',disable_path(question.id)
+      
+  - else
+    = link_to 'Disable',disable_path(question.id)
+    
+  -if !(current_administrator)
+    |
+    = link_to "Report Abuse",report_path(question.id)

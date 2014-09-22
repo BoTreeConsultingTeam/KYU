@@ -1,0 +1,50 @@
+= render :partial => "layouts/sub_heading", :locals => {:object => 'Badges'}
+.row.points-system
+  .col-md-12
+    %h3 
+      = t('badges.captions.point_system')  
+    %p 
+      = t('badges.captions.earn_reputaion')  
+  .clearfix
+  %ul.points-define
+    %li.col-md-3
+      %div
+        %span.points-count
+          +2
+        %span.star
+          %i.fa.fa-star
+          %br
+            = t('badges.captions.create_a_question')  
+    %li.col-md-3
+      %div
+        %span.points-count
+          +5
+        %span.star
+          %i.fa.fa-star
+          %br
+            = t('badges.captions.question_vote_up')     
+    %li.col-md-3
+      %div
+        %span.points-count
+          +5
+        %span.star
+          %i.fa.fa-star
+          %br
+            = t('badges.captions.answer_vote_up')     
+    %li.col-md-3
+      %div
+        %span.points-count
+          +15
+        %span.star
+          %i.fa.fa-star
+          %br
+            
+.row.badges-system
+  .col-md-12
+    %h3 
+      = t('badges.captions.badge_system')      
+    %p 
+      = t('badges.captions.earn_reputaion')  
+  .col-md-12.badge-content
+    = render 'badge_list'  
+

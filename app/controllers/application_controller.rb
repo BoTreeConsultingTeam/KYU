@@ -1,5 +1,64 @@
 class ApplicationController < ActionController::Base
-  # Prevent CSRF attacks by raising an exception.
-  # For APIs, you may want to use :null_session instead.
+
   protect_from_forgery with: :exception
+  
+  def liked_by
+    current_user
+  end
+  
+  def user_signed_in?
+    if current_user.nil?
+      redirect_to root_path, flash: { error: t('common.messages.sign_in') }
+    end
+  end
+  
+  def user_profile_update user
+    account_update_params = devise_parameter_sanitizer.sanitize(:account_update)
+    if account_update_params[:password].blank?
+      account_update_params.delete("password")
+      account_update_params.delete("password_confirmation")
+    end
+    if user.update_attributes(account_update_params)
+      set_flash_message :notice, :updated
+      sign_in user, :bypass => true
+      if current_student
+        redirect_to student_views_profile_path(user)
+      else
+        redirect_to teacher_views_profile_path(user)
+      end
+    else
+       render "edit"
+    end
+  end
+
+  protected
+
+  def configure_permitted_parameters
+    devise_parameter_sanitizer.for(:sign_up) << [:salutation, :first_name,:middle_name, :last_name, :username,:birthdate, :standard_id, :avatar]
+    devise_parameter_sanitizer.for(:account_update) << [:salutation, :first_name, :middle_name, :last_name, :username, :birthdate, :qualification, :standard_id, :avatar]
+  end
+
+  private
+  
+  def current_user
+    if(current_administrator.present?)
+      current_user = current_administrator
+    elsif(current_teacher.present?)
+      current_user = current_teacher
+    else
+      current_user = current_student   
+    end      
+  end
+  helper_method :current_user
+
+  def give_points(object, points)
+      if object.is_a? Question
+        user = object.askable  
+      else
+        user = object.answerable
+      end 
+      if user.is_a? Student
+        user.change_points(points)    
+      end
+  end
 end

@@ -1,0 +1,18 @@
+.clearfix
+#question_filter.row.question-filter
+  .col-md-12.col-xs-12.sort-questions
+    %ul
+      %li
+        = set_link(t('questions.link.all'),'all')
+      %li
+        = set_link(t('questions.link.newest'),'newest')
+      %li
+        = set_link(t('questions.link.last_week'),'week')          
+      %li
+        = set_link(t('questions.link.last_month'),'month')
+      %li
+        = set_link(t('question.link.most_viewed'),'most_viewed')
+      / %li
+      /   = set_link(t('question.link.most_voted'),'most_voted')
+      %li
+        = set_link(t('question.link.unanswered'),'un_answered')
