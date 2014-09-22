@@ -152,14 +152,10 @@
             You haven't tagged any thing yet!!!
 - elsif params[:active_tab] == "badges"
   .main-questions-list
-    %ul#main_questions_list
+    %ul#main_questions_list.single-head
       - if !(@student.badges.last.blank?)
-        - @student.badges.pluck(:name).each do |badge|
-          .row.select-category.single-head
-            .col-md-6  
-              .question-cat
-                %span{class: student_badge_color("#{badge}")}
-                  = badge
+        .col-md-12.badge-content
+          = render 'badges/badge_list'
       -else
         .spacer50
         .col-md-2
