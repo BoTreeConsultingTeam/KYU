@@ -285,40 +285,7 @@ ul.social-icon{
 	height:20px;
 }
 
-.question-views {
-	background-color: #885dd8 !important;
-  border: medium none !important;
-  border-radius: 22px !important;
-  color: #fff !important;
-}
-/*h4 i.view{
-	color: #885dd8;
-}
-h4 i.answer{
-	color: #ffbf00;
-}
-h4 i.like{
-	color: #1abc9c;
-}
-h4 i.dislike{
-	color: #f57474;
-}*/
-.question-answers{
-	background-color: #ffbf50 !important; 
-}
-.question-upvotes {
-  background-color: #1abc9c !important;
-  border: medium none !important;
-  border-radius: 22px !important;
-  color: #fff !important;
-}
 
-.question-downvotes {
-	background-color: #f57474 !important;
-  border: medium none !important;
-  border-radius: 22px !important;
-  color: #fff !important;
-}
 li.tag-list {
 	margin-bottom: 30px;
 	padding-right: 30px;

@@ -23,6 +23,11 @@ en:
     btn:
       new_question: 'New Question'
       submit: 'Submit'
+    links:
+      add_bookmark: 'Add to Bookmark'
+      delete_bookmark: 'Remove from Bookmark'
+      report_abuse: 'Report Abuse'
+
   answers:
     messages:
       contains_error: 'Must contain some text'
@@ -36,7 +41,8 @@ en:
     btn:
       submit_answer: 'Submit'
     links:
-      accept: 'Accept'
+      make_right: 'Make Right'
+      correct_answer: 'Correct Answer'
       delete: '| Delete'
       edit: '| Edit'
       add_comment: 'Add Comment'
@@ -94,13 +100,27 @@ en:
     links:
       sign_in: 'Sign in'
       sign_up: 'Sign up'
+      edit_your_info: 'Edit your Info'
+      basic_info: 'Basic Info'
+      question: 'Questions'
+      badges: 'Badges'
+      votes: 'Votes'
       forgot_password: 'Forgot your password?'
       last_week: 'Last week'
       last_month: 'Last Month'
       questions: 'Questions'     
       answers: 'Answers'
+      add_tag: ' Add Tag'
       bookmarks: 'Bookmarks'
       comment: 'Comment'
+      disable: 'Disable'
+      enable: 'Enable'
+      edit: 'Edit'
+      delete_link: 'Delete'
+      delete:
+        confirm: 'Are you sure?'
+    image:
+      alt: 'Image.image.alt'
   students:
     captions:
       middle_name: 'Middle Name' 
@@ -113,7 +133,7 @@ en:
       blocked_profile: 'Your account has been blocked. Please contact to administrator'
     links:
       block : 'Block' 
-      mark_as_review: 'MarkasReview'
+      mark_as_review: 'Mark as Review'
       review: 'Review'
       unblock: 'Unblock'
       unmark_review: 'Unmark Review'
@@ -178,6 +198,9 @@ en:
     tags: 'Tags'
     edit_profile: 'Edit Profile'
     logout: 'Logout'
+    profile: 'Profile'
+    report: 'Report'
+    disabled_question: 'Disabled Question'
   right_side_bar:
     questions: 'Questions'
     students: 'Students'

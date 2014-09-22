@@ -31,7 +31,7 @@ class QuestionsController < ApplicationController
 
   def new
     @standards = Standard.all
-    @tags = ActsAsTaggableOn::Tag.all
+    @tags = tag_list
     if !(current_administrator)
       @question = Question.new
       @question.user_id = session[:id]
@@ -110,7 +110,7 @@ class QuestionsController < ApplicationController
   def edit
     @standards = Standard.all
     @question = question_find_by_id
-    @tags = ActsAsTaggableOn::Tag.all
+    @tags = tag_list
     @standards = Standard.all
     if question_find_by_id.nil?
       redirect_to questions_path(active_tab: 'all'),flash: { error: t('flash_message.error.question.edit') }
@@ -158,10 +158,6 @@ class QuestionsController < ApplicationController
     redirect_to questions_path(active_tab: 'all')
   end
 
-  def alltags
-    @tags = ActsAsTaggableOn::Tag.all.page(params[:page]).per(5)
-  end
-
   private
   
   def question_params
@@ -200,5 +196,9 @@ class QuestionsController < ApplicationController
       end
     end
     question.keys
+  end
+
+  def tag_list
+    ActsAsTaggableOn::Tag.all
   end
 end
