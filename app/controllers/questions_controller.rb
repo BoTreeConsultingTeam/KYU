@@ -56,7 +56,7 @@ class QuestionsController < ApplicationController
   def show
     @question = question_find_by_id
     if !(@question.nil?)
-      @answers = @question.answers
+      @answers = @question.answers.page params[:page]
       @answer = Answer.new
       impressionist(@question, nil, { unique: [:session_hash] })
       @comment = Comment.new

@@ -1,20 +1,6 @@
-.col-md-8.main-content
+.col-md-8
   .row
-    .col-md-6
-      .spacer30
-      .table-responsive
-        %table.table.table-bordered.table-striped
-          %thead
-            %tr.success
-              %th.text-center Student name
-              %th.text-center Total Questions
-          %tbody
-            - @students_questions_compare_table.each do |row|
-              %tr.text-center
-                - row.each do |column|
-                  %td
-                    = column
-    .col-md-6    
+    .col-md-12.col-xs-12    
       #chart
         = render_chart(@students_questions_compare_chart, 'chart') 
         

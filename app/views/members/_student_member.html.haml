@@ -1,4 +1,4 @@
-.row.select-category
+.row
 %ul#main_users_list.row
   - students.each do |student|
     %li.user-item.col-md-4.col-xs-6
@@ -40,4 +40,8 @@
             - if params[:active_tab] == 'Students for Review'
               |
               = link_to t('students.links.unmark_review'), unmark_student_review_path(student)
-= render partial: "shared/pagination", locals: {object: students}
+%hr/
+.row.paginations.home
+  .col-md-12
+    .question-item.answer-pagination
+      = render partial: "shared/pagination", locals: {object: students}

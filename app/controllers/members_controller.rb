@@ -3,9 +3,9 @@ class MembersController < ApplicationController
   before_action :user_signed_in?
   def index
     if params[:active_tab] == 'Students'
-      @students = Student.all.page(params[:page]).per(15)
+      @students = Student.all.page(params[:page]).per(9)
     elsif params[:active_tab] == 'Teachers'
-      @teachers = Teacher.all.page(params[:page]).per(15)
+      @teachers = Teacher.all.page(params[:page]).per(9)
     elsif params[:active_tab] == 'Managers'
       @students = Student.where("student_manager = ?",true).page(params[:page]).per(5)
     elsif params[:active_tab] == 'Students for Review'

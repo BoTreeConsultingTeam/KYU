@@ -251,7 +251,7 @@ ul.social-icon{
   color: #fff;
 }
 .accept-answer{
-  color:green;
+  padding-left: 40px;
 }
 
 .report-link {
@@ -304,4 +304,40 @@ ul.social-icon{
   border: medium none !important;
   border-radius: 22px !important;
   color: #fff !important;
+}
+
+.tag-pagination {
+	padding-left: 45px !important;
+}
+
+.answer-pagination {
+	padding-left: 40px !important;
+}
+.member-pagination {
+	padding-left: 30px;
+}
+
+.question-main-content .question-content {
+	margin: 10px 0 20px;
+}
+
+.q-right-content .top-content {
+	margin-bottom: -5px;
+}
+.comment-list {
+	border-bottom: 1px solid #ddd;
+	padding-top: 5px;
+	float: left;
+}
+.comment-owner {
+	float: left;
+}
+.comment-body {
+	float: left;
+}
+.main-content {
+	border-right: 1px solid #dadfea;
+	border-left: 1px solid #dadfea;
+	min-height: 800px;		
+	padding: 0;
 }
