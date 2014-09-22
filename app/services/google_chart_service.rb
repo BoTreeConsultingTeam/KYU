@@ -9,7 +9,7 @@ class GoogleChartService
       formatter.columns(1)
       data_table.format(formatter)
     end
-    opts = { :width => 400, :height => 240, :title => chart_name, :legend => 'bottom'}
+    opts = { :width => Settings.google_chart.width, :height => Settings.google_chart.height, :title => chart_name, :legend => 'bottom'}
     if chart_type == :pie
       if !interactive.present?
         chart = GoogleVisualr::Interactive::PieChart.new(data_table, opts)

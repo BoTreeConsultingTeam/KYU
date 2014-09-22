@@ -7,19 +7,19 @@ class QuestionsController < ApplicationController
     else received_active_tab
       case received_active_tab
       when 'all'
-        @questions = all_questions.page params[:page]  
+        @questions = Kaminari.paginate_array(all_questions).page(params[:page]).per(Kaminari.config.default_per_page) 
       when 'week'
-        @questions = Question.recent_data_week.enabled.page params[:page]
+        @questions = Kaminari.paginate_array(Question.recent_data_week.enabled).page(params[:page]).per(Kaminari.config.default_per_page) 
       when 'month'
-        @questions = Question.recent_data_month.enabled.page params[:page]
+        @questions = Kaminari.paginate_array(Question.recent_data_month.enabled).page(params[:page]).per(Kaminari.config.default_per_page) 
       when 'un_answered'
-        @questions = Kaminari.paginate_array(Question.enabled.find_all_by_id(un_answered_questions).reverse).page params[:page]
+        @questions = Kaminari.paginate_array(Question.enabled.find_all_by_id(un_answered_questions).reverse).page(params[:page]).per(Kaminari.config.default_per_page) 
       when 'most_viewed'
-        @questions = Question.most_viwed_question.enabled.page params[:page]
+        @questions = Kaminari.paginate_array(Question.most_viwed_question.enabled.to_a).page(params[:page]).per(Kaminari.config.default_per_page) 
       when 'most_voted'
-        @questions = Question.highest_voted.enabled.page params[:page]
+        @questions = Kaminari.paginate_array(Question.highest_voted.enabled).page(params[:page]).per(Kaminari.config.default_per_page) 
       when 'newest'
-        @questions = Question.newest(current_user).enabled.page params[:page]
+        @questions = Kaminari.paginate_array(Question.newest(current_user).enabled).page(params[:page]).per(Kaminari.config.default_per_page)        
       end
     end
   end
@@ -44,7 +44,7 @@ class QuestionsController < ApplicationController
     current_user.tag( @question, :with => question_params[:tag_list], :on => :tags )
     if @question.save
       if current_student
-        current_student.change_points(2)
+        current_student.change_points(Settings.points.create_question)
       end
       redirect_to questions_path(active_tab: 'all')
     else
@@ -91,12 +91,12 @@ class QuestionsController < ApplicationController
       if "up" == params[:type]
         if !@question.get_likes.map{|vote| vote.voter_id}.include?current_user.id 
           question_liked_by(@question,liked_by)
-          give_points(@question,5)
+          give_points(@question,Settings.points.question.vote_up)
         end
       else
         if !@question.get_dislikes.map{|vote| vote.voter_id}.include?current_user.id 
           question_disliked_by(@question,liked_by)
-          give_points(@question,-5)
+          give_points(@question,Settings.points.question.vote_down)
         end
       end
       respond_to do |format|
@@ -156,7 +156,7 @@ class QuestionsController < ApplicationController
   end
 
   def alltags
-    @tags = ActsAsTaggableOn::Tag.all.page(params[:page]).per(5)
+    @tags = ActsAsTaggableOn::Tag.all.page(params[:page]).per(Settings.pagination.per_page_5)
   end
 
   private

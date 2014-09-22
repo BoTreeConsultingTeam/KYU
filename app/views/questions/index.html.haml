@@ -6,4 +6,4 @@
   No Questions Available
 .row.paginations.home
   .col-md-12
-    =paginate @questions
+    = render partial: 'shared/pagination', locals: { object: @questions}

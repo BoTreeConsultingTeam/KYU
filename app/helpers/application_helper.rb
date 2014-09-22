@@ -43,7 +43,7 @@ module ApplicationHelper
   end
 
   def most_used_tags
-    @tags = Question.tag_counts_on(:tags).limit(5).order('count desc')
+    @tags = Question.tag_counts_on(:tags).limit(Settings.tags.most_used_tags_limit).order('count desc')
   end
   
   def edit_user_registration_path
@@ -51,7 +51,7 @@ module ApplicationHelper
   end
 
   def most_viewed_questions
-    Question.joins(:impressions).group("questions.id").order("count(questions.id) DESC").limit(5)
+    Question.joins(:impressions).group("questions.id").order("count(questions.id) DESC").limit(Settings.questions.most_viewed_questions_limit)
   end
 
   def user_signed_in
