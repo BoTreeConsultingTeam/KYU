@@ -19,5 +19,7 @@
  *= require main
  *= require css
  *= require custom
+ *= require jquery.autocomplete.css
  *= require_self
+ *= jquery-ui.css
  */

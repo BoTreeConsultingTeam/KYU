@@ -3,16 +3,10 @@
     KYU
   -if (user_signed_in)
     .col-md-8.col-xs-8
-      .header-menu
+      .header-menu    
         %ul
           %li
             = link_to t('header_navigation.home'), questions_path(active_tab: 'all')   
-          %li
-            %a{:href => members_path( active_tab: 'Students')} Users
-          %li
-            = link_to t('header_navigation.questions'), questions_path(active_tab: 'all')
-          %li
-            = link_to t('header_navigation.tags'), tags_path
           - if student_signed_in?
             %li
               = link_to 'Profile', student_views_profile_path(current_user)
@@ -46,3 +40,11 @@
               = "Welcome #{current_teacher.username}"
           - if administrator_signed_in?
             = "Welcome #{current_administrator.email}"
+      .header-search-wrapper#que-search
+        %form#header_search
+          %input{:autocomplete => "off", :name => "search", :placeholder => "Enter Keywords", :type => "text", :value => "" , id: 'search'}/ 
+          %i.fa.fa-search
+        .search-preview#search_preview
+          %span.i-preview
+
+        

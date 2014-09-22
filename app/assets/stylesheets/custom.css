@@ -305,3 +305,9 @@ ul.social-icon{
   border-radius: 22px !important;
   color: #fff !important;
 }
+#que-search{
+	float: right !important;
+    margin-right: 576px !important;
+    margin-top: -25px !important;
+    position: relative !important;
+}

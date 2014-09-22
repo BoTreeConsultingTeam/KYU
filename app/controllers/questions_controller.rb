@@ -1,6 +1,6 @@
 class QuestionsController < ApplicationController
   before_action :user_signed_in?
-    
+
   def index
     if received_tag
       @questions = Question.tagged_with(received_tag).enabled.page params[:page]
@@ -22,12 +22,30 @@ class QuestionsController < ApplicationController
         @questions = Question.newest(current_user).enabled.page params[:page]
       end
     else
-      @search = Sunspot.search(Question) do
-        fulltext params[:search]
-      end
-      @questions = @search.results
+      @question = Question.all.page params[:page] 
     end
+  end
 
+  def search_by_keyword 
+    if received_keyword != ''
+      @search = Sunspot.search(Question) do
+        fulltext received_keyword
+      end
+      @question_list = @search.results
+      respond_to do |format|
+          format.html
+          format.json { 
+          render json: @question_list.map{|question|[question.id,question.title]}
+        }
+      end
+    else
+      respond_to do |format|
+        format.html
+        format.json { 
+          render json: []
+        }
+      end
+    end
   end
 
   def disabled_questions
@@ -203,5 +221,9 @@ class QuestionsController < ApplicationController
       end
     end
     question.keys
+  end
+
+  def received_keyword
+    params[:keyword].gsub(/\s+/, "")
   end
 end

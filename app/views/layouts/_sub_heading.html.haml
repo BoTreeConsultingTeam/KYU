@@ -2,14 +2,3 @@
   .col-md-6.col-xs-6.current-category
     %span
       = object
-  .col-md-6.col-xs-6.single-head
-    - if object == 'Users'
-      = form_tag members_path(active_tab: 'Students'), :method => :get do
-        %p
-          = text_field_tag :search, params[:search]
-          = submit_tag "Search", :name => nil  
-    - else
-      = form_tag questions_path(active_tab: 'all'), :method => :get do
-        %p
-          = text_field_tag :search, params[:search]
-          = submit_tag "Search", :name => nil
