@@ -71,4 +71,31 @@
             = select_tag 'standard_id', content_tag(:option,'select standard...',:value=>"")+options_from_collection_for_select( @standards, :id, :class_no), class: 'form-control'
             .spacer20
             = submit_tag "Check", class: 'btn btn-primary'
-            
+    
+.spacer20
+.modal-submit-questions
+  .modal-dialog
+    .modal-body
+      .row  
+        %strong.h3
+          Top 3 weak areas
+        .col-md-6
+          = form_tag top_3_weak_area_path do 
+            .spacer20
+            = text_field_tag :id, nil,:class => 'form-control'
+            .spacer20
+            = submit_tag "Check", class: 'btn btn-primary'
+
+.spacer20
+.modal-submit-questions
+  .modal-dialog
+    .modal-body
+      .row  
+        %strong.h3
+          Top 3 strong areas
+        .col-md-6
+          = form_tag top_3_strong_area_path do 
+            .spacer20
+            = text_field_tag :id, nil,:class => 'form-control'
+            .spacer20
+            = submit_tag "Check", class: 'btn btn-primary'
