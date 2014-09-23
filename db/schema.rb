@@ -13,9 +13,6 @@
 
 ActiveRecord::Schema.define(version: 20140912082905) do
 
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
-
   create_table "administrators", force: true do |t|
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
@@ -73,7 +70,7 @@ ActiveRecord::Schema.define(version: 20140912082905) do
   add_index "bookmarks", ["question_id", "bookmarkable_id", "bookmarkable_type"], name: "bookmarks_index", unique: true, using: :btree
 
   create_table "comments", force: true do |t|
-    t.string   "title",            limit: 50, default: ""
+    t.string   "title",            limit: 50
     t.text     "comment"
     t.integer  "commentable_id"
     t.string   "commentable_type"
@@ -177,18 +174,9 @@ ActiveRecord::Schema.define(version: 20140912082905) do
     t.datetime "updated_at"
     t.integer  "askable_id"
     t.string   "askable_type"
-    t.boolean  "enabled",            default: true
-    t.integer  "cached_votes_total", default: 0
-    t.integer  "cached_votes_score", default: 0
-    t.integer  "cached_votes_up",    default: 0
-    t.integer  "cached_votes_down",  default: 0
+    t.boolean  "enabled",      default: true
     t.integer  "standard_id"
   end
-
-  add_index "questions", ["cached_votes_down"], name: "index_questions_on_cached_votes_down", using: :btree
-  add_index "questions", ["cached_votes_score"], name: "index_questions_on_cached_votes_score", using: :btree
-  add_index "questions", ["cached_votes_total"], name: "index_questions_on_cached_votes_total", using: :btree
-  add_index "questions", ["cached_votes_up"], name: "index_questions_on_cached_votes_up", using: :btree
 
   create_table "sashes", force: true do |t|
     t.datetime "created_at"
@@ -214,20 +202,20 @@ ActiveRecord::Schema.define(version: 20140912082905) do
     t.string   "last_sign_in_ip"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "first_name"
+    t.string   "middle_name"
+    t.string   "last_name"
     t.string   "username"
     t.date     "birthdate"
-    t.integer  "sash_id"
-    t.integer  "level",                  default: 0
-    t.boolean  "student_manager",        default: false
-    t.string   "student_class"
     t.integer  "points"
-    t.integer  "standard_id"
-    t.boolean  "enable",                 default: true
-    t.boolean  "mark_as_review",         default: false
     t.string   "avatar_file_name"
     t.string   "avatar_content_type"
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
+    t.boolean  "student_manager",        default: false
+    t.boolean  "enable",                 default: true
+    t.boolean  "mark_as_review",         default: false
+    t.integer  "standard_id"
   end
 
   add_index "students", ["email"], name: "index_students_on_email", unique: true, using: :btree
@@ -272,11 +260,11 @@ ActiveRecord::Schema.define(version: 20140912082905) do
     t.string   "username"
     t.string   "qualification"
     t.string   "salutation"
-    t.boolean  "enable",                 default: true
     t.string   "avatar_file_name"
     t.string   "avatar_content_type"
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
+    t.boolean  "enable",                 default: true
   end
 
   add_index "teachers", ["email"], name: "index_teachers_on_email", unique: true, using: :btree
