@@ -1,0 +1,28 @@
+.modal-submit-questions
+  .modal-dialog
+    .modal-body
+      = form_for(@question) do |f|
+        = render 'shared/error_messages', object: f.object
+        %div
+        = f.label t('students.captions.class')
+        - if form_type == 'edit'
+          = f.select(:standard_id, options_from_collection_for_select(@standards, 'id', 'class_no',@question.standard_id),{},{class: 'form-control'})
+        - else
+          = f.select(:standard_id, options_from_collection_for_select(@standards, 'id', 'class_no'),{prompt: t('teachers.basic.prompt')},{class: 'form-control'})
+        %div
+        = f.label :title
+        %br/
+        = f.text_field :title, autofocus: true, class: 'submit-input'
+        %div
+        = f.label t('questions.basic.content_label')
+        %br/
+        = f.text_area :content,:toolbar => 'mini', :class => 'ckeditor', style: 'width: none !important;'
+        %br/
+        = f.label :tag_list, t('questions.basic.tag_on_new')
+        %br/
+        = f.text_field :tag_list, class: 'submit-input tags-input'
+        -if current_student
+          = f.hidden_field :user_id, :value => current_student.id
+        -elsif current_teacher
+          = f.hidden_field :user_id, :value => current_teacher.id
+        = f.submit t('questions.btn.submit'),class: 'btn btn-success', id: 'btn_submit_question'

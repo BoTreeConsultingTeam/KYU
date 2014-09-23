@@ -1,0 +1,7 @@
+.row.select-category
+  .col-md-8.col-xs-8
+    %h4
+      = @question.title
+
+= render partial: 'form', locals: {type: 'edit',object: @question}
+= render 'show_comments_of_questions'

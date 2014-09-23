@@ -1,0 +1,100 @@
+.row.select-category.single-head
+  .col-md-2.col-xs-2
+    %span.back
+      %i.fa.fa-angle-double-left
+      %a 
+        = link_to 'Home',questions_path(active_tab: 'all')
+  .col-md-8.col-xs-8
+    %h3 
+      = @question.title
+#question_content.row.question-main-content.question-item{"data-id" => "1728"}
+  - if !current_administrator
+    .col-md-2.col-xs-2.vote-block
+      %ul
+        %li{"data-original-title" => "This is useful.", :title => ""}
+          = vote_link(@question, 'up')
+        %li
+          %span.vote-count{id: "upvote_question#{@question.id}" }
+            = @question.get_likes.size
+        %li
+          %span.vote-count{id: "downvote_question#{@question.id}"}  
+            = @question.get_dislikes.size
+        %li{"data-original-title" => "This is useful.", :title => ""}
+          = vote_link(@question, 'down')
+  - else 
+    .col-md-1
+  .col-md-9.col-xs-9.q-right-content
+    %ul.post-controls
+      -if !(current_administrator) && @question.askable == current_user
+        %li
+          = link_to '',edit_question_path(@question.id),class: 'post-edit action fa fa-pencil',rel: 'tooltip',title: 'Edit', 'data-no-turbolink' => true
+          %li
+            = link_to '',question_path,method: :delete,data: {confirm:'Are you sure?'},rel: 'tooltip',title: 'Delete',class: 'post-delete action fa fa-trash-o'
+        
+        - if (check_bookmark @question).blank?
+          %li
+            = link_to '', bookmarks_path(:question_id => @question.id), method: :post,rel: 'tooltip',title: 'Add to Bookmarks', class: 'post-delete action fa fa-plus'
+        -else
+          %li
+            = link_to '',bookmark_path(:question_id => @question.id), method: :delete,data: {confirm:'Are you sure?'},rel: 'tooltip',title: 'Delete from Boolmarks',class: 'post-delete action fa fa-minus-square'    
+    .top-content
+      - if @question.answers.count > 0
+        %span.answered
+          %i.fa.fa-check
+            Answered
+      = render :partial => 'question_tags', :locals => { :object => @question}
+    .clearfix
+    .question-content
+      = raw(@question.content)
+    .row
+      .col-md-8.col-xs-9.question-cat
+        - if @question.askable_type != 'Teacher'
+          %a{:href => student_views_profile_path(@question.askable.id,user: 'Student')}
+            %span.avatar
+              = image_tag @question.askable.avatar.url(:medium) ,class: 'img-circle user-thumb-img'
+            %span.author-name                
+              - if @question.askable.student_manager?
+                .student_manager{rel: "tooltip",title: t('students.tooltip.manager')} 
+                  = @question.askable.username
+              - else
+                = @question.askable.username
+          %span.user-badge{:style => "background-color:#04aad4;"} 
+            = @question.askable.class
+        - else                    
+          %span.avatar
+            = image_tag @question.askable.avatar.url(:medium) ,class: 'img-circle user-thumb-img' 
+          %span.author-name   
+            = @question.askable.username
+          %span.user-badge{:style => "background-color:#780978;"} 
+            = @question.askable.class
+        %span.question-time
+          #{time_ago_in_words(@question.created_at)} ago.
+      - if !current_administrator
+        .col-md-4.col-xs-4.question-control
+          = render :partial => 'link_to_comment', :locals => { object: @question, id: "question#{@question.id}"}
+          %span{id: "comment_count"}
+            (
+            = @question.comments.count
+            )
+    .comments-container.collapse.hidden_comment-box{id: 'commentquestion' + "#{@question.id}"}              
+      = render partial: 'comments/create_comment',locals: {commentable: @question}
+    %br/
+    = render 'comments/show_comments_of_questions'
+    - if @question_comments.present?           
+      .row.paginations.home
+        .col-md-12{id:'paginator'}
+          = paginate @question_comments
+    .clearfix
+.sticky-wrapper
+  #answers_filter.row.answers-filter
+    .max-col-md-8
+      .col-md-6.col-xs-6
+        %span.answers-count
+          %span.number 
+            = @question.answers.count
+          Answers
+/ ANSWERS LOOP
+#answers_main_list
+  = render 'answers_list', locals: { :answers =>  @answer}
+  - if !current_administrator
+    = render 'answers/form'

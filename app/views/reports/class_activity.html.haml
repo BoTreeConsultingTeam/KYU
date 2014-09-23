@@ -1,0 +1,19 @@
+.col-md-8.main-content
+  .row
+    .col-md-6
+      .spacer30
+      .table-responsive
+        %table.table.table-bordered.table-striped
+          %thead
+            %tr.success
+              %th.text-center Student name
+              %th.text-center Tatal Question
+          %tbody
+            - @questions.each do |row|
+              %tr.text-center
+                - row.each do |column|
+                  %td
+                    = column
+    .col-md-6    
+      #chart
+        = render_chart(@class_activity_bar_chart, 'chart') 

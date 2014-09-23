@@ -1,0 +1,14 @@
+.col-md-8.main-content
+  = render :partial => "layouts/sub_heading", :locals => {:object => 'Forgot your Password'}
+  .modal-submit-questions
+    .modal-dialog
+      .modal-body
+        = form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post }) do |f|
+          = devise_error_messages!
+          %div
+          = f.label :email,:autofocus => true, class: 'submit-input'
+          %br/
+          = f.email_field :email, :autofocus => true, class: 'form-control'
+          .spacer20
+          %div= f.submit "Send me reset password instructions", class: 'btn btn-primary'
+        = render "students/shared/links"

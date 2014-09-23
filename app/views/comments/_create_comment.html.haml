@@ -1,0 +1,7 @@
+= form_for (@comment),remote: true do |f|
+  = f.text_area :comment,:toolbar => 'mini', :class => 'ckeditor', style: 'width: none !important;',id: "text" + "#{commentable.id}"
+  = f.hidden_field :relative, :value => commentable
+  = f.hidden_field :relative_type, :value => commentable.class.to_s
+  = f.hidden_field :relative_id, :value => commentable.id
+  %br/
+  = submit_tag "Post",class: 'btn btn-primary'

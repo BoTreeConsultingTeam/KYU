@@ -1,0 +1,159 @@
+= render :partial => "layouts/sub_heading", :locals => {:object => 'Profile'}
+.row.user-statistic.highlight
+  .col-md-5.col-xs-5.user-info
+    %span.avatar
+      = image_tag @teacher.avatar.url(:medium), alt: 'Image' ,class: 'img-circle profile-img'    
+    %ul
+      %li.name 
+        = @teacher.username
+      %li.email
+        %i.fa.fa-envelope
+        = @teacher.email
+  .col-md-7.col-xs-7.user-post-count
+    .row
+      .col-md-4.col-xs-4
+        %p.questions-count
+          Questions
+          %br
+            %span 
+              = @teacher.questions.count
+      .col-md-4.col-xs-4
+        %p.answers-count
+          Answers
+          %br
+            %span 
+              = @teacher.answers.count
+/ END USER-STATISTIC
+.row.question-filter
+  - if ( @teacher == current_user )
+    .col-md-12.sort-questions
+      %ul
+        %li
+          = link_to 'Edit your Info', edit_teacher_registration_path
+        %li
+          = link_to 'Basic Info', teacher_views_profile_path(@teacher.id, active_tab:'basicinfo'), class: "#{profile_active_tab('basicinfo')}"
+        %li
+          = link_to 'Questions', teacher_views_profile_path(@teacher.id, active_tab:'questions'), class: "#{profile_active_tab('questions')}"
+        %li
+          = link_to 'Answers', teacher_views_profile_path(@teacher.id, active_tab:'answers'), class: "#{profile_active_tab('answers')}"
+        %li
+          = link_to 'Bookmarks', teacher_views_profile_path(@teacher.id, active_tab:'bookmarks'), class: "#{profile_active_tab('bookmarks')}"
+        %li
+          = link_to 'Votes', teacher_views_profile_path(@teacher.id, active_tab:'votes'), class: "#{profile_active_tab('votes')}"
+  - else
+    .col-md-12.sort-questions
+      %ul
+        %li
+          = link_to 'Basic Info', teacher_views_profile_path(@teacher.id, active_tab:'basicinfo'), class: "#{profile_active_tab('basicinfo')}"
+        %li
+          = link_to 'Questions', teacher_views_profile_path(@teacher.id, active_tab:'questions'), class: "#{profile_active_tab('questions')}"
+        %li
+          = link_to 'Answers', teacher_views_profile_path(@teacher.id, active_tab:'answers'), class: "#{profile_active_tab('answers')}"
+        %li
+          = link_to 'Votes', teacher_views_profile_path(@teacher.id, active_tab:'votes'), class: "#{profile_active_tab('votes')}"
+/ END QUESTIONS-FILTER
+- if params[:active_tab] == "answers"
+  .main-questions-list
+    %ul#main_questions_list
+      -if !(@answers.blank?)
+        = render :partial => 'members/member_answers_list', locals: { answers: @answers}
+      - else
+        .spacer50
+        .col-md-2
+        .col-md-6.col-xs-12
+          %h4
+            You don't  have answered any question yet
+- elsif params[:active_tab] == "bookmarks"
+  - question_list = bookmark_question_ids @teacher
+  - if !(question_list.blank?)
+    = render :partial => 'questions/questions_list', :locals => { questions: question_list}
+  - else
+    .spacer50
+    .col-md-2
+    .col-md-6.col-xs-12
+      %h4
+        No Bookmarks yet
+    
+
+- elsif params[:active_tab] == "votes"
+  .main-questions-list
+    %ul#main_questions_list
+      - if !(@questions.blank?)
+        .row.select-category
+          .col-md-12.col-xs-12
+            .spacer20
+            %table.table.table-bordered.table-striped
+              %thead
+                %tr.success
+                  %th.text-center
+                  %th.text-center
+                    Up Votes Count
+                  %th.text-center
+                    Down Votes Count
+                  %th.text-center
+                    Total Count
+              %tbody
+                %tr
+                  %td.text-center
+                    Questions
+                  %td.text-center
+                    = @total_upvotes_question
+                  %td.text-center
+                    = @total_downvotes_question
+                  %td.text-center
+                    = @questions.count
+                %tr
+                  %td.text-center
+                    Answers
+                  %td.text-center
+                    = @total_upvotes_answer
+                  %td.text-center
+                    = @total_downvotes_answer
+                  %td.text-center
+                    = @answers.count
+      -else
+        .spacer50
+        .col-md-2
+        .col-md-6.col-xs-12
+          %h4
+            You haven't got any votes!!!
+- elsif params[:active_tab] == "questions"
+  - if !(@teacher.questions.blank?)
+    = render partial: 'questions/questions_list', locals: {questions: @teacher.questions}
+  - else
+    .spacer50
+    .col-md-2
+    .col-md-6.col-xs-12
+      %h4
+        You don't have asked any questions yet
+- else
+  .row
+    .col-md-9.col-md-push-3 
+      =@teacher.first_name
+      =@teacher.last_name 
+     
+    .col-md-3.col-md-pull-9 
+      %b Name 
+    
+    .col-md-9.col-md-push-3 
+      %br
+        =@teacher.qualification
+    .col-md-3.col-md-pull-9
+      %br/
+      %b Qualification
+    
+    .col-md-9.col-md-push-3
+      %br/
+      =@teacher.username
+    .col-md-3.col-md-pull-9  
+      %br/
+      %b Username
+
+    .col-md-9.col-md-push-3
+      %br/
+      =@teacher   .email 
+    .col-md-3.col-md-pull-9
+      %br/
+      %b Email
+
+.row.paginations.home

@@ -1,0 +1,6 @@
+%ul
+  - most_viewed_questions.each do |question|
+    %li
+      %span.avatar
+        = image_tag question.askable.avatar.url(:thumb), alt: 'Image', class: 'img-circle user-small-thumb-img'
+      = link_to  question.title, question_path(question), 'data-no-turbolink' => true
