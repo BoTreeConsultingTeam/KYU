@@ -74,9 +74,7 @@ class ReportsController < ApplicationController
   def top_3_weak_area
     if !@student.questions.blank?
       @students_tags = @student.owned_tags.map { |obj| [obj.name, obj.taggings_count]  }
-      @sorted_tags = @students_tags.sort {|a,b| a[1] <=> b[1]}.reverse
-      @student_top3_weakness = @sorted_tags.slice(0,3)
-      @student_top3_weakness_chart = GoogleChartService.render_reports_charts( @student_top3_weakness, :bar, "Student's tag ration", true, 'Tag', 'Count', false )  
+      @top_3_area = map_array_for_chart(@students_tags)  
     else
       error_message
     end
@@ -84,13 +82,11 @@ class ReportsController < ApplicationController
 
   def top_3_strong_area
     if !@student.answers.blank?
-      @accepted_answers = @student.answers.where("flag = 'true'")
+      @accepted_answers = @student.answers.accepted_answers
       @question_ids = @accepted_answers.pluck(:question_id)
-      @tag_list = ActsAsTaggableOn::Tagging.find_all_by_taggable_id(@question_ids).map { |obj| obj.tag_id }
-      @full_tag_list =  @tag_list.group_by{|i| i}.map{|k,v| [ ActsAsTaggableOn::Tag.find_all_by_id(k).map {|obj| obj.name}, v.count].flatten }
-      @student_strong_area_ordered = @full_tag_list.sort {|a,b| a[1] <=> b[1]}.reverse
-      @top_3_strong_area = @student_strong_area_ordered.slice(0,3)
-      @student_top3_weakness_chart = GoogleChartService.render_reports_charts( @top_3_strong_area, :bar, "Student's tag ration", true, 'Tag', 'Count', false )  
+      @tag_ids_of_question_where_answer_accepted = ActsAsTaggableOn::Tagging.find_all_by_taggable_id(@question_ids).map { |obj| obj.tag_id }
+      @tag_names_and_count_where_anser_accepted =  @tag_ids_of_question_where_answer_accepted.group_by{|tag_id| tag_id}.map{|tag_id,tag_count| [ ActsAsTaggableOn::Tag.find_all_by_id(tag_id).map {|obj| obj.name}, tag_count.count].flatten }
+      @top_3_area = map_array_for_chart(@tag_names_and_count_where_anser_accepted)  
     else
       error_message
     end
@@ -117,6 +113,12 @@ class ReportsController < ApplicationController
     def error_message
       flash[:error] = 'No Record Found'
       redirect_to reports_path
+    end
+    def map_array_for_chart(array)
+      sorted_reverse_array = array.sort {|a,b| a[1] <=> b[1]}.reverse
+      first_3_elements = sorted_reverse_array.slice(0,3)
+      @student_top3_chart = GoogleChartService.render_reports_charts( first_3_elements, :bar, "Student's tag ration", true, 'Tag', 'Count', false )
+      first_3_elements
     end
 end
 
