@@ -54,7 +54,7 @@ class QuestionsController < ApplicationController
     current_user.tag( @question, :with => question_params[:tag_list], :on => :tags )
     if @question.save
       if current_student
-        current_student.change_points(2)
+        current_student.change_points(Settings.points.create_question)
       end
       redirect_to questions_path(active_tab: 'all')
     else
@@ -101,12 +101,12 @@ class QuestionsController < ApplicationController
       if "up" == params[:type]
         if !@question.get_likes.map{|vote| vote.voter_id}.include?current_user.id 
           question_liked_by(@question,liked_by)
-          give_points(@question,5)
+          give_points(@question,Settings.points.question.vote_up)
         end
       else
         if !@question.get_dislikes.map{|vote| vote.voter_id}.include?current_user.id 
           question_disliked_by(@question,liked_by)
-          give_points(@question,-5)
+          give_points(@question,Settings.points.question.vote_down)
         end
       end
       respond_to do |format|

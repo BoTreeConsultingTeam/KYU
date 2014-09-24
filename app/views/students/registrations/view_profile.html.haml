@@ -191,20 +191,20 @@
                     %td.text-center
                       Questions
                     %td.text-center
-                      = @total_upvotes_question
+                      = @questions_likes_count
                     %td.text-center
-                      = @total_downvotes_question
+                      = @questions_dislikes_count
                     %td.text-center
-                      = @questions.count
+                      = @total_questions_votes
                   %tr
                     %td.text-center
                       Answers
                     %td.text-center
-                      = @total_upvotes_answer
+                      = @answers_likes_count
                     %td.text-center
-                      = @total_downvotes_answer
+                      = @answers_dislikes_count
                     %td.text-center
-                      = @answers.count
+                      = @total_answers_votes
       -else
         .spacer50
         .col-md-2

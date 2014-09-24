@@ -4,7 +4,7 @@ class CommentsController < ApplicationController
   
   def create 
     @comment = Comment.new(comment_params.merge({commentable: current_user}).merge({relative: params[:relative]}))
-    @comments = Comment.relative_comments(comment_relative_id,comment_relative_type).page params[:page]
+    @comments = Kaminari.paginate_array(Comment.relative_comments(comment_relative_id,comment_relative_type)).page(params[:page]).per(Settings.pagination.per_page_5) 
     if @comment.save
       if "Question" == relative_type
         @question = Question.find_by_id(comment_relative_id)

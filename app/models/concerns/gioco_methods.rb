@@ -12,7 +12,6 @@ module Gioco_Methods
       present_badge_kind(points,kind)
       new_pontuation = @old_pontuation + points
       Gioco::Core.sync_resource_by_points(self, new_pontuation, kind)
-      
     end
 
     def next_badge?(kind_id = false)
@@ -34,13 +33,11 @@ module Gioco_Methods
 
     def add(resource_id)
       resource = Gioco::Core.get_resource(resource_id)
-
       if Gioco::Core::POINTS && !resource.badges.include?(self)
         if Gioco::Core::KINDS
            sync_resource_by_points resoure, self.points, self.kind
         else
-          sync_resource_by_points resoure, self.points
-          
+          sync_resource_by_points resoure, self.points 
         end
       elsif !resource.badges.include?(self)
         resource.badges << self
@@ -62,7 +59,6 @@ module Gioco_Methods
           badges_gap = Badge.where(points_kind).order('points DESC')[0]
           sync_resource_by_points resoure, badges_gap,kind = nil
         end
-        
       elsif resource.badges.include?(self)
         resource.levels.where( :badge_id => self.id )[0].destroy
         return self

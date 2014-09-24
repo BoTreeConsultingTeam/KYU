@@ -8,7 +8,6 @@ class Question < ActiveRecord::Base
   has_many :bookmarks
   has_many :comments,as: :relative,dependent: :destroy
   belongs_to :standard
-  paginates_per 10
   is_impressionable
   acts_as_taggable
   acts_as_votable
@@ -48,7 +47,7 @@ class Question < ActiveRecord::Base
   end
   
   def self.highest_voted
-    self.order("cached_votes_score DESC").limit(5)
+    self.order("cached_votes_score DESC").limit(Settings.questions.highest_voted_limit)
   end
 
   def tag_list

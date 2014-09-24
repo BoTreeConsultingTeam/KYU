@@ -1,2 +1,33 @@
-app_name: "KYU"
-default_password: 'password'
+app_name: 'KYU'
+pagination:
+  per_page: 10
+  per_page_5: 5
+  per_page_15: 15
+  per_page_3: 3
+points:
+  answer:
+    vote_up: +15
+    vote_down: -15
+  question:
+    vote_up: +5
+    vote_down: -5
+  answer_accepted: +10
+  create_question: +2
+questions:
+  most_viewed_questions_limit: 5
+  highest_voted_limit: 5
+tags:
+  most_used_tags_limit: 5
+students:
+  student_manager_limit: 2
+paperclip:
+  style:
+    medium: '300x300'
+    thumb: '50x50'
+    image_default_url: 'missing.jpeg'  
+mail:
+  default_url_options:
+    support_email: 'support@kyu.in'
+google_chart:
+  width: 400
+  height: 240
