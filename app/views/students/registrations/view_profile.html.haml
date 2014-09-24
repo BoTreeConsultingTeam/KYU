@@ -2,7 +2,7 @@
 .row.user-statistic.highlight
   .col-md-5.col-xs-5.user-info
     %span.avatar
-      = image_tag @student.avatar.url(:medium), alt: 'Image' ,class: 'img-circle profile-img'
+      = image_tag @student.avatar.url(:medium), alt: t('common.image.alt') ,class: 'img-circle profile-img'
     %ul
       %li.name 
         = @student.username
@@ -47,21 +47,21 @@
     .col-md-12.sort-questions
       %ul
         %li
-          = link_to "Basic Info", student_views_profile_path(@student.id, active_tab:'basicinfo'), class: "#{profile_active_tab('basicinfo')}"
+          = link_to t('common.links.basic_info'), student_views_profile_path(@student.id, active_tab: t('students.active_tab.basic_info')), class: "#{profile_active_tab(t('students.active_tab.basic_info'))}"
         %li
-          = link_to 'Questions', student_views_profile_path(@student.id, active_tab:'questions'), class: "#{profile_active_tab('questions')}"
+          = link_to t('common.links.question'), student_views_profile_path(@student.id, active_tab: t('students.active_tab.questions')), class: "#{profile_active_tab(t('students.active_tab.questions'))}"
         %li
-          = link_to 'Answers', student_views_profile_path(@student.id, active_tab:'answers'), class: "#{profile_active_tab('answers')}"
+          = link_to t('common.links.answers'), student_views_profile_path(@student.id, active_tab: t('students.active_tab.answers')), class: "#{profile_active_tab(t('students.active_tab.answers'))}"
         %li
-          = link_to 'Bookmarks', student_views_profile_path(@student.id, active_tab:'bookmarks'), class: "#{profile_active_tab('bookmarks')}"
+          = link_to t('common.links.bookmarks'), student_views_profile_path(@student.id, active_tab: t('students.active_tab.bookmarks')), class: "#{profile_active_tab(t('students.active_tab.bookmarks'))}"
         %li
-          = link_to 'Tags', student_views_profile_path(@student.id, active_tab:'tags'), class: "#{profile_active_tab('tags')}"
+          = link_to t('common.links.tags'), student_views_profile_path(@student.id, active_tab: t('students.active_tab.tags')), class: "#{profile_active_tab(t('students.active_tab.tags'))}"
         %li
-          = link_to 'Badges', student_views_profile_path(@student.id, active_tab:'badges'), class: "#{profile_active_tab('badges')}"
+          = link_to t('common.links.badges'), student_views_profile_path(@student.id, active_tab: t('students.active_tab.badges')), class: "#{profile_active_tab(t('students.active_tab.badges'))}"
         %li
-          = link_to 'Votes', student_views_profile_path(@student.id, active_tab:'votes'), class: "#{profile_active_tab('votes')}"
+          = link_to t('common.links.votes'), student_views_profile_path(@student.id, active_tab: t('students.active_tab.votes')), class: "#{profile_active_tab(t('students.active_tab.votes'))}"
   / END QUESTIONS-FILTER
-- if params[:active_tab] == "answers"
+- if params[:active_tab] == t('students.active_tab.answers')
   .main-questions-list
     %ul#main_questions_list
       -if !(@answers.blank?)
@@ -74,7 +74,7 @@
               .q-lbtm-content
                 .question-cat
                   %span.avatar
-                    = image_tag answer.answerable.avatar.url(:medium), alt: 'Image' ,class: 'img-circle user-thumb-img'
+                    = image_tag answer.answerable.avatar.url(:medium), alt: t('common.image.alt') ,class: 'img-circle user-thumb-img'
                   %span.user-badge
                     - if answer.answerable.badges.last.blank?
                     -else
@@ -119,7 +119,7 @@
           %h4
             = @student.username
             don't  have answered any question yet
--elsif params[:active_tab] == "bookmarks"
+-elsif params[:active_tab] == t('students.active_tab.bookmarks')
   - question_list = bookmark_question_ids @student
   - if !(question_list.blank?)
     = render :partial => 'questions/questions_list', :locals => { questions: question_list}
@@ -130,19 +130,25 @@
       %h4
         = @student.username 
         don't have Bookmarked any Question
-- elsif params[:active_tab] == "tags"
+- elsif params[:active_tab] == t('students.active_tab.tags')
   .main-questions-list
     %ul#main_questions_list
       -if !(@tags.blank?)
-        .col-md-12
-          .row
-          .col-md-6
-            - @tags.each do |row|
-              .row
-                - row.each do |column|
-                  .col-md-6
-                    %h4
-                      = column
+        .main-tag-list
+          .wrap-tag-list   
+            %ul.raw.tag-list
+              - @tags.each do |tag|
+                %li.col-md-4.col-xs-6.tag-list
+                  = link_to tag, questions_path(tag: tag.name),class: 'q-tag'
+                  = "x #{tag.taggings_count}"
+                  - if (administrator_signed_in?)
+                    = link_to '',delete_tag_path(tag.id), method: :delete, rel: 'tooltip', title: t('common.links.delete_link'), data: {confirm: t('common.links.delete.confirm')}, class: 'fa fa-trash-o pull-right'
+                    = link_to ' |',edit_tag_path(tag.id),'data-no-turbolink' => true, rel: 'tooltip', title: t('common.links.edit'), class: 'fa fa-pencil pull-right'
+                  %div
+                    = truncate(tag.description,length: 120,escape: false) {link_to "Read more",questions_path(tag: tag.name,id: 'show_tag') }
+            .row.paginations.home
+              .col-md-12
+                =paginate @tags            
       - else
         .spacer50
         .col-md-2
@@ -150,7 +156,7 @@
           %h4
             = @student.username
             You haven't tagged any thing yet!!!
-- elsif params[:active_tab] == "badges"
+- elsif params[:active_tab] == t('students.active_tab.badges')
   .main-questions-list
     %ul#main_questions_list.single-head
       - if !(@student.badges.last.blank?)
@@ -163,7 +169,7 @@
           %h4
             = @student.username
             haven't earned any Badges!!!
-- elsif params[:active_tab] == "votes"
+- elsif params[:active_tab] == t('students.active_tab.votes')
   .main-questions-list
     %ul#main_questions_list
       - if !(@questions.blank?)
@@ -185,20 +191,20 @@
                     %td.text-center
                       Questions
                     %td.text-center
-                      = @total_upvotes_question
+                      = @questions_likes_count
                     %td.text-center
-                      = @total_downvotes_question
+                      = @questions_dislikes_count
                     %td.text-center
-                      = @questions.count
+                      = @total_questions_votes
                   %tr
                     %td.text-center
                       Answers
                     %td.text-center
-                      = @total_upvotes_answer
+                      = @answers_likes_count
                     %td.text-center
-                      = @total_downvotes_answer
+                      = @answers_dislikes_count
                     %td.text-center
-                      = @answers.count
+                      = @total_answers_votes
       -else
         .spacer50
         .col-md-2
@@ -206,7 +212,7 @@
           %h4
             = @student.username
             haven't got any votes!!!
-- elsif params[:active_tab] == "questions"
+- elsif params[:active_tab] == t('students.active_tab.questions')
   .main-questions-list    
     %ul#main_questions_list
       - if !(@questions.blank?)
@@ -221,14 +227,14 @@
                   %p 
                     = raw(question.content)
                 .question-cat
-                  %ul.question-statisticgs
+                  %ul.question-tags
                     - question.tags.each do |tag|
                       %li
                         = link_to tag, questions_path(tag: tag.name),class: 'q-tag'   
                   .clearfix
                   %a{:href => '#'}
                     %span.avatar
-                      = image_tag question.askable.avatar.url(:medium), alt: 'Image' ,class: 'img-circle user-thumb-img'
+                      = image_tag question.askable.avatar.url(:medium), alt: t('common.image.alt') ,class: 'img-circle user-thumb-img'
                     %span.author-name 
                       = question.askable.username
                   %span.user-badge

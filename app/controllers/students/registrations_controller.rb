@@ -8,9 +8,9 @@ class Students::RegistrationsController <  Devise::RegistrationsController
   
   def index
     if params[:tag]
-      @questions = Question.tagged_with(params[:tag])
+      @questions = Kaminari.paginate_array(Question.tagged_with(params[:tag])).page(params[:page]).per(Kaminari.config.default_per_page)
     else
-      @questions = Question.all.page params[:page]
+      @questions = Kaminari.paginate_array(Question.all).page(params[:page]).per(Kaminari.config.default_per_page)
     end
     @most_used_tags = tag_cloud
     @students_count = Student.count
@@ -26,29 +26,16 @@ class Students::RegistrationsController <  Devise::RegistrationsController
   end
 
   def view_profile
-    @total_downvotes_question = 0
-    @total_upvotes_question = 0
-    @total_upvotes_answer = 0
-    @total_downvotes_answer = 0
     @student = Student.find(params[:id])
-    @questions = @student.questions
-    @answers = @student.answers
-    @badges = @student.badges
     @tag = @student.owned_tags
+    @questions = @student.questions
     @tags = @tag.map { |obj| [obj.name, obj.taggings_count]  }
-    @questions.each do |question|
-      @total_upvotes_question = @total_upvotes_question + question.get_upvotes.size
-    end
-    @questions.each do |question|
-      @total_downvotes_question = @total_downvotes_question + question.get_downvotes.size
-    end
-    @answers.each do |answer|
-      @total_upvotes_answer = @total_upvotes_answer + answer.get_upvotes.size
-    end
-
-    @answers.each do |answer|
-      @total_downvotes_answer = @total_downvotes_answer + answer.get_downvotes.size
-    end
+    @questions_likes_count  =  @student.questions.map{|question|question.get_likes.count}.inject{|sum,val|sum+val}
+    @questions_dislikes_count  =  @student.questions.map{|question|question.get_dislikes.count}.inject{|sum,val|sum+val}
+    @answers_dislikes_count  =  @student.answers.map{|question|question.get_dislikes.count}.inject{|sum,val|sum+val}
+    @answers_likes_count  =  @student.answers.map{|question|question.get_likes.count}.inject{|sum,val|sum+val}
+    @total_questions_votes = @questions_likes_count + @questions_dislikes_count
+    @total_answers_votes = @answers_dislikes_count + @answers_likes_count
   end
 
   def update

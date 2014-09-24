@@ -57,10 +57,10 @@ class AnswersController < ApplicationController
     else
       if "up" == params[:type]        
         answer_liked_by(@answer,liked_by)
-        give_points(@answer,15)
+        give_points(@answer, Settings.points.answer.vote_up)
       else
         answer_disliked_by(@answer,liked_by)
-        give_points(@answer,-15)
+        give_points(@answer, Settings.points.answer.vote_down)
       end
       respond_to do |format|
         format.js        
@@ -75,7 +75,7 @@ class AnswersController < ApplicationController
     else
       @answer.flag = true
       @answer.save
-      give_points(@answer,10)
+      give_points(@answer, Settings.points.answer_accepted)
       flash[:notice] = t('flash_message.success.answer.accept')      
     end
     redirect_to_question(@answer.question)

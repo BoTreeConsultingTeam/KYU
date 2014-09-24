@@ -12,7 +12,6 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require turbolinks
 //= require bootstrap
 //= require bootstrap.min
 //= require bootstrap-datepicker.min
@@ -21,5 +20,4 @@
 //= require ckeditor/plugins/eqneditor/plugin.min
 //= require common
 //= require jsapi
-//= require chosen.proto.min
 //= require chosen.jquery.min
