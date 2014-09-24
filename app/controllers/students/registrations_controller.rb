@@ -33,8 +33,8 @@ class Students::RegistrationsController <  Devise::RegistrationsController
     @student = Student.find(params[:id])
     @questions = @student.questions
     @answers = @student.answers
-    @tag = @student.owned_tags
-    @tags = @tag.map { |obj| [obj.name, obj.taggings_count]  }
+    @badges = @student.badges
+    @tags = @student.owned_tags.page(params[:page]).per(15)
     @questions.each do |question|
       @total_upvotes_question = @total_upvotes_question + question.get_upvotes.size
     end

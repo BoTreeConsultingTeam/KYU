@@ -3,7 +3,7 @@
   - students.each do |student|
     %li.user-item.col-md-4.col-xs-6
       %span.user-avatar
-        = image_tag student.avatar.url(:medium), alt: 'Image',class: 'img-circle user-thumb-img'
+        = image_tag student.avatar.url(:medium), alt: t('common.image.alt'), class: 'img-circle user-thumb-img'
       .left-info
         %span.display_name 
           = link_to student.username,  student_views_profile_path(student,user: 'Student')
@@ -11,15 +11,14 @@
             - if students.student_manager_selected? < 2
               - if !(student.student_manager)
                 = link_to t('teachers.basic.student_manager'),select_students_manager_path(student.id), class: 'pull-right'
-          -if (student.student_manager)
+          -if student.student_manager
             .action.pull-right{href: "#", rel: "tooltip", title: t('students.tooltip.manager')}
               %i.fa.fa-user.fa-fw
         %br
           %span.email
             = student.email
           .question-cat
-            %span.user-badge
-              = render :partial => 'student_badge', :locals => { :object => student}  
+            = render :partial => 'student_badge', :locals => { :object => student}  
             %span.points 
               -if student.points.nil?
                 0 Points
@@ -27,17 +26,19 @@
                 = "#{student.points} Points"
           - if administrator_signed_in? 
             -if student.enable == true
-              = link_to t('students.links.block'), deactivate_path(student) 
+              = link_to '', deactivate_path(student), rel: "tooltip", title: t('students.links.block'), class: 'fa fa-lock'
               |
             -else
-              - if params[:active_tab] == 'Blocked Students'
-                = link_to t('students.links.unblock'),activate_student_path(student)
+              - if params[:active_tab] == t('common.active_tab.blocked_student')
+                = link_to '',activate_student_path(student), rel: "tooltip", title: t('students.links.unblock'), class: 'fa fa-unlock-alt'
                 |
-          - if ((administrator_signed_in? || teacher_signed_in?) && student.mark_as_review == false)
-            = link_to t('students.links.mark_as_review'), markreview_path(student)
-          - if ((administrator_signed_in? || teacher_signed_in?) && student.mark_as_review == true)
-            = link_to t('students.links.review'), student_views_profile_path(student,user: "Student")
-            - if params[:active_tab] == 'Students for Review'
+          - if ((administrator_signed_in? || teacher_signed_in?))
+            - case (student.mark_as_review)
+              - when false
+                = link_to '', markreview_path(student), rel: "tooltip", title: t('students.links.mark_as_review'), class: 'fa fa-flag-checkered'
+              - when true
+                = link_to '', student_views_profile_path(student,user: "Student"), rel: "tooltip", title: t('students.links.review'), class: 'fa fa-check-square-o'
+            - if params[:active_tab] == t('common.active_tab.student_for_review')
               |
-              = link_to t('students.links.unmark_review'), unmark_student_review_path(student)
+              = link_to '', unmark_student_review_path(student), rel: "tooltip", title: t('students.links.unmark_review'), class: 'fa fa-check'
 = render partial: "shared/pagination", locals: {object: students}

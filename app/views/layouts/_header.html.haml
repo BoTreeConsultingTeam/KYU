@@ -9,21 +9,21 @@
             = link_to t('header_navigation.home'), questions_path(active_tab: 'all')   
           - if student_signed_in?
             %li
-              = link_to 'Profile', student_views_profile_path(current_user)
+              = link_to t('header_navigation.profile'), student_views_profile_path(current_user)
             %li
               = link_to t('header_navigation.logout'), destroy_student_session_path, method: :delete
           - if teacher_signed_in?
             %li
-              = link_to 'Report', reports_path
+              = link_to t('header_navigation.report'), reports_path
             %li
-              = link_to 'Profile', teacher_views_profile_path(current_user)
+              = link_to t('header_navigation.profile'), teacher_views_profile_path(current_user)
             %li
-              = link_to "Logout", destroy_teacher_session_path, method: :delete
+              = link_to t('header_navigation.logout'), destroy_teacher_session_path, method: :delete
           - if administrator_signed_in?
             %li
-              = link_to 'Disabled Question', disabled_questions_path
+              = link_to t('header_navigation.disabled_question'), disabled_questions_path
             %li       
-              = link_to 'Report', reports_path
+              = link_to t('header_navigation.report'), reports_path
             %li
               = link_to t('header_navigation.logout'), destroy_teacher_session_path, method: :delete
     .col-md-2.col-xs-2.btn-group.header-avatar
