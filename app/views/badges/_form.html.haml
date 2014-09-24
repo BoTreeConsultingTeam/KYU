@@ -14,8 +14,8 @@
         = f.select(:default, options_for_select(%w[TRUE FALSE], @badge.default),{},{class: 'form-control'})
         .spacer20
         = f.label :color
-        .input-group.colorpicker
-          = f.text_field :color, class: 'form-control'
+        .input-group.colorpicker.color-picker-width
+          = f.text_field :color, class: 'form-control '
           %span.input-group-addon
             %div.fa.fa-square
         .spacer20

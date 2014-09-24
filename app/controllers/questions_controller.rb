@@ -53,20 +53,19 @@ class QuestionsController < ApplicationController
   def create
     @rule = set_rule 3
     if check_permission current_user,@rule
-    @question = Question.new(question_params.merge({askable: current_user}).except!(:tag_list))
-    current_user.tag( @question, :with => question_params[:tag_list], :on => :tags )
-    if @question.save
-      if current_student
-        current_student.change_points(Point.action_score(1))
-      end
-        redirect_to questions_path(active_tab: 'all')
+      @question = Question.new(question_params.merge({askable: current_user}).except!(:tag_list))
+      current_user.tag( @question, :with => question_params[:tag_list], :on => :tags )
+      if @question.save
+        if current_student
+          current_student.change_points(Point.action_score(1))
+          redirect_to questions_path(active_tab: 'all')
+        else
+          render 'new'
+        end
       else
-        @standards = Standard.all
-        render new_question_path
+        flash[:error] = t('answers.messages.unauthorized')
+        redirect_to questions_path
       end
-    else
-      flash[:error] = t('answers.messages.unauthorized')
-      redirect_to questions_path
     end
   end
 
@@ -105,9 +104,11 @@ class QuestionsController < ApplicationController
       if question_find_by_id.nil?
         redirect_to questions_path,flash: { error: t('flash_message.error.question.vote') }
       else
-        if "up" == params[:type] && !@question.get_likes.map{|vote| vote.voter_id}.include?current_user.id 
+        if "up" == params[:type] 
+          if !@question.get_likes.map{|vote| vote.voter_id}.include?current_user.id 
           question_liked_by(@question,liked_by)
           give_points(@question, Point.action_score(3))
+        end
         else
           if !@question.get_dislikes.map{|vote| vote.voter_id}.include?current_user.id 
             question_disliked_by(@question,liked_by)

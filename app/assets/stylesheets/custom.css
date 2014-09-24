@@ -374,3 +374,6 @@ ul.chosen-choices{
 .rules-list{
 	margin-top: 5px !important;
 }
+.color-picker-width{
+	width: 120px !important;
+}

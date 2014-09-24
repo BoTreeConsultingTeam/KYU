@@ -12,6 +12,3 @@
   = render :partial => 'questions_list', :locals => { questions: @questions}
 -else
   = t('questions.error.message')
-.row.paginations.home
-  .col-md-12
-    = render partial: 'shared/pagination', locals: { object: @questions}
