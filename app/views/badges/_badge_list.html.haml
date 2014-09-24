@@ -14,13 +14,4 @@
             = t('badges.captions.points_require')
     %ul.raw.single-head
       - badge_rules = badge.rules 
-      -@rules.each do |rule|
-        %span
-          %li.col-md-3.col-xs-5.rules-list
-            - if badge_rules.include? rule
-              %i.fa.fa-check
-              = rule.description
-            - else
-              %i.fa.fa-ban
-                = rule.description
-
+      = render partial: 'badges/rules_list', locals: { rules: @rules, badge_rules: badge_rules}

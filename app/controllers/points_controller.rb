@@ -9,11 +9,10 @@ class PointsController < ApplicationController
     @point.update(point_params)
     if @point.save
       flash[:notice] = t('points.message.update_success')
-      redirect_to badges_path
     else
       flash[:error] = t('points.message.update_failed')
-      redirect_to badges_path
     end
+    redirect_to badges_path
   end
 
   private

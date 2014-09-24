@@ -5,7 +5,7 @@
   .col-md-6.col-xs-6.current-category    
     %span
       - if (administrator_signed_in?)
-        = link_to ' Add Badge', new_badge_path,'data-no-turbolink' => true, class: 'fa fa-plus btn btn-success  pull-right'
+        = link_to t('badges.captions.add_badge'), new_badge_path,'data-no-turbolink' => true, class: 'fa fa-plus btn btn-success  pull-right'
 .row.points-system
   .col-md-12
     %h3 
@@ -13,23 +13,7 @@
     %p 
       = t('badges.captions.earn_reputaion')  
   .clearfix
-  %ul.raw.points-define.single-head
-    - @points.each do |point|
-      %span
-        %li.col-md-3.col-xs-6
-          %div
-            %span.points-count
-              = point.score
-            %span.star
-              %i.fa.fa-star
-              - if (administrator_signed_in?)
-                |
-                = link_to '', edit_point_path(point.id), class: 'fa fa-pencil'
-              %br
-              = point.action
-          %br
-
-            
+  = render partial: 'badges/points_list', locals: { points: @points}
 .row.badges-system
   .col-md-12
     %h3 
@@ -37,5 +21,4 @@
     %p 
       = t('badges.captions.earn_reputaion')  
   .col-md-12.badge-content
-    = render 'badge_list'  
-
+    = render 'badge_list'

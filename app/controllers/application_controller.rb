@@ -17,7 +17,7 @@ class ApplicationController < ActionController::Base
   end
 
   def set_rule id
-    Rule.find(id)
+    Rule.find_by_id(id)
   end
   
   def badge_rules badge

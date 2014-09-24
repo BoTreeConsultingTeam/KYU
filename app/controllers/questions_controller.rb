@@ -1,6 +1,7 @@
 class QuestionsController < ApplicationController
   before_action :user_signed_in?
   before_filter :tag_list, only: [:new, :edit]
+  before_filter :question_find_by_id, only: [:show, :destroy, :edit]
   def index
     if received_tag
       @tag = ActsAsTaggableOn::Tag.find_by_name(received_tag)
@@ -35,7 +36,7 @@ class QuestionsController < ApplicationController
       @question = Question.new
       @question.user_id = session[:id]
     else
-      flash[:error] = "not_permitted: 'You are not authorized to access this page'"
+      flash[:error] = t('answers.messages.unauthorized')
       redirect_to members_path(active_tab: 'Students')
     end
   end
@@ -55,13 +56,12 @@ class QuestionsController < ApplicationController
         render new_question_path
       end
     else
-      flash[:error] = "You do not have earned enough badges for this action"
+      flash[:error] = t('answers.messages.unauthorized')
       redirect_to questions_path
     end
   end
 
   def show
-    @question = question_find_by_id
     if !(@question.nil?)
       @answers = @question.answers
       @answer = Answer.new
@@ -74,8 +74,7 @@ class QuestionsController < ApplicationController
     end
   end
 
-  def destroy
-    @question = question_find_by_id
+  def destroy 
     title = @question.title
     if question_find_by_id.nil?
       flash[:error] = t('flash_message.error.question.destroy')
@@ -97,11 +96,9 @@ class QuestionsController < ApplicationController
       if question_find_by_id.nil?
         redirect_to questions_path,flash: { error: t('flash_message.error.question.vote') }
       else
-        if "up" == params[:type]
-          if !@question.get_likes.map{|vote| vote.voter_id}.include?current_user.id 
-            question_liked_by(@question,liked_by)
-            give_points(@question, Point.action_score(3))
-          end
+        if "up" == params[:type] && !@question.get_likes.map{|vote| vote.voter_id}.include?current_user.id 
+          question_liked_by(@question,liked_by)
+          give_points(@question, Point.action_score(3))
         else
           if !@question.get_dislikes.map{|vote| vote.voter_id}.include?current_user.id 
             question_disliked_by(@question,liked_by)
@@ -113,7 +110,7 @@ class QuestionsController < ApplicationController
         end      
       end
     else
-      flash[:error] = "You are not authorized for this"
+      flash[:error] = t('answers.messages.unauthorized')
       redirect_to questions_path
     end
 
@@ -121,7 +118,6 @@ class QuestionsController < ApplicationController
   
   def edit
     @standards = Standard.all
-    @question = question_find_by_id
     @standards = Standard.all
     if question_find_by_id.nil?
       redirect_to questions_path(active_tab: 'all'),flash: { error: t('flash_message.error.question.edit') }
@@ -172,7 +168,7 @@ class QuestionsController < ApplicationController
       end
       redirect_to questions_path(active_tab: 'all')
     else
-      flash[:error] =  "You are not authorized for this action"
+      flash[:error] =  t('answers.messages.unauthorized')
       redirect_to questions_path
     end
   end
@@ -208,13 +204,13 @@ class QuestionsController < ApplicationController
   end
 
   def un_answered_questions
-    question = {}
-    all_questions.each do |q| 
-      if q.answers.count == 0
-        question[q.id] = q
+    answer_counts = {}
+    all_questions.each do |question| 
+      if question.answers.count == 0
+        answer_counts[question.id] = question
       end
     end
-    question.keys
+    answer_counts.keys
   end
 
   def tag_list

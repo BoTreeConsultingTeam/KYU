@@ -20,7 +20,7 @@ class AnswersController < ApplicationController
         redirect_to_question(params[:answer][:question_id])
       end
     else
-      flash[:error] = "You are not authorized for this action"
+      flash[:error] = t('answers.messages.unauthorized')
       redirect_to questions_path
     end
   end
@@ -76,7 +76,7 @@ class AnswersController < ApplicationController
         end  
       end
     else
-      flash[:error] = "You are not authyorized for this action"
+      flash[:error] = t('answers.messages.unauthorized')
       redirect_to questions_path
     end
   end

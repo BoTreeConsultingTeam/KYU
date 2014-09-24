@@ -1,14 +1,13 @@
 class BadgesController < ApplicationController
-  before_action :set_badge, only: [:edit, :update, :destroy]
+  before_action :find_badge, only: [:edit, :update, :destroy]
+  before_filter :find_all_rules, only: [:index, :edit, :new]
   def index
     @badges = Badge.all
-    @rules = Rule.all
     @points = Point.all
   end
   
   def new
     @badge = Badge.new
-    @rules = Rule.all
   end
 
   def create
@@ -27,25 +26,14 @@ class BadgesController < ApplicationController
   end
 
   def edit
-    @rules = Rule.all
     @badge_rules =  @badge.rules
   end
 
   def update
     current_access = @badge.permissions.map{|permission|permission.rule_id}
     rule_ids = params[:rule_id]
-    current_access.each do |access_id|
-      if !rule_ids.include? access_id 
-        @badge.permissions.find_by(rule_id: access_id).destroy
-      end
-    end
-    if !rule_ids.nil?
-      rule_ids.each do |rule_id|
-        if !@badge.permissions.find_by(rule_id: rule_id)
-          @badge.permissions.create(rule_id: rule_id)
-        end
-      end
-    end
+    destroy_permission rule_ids, current_access 
+    create_permission rule_ids
     if @badge.update(badge_params)
       flash[:notice] = t('badges.message.badge_update_success')
       redirect_to badges_path
@@ -69,7 +57,28 @@ class BadgesController < ApplicationController
     params.require(:badge).permit(:name, :points, :default, :color)
   end
 
-  def set_badge
-    @badge = Badge.find(params[:id])
+  def find_badge
+    @badge = Badge.find_by_id(params[:id])
+  end
+
+  def find_all_rules
+    @rules = Rule.all
+  end
+
+  def destroy_permission rule_ids, current_access 
+    current_access.each do |access_id|
+      if !rule_ids.include? access_id 
+        @badge.permissions.find_by_rule_id(access_id).destroy
+      end
+    end
+  end
+  def create_permission rule_ids
+    if !rule_ids.nil?
+      rule_ids.each do |rule_id|
+        if !@badge.permissions.find_by_rule_id(rule_id)
+          @badge.permissions.create(rule_id: rule_id)
+        end
+      end
+    end
   end
 end

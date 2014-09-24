@@ -20,7 +20,7 @@ class CommentsController < ApplicationController
         redirect_to questions_path(active_tab: 'all')
       end
     else
-      flash[:error] = "You are not authorized for this action"
+      flash[:error] = t('answers.messages.unauthorized')
       redirect_to questions_path
     end
   end
@@ -91,7 +91,7 @@ class CommentsController < ApplicationController
       if params[:answer_id].present?
         @answer = find_by_answer_id(params[:id])
         @comments = Comment.all
-        redirect_to question_path(@answer.question.id),flash: { error: "No such Comment found for Delete!" }
+        redirect_to question_path(@answer.question.id),flash: { error: t('comments.messages.comment_not_found') }
       else
         redirect_to question_path(params[:question_id]),flash: { error: t('comments.messages.comment_not_found') }
       end
