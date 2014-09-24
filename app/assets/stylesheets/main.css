@@ -719,8 +719,8 @@ ul.q-f-sort li a:hover {
 	-webkit-border-radius: 3px;
 	border-radius: 3px; /* border radius */
 	background-color: #00adef; /* layer fill content */
-
 }
+
 ul.question-tags {
 	display: inline-block;
 	margin-bottom: 10px;
@@ -3054,7 +3054,7 @@ ul.socials-share li a.btn-gg:hover{
 	width: 30px;
 	height: 30px;
 }
-.i-preview .i-preview-content .i-preview-title{
+.i-preview .i-preview-content .i-preview-title a{
 	display: inline-block;
 	vertical-align: middle;
 	color: #8c97b2;

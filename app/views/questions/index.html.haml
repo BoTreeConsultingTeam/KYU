@@ -1,9 +1,17 @@
 = render :partial => "layouts/sub_heading", :locals => {:object => 'All Questions'}
 = render :partial => "questions_filter_links"
--if !(@questions.nil?)
+- if !@tag.nil?
+  %ul.row.select-category
+    %li.col-md-12.select-catagory.single-head
+      .col-md-2
+        .q-tag
+          = @tag       
+      .col-md-8
+        = raw(@tag.description)
+- if !(@questions.nil?)
   = render :partial => 'questions_list', :locals => { questions: @questions}
 -else
-  No Questions Available
+  = t('questions.error.message')
 .row.paginations.home
   .col-md-12
     = render partial: 'shared/pagination', locals: { object: @questions}

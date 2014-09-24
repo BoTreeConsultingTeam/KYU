@@ -6,7 +6,6 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 require "#{Rails.root}/db/gioco/db.rb"
-
 def find_or_create_admin(admin_attrs)
 	email = admin_attrs[:email]
 	admin = Administrator.find_by_email(email)
@@ -19,6 +18,7 @@ def find_or_create_admin(admin_attrs)
 	end
 	admin	
 end	
+
 
 admin_user = find_or_create_admin({email: 'admin@kyu.com', password: 'password'})
 
