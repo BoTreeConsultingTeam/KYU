@@ -25,6 +25,7 @@ class Student < ActiveRecord::Base
   acts_as_voter
   has_attached_file :avatar, :styles => { :medium => "#{Settings.paperclip.style.medium}>", :thumb => "#{Settings.paperclip.style.thumb}>" }, :default_url => Settings.paperclip.style.image_default_url
   validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/
+  #scope :accepted_answers, -> { Answer.where(:flag => true)}
   def delete_bookmarks
     self.bookmarks.destroy_all
   end
