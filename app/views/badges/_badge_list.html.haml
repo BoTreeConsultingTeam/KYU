@@ -1,8 +1,9 @@
 - @badges.each do |badge|
   .border
     .col-md-3.question-cat
-      %span.user-badge
-        = badge.name  
+      .spacer20
+      %span{class: student_badge_color("#{badge.name}")}
+        = badge.name    
       %span 
         = render partial: 'badges_links', locals: { badge: badge}
       %br

@@ -33,6 +33,7 @@ class Students::RegistrationsController <  Devise::RegistrationsController
     @student = Student.find(params[:id])
     @questions = @student.questions
     @answers = @student.answers
+    @badges = @student.badges
     @tag = @student.owned_tags
     @tags = @tag.map { |obj| [obj.name, obj.taggings_count]  }
     @questions.each do |question|

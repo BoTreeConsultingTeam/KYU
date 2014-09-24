@@ -719,8 +719,8 @@ ul.q-f-sort li a:hover {
 	-webkit-border-radius: 3px;
 	border-radius: 3px; /* border radius */
 	background-color: #00adef; /* layer fill content */
-
 }
+
 ul.question-tags {
 	display: inline-block;
 	margin-bottom: 10px;

@@ -73,7 +73,7 @@ ActiveRecord::Schema.define(version: 20140923162506) do
   add_index "bookmarks", ["question_id", "bookmarkable_id", "bookmarkable_type"], name: "bookmarks_index", unique: true, using: :btree
 
   create_table "comments", force: true do |t|
-    t.string   "title",            limit: 50, default: ""
+    t.string   "title",            limit: 50
     t.text     "comment"
     t.integer  "commentable_id"
     t.string   "commentable_type"
@@ -195,7 +195,7 @@ ActiveRecord::Schema.define(version: 20140923162506) do
     t.datetime "updated_at"
     t.integer  "askable_id"
     t.string   "askable_type"
-    t.boolean  "enabled",            default: true
+    t.boolean  "enabled",      default: true
     t.integer  "cached_votes_total", default: 0
     t.integer  "cached_votes_score", default: 0
     t.integer  "cached_votes_up",    default: 0
@@ -240,18 +240,15 @@ ActiveRecord::Schema.define(version: 20140923162506) do
     t.datetime "updated_at"
     t.string   "username"
     t.date     "birthdate"
-    t.integer  "sash_id"
-    t.integer  "level",                  default: 0
-    t.boolean  "student_manager",        default: false
-    t.string   "student_class"
     t.integer  "points"
-    t.integer  "standard_id"
-    t.boolean  "enable",                 default: true
-    t.boolean  "mark_as_review",         default: false
     t.string   "avatar_file_name"
     t.string   "avatar_content_type"
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
+    t.boolean  "student_manager",        default: false
+    t.boolean  "enable",                 default: true
+    t.boolean  "mark_as_review",         default: false
+    t.integer  "standard_id"
   end
 
   add_index "students", ["email"], name: "index_students_on_email", unique: true, using: :btree
@@ -296,11 +293,11 @@ ActiveRecord::Schema.define(version: 20140923162506) do
     t.string   "username"
     t.string   "qualification"
     t.string   "salutation"
-    t.boolean  "enable",                 default: true
     t.string   "avatar_file_name"
     t.string   "avatar_content_type"
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
+    t.boolean  "enable",                 default: true
   end
 
   add_index "teachers", ["email"], name: "index_teachers_on_email", unique: true, using: :btree

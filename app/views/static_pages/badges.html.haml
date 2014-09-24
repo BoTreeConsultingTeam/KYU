@@ -1,2 +1,3 @@
-= @badges.each do |badge|
-  badge.name  
+- @badges.each do |badge|
+  %span{class: student_badge_color("#{badge.name}")}
+   = badge.name  
