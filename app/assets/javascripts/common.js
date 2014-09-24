@@ -1,8 +1,9 @@
 $( document ).ready(function() {
   $(".i-preview").hide(); 
   $('.toggleLink').click(function(){
-  $("#comment" + this.id).slideToggle();
+    $("#comment" + this.id).slideToggle();
   });
+  $('#datepicker1').datepicker();
   $('.colorpicker').colorpicker();
   $('.colorselect').click(function(){
     $('#colorSelector').ColorPicker({
@@ -19,7 +20,8 @@ $( document ).ready(function() {
         $('#colorSelector div').css('backgroundColor', '#' + hex);
       }
     });
-  $('#datepicker1').datepicker();
+  });
+  
   $("#search").keyup(function() {
     $('#search_preview').empty();
     $('.i-preview').hide();
