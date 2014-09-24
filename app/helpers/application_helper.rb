@@ -30,6 +30,24 @@ module ApplicationHelper
     link_to users_type, members_path(active_tab: users_type), {class: profile_active_tab("#{users_type}")}
   end
 
+  def student_badge_color(badge_name)
+    if badge_name.blank?
+      css_class = "user-badge"
+    elsif badge_name == "train"
+      css_class = "user-badge-train"
+    elsif badge_name == "Reviewer"
+      css_class = "user-badge-reviewer"
+    elsif badge_name == "Supporter"
+      css_class = "user-badge-supporter"
+    elsif badge_name == "Doctor"
+      css_class = "user-badge-doctor"
+    elsif badge_name == "Vice Professor"
+      css_class = "user-badge-vice-professor"
+    elsif badge_name == "Professor"
+      css_class = "user-badge-professor"
+    end
+  end
+
   def questions_count
     Question.count
   end

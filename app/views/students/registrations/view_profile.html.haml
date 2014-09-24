@@ -12,10 +12,10 @@
   .col-md-7.col-xs-7.user-post-count
     .row
       .col-md-4.col-xs-4.question-cat
-        %span.user-badge
-          - if @student.badges.last.blank?
-            No Badges
-          - else 
+        - if @student.badges.last.blank?
+          %span.user-badge
+        - else
+          %span{class: student_badge_color("#{@student.badges.last.name}")}
             = @student.badges.last.name
         %br
           %span.points-count
@@ -77,7 +77,6 @@
                     = image_tag answer.answerable.avatar.url(:medium), alt: t('common.image.alt') ,class: 'img-circle user-thumb-img'
                   %span.user-badge
                     - if answer.answerable.badges.last.blank?
-                      No Badges
                     -else
                       = answer.answerable.badges.last.name
                   %span.question-time
@@ -159,14 +158,10 @@
             You haven't tagged any thing yet!!!
 - elsif params[:active_tab] == t('students.active_tab.badges')
   .main-questions-list
-    %ul#main_questions_list
+    %ul#main_questions_list.single-head
       - if !(@student.badges.last.blank?)
-        - @student.badges.pluck(:name).each do |badge|
-          .row.select-category.single-head
-            .col-md-6  
-              .question-cat
-                %span.user-badge  
-                  = badge
+        .col-md-12.badge-content
+          = render 'badges/badge_list'
       -else
         .spacer50
         .col-md-2
@@ -244,7 +239,6 @@
                       = question.askable.username
                   %span.user-badge
                     - if question.askable.badges.last.blank?
-                      No Badges
                     - else 
                       = question.askable.badges.last.name  
                   %span.question-time

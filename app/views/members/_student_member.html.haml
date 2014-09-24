@@ -18,8 +18,7 @@
           %span.email
             = student.email
           .question-cat
-            %span.user-badge
-              = render :partial => 'student_badge', :locals => { :object => student}  
+            = render :partial => 'student_badge', :locals => { :object => student}  
             %span.points 
               -if student.points.nil?
                 0 Points
