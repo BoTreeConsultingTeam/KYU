@@ -28,9 +28,9 @@
       - if !current_administrator && answer.answerable ==  current_user
         %ul.post-controls
           %li
-            = link_to '',edit_question_answer_path(@question.id,answer.id),class: 'post-edit action fa fa-pencil','data-no-turbolink' => true
+            = link_to '',edit_question_answer_path(@question.id,answer.id), rel: 'tooltip', title: t('common.links.edit'),class: 'post-edit action fa fa-pencil','data-no-turbolink' => true
           %li
-            = link_to '', question_answer_path(@question.id,answer.id),method: :delete,data: {confirm:'Are you sure?'},class: 'post-delete action fa fa-trash-o'
+            = link_to '', question_answer_path(@question.id,answer.id),method: :delete,rel: 'tooltip',title: t('common.links.delete_link'),data: {confirm: t('common.links.delete.confirm')},class: 'post-delete action fa fa-trash-o'
       .clearfix
       .question-content
         = raw(answer.content)

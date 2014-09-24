@@ -3,15 +3,15 @@ class MembersController < ApplicationController
   before_action :user_signed_in?
   def index
     if params[:active_tab] == 'Students'
-      @students = Student.all.page(params[:page]).per(9)
+      @students = Kaminari.paginate_array(Student.all).page(params[:page]).per(Settings.pagination.per_page_5)
     elsif params[:active_tab] == 'Teachers'
-      @teachers = Teacher.all.page(params[:page]).per(9)
+      @teachers = Kaminari.paginate_array(Teacher.all).page(params[:page]).per(Settings.pagination.per_page_5)
     elsif params[:active_tab] == 'Managers'
-      @students = Student.where("student_manager = ?",true).page(params[:page]).per(5)
+      @students = Kaminari.paginate_array(Student.where("student_manager = ?",true)).page(params[:page]).per(Settings.pagination.per_page_5)
     elsif params[:active_tab] == 'Students for Review'
-      @students = Student.where("mark_as_review = ?",true).page(params[:page]).per(5)
+      @students = Kaminari.paginate_array(Student.where("mark_as_review = ?",true)).page(params[:page]).per(Settings.pagination.per_page_5)
     else
-       @students = Student.where("enable = ?",false).page(params[:page]).per(5)
+      @students = Kaminari.paginate_array(Student.where("enable = ?",false)).page(params[:page]).per(Settings.pagination.per_page_5)
     end
   end
 
@@ -66,7 +66,7 @@ class MembersController < ApplicationController
   end
 
   def select_students_manager
-    if Student.find_all_by_student_manager(true).count < 2
+    if Student.find_all_by_student_manager(true).count < Settings.student.student_manager_limit
       @student = Student.find_by_id(params[:id])
       @student.student_manager = true
       @student.save      

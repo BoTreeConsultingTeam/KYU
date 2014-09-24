@@ -8,4 +8,5 @@ class Answer < ActiveRecord::Base
   acts_as_votable
   belongs_to :answerable, polymorphic: true
   validates_presence_of :content
+  scope :accepted_answers, -> { where(:flag => true)}
 end

@@ -20,9 +20,24 @@
         %br/
         = f.label :tag_list, t('questions.basic.tag_on_new')
         %br/
-        = f.text_field :tag_list, class: 'submit-input tags-input'
+        .chzn-drop
+          = f.select :tag_list, options_for_select(@tags, @question.tags),{},multiple: true, prompt: false, id: 'form-field-select-4', class: 'chzn-drop instructor-chosen-select chosen-select form-control', data: { placeholder: '' }
+        %br/
         -if current_student
           = f.hidden_field :user_id, :value => current_student.id
         -elsif current_teacher
           = f.hidden_field :user_id, :value => current_teacher.id
         = f.submit t('questions.btn.submit'),class: 'btn btn-success', id: 'btn_submit_question'
+
+:javascript
+  var config = {
+    '.chosen-select'           : {},
+    '.chosen-select-deselect'  : {allow_single_deselect:true},
+    '.chosen-select-no-single' : {disable_search_threshold:10},
+    '.chosen-select-no-results': {no_results_text:'Oops, nothing found!'},
+    '.chosen-select-width'     : {width:"95%"}
+  }
+  for (var selector in config) {
+    $(selector).chosen(config[selector]);
+  }
+

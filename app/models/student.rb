@@ -1,6 +1,5 @@
 class Student < ActiveRecord::Base
-
-  paginates_per 10
+  
   include Gioco_Methods
 
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
@@ -24,8 +23,9 @@ class Student < ActiveRecord::Base
   validates_confirmation_of :password, if: lambda { |m| m.password.present? }  
   acts_as_tagger
   acts_as_voter
-  has_attached_file :avatar, :styles => { :medium => "300x300>", :thumb => "50x50>" }, :default_url => "missing.jpeg"
+  has_attached_file :avatar, :styles => { :medium => "#{Settings.paperclip.style.medium}>", :thumb => "#{Settings.paperclip.style.thumb}>" }, :default_url => Settings.paperclip.style.image_default_url
   validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/
+  #scope :accepted_answers, -> { Answer.where(:flag => true)}
   def delete_bookmarks
     self.bookmarks.destroy_all
   end

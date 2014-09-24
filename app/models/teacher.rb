@@ -1,7 +1,6 @@
 class Teacher < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
-  paginates_per 10
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable
   has_many :comments, as: :commentable
   
@@ -20,6 +19,6 @@ class Teacher < ActiveRecord::Base
   attr_accessor :current_password
   acts_as_tagger
   acts_as_voter
-  has_attached_file :avatar, :styles => { :medium => "300x300>", :thumb => "50x50>" }, :default_url => "missing.jpeg"
+  has_attached_file :avatar, :styles => { :medium => "#{Settings.paperclip.style.medium}>", :thumb => "#{Settings.paperclip.style.thumb}>" }, :default_url => Settings.paperclip.style.image_default_url
   validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/
 end
