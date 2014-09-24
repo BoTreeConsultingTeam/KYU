@@ -97,7 +97,7 @@ class ReportsController < ApplicationController
     def set_student
       @student  = Student.find_by_id(params[:id])
       if @student.nil?
-        flash[:error] = 'No Student Found'
+        flash[:error] = t('flash_message.error.report.no_student')
         redirect_to reports_path        
       end
     end
@@ -105,17 +105,17 @@ class ReportsController < ApplicationController
     def set_standard
       @standard = Standard.find_by_id(params[:standard_id])
       if @standard.nil?
-        flash[:error] = 'No Standard Found'
+        flash[:error] = t('flash_message.error.report.no_standard')
         redirect_to reports_path
       end
     end
     
     def error_message
-      flash[:error] = 'No Record Found'
+      flash[:error] = t('flash_message.error.report.no_student')
       redirect_to reports_path
     end
-    def map_array_for_chart(array)
-      sorted_reverse_array = array.sort {|a,b| a[1] <=> b[1]}.reverse
+    def map_array_for_chart(data_for_chart)
+      sorted_reverse_array = data_for_chart.sort {|a,b| a[1] <=> b[1]}.reverse
       first_3_elements = sorted_reverse_array.slice(0,3)
       @student_top3_chart = GoogleChartService.render_reports_charts( first_3_elements, :bar, "Student's tag ration", true, 'Tag', 'Count', false )
       first_3_elements

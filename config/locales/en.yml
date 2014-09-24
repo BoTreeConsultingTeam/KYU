@@ -156,6 +156,10 @@ en:
         edit: 'No such Comment found for Edit!'
         update: 'no such Comment found for Update!'
         destroy:
+      report:
+        no_record: 'No Record Found'
+        no_student: 'No Student Found'
+        no_standard: 'No Standard Found'
     success:
       question:
         update: 'Question successfully updated!'
