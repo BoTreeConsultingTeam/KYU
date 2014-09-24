@@ -22,5 +22,4 @@
 //= require common
 //= require jsapi
 //= require chosen.jquery.min
-//= require tag_chosen
 
