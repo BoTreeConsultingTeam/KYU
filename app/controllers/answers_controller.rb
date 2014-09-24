@@ -8,13 +8,20 @@ class AnswersController < ApplicationController
   end
 
   def create
-    @answer = Answer.new(answer_params.merge({answerable: current_user}))
-    @question = @answer.question
-    if @answer.save
-      redirect_to_question(params[:answer][:question_id])
+    @rule = set_rule 6
+    if check_permission current_user,@rule
+      @answer = Answer.new(answer_params.merge({answerable: current_user}))
+      @question = @answer.question
+      if @answer.save
+        give_points(@answer, Point.action_score(2))
+        redirect_to_question(params[:answer][:question_id])
+      else
+        flash[:error] = t('answers.messages.contains_error')
+        redirect_to_question(params[:answer][:question_id])
+      end
     else
-      flash[:error] = t('answers.messages.contains_error')
-      redirect_to_question(params[:answer][:question_id])
+      flash[:error] = t('answers.messages.unauthorized')
+      redirect_to questions_path
     end
   end
 
@@ -51,20 +58,26 @@ class AnswersController < ApplicationController
   end
 
   def vote
-    answer_find_by_id
-    if answer_find_by_id.nil?
-      redirect_to questions_path(active_tab: 'all'),flash: { error: t('flash_message.error.answer.vote') }
-    else
-      if "up" == params[:type]        
-        answer_liked_by(@answer,liked_by)
-        give_points(@answer, Settings.points.answer.vote_up)
+    @rule = set_rule 2
+    if check_permission current_user,@rule
+      answer_find_by_id
+      if answer_find_by_id.nil?
+        redirect_to questions_path(active_tab: 'all'),flash: { error: t('flash_message.error.answer.vote') }
       else
-        answer_disliked_by(@answer,liked_by)
-        give_points(@answer, Settings.points.answer.vote_down)
+        if "up" == params[:type]        
+          answer_liked_by(@answer, liked_by)
+          give_points(@answer, Point.action_score(4))
+        else
+          answer_disliked_by(@answer,liked_by)
+          give_points(@answer, Point.action_score(6))
+        end
+        respond_to do |format|
+          format.js        
+        end  
       end
-      respond_to do |format|
-        format.js        
-      end  
+    else
+      flash[:error] = t('answers.messages.unauthorized')
+      redirect_to questions_path
     end
   end
 
@@ -74,8 +87,8 @@ class AnswersController < ApplicationController
       flash[:error] = t('flash_message.error.answer.accept')
     else
       @answer.flag = true
-      @answer.save
-      give_points(@answer, Settings.points.answer_accepted)
+      @answer.save     
+      give_points(@answer, Point.action_score(7))
       flash[:notice] = t('flash_message.success.answer.accept')      
     end
     redirect_to_question(@answer.question)

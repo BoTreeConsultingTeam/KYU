@@ -252,6 +252,7 @@ ul.social-icon{
 }
 .accept-answer{
   padding-left: 40px;
+  color:green;
 }
 
 .report-link {
@@ -369,4 +370,7 @@ ul.chosen-choices{
     margin-right: 576px !important;
     margin-top: -25px !important;
     position: relative !important;
+}
+.rules-list{
+	margin-top: 5px !important;
 }

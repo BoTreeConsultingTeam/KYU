@@ -42,6 +42,7 @@ en:
       update_success: 'Updated Successfully!'
       delete_success: 'Deleted successfully!'
       answer_accepted: 'Answer Accepted!'
+      unauthorized: 'You are not authorized for this action'
     basic:
       answer_label: 'Your answer'
       new_answer: 'New Answer'
@@ -80,6 +81,19 @@ en:
       answer_vote_up: 'answer is voted up'
       answer_accepted: 'answer is Accepted'
       badge_system: 'Badges System'
+      add_badge: 'Add Badge'
+      add_new_badge: 'Add New Badge'
+      edit_badge: 'Edit Badge'
+    message:
+      badge_create_success: 'Badge Created'
+      badge_create_fail: 'Badge Not Created'
+      badge_update_success: 'Badge updated'
+      badge_destroy_success: 'Badge destroy'
+      badge_destroy_fail: 'Badge not destroy'
+  points:
+    message: 
+      update_success: 'Points Updated '
+      update_failed: 'Points not Updated'
   common:
     error:
       messages: 'No Record Found'

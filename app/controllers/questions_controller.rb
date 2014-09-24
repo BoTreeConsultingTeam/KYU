@@ -1,6 +1,7 @@
 class QuestionsController < ApplicationController
   before_action :user_signed_in?
   before_filter :tag_list, only: [:new, :edit]
+  before_filter :question_find_by_id, only: [:show, :destroy, :edit]
   def index
     if received_tag
       @tag = ActsAsTaggableOn::Tag.find_by_name(received_tag)
@@ -44,27 +45,32 @@ class QuestionsController < ApplicationController
       @question = Question.new
       @question.user_id = session[:id]
     else
-      flash[:error] = "not_permitted: 'You are not authorized to access this page'"
+      flash[:error] = t('answers.messages.unauthorized')
       redirect_to members_path(active_tab: 'Students')
     end
   end
 
   def create
+    @rule = set_rule 3
+    if check_permission current_user,@rule
     @question = Question.new(question_params.merge({askable: current_user}).except!(:tag_list))
     current_user.tag( @question, :with => question_params[:tag_list], :on => :tags )
     if @question.save
       if current_student
-        current_student.change_points(Settings.points.create_question)
+        current_student.change_points(Point.action_score(1))
       end
-      redirect_to questions_path(active_tab: 'all')
+        redirect_to questions_path(active_tab: 'all')
+      else
+        @standards = Standard.all
+        render new_question_path
+      end
     else
-      @standards = Standard.all
-      render new_question_path
+      flash[:error] = t('answers.messages.unauthorized')
+      redirect_to questions_path
     end
   end
 
   def show
-    @question = question_find_by_id
     if !(@question.nil?)
       @answers = @question.answers.page params[:page]
       @answer = Answer.new
@@ -77,8 +83,7 @@ class QuestionsController < ApplicationController
     end
   end
 
-  def destroy
-    @question = question_find_by_id
+  def destroy 
     title = @question.title
     if question_find_by_id.nil?
       flash[:error] = t('flash_message.error.question.destroy')
@@ -94,30 +99,34 @@ class QuestionsController < ApplicationController
   end
 
   def vote
-    @question = question_find_by_id
-    if question_find_by_id.nil?
-      redirect_to questions_path,flash: { error: t('flash_message.error.question.vote') }
-    else
-      if "up" == params[:type]
-        if !@question.get_likes.map{|vote| vote.voter_id}.include?current_user.id 
-          question_liked_by(@question,liked_by)
-          give_points(@question,Settings.points.question.vote_up)
-        end
+    @rule = set_rule 1
+    if check_permission current_user,@rule
+      @question = question_find_by_id
+      if question_find_by_id.nil?
+        redirect_to questions_path,flash: { error: t('flash_message.error.question.vote') }
       else
-        if !@question.get_dislikes.map{|vote| vote.voter_id}.include?current_user.id 
-          question_disliked_by(@question,liked_by)
-          give_points(@question,Settings.points.question.vote_down)
+        if "up" == params[:type] && !@question.get_likes.map{|vote| vote.voter_id}.include?current_user.id 
+          question_liked_by(@question,liked_by)
+          give_points(@question, Point.action_score(3))
+        else
+          if !@question.get_dislikes.map{|vote| vote.voter_id}.include?current_user.id 
+            question_disliked_by(@question,liked_by)
+            give_points(@question, Point.action_score(5))
+          end
+        end
+        respond_to do |format|
+          format.js
         end
       end
-      respond_to do |format|
-        format.js        
-      end      
+    else
+      flash[:error] = t('answers.messages.unauthorized')
+      redirect_to questions_path
     end
+
   end
   
   def edit
     @standards = Standard.all
-    @question = question_find_by_id
     @standards = Standard.all
     if question_find_by_id.nil?
       redirect_to questions_path(active_tab: 'all'),flash: { error: t('flash_message.error.question.edit') }
@@ -149,20 +158,28 @@ class QuestionsController < ApplicationController
       flash[:error] = t('flash_message.error.question.disable')
     else
       @question.enabled = false
-      @question.save
+      if @question.save
+        give_points(@question, Point.action_score(8))
+      end
     end
     redirect_to questions_path(active_tab: 'all')
   end
 
   def abuse_report
-    @question = question_find_by_id
-    if @question.nil?
-      flash[:error] =  t('flash_message.error.question.report_abuse') 
+    @rule = set_rule 5
+    if check_permission current_user,@rule
+      @question = question_find_by_id
+      if @question.nil?
+        flash[:error] =  t('flash_message.error.question.report_abuse') 
+      else
+        Question.send_question_answer_abuse_report(current_user,@question)
+        flash[:notice] = t('flash_message.success.question.report_abuse')
+      end
+      redirect_to questions_path(active_tab: 'all')
     else
-      Question.send_question_answer_abuse_report(current_user,@question)
-      flash[:notice] = t('flash_message.success.question.report_abuse')
+      flash[:error] =  t('answers.messages.unauthorized')
+      redirect_to questions_path
     end
-    redirect_to questions_path(active_tab: 'all')
   end
 
   private
@@ -215,13 +232,13 @@ class QuestionsController < ApplicationController
   end
 
   def un_answered_questions
-    question = {}
-    all_questions.each do |q| 
-      if q.answers.count == 0
-        question[q.id] = q
+    answer_counts = {}
+    all_questions.each do |question| 
+      if question.answers.count == 0
+        answer_counts[question.id] = question
       end
     end
-    question.keys
+    answer_counts.keys
   end
 
   def tag_list

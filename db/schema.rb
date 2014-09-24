@@ -11,7 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140912082905) do
+ActiveRecord::Schema.define(version: 20140924050110) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "administrators", force: true do |t|
     t.string   "email",                  default: "", null: false
@@ -48,6 +51,7 @@ ActiveRecord::Schema.define(version: 20140912082905) do
     t.boolean  "default"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "color"
   end
 
   create_table "badges_sashes", force: true do |t|
@@ -166,6 +170,24 @@ ActiveRecord::Schema.define(version: 20140912082905) do
     t.string  "category", default: "default"
   end
 
+  create_table "permissions", force: true do |t|
+    t.integer  "badge_id"
+    t.integer  "rule_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "permissions", ["badge_id", "rule_id"], name: "index_permissions_on_badge_id_and_rule_id", unique: true, using: :btree
+  add_index "permissions", ["badge_id"], name: "index_permissions_on_badge_id", using: :btree
+  add_index "permissions", ["rule_id"], name: "index_permissions_on_rule_id", using: :btree
+
+  create_table "points", force: true do |t|
+    t.integer  "score"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "action"
+  end
+
   create_table "questions", force: true do |t|
     t.string   "title"
     t.text     "content"
@@ -174,8 +196,23 @@ ActiveRecord::Schema.define(version: 20140912082905) do
     t.datetime "updated_at"
     t.integer  "askable_id"
     t.string   "askable_type"
-    t.boolean  "enabled",      default: true
+    t.boolean  "enabled",            default: true
+    t.integer  "cached_votes_total", default: 0
+    t.integer  "cached_votes_score", default: 0
+    t.integer  "cached_votes_up",    default: 0
+    t.integer  "cached_votes_down",  default: 0
     t.integer  "standard_id"
+  end
+
+  add_index "questions", ["cached_votes_down"], name: "index_questions_on_cached_votes_down", using: :btree
+  add_index "questions", ["cached_votes_score"], name: "index_questions_on_cached_votes_score", using: :btree
+  add_index "questions", ["cached_votes_total"], name: "index_questions_on_cached_votes_total", using: :btree
+  add_index "questions", ["cached_votes_up"], name: "index_questions_on_cached_votes_up", using: :btree
+
+  create_table "rules", force: true do |t|
+    t.string   "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "sashes", force: true do |t|
@@ -202,9 +239,6 @@ ActiveRecord::Schema.define(version: 20140912082905) do
     t.string   "last_sign_in_ip"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "first_name"
-    t.string   "middle_name"
-    t.string   "last_name"
     t.string   "username"
     t.date     "birthdate"
     t.integer  "points"

@@ -15,6 +15,7 @@
 //= require bootstrap
 //= require bootstrap.min
 //= require bootstrap-datepicker.min
+//= require bootstrap-colorpicker.min
 //= require ckeditor-jquery
 //= require ckeditor/config
 //= require ckeditor/plugins/eqneditor/plugin.min

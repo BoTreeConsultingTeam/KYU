@@ -1,0 +1,10 @@
+- rules.each do |rule|
+  %span
+    %li.col-md-3.col-xs-5.rules-list
+      - if badge_rules.include? rule
+        %i.fa.fa-check
+        = rule.description
+      - else
+        %i.fa.fa-ban
+        = rule.description
+

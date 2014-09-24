@@ -15,7 +15,7 @@
         - if @student.badges.last.blank?
           %span.user-badge
         - else
-          %span{class: student_badge_color("#{@student.badges.last.name}")}
+          %span.user-badge{style: "background-color: #{ @student.badges.last.color}"}
             = @student.badges.last.name
         %br
           %span.points-count
@@ -161,7 +161,7 @@
     %ul#main_questions_list.single-head
       - if !(@student.badges.last.blank?)
         .col-md-12.badge-content
-          = render 'badges/badge_list'
+          = render '/badges/badge_list'
       -else
         .spacer50
         .col-md-2

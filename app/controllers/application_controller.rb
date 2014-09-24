@@ -11,6 +11,30 @@ class ApplicationController < ActionController::Base
       redirect_to root_path, flash: { error: t('common.messages.sign_in') }
     end
   end
+
+  def user_badge user
+    user.badges.last
+  end
+
+  def set_rule id
+    Rule.find_by_id(id)
+  end
+  
+  def badge_rules badge
+    badge.rules.map{|rule|rule.id}
+  end
+
+  def check_permission user,rule  
+    badge = user_badge user
+    if !badge.nil?
+      rule_arr = badge_rules badge
+      if rule_arr.include? rule.id
+        return true
+      else
+        return false
+      end
+    end
+  end
   
   def user_profile_update user
     account_update_params = devise_parameter_sanitizer.sanitize(:account_update)
