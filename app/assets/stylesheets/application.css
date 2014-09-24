@@ -19,6 +19,5 @@
  *= require main
  *= require css
  *= require custom
- *= require_self
  *= jquery-ui.css
  */
