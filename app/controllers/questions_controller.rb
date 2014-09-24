@@ -135,8 +135,7 @@ class QuestionsController < ApplicationController
   end
   
   def update
-    @question = question_find_by_id
-    if !(@question.nil?) 
+    if !(@question.present?) 
       @question.update(question_params.merge({askable: current_user}).except!(:tag_list))
       current_user.tag( @question, :with => question_params[:tag_list], :on => :tags )
       flash[:notice] = t('flash_message.success.question.update')
@@ -225,7 +224,7 @@ class QuestionsController < ApplicationController
   end
 
   def question_find_by_id
-    Question.find_by_id(params[:id])
+    @question = Question.find_by_id(params[:id])
   end
 
   def all_questions
