@@ -1,9 +1,12 @@
 - if answer_comment.relative == answer
-  .col-md-10.col-xs-10
-    = raw(answer_comment.comment)
-    %hr/
-  .col-md-2.col-xs-2    
+  .col-md-12.col-xs-12.comment-list
+    .comment-body
+      = raw(answer_comment.comment)
+    .comment-owner
+      = link_to " -  #{answer_comment.commentable.username}",student_views_profile_path(answer_comment.commentable,user: 'Student')   
     - if answer_comment.is_author?(current_user)
+      = ' - '
       =link_to '',edit_answer_comment_path(answer.id,answer_comment.id), rel: 'tooltip', title: t('common.links.edit'), class: 'fa fa-pencil','data-no-turbolink' => true
       |
       = link_to '',answer_comment_path(answer.id,answer_comment.id), rel: 'tooltip', title: t('common.links.delete_link'), method: :delete, data: {confirm: t('common.links.delete.confirm')}, remote: true, class: 'fa fa-trash-o'
+      

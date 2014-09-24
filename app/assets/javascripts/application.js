@@ -12,7 +12,6 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require turbolinks
 //= require bootstrap
 //= require bootstrap.min
 //= require bootstrap-datepicker.min
@@ -23,4 +22,3 @@
 //= require common
 //= require jsapi
 //= require chosen.jquery.min
-

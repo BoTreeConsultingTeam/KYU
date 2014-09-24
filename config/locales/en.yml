@@ -225,6 +225,10 @@ en:
         edit: 'No such Comment found for Edit!'
         update: 'no such Comment found for Update!'
         destroy:
+      report:
+        no_record: 'No Record Found'
+        no_student: 'No Student Found'
+        no_standard: 'No Standard Found'
     success:
       question:
         update: 'Question successfully updated!'
@@ -266,4 +270,10 @@ en:
       never_ask: You don't have asked any questions yet
   administrator:
     cancel_account: 'Cancel my account'
+
+  report:
+    captions:
+      select_artist: Select an Artist
+      top_3_weak_area: Top 3 weak Areas
+      top_3_strong_area: Top 3 strong Areas
 

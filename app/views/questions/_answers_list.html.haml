@@ -1,12 +1,7 @@
 -@answers.each do |answer|
-  #74.row.question-main-content.question-item.answer-item
-    .col-md-2.col-xs-2
-      .accept-answer
-        -if !@question.answered?
-          - if @question.askable == current_user
-            %h3
-            = link_to '', index_path(answer.id),rel: 'tooltip',title: t('answers.links.make_right'),class: 'tooltip-inner img-circle fa fa-check pull-left'
-      - if !current_administrator
+  .row.question-main-content.question-item.answer-item{id: 'answer.id'}
+    - if !current_administrator
+      .col-md-2.col-xs-2
         .vote-block
           %ul
             %li{"data-original-title" => "This is useful.", :title => ""}
@@ -20,9 +15,15 @@
             %li{"data-original-title" => "This is useful.", :title => ""}
               = vote_link(answer, 'down')
             %li
-      -if @question.accepted_answer_id == answer.id
-        .top-content{rel: 'tooltip',title: t('answers.links.correct_answer')}
-          %span.answered.fa.fa-check      
+        .accept-answer
+          -if !@question.answered?
+            - if @question.askable == current_user
+              = link_to image_tag('right.png'), index_path(answer.id),rel: 'tooltip',title: 'Make Right',class: 'img-circle pull-left'
+          -if @question.accepted_answer_id == answer.id
+            .top-content{rel: 'tooltip',title: 'Correct Answer'}
+              = image_tag('right.png')  
+    - else
+      .col-md-1    
     .col-md-9.col-xs-9.q-right-content
       - if !current_administrator && answer.answerable ==  current_user
         %ul.post-controls
@@ -45,14 +46,14 @@
                     = answer.answerable.username
                 - else
                   = answer.answerable.username
-            %span.user-badge{:style => "background-color:#04aad4;", :title => "1543"} 
+            %span.user-badge{:style => "background-color:#04aad4;"} 
               = answer.answerable_type
           - else
             %span.author-avatar
               = image_tag answer.answerable.avatar.url(:medium) ,class: 'img-circle user-thumb-img'
             %span.author-name
               = answer.answerable.username
-            %span.user-badge{:style => "background-color:#780978;", :title => "1543"} 
+            %span.user-badge{:style => "background-color:#780978;"} 
               = answer.answerable_type
           %span.question-time
             #{time_ago_in_words(answer.created_at)} ago.

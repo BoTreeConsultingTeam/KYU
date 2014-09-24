@@ -1,8 +1,8 @@
 class CommentsController < ApplicationController
 
   before_action :user_signed_in?
-  
-  def create
+
+  def create 
     @rule = set_rule 4
     if check_permission current_user,@rule 
       @comment = Comment.new(comment_params.merge({commentable: current_user}).merge({relative: params[:relative]}))
@@ -24,7 +24,7 @@ class CommentsController < ApplicationController
       redirect_to questions_path
     end
   end
-   
+
   def update
     comment_find_by_id
     if !(@comment.nil?)
@@ -74,7 +74,7 @@ class CommentsController < ApplicationController
   end    
 
   def destroy
-    comment_find_by_id
+    @comment = comment_find_by_id
     if !(comment_find_by_id.nil?)
       @comment.delete
       if params[:answer_id].present?

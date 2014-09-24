@@ -1,21 +1,7 @@
-.col-md-8.main-content
+.col-md-8
   .row
     - if !@student_strength_table.blank?
-      .col-md-6s
-        .spacer30
-        .table-responsive
-          %table.table.table-bordered.table-striped
-            %thead
-              %tr.success
-                %th.text-center Tag 
-                %th.text-center Tags Usage Count
-            %tbody
-              - @student_strength_table.each do |row|
-                %tr.text-center 
-                  - row.each do |column|
-                    %td                   
-                      = column
-      .col-md-6    
+      .col-md-12.col-xs-12    
         #chart
           = render_chart(@student_strength_chart, 'chart') 
     - else
