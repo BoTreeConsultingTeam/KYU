@@ -20,10 +20,11 @@
   - else 
     .col-md-1
   .col-md-9.col-xs-9.q-right-content
-    -if !(current_administrator) && @question.askable == current_user
+    -if !(current_administrator)
       %ul.post-controls      
-        %li
-          = link_to '',edit_question_path(@question.id),class: 'post-edit action fa fa-pencil',rel: 'tooltip',title: t('common.links.edit'), 'data-no-turbolink' => true
+        - if @question.askable == current_user
+          %li
+            = link_to '',edit_question_path(@question.id),class: 'post-edit action fa fa-pencil',rel: 'tooltip',title: t('common.links.edit'), 'data-no-turbolink' => true
           %li
             = link_to '',question_path,method: :delete,data: {confirm: t('common.links.delete.confirm')},rel: 'tooltip',title: t('common.links.delete_link'),class: 'post-delete action fa fa-trash-o'
         
@@ -32,7 +33,7 @@
             = link_to '', bookmarks_path(:question_id => @question.id), method: :post,rel: 'tooltip',title: t('questions.links.add_bookmark'), class: 'post-delete action fa fa-plus'
         -else
           %li
-            = link_to '',bookmark_path(:question_id => @question.id), method: :delete,data: {confirm: t('common.links.delete.confirm')},rel: 'tooltip',title: t('questions.links.delete_bookmark '),class: 'post-delete action fa fa-minus-square'    
+            = link_to '',bookmark_path(:question_id => @question.id), method: :delete,data: {confirm: t('common.links.delete.confirm')},rel: 'tooltip',title: t('questions.links.delete_bookmark'),class: 'post-delete action fa fa-minus-square'    
     .top-content
       - if @question.answers.count > 0
         %span.answered

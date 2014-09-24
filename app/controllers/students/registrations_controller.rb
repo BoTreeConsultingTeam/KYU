@@ -27,9 +27,10 @@ class Students::RegistrationsController <  Devise::RegistrationsController
 
   def view_profile
     @student = Student.find(params[:id])
-    @tag = @student.owned_tags
+    @badges = @student.badges
+    @rules = Rule.all
     @questions = @student.questions
-    @tags = @tag.map { |obj| [obj.name, obj.taggings_count]  }
+    @tags = @student.owned_tags.page params[:page]
     @questions_likes_count  =  @student.questions.map{|question|question.get_likes.count}.inject{|sum,val|sum+val}
     @questions_dislikes_count  =  @student.questions.map{|question|question.get_dislikes.count}.inject{|sum,val|sum+val}
     @answers_dislikes_count  =  @student.answers.map{|question|question.get_dislikes.count}.inject{|sum,val|sum+val}

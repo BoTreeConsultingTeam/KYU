@@ -1,10 +1,5 @@
 .row
   .col-xs-6
-    = collection_select(nil, :standard_id,  @standards,  :id, :class_no, {:prompt   => "Select a Standard"}, {:id => 'standard_select'})
-    %br
-    = collection_select(nil, :id, @students, :id, :username, {:prompt   => "Select an Student"}, {:id => 'student_select'})
-.row
-  .col-xs-6
     = link_to "Class Activity", class_activity_path, class: 'report-link'
 .spacer20
 
