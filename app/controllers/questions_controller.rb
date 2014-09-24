@@ -1,8 +1,9 @@
 class QuestionsController < ApplicationController
   before_action :user_signed_in?
-    
+  before_filter :tag_list, only: [:new, :edit]
   def index
     if received_tag
+      @tag = ActsAsTaggableOn::Tag.find_by_name(received_tag)
       @questions = Question.tagged_with(received_tag).enabled.page params[:page]
     else received_active_tab
       case received_active_tab
@@ -121,7 +122,6 @@ class QuestionsController < ApplicationController
   def edit
     @standards = Standard.all
     @question = question_find_by_id
-    @tags = @question.tags
     @standards = Standard.all
     if question_find_by_id.nil?
       redirect_to questions_path(active_tab: 'all'),flash: { error: t('flash_message.error.question.edit') }
@@ -131,7 +131,8 @@ class QuestionsController < ApplicationController
   def update
     @question = question_find_by_id
     if !(@question.nil?) 
-      @question.update(question_params)
+      @question.update(question_params.merge({askable: current_user}).except!(:tag_list))
+      current_user.tag( @question, :with => question_params[:tag_list], :on => :tags )
       flash[:notice] = t('flash_message.success.question.update')
       redirect_to question_path(params[:id])
     else
@@ -176,14 +177,10 @@ class QuestionsController < ApplicationController
     end
   end
 
-  def alltags
-    @tags = ActsAsTaggableOn::Tag.all.page(params[:page]).per(5)
-  end
-
   private
   
   def question_params
-    params.require(:question).permit(:standard_id, :title, :content, :user_id, :tag_list)
+    params.require(:question).permit(:standard_id, :title, :content, :user_id, :tag_list =>[])
   end
 
   def question_liked_by(question,user)
@@ -218,5 +215,9 @@ class QuestionsController < ApplicationController
       end
     end
     question.keys
+  end
+
+  def tag_list
+    @tags = ActsAsTaggableOn::Tag.all
   end
 end

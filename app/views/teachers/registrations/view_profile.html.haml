@@ -2,7 +2,7 @@
 .row.user-statistic.highlight
   .col-md-5.col-xs-5.user-info
     %span.avatar
-      = image_tag @teacher.avatar.url(:medium), alt: 'Image' ,class: 'img-circle profile-img'    
+      = image_tag @teacher.avatar.url(:medium), alt: t('common.image.alt') ,class: 'img-circle profile-img'    
     %ul
       %li.name 
         = @teacher.username
@@ -29,28 +29,28 @@
     .col-md-12.sort-questions
       %ul
         %li
-          = link_to 'Edit your Info', edit_teacher_registration_path
+          = link_to t('common.links.edit_your_info'), edit_teacher_registration_path
         %li
-          = link_to 'Basic Info', teacher_views_profile_path(@teacher.id, active_tab:'basicinfo'), class: "#{profile_active_tab('basicinfo')}"
+          = link_to t('common.links.basic_info'), teacher_views_profile_path(@teacher.id, active_tab:'basicinfo'), class: "#{profile_active_tab('basicinfo')}"
         %li
-          = link_to 'Questions', teacher_views_profile_path(@teacher.id, active_tab:'questions'), class: "#{profile_active_tab('questions')}"
+          = link_to t('common.links.question'), teacher_views_profile_path(@teacher.id, active_tab:'questions'), class: "#{profile_active_tab('questions')}"
         %li
-          = link_to 'Answers', teacher_views_profile_path(@teacher.id, active_tab:'answers'), class: "#{profile_active_tab('answers')}"
+          = link_to t('common.links.answers'), teacher_views_profile_path(@teacher.id, active_tab:'answers'), class: "#{profile_active_tab('answers')}"
         %li
-          = link_to 'Bookmarks', teacher_views_profile_path(@teacher.id, active_tab:'bookmarks'), class: "#{profile_active_tab('bookmarks')}"
+          = link_to t('common.links.bookmarks'), teacher_views_profile_path(@teacher.id, active_tab:'bookmarks'), class: "#{profile_active_tab('bookmarks')}"
         %li
-          = link_to 'Votes', teacher_views_profile_path(@teacher.id, active_tab:'votes'), class: "#{profile_active_tab('votes')}"
+          = link_to t('common.links.votes'), teacher_views_profile_path(@teacher.id, active_tab:'votes'), class: "#{profile_active_tab('votes')}"
   - else
     .col-md-12.sort-questions
       %ul
         %li
-          = link_to 'Basic Info', teacher_views_profile_path(@teacher.id, active_tab:'basicinfo'), class: "#{profile_active_tab('basicinfo')}"
+          = link_to t('common.links.basic_info'), teacher_views_profile_path(@teacher.id, active_tab:'basicinfo'), class: "#{profile_active_tab('basicinfo')}"
         %li
-          = link_to 'Questions', teacher_views_profile_path(@teacher.id, active_tab:'questions'), class: "#{profile_active_tab('questions')}"
+          = link_to t('common.links.question'), teacher_views_profile_path(@teacher.id, active_tab:'questions'), class: "#{profile_active_tab('questions')}"
         %li
-          = link_to 'Answers', teacher_views_profile_path(@teacher.id, active_tab:'answers'), class: "#{profile_active_tab('answers')}"
+          = link_to t('common.links.answers'), teacher_views_profile_path(@teacher.id, active_tab:'answers'), class: "#{profile_active_tab('answers')}"
         %li
-          = link_to 'Votes', teacher_views_profile_path(@teacher.id, active_tab:'votes'), class: "#{profile_active_tab('votes')}"
+          = link_to t('common.links.votes'), teacher_views_profile_path(@teacher.id, active_tab:'votes'), class: "#{profile_active_tab('votes')}"
 / END QUESTIONS-FILTER
 - if params[:active_tab] == "answers"
   .main-questions-list
