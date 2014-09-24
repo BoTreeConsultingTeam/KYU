@@ -1,0 +1,28 @@
+.modal-submit-questions
+  .modal-dialog
+    .modal-body
+      = form_for(@badge) do |f|
+        = render 'shared/error_messages', object: f.object
+        %div
+        = f.label :name
+        %br/
+        = f.text_field :name, autofocus: true, class: 'submit-input'        
+        = f.label :Points
+        %br/
+        = f.text_field :points, autofocus: true, class: 'submit-input'        
+        = f.label :default
+        %br/
+
+        = f.select(:default, options_for_select(%w[TRUE FALSE], @badge.default),{},{class: 'form-control'})
+        
+        Permissions:
+        %ul
+          - @rules.each do |rule|
+            %li
+              - if @badge_rules.include? rule
+                = check_box_tag "rule_id[]", rule.id, checked: 'checked'
+              -else
+                = check_box_tag "rule_id[]", rule.id
+              = label_tag "#{rule.id}", rule.description
+        %br/
+        = f.submit 'Submit',class: 'btn-submit-question', id: 'btn_submit_question'

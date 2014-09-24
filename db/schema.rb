@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140912082905) do
+ActiveRecord::Schema.define(version: 20140923162506) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -169,6 +169,24 @@ ActiveRecord::Schema.define(version: 20140912082905) do
     t.string  "category", default: "default"
   end
 
+  create_table "permissions", force: true do |t|
+    t.integer  "badge_id"
+    t.integer  "rule_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "permissions", ["badge_id", "rule_id"], name: "index_permissions_on_badge_id_and_rule_id", unique: true, using: :btree
+  add_index "permissions", ["badge_id"], name: "index_permissions_on_badge_id", using: :btree
+  add_index "permissions", ["rule_id"], name: "index_permissions_on_rule_id", using: :btree
+
+  create_table "points", force: true do |t|
+    t.integer  "score"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "action"
+  end
+
   create_table "questions", force: true do |t|
     t.string   "title"
     t.text     "content"
@@ -189,6 +207,12 @@ ActiveRecord::Schema.define(version: 20140912082905) do
   add_index "questions", ["cached_votes_score"], name: "index_questions_on_cached_votes_score", using: :btree
   add_index "questions", ["cached_votes_total"], name: "index_questions_on_cached_votes_total", using: :btree
   add_index "questions", ["cached_votes_up"], name: "index_questions_on_cached_votes_up", using: :btree
+
+  create_table "rules", force: true do |t|
+    t.string   "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "sashes", force: true do |t|
     t.datetime "created_at"

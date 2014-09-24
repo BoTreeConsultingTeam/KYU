@@ -2,7 +2,9 @@
   .border
     .col-md-3.question-cat
       %span.user-badge
-        = badge.name    
+        = badge.name  
+      %span 
+        = render partial: 'badges_links', locals: { badge: badge}
       %br
         %span.points-count
           = badge.points
@@ -10,27 +12,15 @@
           %i.fa.fa-star
           %br
             = t('badges.captions.points_require')
-    .col-md-4
-      %span 
-        = t('badges.captions.with_you_can')
-      %p
-        %i.fa.fa-ban
-        = t('badges.captions.edit_other_people')
-      %p
-        %i.fa.fa-check
-        = t('badges.captions.vote_to_close')
-        
-    .col-md-3
-      %p
-        %i.fa.fa-ban
-        = t('badges.captions.edit_others_answer')  
-      %p
-        %i.fa.fa-check
-        = t('badges.captions.vote_down')  
-    .col-md-2
-      %p
-        %i.fa.fa-check
-        = t('badges.captions.leave_comment')  
-      %p
-        %i.fa.fa-check
-          = t('badges.captions.vote_up')  
+    %ul.raw.single-head
+      - badge_rules = badge.rules
+      -@rules.each do |rule|
+        %span
+          %li.col-md-3.col-xs-5.rules-list
+            - if badge_rules.include? rule
+              %i.fa.fa-check
+              = rule.description
+            - else
+              %i.fa.fa-ban
+                = rule.description
+

@@ -40,16 +40,22 @@ class QuestionsController < ApplicationController
   end
 
   def create
-    @question = Question.new(question_params.merge({askable: current_user}).except!(:tag_list))
-    current_user.tag( @question, :with => question_params[:tag_list], :on => :tags )
-    if @question.save
-      if current_student
-        current_student.change_points(2)
+    @rule = set_rule 3
+    if check_permission current_user,@rule
+      @question = Question.new(question_params.merge({askable: current_user}).except!(:tag_list))
+      current_user.tag( @question, :with => question_params[:tag_list], :on => :tags )
+      if @question.save
+        if current_student
+          current_student.change_points(Point.action_score(1))
+        end
+        redirect_to questions_path(active_tab: 'all')
+      else
+        @standards = Standard.all
+        render new_question_path
       end
-      redirect_to questions_path(active_tab: 'all')
     else
-      @standards = Standard.all
-      render new_question_path
+      flash[:error] = "You do not have earned enough badges for this action"
+      redirect_to questions_path
     end
   end
 
@@ -84,25 +90,32 @@ class QuestionsController < ApplicationController
   end
 
   def vote
-    @question = question_find_by_id
-    if question_find_by_id.nil?
-      redirect_to questions_path,flash: { error: t('flash_message.error.question.vote') }
-    else
-      if "up" == params[:type]
-        if !@question.get_likes.map{|vote| vote.voter_id}.include?current_user.id 
-          question_liked_by(@question,liked_by)
-          give_points(@question,5)
-        end
+    @rule = set_rule 1
+    if check_permission current_user,@rule
+      @question = question_find_by_id
+      if question_find_by_id.nil?
+        redirect_to questions_path,flash: { error: t('flash_message.error.question.vote') }
       else
-        if !@question.get_dislikes.map{|vote| vote.voter_id}.include?current_user.id 
-          question_disliked_by(@question,liked_by)
-          give_points(@question,-5)
+        if "up" == params[:type]
+          if !@question.get_likes.map{|vote| vote.voter_id}.include?current_user.id 
+            question_liked_by(@question,liked_by)
+            give_points(@question, Point.action_score(3))
+          end
+        else
+          if !@question.get_dislikes.map{|vote| vote.voter_id}.include?current_user.id 
+            question_disliked_by(@question,liked_by)
+            give_points(@question, Point.action_score(5))
+          end
         end
+        respond_to do |format|
+          format.js        
+        end      
       end
-      respond_to do |format|
-        format.js        
-      end      
+    else
+      flash[:error] = "You are not authorized for this"
+      redirect_to questions_path
     end
+
   end
   
   def edit
@@ -139,20 +152,28 @@ class QuestionsController < ApplicationController
       flash[:error] = t('flash_message.error.question.disable')
     else
       @question.enabled = false
-      @question.save
+      if @question.save
+        give_points(@question, Point.action_score(8))
+      end
     end
     redirect_to questions_path(active_tab: 'all')
   end
 
   def abuse_report
-    @question = question_find_by_id
-    if @question.nil?
-      flash[:error] =  t('flash_message.error.question.report_abuse') 
+    @rule = set_rule 5
+    if check_permission current_user,@rule
+      @question = question_find_by_id
+      if @question.nil?
+        flash[:error] =  t('flash_message.error.question.report_abuse') 
+      else
+        Question.send_question_answer_abuse_report(current_user,@question)
+        flash[:notice] = t('flash_message.success.question.report_abuse')
+      end
+      redirect_to questions_path(active_tab: 'all')
     else
-      Question.send_question_answer_abuse_report(current_user,@question)
-      flash[:notice] = t('flash_message.success.question.report_abuse')
+      flash[:error] =  "You are not authorized for this action"
+      redirect_to questions_path
     end
-    redirect_to questions_path(active_tab: 'all')
   end
 
   def alltags

@@ -2,20 +2,26 @@ class CommentsController < ApplicationController
 
   before_action :user_signed_in?
   
-  def create 
-    @comment = Comment.new(comment_params.merge({commentable: current_user}).merge({relative: params[:relative]}))
-    @comments = Comment.relative_comments(comment_relative_id,comment_relative_type).page params[:page]
-    if @comment.save
-      if "Question" == relative_type
-        @question = Question.find_by_id(comment_relative_id)
+  def create
+    @rule = set_rule 4
+    if check_permission current_user,@rule 
+      @comment = Comment.new(comment_params.merge({commentable: current_user}).merge({relative: params[:relative]}))
+      @comments = Comment.relative_comments(comment_relative_id,comment_relative_type).page params[:page]
+      if @comment.save
+        if "Question" == relative_type
+          @question = Question.find_by_id(comment_relative_id)
+        else
+          @answer = find_by_answer_id(comment_relative_id)  
+        end 
+        respond_to do |format|
+          format.js
+        end
       else
-        @answer = find_by_answer_id(comment_relative_id)  
-      end 
-      respond_to do |format|
-        format.js
+        redirect_to questions_path(active_tab: 'all')
       end
     else
-      redirect_to questions_path(active_tab: 'all')
+      flash[:error] = "You are not authorized for this action"
+      redirect_to questions_path
     end
   end
    

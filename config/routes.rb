@@ -21,7 +21,10 @@ Rails.application.routes.draw do
 
   get 'answers/accept/:id', to: 'answers#accept', as: :index
   get 'questions/abuse_report/:id',to: 'questions#abuse_report',as: :report
-  get '/badges', to: 'badges#index', as: :badges
+  resources :points
+  resources :badges
+  resources :permissions
+  get 'badges/:id/setpermission', to: 'badges#setpermission', as: :set_permissions
   get 'questions/disabled_questions',to: 'questions#disabled_questions',as: :disabled_questions
   resources :questions do
     resources :comments

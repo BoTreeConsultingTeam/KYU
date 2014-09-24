@@ -64,6 +64,16 @@ en:
       answer_vote_up: 'answer is voted up'
       answer_accepted: 'answer is Accepted'
       badge_system: 'Badges System'
+    message:
+      badge_create_success: 'Badge Created'
+      badge_create_fail: 'Badge Not Created'
+      badge_update_success: 'Badge updated'
+      badge_destroy_success: 'Badge destroy'
+      badge_destroy_fail: 'Badge not destroy'
+  points:
+    message: 
+      update_success: 'Points Updated '
+      update_failed: 'Points not Updated'
   common:
     messages:
       sign_in: 'Sign in First'
