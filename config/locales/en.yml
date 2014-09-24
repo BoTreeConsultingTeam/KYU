@@ -132,7 +132,7 @@ en:
       delete:
         confirm: 'Are you sure?'
     image:
-      alt: 'Image.image.alt'
+      alt: 'Image'
     active_tab: 
       blocked_student: 'Blocked Students'
       student_for_review: 'Students for Review'
