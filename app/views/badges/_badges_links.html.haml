@@ -1,4 +1,4 @@
 - if (administrator_signed_in?)
-  = link_to '', edit_badge_path(badge.id), class: 'fa fa-pencil'
+  = link_to '', edit_badge_path(badge.id), class: 'fa fa-pencil', 'data-no-turbolink' => true
   |
   = link_to '', badge_path(badge.id), method: :delete, data: {confirm: 'Are you sure?'}, class: 'fa fa-trash-o'

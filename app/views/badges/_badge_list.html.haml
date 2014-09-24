@@ -1,11 +1,10 @@
 - @badges.each do |badge|
   .border
     .col-md-3.question-cat
-      .spacer20
-      %span{class: student_badge_color("#{badge.name}")}
+      %span.user-badge{style: "background-color: #{badge.color}"}
         = badge.name    
       %span 
-        = render partial: 'badges_links', locals: { badge: badge}
+        = render partial: '/badges/badges_links', locals: { badge: badge}
       %br
         %span.points-count
           = badge.points
@@ -14,7 +13,7 @@
           %br
             = t('badges.captions.points_require')
     %ul.raw.single-head
-      - badge_rules = badge.rules
+      - badge_rules = badge.rules 
       -@rules.each do |rule|
         %span
           %li.col-md-3.col-xs-5.rules-list

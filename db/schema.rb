@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140923162506) do
+ActiveRecord::Schema.define(version: 20140924050110) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -51,6 +51,7 @@ ActiveRecord::Schema.define(version: 20140923162506) do
     t.boolean  "default"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "color"
   end
 
   create_table "badges_sashes", force: true do |t|
@@ -195,7 +196,7 @@ ActiveRecord::Schema.define(version: 20140923162506) do
     t.datetime "updated_at"
     t.integer  "askable_id"
     t.string   "askable_type"
-    t.boolean  "enabled",      default: true
+    t.boolean  "enabled",            default: true
     t.integer  "cached_votes_total", default: 0
     t.integer  "cached_votes_score", default: 0
     t.integer  "cached_votes_up",    default: 0

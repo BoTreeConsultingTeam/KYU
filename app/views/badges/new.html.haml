@@ -15,6 +15,10 @@
         %br/
         = f.select(:default, options_for_select([false,true]),{},{class: 'form-control'})
         %br/
+        .input-group.colorpicker
+          = f.text_field :color, class: 'form-control'
+          %span.input-group-addon
+            %div.fa.fa-square
         Permissions:
         %ul
           - @rules.each do |rule|

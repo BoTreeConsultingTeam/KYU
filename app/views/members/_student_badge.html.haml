@@ -1,5 +1,5 @@
 - if object.badges.last.blank?
   %span.user-badge
 - else
-  %span{class: student_badge_color("#{object.badges.last.name}")}
+  %span.user-badge{style: "background-color: #{object.badges.last.color}"}
     = object.badges.last.name

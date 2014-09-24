@@ -39,9 +39,11 @@ class BadgesController < ApplicationController
         @badge.permissions.find_by(rule_id: access_id).destroy
       end
     end
-    rule_ids.each do |rule_id|
-      if !@badge.permissions.find_by(rule_id: rule_id)
-        @badge.permissions.create(rule_id: rule_id)
+    if !rule_ids.nil?
+      rule_ids.each do |rule_id|
+        if !@badge.permissions.find_by(rule_id: rule_id)
+          @badge.permissions.create(rule_id: rule_id)
+        end
       end
     end
     if @badge.update(badge_params)
@@ -64,7 +66,7 @@ class BadgesController < ApplicationController
   private
   
   def badge_params
-    params.require(:badge).permit(:name, :points, :default)
+    params.require(:badge).permit(:name, :points, :default, :color)
   end
 
   def set_badge
