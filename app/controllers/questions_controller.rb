@@ -5,22 +5,7 @@ class QuestionsController < ApplicationController
     if received_tag
       @questions = Question.tagged_with(received_tag).enabled.page params[:page]
     elsif received_active_tab
-      case received_active_tab
-      when 'all'
-        @questions = all_questions.page params[:page]  
-      when 'week'
-        @questions = Question.recent_data_week.enabled.page params[:page]
-      when 'month'
-        @questions = Question.recent_data_month.enabled.page params[:page]
-      when 'un_answered'
-        @questions = Kaminari.paginate_array(Question.enabled.find_all_by_id(un_answered_questions).reverse).page params[:page]
-      when 'most_viewed'
-        @questions = Question.most_viwed_question.enabled.page params[:page]
-      when 'most_voted'
-        @questions = Question.highest_voted.enabled.page params[:page]
-      when 'newest'
-        @questions = Question.newest(current_user).enabled.page params[:page]
-      end
+      active_tab(received_active_tab)
     else
       @question = Question.all.page params[:page] 
     end
@@ -185,6 +170,25 @@ class QuestionsController < ApplicationController
 
   private
   
+  def active_tab(active_tab_params)
+    case active_tab_params
+      when 'all'
+        @questions = all_questions.page params[:page]  
+      when 'week'
+        @questions = Question.recent_data_week.enabled.page params[:page]
+      when 'month'
+        @questions = Question.recent_data_month.enabled.page params[:page]
+      when 'un_answered'
+        @questions = Kaminari.paginate_array(Question.enabled.find_all_by_id(un_answered_questions).reverse).page params[:page]
+      when 'most_viewed'
+        @questions = Question.most_viwed_question.enabled.page params[:page]
+      when 'most_voted'
+        @questions = Question.highest_voted.enabled.page params[:page]
+      when 'newest'
+        @questions = Question.newest(current_user).enabled.page params[:page]
+      end
+  end
+
   def question_params
     params.require(:question).permit(:standard_id, :title, :content, :user_id, :tag_list)
   end
