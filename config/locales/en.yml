@@ -9,6 +9,11 @@ en:
       question_not_found: 'No such Question found for Delete!'
       delete_success: 'Deleted Successfuly!'
       profile_update: 'Profile updated'
+      block_list_empty: 'No Questions are Blocked'
+    table: 
+      header:
+        title: 'Question Title'
+        action: 'Action'
     page_header:
       title: 'Question'
       title_for_new: 'New Question'
@@ -20,9 +25,16 @@ en:
       answers: 'Answers'
       tag_on_new: "Tags (separated by commas)"
       content_label: 'Content:'
+      answered: 'Answered'
     btn:
       new_question: 'New Question'
       submit: 'Submit'
+    links:
+      add_bookmark: 'Add to Bookmark'
+      delete_bookmark: 'Remove from Bookmark'
+      report_abuse: 'Report Abuse'
+    error:
+      message: 'No Questions Available'
   answers:
     messages:
       contains_error: 'Must contain some text'
@@ -36,7 +48,8 @@ en:
     btn:
       submit_answer: 'Submit'
     links:
-      accept: 'Accept'
+      make_right: 'Make Right'
+      correct_answer: 'Correct Answer'
       delete: '| Delete'
       edit: '| Edit'
       add_comment: 'Add Comment'
@@ -47,6 +60,9 @@ en:
       update_success: 'Updated Successfully'
       comment_not_found: 'No such Comment found'
       successful_delete: 'Deleted Successfully!'
+  tag: 
+    header:
+      title: 'Tags'
   badges:
     captions:
       points_require: 'points require'
@@ -65,6 +81,8 @@ en:
       answer_accepted: 'answer is Accepted'
       badge_system: 'Badges System'
   common:
+    error:
+      messages: 'No Record Found'
     messages:
       sign_in: 'Sign in First'
       create_bookmark: 'You have bookmark this question'
@@ -94,13 +112,35 @@ en:
     links:
       sign_in: 'Sign in'
       sign_up: 'Sign up'
+      edit_your_info: 'Edit your Info'
+      basic_info: 'Basic Info'
+      question: 'Questions'
+      badges: 'Badges'
+      votes: 'Votes'
       forgot_password: 'Forgot your password?'
       last_week: 'Last week'
       last_month: 'Last Month'
       questions: 'Questions'     
       answers: 'Answers'
+      add_tag: ' Add Tag'
       bookmarks: 'Bookmarks'
       comment: 'Comment'
+      disable: 'Disable'
+      enable: 'Enable'
+      edit: 'Edit'
+      delete_link: 'Delete'
+      delete:
+        confirm: 'Are you sure?'
+    image:
+      alt: 'Image.image.alt'
+    active_tab: 
+      blocked_student: 'Blocked Students'
+      student_for_review: 'Students for Review'
+      students: 'Students'
+      teachers: 'Teachers'
+      managers: 'Managers'
+    page_header:
+      users: 'Users'
   students:
     captions:
       middle_name: 'Middle Name' 
@@ -113,12 +153,27 @@ en:
       blocked_profile: 'Your account has been blocked. Please contact to administrator'
     links:
       block : 'Block' 
-      mark_as_review: 'MarkasReview'
+      mark_as_review: 'Mark as Review'
       review: 'Review'
       unblock: 'Unblock'
       unmark_review: 'Unmark Review'
     tooltip:
       manager: 'Student Manager'
+    filter:
+      basic_info: 'basicinfo'
+      questions: 'questions'
+      answers: 'answers'
+      tags: 'tags'
+      badges: 'badges'
+      votes: 'votes'
+    active_tab:
+      basic_info: 'basicinfo'
+      questions: 'questions'
+      answers: 'answers'
+      tags: 'tags'
+      badges: 'badges'
+      votes: 'votes'
+      bookmarks: 'bookmarks'
   teachers:
     captions:
     page_header:
@@ -178,6 +233,9 @@ en:
     tags: 'Tags'
     edit_profile: 'Edit Profile'
     logout: 'Logout'
+    profile: 'Profile'
+    report: 'Report'
+    disabled_question: 'Disabled Question'
   right_side_bar:
     questions: 'Questions'
     students: 'Students'
@@ -192,4 +250,6 @@ en:
     captions:
       not_answered: You don't  have answered any question yet
       never_ask: You don't have asked any questions yet
+  administrator:
+    cancel_account: 'Cancel my account'
 

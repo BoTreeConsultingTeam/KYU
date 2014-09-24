@@ -7,7 +7,7 @@
       %span.glyphicon.glyphicon-ok
     = answer.content
     - if answer.answerable == current_user
-      = link_to t('answers.links.delete'), question_answer_path(@question.id,answer.id), method: :delete,data: {confirm: "are you sure?"}, class: 'pull-right'
+      = link_to t('answers.links.delete'), question_answer_path(@question.id,answer.id), method: :delete,data: {confirm: t('common.links.delete.confirm')}, class: 'pull-right'
       = link_to t('answers.links.edit'), edit_question_answer_path(@question.id,answer.id), class: 'pull-right','data-no-turbolink' => true
     = link_to t('answers.links.add_comment'), answer_comment_path(@question.id,answer.id),class: 'pull-right'
   By
