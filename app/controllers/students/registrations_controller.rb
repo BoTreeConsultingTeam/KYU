@@ -34,8 +34,6 @@ class Students::RegistrationsController <  Devise::RegistrationsController
     @questions_dislikes_count  =  @student.questions.map{|question|question.get_dislikes.count}.inject{|sum,val|sum+val}
     @answers_dislikes_count  =  @student.answers.map{|question|question.get_dislikes.count}.inject{|sum,val|sum+val}
     @answers_likes_count  =  @student.answers.map{|question|question.get_likes.count}.inject{|sum,val|sum+val}
-    @total_questions_votes = @questions_likes_count + @questions_dislikes_count
-    @total_answers_votes = @answers_dislikes_count + @answers_likes_count
   end
 
   def update

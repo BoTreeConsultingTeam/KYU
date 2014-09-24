@@ -51,8 +51,7 @@ class QuestionsController < ApplicationController
   end
 
   def create
-    @rule = set_rule 3
-    if check_permission current_user,@rule
+    if !current_administrator
       @question = Question.new(question_params.merge({askable: current_user}).except!(:tag_list))
       current_user.tag( @question, :with => question_params[:tag_list], :on => :tags )
       if @question.save
@@ -60,7 +59,7 @@ class QuestionsController < ApplicationController
           current_student.change_points(Point.action_score(1))
           redirect_to questions_path(active_tab: 'all')
         else
-          render 'new'
+          redirect_to new_question_path
         end
       else
         flash[:error] = t('answers.messages.unauthorized')
@@ -148,6 +147,7 @@ class QuestionsController < ApplicationController
   def enable 
     @question = Question.find_by_id(params[:id])
     @question.update_attributes(enabled: true)
+    give_points(@question, Point.action_score(7))
 
     redirect_to disabled_questions_path
   end
