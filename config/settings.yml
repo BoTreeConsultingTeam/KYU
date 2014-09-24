@@ -2,6 +2,8 @@ app_name: 'KYU'
 pagination:
   per_page: 10
   per_page_5: 5
+  per_page_6: 6
+  per_page_12: 12
   per_page_15: 15
   per_page_3: 3
 points:
