@@ -308,13 +308,16 @@ ul.tag-list {
 {
 	height: 30px;
 }
+
 li.search-field {
 	height: 35px;
 }
+
 ul.chosen-choices{
 	border: 1px solid #ddd;
 	border-radius: 3px;
 }
+
 .chosen-container-multi .chosen-choices li.search-choice .search-choice-close{
 	position: absolute;
 	top: 6px;
@@ -326,36 +329,9 @@ ul.chosen-choices{
 	font-size: 1px;
 }
 
-.user-badge-train,
-.user-badge-reviewer,
-.user-badge-supporter,
-.user-badge-doctor,
-.user-badge-vice-professor,
-.user-badge-professor{
-  padding:0 10px;
-  color: #fff;
-  /*margin-left: 10px;*/
-  margin-right: 15px;
-  line-height: 18px;
-  -moz-border-radius: 3px;
-  -webkit-border-radius: 3px;
-  border-radius: 3px; /* border radius */
-}
-.user-badge-train{  
-  background-color: #f60e0e; /* layer fill content */
-}
-.user-badge-reviewer{
-  background-color: #0ef612; /* layer fill content */
-}
-.user-badge-supporter{
-  background-color: #f60ec9; /* layer fill content */
-}
-.user-badge-doctor{
-  background-color: #f4f60e; /* layer fill content */
-}
-.user-badge-vice-professor{
-  background-color: #a016ba; /* layer fill content */
-}
-.user-badge-professor{
-  background-color: #135163; /* layer fill content */
+#que-search{
+	float: right !important;
+    margin-right: 576px !important;
+    margin-top: -25px !important;
+    position: relative !important;
 }

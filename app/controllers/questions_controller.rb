@@ -5,22 +5,31 @@ class QuestionsController < ApplicationController
     if received_tag
       @tag = ActsAsTaggableOn::Tag.find_by_name(received_tag)
       @questions = Question.tagged_with(received_tag).enabled.page params[:page]
-    else received_active_tab
-      case received_active_tab
-      when 'all'
-        @questions = all_questions.page params[:page]  
-      when 'week'
-        @questions = Question.recent_data_week.enabled.page params[:page]
-      when 'month'
-        @questions = Question.recent_data_month.enabled.page params[:page]
-      when 'un_answered'
-        @questions = Kaminari.paginate_array(Question.enabled.find_all_by_id(un_answered_questions).reverse).page params[:page]
-      when 'most_viewed'
-        @questions = Question.most_viwed_question.enabled.page params[:page]
-      when 'most_voted'
-        @questions = Question.highest_voted.enabled.page params[:page]
-      when 'newest'
-        @questions = Question.newest(current_user).enabled.page params[:page]
+    elsif received_active_tab
+      active_tab(received_active_tab)
+    else
+      @question = Question.all.page params[:page] 
+    end
+  end
+
+  def search_by_keyword 
+    if received_keyword != ''
+      @search = Sunspot.search(Question) do
+        fulltext received_keyword
+      end
+      @question_list = @search.results
+      respond_to do |format|
+          format.html
+          format.json { 
+          render json: @question_list.map{|question|[question.id,question.title]}
+        }
+      end
+    else
+      respond_to do |format|
+        format.html
+        format.json { 
+          render json: []
+        }
       end
     end
   end
@@ -158,6 +167,25 @@ class QuestionsController < ApplicationController
 
   private
   
+  def active_tab(active_tab_params)
+    case active_tab_params
+      when 'all'
+        @questions = all_questions.page params[:page]  
+      when 'week'
+        @questions = Question.recent_data_week.enabled.page params[:page]
+      when 'month'
+        @questions = Question.recent_data_month.enabled.page params[:page]
+      when 'un_answered'
+        @questions = Kaminari.paginate_array(Question.enabled.find_all_by_id(un_answered_questions).reverse).page params[:page]
+      when 'most_viewed'
+        @questions = Question.most_viwed_question.enabled.page params[:page]
+      when 'most_voted'
+        @questions = Question.highest_voted.enabled.page params[:page]
+      when 'newest'
+        @questions = Question.newest(current_user).enabled.page params[:page]
+      end
+  end
+
   def question_params
     params.require(:question).permit(:standard_id, :title, :content, :user_id, :tag_list =>[])
   end
@@ -198,5 +226,9 @@ class QuestionsController < ApplicationController
 
   def tag_list
     @tags = ActsAsTaggableOn::Tag.all
+  end
+  
+  def received_keyword
+    params[:keyword].gsub(/\s+/, "")
   end
 end

@@ -12,7 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require turbolinks
+//= require autocomplete-rails
 //= require bootstrap
 //= require bootstrap.min
 //= require bootstrap-datepicker.min

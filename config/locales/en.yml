@@ -253,3 +253,7 @@ en:
   administrator:
     cancel_account: 'Cancel my account'
 
+  report:
+    captions:
+      select_artist: Select an Artist
+
