@@ -1,6 +1,6 @@
 class QuestionsController < ApplicationController
   before_action :user_signed_in?
-    
+  before_filter :tag_list, only: [:new, :edit]
   def index
     if received_tag
       @tag = ActsAsTaggableOn::Tag.find_by_name(received_tag)
@@ -31,7 +31,6 @@ class QuestionsController < ApplicationController
 
   def new
     @standards = Standard.all
-    @tags = tag_list
     if !(current_administrator)
       @question = Question.new
       @question.user_id = session[:id]
@@ -110,7 +109,6 @@ class QuestionsController < ApplicationController
   def edit
     @standards = Standard.all
     @question = question_find_by_id
-    @tags = tag_list
     @standards = Standard.all
     if question_find_by_id.nil?
       redirect_to questions_path(active_tab: 'all'),flash: { error: t('flash_message.error.question.edit') }
@@ -199,6 +197,6 @@ class QuestionsController < ApplicationController
   end
 
   def tag_list
-    ActsAsTaggableOn::Tag.all
+    @tags = ActsAsTaggableOn::Tag.all
   end
 end

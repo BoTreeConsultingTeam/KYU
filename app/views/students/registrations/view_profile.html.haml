@@ -47,21 +47,21 @@
     .col-md-12.sort-questions
       %ul
         %li
-          = link_to "Basic Info", student_views_profile_path(@student.id, active_tab:'basicinfo'), class: "#{profile_active_tab('basicinfo')}"
+          = link_to t('common.links.basic_info'), student_views_profile_path(@student.id, active_tab: t('students.active_tab.basic_info')), class: "#{profile_active_tab(t('students.active_tab.basic_info'))}"
         %li
-          = link_to 'Questions', student_views_profile_path(@student.id, active_tab:'questions'), class: "#{profile_active_tab('questions')}"
+          = link_to t('common.links.question'), student_views_profile_path(@student.id, active_tab: t('students.active_tab.questions')), class: "#{profile_active_tab(t('students.active_tab.questions'))}"
         %li
-          = link_to 'Answers', student_views_profile_path(@student.id, active_tab:'answers'), class: "#{profile_active_tab('answers')}"
+          = link_to t('common.links.answers'), student_views_profile_path(@student.id, active_tab: t('students.active_tab.answers')), class: "#{profile_active_tab(t('students.active_tab.answers'))}"
         %li
-          = link_to 'Bookmarks', student_views_profile_path(@student.id, active_tab:'bookmarks'), class: "#{profile_active_tab('bookmarks')}"
+          = link_to t('common.links.bookmarks'), student_views_profile_path(@student.id, active_tab: t('students.active_tab.bookmarks')), class: "#{profile_active_tab(t('students.active_tab.bookmarks'))}"
         %li
-          = link_to 'Tags', student_views_profile_path(@student.id, active_tab:'tags'), class: "#{profile_active_tab('tags')}"
+          = link_to t('common.links.tags'), student_views_profile_path(@student.id, active_tab: t('students.active_tab.tags')), class: "#{profile_active_tab(t('students.active_tab.tags'))}"
         %li
-          = link_to 'Badges', student_views_profile_path(@student.id, active_tab:'badges'), class: "#{profile_active_tab('badges')}"
+          = link_to t('common.links.badges'), student_views_profile_path(@student.id, active_tab: t('students.active_tab.badges')), class: "#{profile_active_tab(t('students.active_tab.badges'))}"
         %li
-          = link_to 'Votes', student_views_profile_path(@student.id, active_tab:'votes'), class: "#{profile_active_tab('votes')}"
+          = link_to t('common.links.votes'), student_views_profile_path(@student.id, active_tab: t('students.active_tab.votes')), class: "#{profile_active_tab(t('students.active_tab.votes'))}"
   / END QUESTIONS-FILTER
-- if params[:active_tab] == "answers"
+- if params[:active_tab] == t('students.active_tab.answers')
   .main-questions-list
     %ul#main_questions_list
       -if !(@answers.blank?)
@@ -120,7 +120,7 @@
           %h4
             = @student.username
             don't  have answered any question yet
--elsif params[:active_tab] == "bookmarks"
+-elsif params[:active_tab] == t('students.active_tab.bookmarks')
   - question_list = bookmark_question_ids @student
   - if !(question_list.blank?)
     = render :partial => 'questions/questions_list', :locals => { questions: question_list}
@@ -131,7 +131,7 @@
       %h4
         = @student.username 
         don't have Bookmarked any Question
-- elsif params[:active_tab] == "tags"
+- elsif params[:active_tab] == t('students.active_tab.tags')
   .main-questions-list
     %ul#main_questions_list
       -if !(@tags.blank?)
@@ -157,7 +157,7 @@
           %h4
             = @student.username
             You haven't tagged any thing yet!!!
-- elsif params[:active_tab] == "badges"
+- elsif params[:active_tab] == t('students.active_tab.badges')
   .main-questions-list
     %ul#main_questions_list
       - if !(@student.badges.last.blank?)
@@ -174,7 +174,7 @@
           %h4
             = @student.username
             haven't earned any Badges!!!
-- elsif params[:active_tab] == "votes"
+- elsif params[:active_tab] == t('students.active_tab.votes')
   .main-questions-list
     %ul#main_questions_list
       - if !(@questions.blank?)
@@ -217,7 +217,7 @@
           %h4
             = @student.username
             haven't got any votes!!!
-- elsif params[:active_tab] == "questions"
+- elsif params[:active_tab] == t('students.active_tab.questions')
   .main-questions-list    
     %ul#main_questions_list
       - if !(@questions.blank?)
