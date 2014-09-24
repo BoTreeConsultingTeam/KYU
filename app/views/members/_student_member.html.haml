@@ -1,4 +1,4 @@
-.row.select-category
+.row
 %ul#main_users_list.row
   - students.each do |student|
     %li.user-item.col-md-4.col-xs-6
@@ -40,5 +40,9 @@
                 = link_to '', student_views_profile_path(student,user: "Student"), rel: "tooltip", title: t('students.links.review'), class: 'fa fa-check-square-o'
             - if params[:active_tab] == t('common.active_tab.student_for_review')
               |
-              = link_to '', unmark_student_review_path(student), rel: "tooltip", title: t('students.links.unmark_review'), class: 'fa fa-check'
-= render partial: "shared/pagination", locals: {object: students}
+              = link_to t('students.links.unmark_review'), unmark_student_review_path(student)
+%hr/
+.row.paginations.home
+  .col-md-12
+    .question-item.answer-pagination
+      = render partial: "shared/pagination", locals: {object: students}

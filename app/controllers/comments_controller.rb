@@ -68,7 +68,7 @@ class CommentsController < ApplicationController
   end    
 
   def destroy
-    comment_find_by_id
+    @comment = comment_find_by_id
     if !(comment_find_by_id.nil?)
       @comment.delete
       if params[:answer_id].present?

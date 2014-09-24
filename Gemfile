@@ -28,8 +28,6 @@ gem 'sass-rails', '~> 4.0.0'
 gem 'jquery-rails'
 gem 'gioco'
 gem "google_visualr", ">= 2.1"
-gem 'jquery-ui-rails','4.1.1'
-gem 'rails4-autocomplete', '~> 1.1.0'
 gem 'jbuilder', '~> 1.2'
 
 group :assets do

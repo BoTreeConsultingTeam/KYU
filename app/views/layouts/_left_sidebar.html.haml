@@ -1,6 +1,6 @@
 .col-md-2.left-sidebar
-  .widget.widget-btn
-    -if !(current_administrator)
+  -if !(current_administrator)
+    .widget.widget-btn
       = link_to  t('questions.btn.new_question'), new_question_path,method: :get, class:" btn btn-success pull-left", style: 'color: #FFFFFF !important;','data-no-turbolink' => true
   .widget.widget-menus
     .menu-left-menu-container
@@ -9,15 +9,15 @@
           = link_to questions_path(active_tab: 'all') do
             %i.fa.fa-question-circle>
             = t('header_navigation.questions')
-        %li.fa-tags.menu-item.menu-item-type-post_type.menu-item-object-page.menu-item-183
+        %li.fa-tags.menu-item.menu-item-type-post_type.menu-item-object-page
           = link_to tags_path do
             %i.fa.fa-tags>
             = t('header_navigation.tags')
-        %li.fa-users.menu-item.menu-item-type-post_type.menu-item-object-page.menu-item-1743
+        %li.fa-users.menu-item.menu-item-type-post_type.menu-item-object-page
           = link_to members_path(active_tab: 'Students') do
             %i.fa.fa-users>
             = t('header_navigation.users')
-        %li.fa-users.menu-item.menu-item-type-post_type.menu-item-object-page.menu-item-1743
+        %li.fa-users.menu-item.menu-item-type-post_type.menu-item-object-page
           = link_to badges_path do
             %i.fa.fa-trophy>
             = t('header_navigation.badges')

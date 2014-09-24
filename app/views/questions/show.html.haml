@@ -1,9 +1,5 @@
 .row.select-category.single-head
-  .col-md-2.col-xs-2
-    %span.back
-      %i.fa.fa-angle-double-left
-      %a 
-        = link_to 'Home',questions_path(active_tab: 'all')
+  .col-md-1
   .col-md-8.col-xs-8
     %h3 
       = @question.title
@@ -24,8 +20,8 @@
   - else 
     .col-md-1
   .col-md-9.col-xs-9.q-right-content
-    %ul.post-controls
-      -if !(current_administrator) && @question.askable == current_user
+    -if !(current_administrator) && @question.askable == current_user
+      %ul.post-controls      
         %li
           = link_to '',edit_question_path(@question.id),class: 'post-edit action fa fa-pencil',rel: 'tooltip',title: t('common.links.edit'), 'data-no-turbolink' => true
           %li
@@ -83,6 +79,7 @@
     - if @question_comments.present?           
       .row.paginations.home
         .col-md-12{id:'paginator'}
+          .spacer10
           = paginate @question_comments
     .clearfix
 .sticky-wrapper
@@ -96,5 +93,11 @@
 / ANSWERS LOOP
 #answers_main_list
   = render 'answers_list', locals: { :answers =>  @answer}
+.row.paginations.home
+  .col-md-12
+    .answer-item.answer-pagination
+      .spacer20
+      =paginate @answers
   - if !current_administrator
+    .spacer50
     = render 'answers/form'
