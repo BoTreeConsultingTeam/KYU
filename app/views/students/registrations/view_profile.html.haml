@@ -39,6 +39,20 @@
           %br
             %span 
               = @student.answers.count
+      .single-head
+      .col-md-4.col-xs-4
+      .col-md-4.col-xs-4
+        %p.questions-count
+          Up Votes
+          %br
+            %span 
+              = @total_upvotes 
+      .col-md-4.col-xs-4
+        %p.answers-count
+          Down Votes
+          %br
+            %span 
+              = @total_downvotes 
 / END USER-STATISTIC
 .row.question-filter
   - if ( @student == current_user )
@@ -58,8 +72,6 @@
           = link_to 'Tags', student_views_profile_path(@student.id, active_tab:'tags'), class: "#{profile_active_tab('tags')}"
         %li
           = link_to 'Badges', student_views_profile_path(@student.id, active_tab:'badges'), class: "#{profile_active_tab('badges')}"
-        %li
-          = link_to 'Votes', student_views_profile_path(@student.id, active_tab:'votes'), class: "#{profile_active_tab('votes')}"
   / END QUESTIONS-FILTER
 - if params[:active_tab] == "answers"
   .main-questions-list
@@ -120,6 +132,8 @@
           %h4
             = @student.username
             don't  have answered any question yet
+- elsif params[:active_tab] == "edit-profile"
+  = render 'form'
 -elsif params[:active_tab] == "bookmarks"
   - question_list = bookmark_question_ids @student
   - if !(question_list.blank?)
@@ -174,49 +188,6 @@
           %h4
             = @student.username
             haven't earned any Badges!!!
-- elsif params[:active_tab] == "votes"
-  .main-questions-list
-    %ul#main_questions_list
-      - if !(@questions.blank?)
-        .row.select-category.single-head
-          .col-md-12.col-xs-12
-            .table-responsive
-              %table.table.table-bordered.table-striped
-                %thead
-                  %tr.success
-                    %th.text-center
-                    %th.text-center 
-                      UpVotes Count
-                    %th.text-center 
-                      DownVotes Count
-                    %th.text-center 
-                      Total Count 
-                %tbody
-                  %tr
-                    %td.text-center
-                      Questions
-                    %td.text-center
-                      = @total_upvotes_question
-                    %td.text-center
-                      = @total_downvotes_question
-                    %td.text-center
-                      = @questions.count
-                  %tr
-                    %td.text-center
-                      Answers
-                    %td.text-center
-                      = @total_upvotes_answer
-                    %td.text-center
-                      = @total_downvotes_answer
-                    %td.text-center
-                      = @answers.count
-      -else
-        .spacer50
-        .col-md-2
-        .col-md-6.col-xs-12
-          %h4
-            = @student.username
-            haven't got any votes!!!
 - elsif params[:active_tab] == "questions"
   .main-questions-list    
     %ul#main_questions_list
@@ -277,28 +248,18 @@
             = @student.username 
             don't have asked any questions yet
 - else
-  .row.select-category.single-head
-    .col-md-8.col-xs-8
-      .table-responsive
-        %table.table.table-bordered.table-striped 
-          %tbody
-            %tr.success
-              %th.text-center
-                Name 
-              %th.text-center 
-                =@student.username  
-            %tr
-              %td.text-center
-                Birthdate
-              %td.text-center
-                =@student.birthdate
-            %tr.success
-              %td.text-center
-                Username
-              %td.text-center
-                =@student.username
-            %tr
-              %td.text-center
-                Email
-              %td.text-center
-                =@student.email 
+  .modal-submit-questions
+    .modal-dialog
+      .modal-body
+        = form_for(resource, :as => resource_name, :url => student_registration_path) do |f|
+          %br
+          = f.label t('common.captions.user_name')
+          = f.text_field :username,class: 'form-control', disabled: true
+          %br
+          = f.label t('common.captions.dob')
+          = f.text_field :birthdate,class: 'form-control date-picker', id: 'datepicker1', disabled: true
+          %br
+          = f.label t('common.captions.email')
+          = f.email_field :email, :autofocus => true,class: 'form-control', disabled: true
+          %br/
+          

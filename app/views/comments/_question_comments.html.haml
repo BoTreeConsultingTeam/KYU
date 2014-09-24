@@ -1,7 +1,7 @@
 .col-md-10.col-xs-10
   %p= raw(question_comment.comment)
   %hr/
-.col-md-2.col-xs-2
+.col-md-2.col-xs-2.commentEditControls
   - if question_comment.is_author?(current_user)
     =link_to '',edit_question_comment_path(question.id,question_comment.id),rel: 'tooltip',title: t('common.links.edit'),class: 'edit-comment fa fa-pencil','data-no-turbolink' => true
     |

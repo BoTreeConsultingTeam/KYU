@@ -1,7 +1,7 @@
 .col-md-12.sort-questions
   %ul
     %li
-      = link_to t('common.links.edit_your_info'), edit_student_registration_path
+      = link_to t('common.links.edit_your_info'), student_views_profile_path(student.id, active_tab: 'edit-profile'), class: "#{profile_active_tab('edit-profile')}"
     %li
       = link_to t('common.links.basic_info'), student_views_profile_path(student.id, active_tab:'basicinfo'), class: "#{profile_active_tab('basicinfo')}"
     %li
@@ -14,5 +14,3 @@
       = link_to t('header_navigation.tags'), student_views_profile_path(student.id, active_tab:'tags'), class: "#{profile_active_tab('tags')}"
     %li
       = link_to t('common.links.badges'), student_views_profile_path(student.id, active_tab:'badges'), class: "#{profile_active_tab('badges')}"
-    %li
-      = link_to t('common.links.votes'), student_views_profile_path(student.id, active_tab:'votes'), class: "#{profile_active_tab('votes')}"

@@ -1,22 +1,22 @@
 .col-md-4.col-xs-4.q-right-content
   %ul.question-statistic
     %li
-      %span.question-views{rel: 'tooltip', title: t('questions.captions.views')}
+      %span.question_points{rel: 'tooltip', title: t('questions.captions.views')}
         = "#{question.impressionist_count}"
       %h4
         %i.view.fa.fa-eye
-    %li.active
-      %span.question-answers{rel: 'tooltip', title: t('questions.captions.answers')}
+    %li
+      %span.question_points{rel: 'tooltip', title: t('questions.captions.answers')}
         = "#{question.answers.count}" 
       %h4
         %i.answer.fa.fa-pencil-square-o
     %li
-      %span.question-upvotes{rel: 'tooltip', title: t('questions.captions.upvotes')}
+      %span.question_points{rel: 'tooltip', title: t('questions.captions.upvotes')}
         = question.get_upvotes.size
       %h4
         %i.like.fa.fa-thumbs-up
     %li
-      %span.question-downvotes{rel: 'tooltip', title: t('questions.captions.downvotes')}
+      %span.question_points{rel: 'tooltip', title: t('questions.captions.downvotes')}
         = question.get_downvotes.size
       %h4
         %i.dislike.fa.fa-thumbs-down

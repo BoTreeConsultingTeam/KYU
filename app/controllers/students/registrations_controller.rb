@@ -46,12 +46,19 @@ class Students::RegistrationsController <  Devise::RegistrationsController
 
     @answers.each do |answer|
       @total_downvotes_answer = @total_downvotes_answer + answer.get_downvotes.size
+    end 
+
+    @total_upvotes = @total_upvotes_question +  @total_upvotes_answer
+    @total_downvotes = @total_downvotes_question + @total_downvotes_answer
+    
+    if params[:active_tab] == 'edit-profile'
+      @student = Student.find(params[:id])
     end
   end
 
   def update
-    @user = Student.find(current_user.id)
-    user_profile_update @user
+    @student = Student.find(current_user.id)
+    user_profile_update @student
   end
 
   def tag_cloud

@@ -6,30 +6,30 @@
       .header-menu
         %ul
           %li
-            = link_to t('header_navigation.home'), questions_path(active_tab: 'all')   
+            = link_to t('header_navigation.home'), questions_path(active_tab: 'all', active_link: 'home'), class: "#{profile_active_link('home')}"
           %li
-            %a{:href => members_path( active_tab: 'Students')} Users
+            = link_to t('header_navigation.users') ,members_path( active_tab: 'Students', active_link: 'users'), class: "#{profile_active_link('users')}"
           %li
-            = link_to t('header_navigation.questions'), questions_path(active_tab: 'all')
+            = link_to t('header_navigation.questions'), questions_path(active_tab: 'all', active_link: 'questions'), class: "#{profile_active_link('questions')}"
           %li
-            = link_to t('header_navigation.tags'), tags_path
+            = link_to t('header_navigation.tags'), tags_path(active_link: 'tags'), class: "#{profile_active_link('tags')}"
           - if student_signed_in?
             %li
-              = link_to t('header_navigation.profile'), student_views_profile_path(current_user)
+              = link_to t('header_navigation.profile'), student_views_profile_path(current_user, active_tab: 'basicinfo', active_link: 'profile'), class: "#{profile_active_link('profile')}"
             %li
               = link_to t('header_navigation.logout'), destroy_student_session_path, method: :delete
           - if teacher_signed_in?
             %li
-              = link_to t('header_navigation.report'), reports_path
+              = link_to t('header_navigation.report'), reports_path(active_link: 'report'), class: "#{profile_active_link('report')}"
             %li
-              = link_to t('header_navigation.profile'), teacher_views_profile_path(current_user)
+              = link_to t('header_navigation.profile'), teacher_views_profile_path(current_user, active_link: 'profile'), class: "#{profile_active_link('profile')}"
             %li
               = link_to t('header_navigation.logout'), destroy_teacher_session_path, method: :delete
           - if administrator_signed_in?
             %li
-              = link_to t('header_navigation.disabled_question'), disabled_questions_path
+              = link_to t('header_navigation.disabled_question'), disabled_questions_path(active_link: 'disabled_question'), class: "#{profile_active_link('disabled_question')}"
             %li       
-              = link_to t('header_navigation.report'), reports_path
+              = link_to t('header_navigation.report'), reports_path(active_link: 'report'), class: "#{profile_active_link('report')}"
             %li
               = link_to t('header_navigation.logout'), destroy_teacher_session_path, method: :delete
     .col-md-2.col-xs-2.btn-group.header-avatar

@@ -22,7 +22,7 @@ class ApplicationController < ActionController::Base
       set_flash_message :notice, :updated
       sign_in user, :bypass => true
       if current_student
-        redirect_to student_views_profile_path(user)
+        redirect_to student_views_profile_path(user, active_tab: 'basicinfo')
       else
         redirect_to teacher_views_profile_path(user)
       end

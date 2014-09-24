@@ -6,4 +6,4 @@
     - if answer_comment.is_author?(current_user)
       =link_to '',edit_answer_comment_path(answer.id,answer_comment.id), rel: 'tooltip', title: t('common.links.edit'), class: 'fa fa-pencil','data-no-turbolink' => true
       |
-      = link_to '',answer_comment_path(answer.id,answer_comment.id), rel: 'tooltip', title: t('common.links.delete_link'), method: :delete, data: {confirm: t('common.links.delete.confirm')}, remote: true, class: 'fa fa-trash-o'
+      = link_to '',answer_comment_path(answer.id,answer_comment.id), rel: 'tooltip', title: t('common.links.delete_link'), method: :delete, data: {confirm: t('common.links.delete.confirm')}, remote: true, class: 'delete-comment fa fa-trash-o'
