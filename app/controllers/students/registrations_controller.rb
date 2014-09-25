@@ -1,7 +1,6 @@
 class Students::RegistrationsController <  Devise::RegistrationsController
    before_filter :configure_permitted_parameters, if: :devise_controller?
    before_action :user_signed_in?, only:[:index,:view_profile,:update]
-   before_filter :password_match?, only: [:create]
   def new
     @standards = Standard.all
     super
@@ -20,9 +19,8 @@ class Students::RegistrationsController <  Devise::RegistrationsController
   end
 
   def create
-    @standard = Standard.all
     @student = build_resource
-    super 
+    super
   end
 
   def view_profile
@@ -51,24 +49,6 @@ class Students::RegistrationsController <  Devise::RegistrationsController
   private
   def sign_up_params
     params.require(:student).permit(:email, :password, :username, :birthdate, :standard_id, :avatar)
-  end
-
-  def password_match?
-    @password = params[:student][:password]
-    puts "----------------------#{@password}"
-    @password_confirmation = params[:student][:password_confirmation]
-     if @password.present? && !@password_confirmation.present?
-      self.errors.add(:student => :password, "does not match with confirmed password")
-      false
-    elsif @password != @password_confirmation
-      self.errors.add(:password, "does not match with confirmed password")
-      false
-    elsif @password.nil?
-      self.errors.add(:password, "is required")
-      return false
-    else
-      true
-    end
   end
   def after_sign_in_path_for(resource)
     students_path(active_tab: 'all')
