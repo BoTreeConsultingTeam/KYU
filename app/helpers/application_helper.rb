@@ -106,6 +106,19 @@ module ApplicationHelper
       css_class
   end
 
+  def profile_active_link(active_link)
+    css_class = ''
+    active_link_param = params[:active_link]
+    if active_link.present? && active_link_param.present? && active_link_param == active_link
+      css_class = 'active_link'
+    elsif active_link.blank? && active_link_param.present? && !PAGE_FILTERS.include?(active_link_param)
+      css_class = 'active_link'
+    elsif active_link.blank? && active_link_param.blank?
+      css_class = 'active_link'
+    end
+      css_class
+  end
+
   def list_of_users(user_type_tab,user)  
     case user_type_tab
     when "Teachers"
@@ -117,5 +130,5 @@ module ApplicationHelper
         render partial: 'members/blank_messages',locals: {type: user_type_tab}
       end
     end
-  end
+  end 
 end

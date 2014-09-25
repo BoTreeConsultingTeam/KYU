@@ -8,5 +8,4 @@
     = ' - '
     =link_to '',edit_question_comment_path(question.id,question_comment.id),rel: 'tooltip',title: t('common.links.edit'),class: 'edit-comment fa fa-pencil','data-no-turbolink' => true
     |
-    =link_to '',question_comment_path(question.id,question_comment.id),method: :delete,data: {confirm: t('common.links.delete.confirm')},remote: true,rel: 'tooltip',title: t('common.links.delete_link'),class: 'delete-comment fa fa-trash-o'
-    
+    =link_to '',question_comment_path(question.id,question_comment.id),method: :delete,data: {confirm: t('common.links.delete.confirm')},remote: true,rel: 'tooltip',title: t('common.links.delete_link'),class: 'delete-comment fa fa-trash-o'   

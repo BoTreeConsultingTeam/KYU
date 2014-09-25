@@ -1,7 +1,7 @@
 .col-md-12.sort-questions
   %ul
     %li
-      = link_to t('common.links.edit_your_info'), edit_student_registration_path
+      = link_to t('common.links.edit_your_info'), student_views_profile_path(student.id, active_tab: 'edit-profile'), class: "#{profile_active_tab('edit-profile')}"
     %li
       = link_to t('common.links.basic_info'), student_views_profile_path(student.id, active_tab: t('students.active_tab.basic_info')), class: "#{profile_active_tab(t('students.active_tab.basic_info'))}"
     %li

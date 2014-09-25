@@ -8,7 +8,7 @@
           .q-lbtm-content
             .question-excerpt
               %p
-                = raw(question.content)
+                = truncate(question.content, escape: false)
             .question-cat
               %ul.question-tags
                 - question.tags.each do |tag|

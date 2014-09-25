@@ -20,6 +20,7 @@ $( document ).ready(function() {
         $('#colorSelector div').css('backgroundColor', '#' + hex);
       }
     });
+ 
   });
   
   $("#search").keyup(function() {
@@ -63,4 +64,25 @@ $( document ).ready(function() {
       $('#search_preview').hide();
     }
   });
+
+  $('a.vote, input#comment-box').on('click', function() { 
+    blockUI();
+  });
+
+  $('body').on('click', 'a.delete-comment', function() { 
+    blockUI();
+  });
 });
+
+
+function blockUI(){
+	$.blockUI({ css: { 
+        border: 'none', 
+        padding: '15px', 
+        backgroundColor: '#000', 
+        '-webkit-border-radius': '10px', 
+        '-moz-border-radius': '10px', 
+        opacity: .5, 
+        color: '#fff' 
+    }}); 
+};

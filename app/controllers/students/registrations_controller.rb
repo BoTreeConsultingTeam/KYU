@@ -40,8 +40,8 @@ class Students::RegistrationsController <  Devise::RegistrationsController
   end
 
   def update
-    @user = Student.find(current_user.id)
-    user_profile_update @user
+    @student = Student.find(current_user.id)
+    user_profile_update @student
   end
 
   def tag_cloud

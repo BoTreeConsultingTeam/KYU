@@ -13,7 +13,7 @@ module QuestionsHelper
     if 'up'== vote
       css_class = "action vote vote-up img-circle fa fa-chevron-up"
     else
-      css_class = "action vote vote-up img-circle fa fa-chevron-down"
+      css_class = "action vote vote-down img-circle fa fa-chevron-down"
     end
     if votable_type.class.to_s == 'Question'
 		  link_to '', vote_question_path(votable_type,type: vote), method: "post",class: css_class,remote: true, :"data-replace" => '#some_id'
