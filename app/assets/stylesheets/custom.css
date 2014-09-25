@@ -372,9 +372,9 @@ ul li a.active_link {
 .main-content {
 	border-right: 1px solid #dadfea;
 	border-left: 1px solid #dadfea;
+	min-height: 800px;
 	padding: 0;
 }
-
 #que-search{
 	float: right !important;
     margin-right: 576px !important;
