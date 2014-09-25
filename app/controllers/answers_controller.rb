@@ -1,6 +1,6 @@
 class AnswersController < ApplicationController
   before_action :user_signed_in?
-  
+  before_filter :answer_find_by_id, only: [:edit, :update, :destroy, :vote, :accept]
   def new
     @answer = Answer.new
     @question =  Question.find(params[:question_id])
@@ -28,8 +28,7 @@ class AnswersController < ApplicationController
   def edit
     @question = Question.find(params[:question_id])
     @answers = @question.answers
-    answer_find_by_id
-    if answer_find_by_id.nil?
+    if @answer.nil?
       flash[:error] = t('flash_message.error.answer.edit')
       redirect_to_question(params[:question_id])
     end
@@ -47,8 +46,7 @@ class AnswersController < ApplicationController
   end
 
   def destroy
-    answer_find_by_id
-    if answer_find_by_id.nil?
+    if @answer.nil?
       flash[:error] = t('flash_message.error.answer.destroy')
     else
       @answer.destroy
@@ -60,16 +58,20 @@ class AnswersController < ApplicationController
   def vote
     @rule = set_rule 2
     if check_permission current_user,@rule
-      answer_find_by_id
-      if answer_find_by_id.nil?
+      
+      if @answer.nil?
         redirect_to questions_path(active_tab: 'all'),flash: { error: t('flash_message.error.answer.vote') }
       else
-        if "up" == params[:type]        
-          answer_liked_by(@answer, liked_by)
-          give_points(@answer, Point.action_score(4))
+        if "up" == params[:type]
+          if !@answer.get_likes.map{|vote| vote.voter}.include?current_user
+            answer_liked_by(@answer, liked_by)
+            give_points(@answer, Point.action_score(4))
+          end
         else
-          answer_disliked_by(@answer,liked_by)
-          give_points(@answer, Point.action_score(6))
+          if !@answer.get_dislikes.map{|vote| vote.voter}.include?current_user
+            answer_disliked_by(@answer,liked_by)
+            give_points(@answer, Point.action_score(6))
+          end
         end
         respond_to do |format|
           format.js        

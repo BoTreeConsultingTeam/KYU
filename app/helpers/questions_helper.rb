@@ -35,6 +35,6 @@ module QuestionsHelper
   end  
 
   def bookmark_question_ids student
-    student.bookmarks.map { |bookmark| bookmark.question }
+    Kaminari.paginate_array(student.bookmarks.map { |bookmark| bookmark.question }).page params[:page]
   end
 end

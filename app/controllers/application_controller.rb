@@ -24,14 +24,18 @@ class ApplicationController < ActionController::Base
     badge.rules.map{|rule|rule.id}
   end
 
-  def check_permission user,rule  
-    badge = user_badge user
-    if !badge.nil?
-      rule_arr = badge_rules badge
-      if rule_arr.include? rule.id
-        return true
-      else
-        return false
+  def check_permission user,rule
+    if current_teacher
+      true
+    else
+      badge = user_badge user
+      if !badge.nil?
+        rule_arr = badge_rules badge
+        if rule_arr.include? rule.id
+          return true
+        else
+          return false
+        end
       end
     end
   end
