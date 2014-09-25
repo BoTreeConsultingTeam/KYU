@@ -22,7 +22,16 @@ $( document ).ready(function() {
     });
  
   });
-  
+  $('#standard_select').change(function() {
+    $.ajax({
+      url: '/students/registrations/update_division.json',
+      type: "GET",
+      data: {
+        standard_id : $('#standard_select').val()
+      },
+      dataType: "json"
+    });
+  });
   $("#search").keyup(function() {
     $('#search_preview').empty();
     $('.i-preview').hide();

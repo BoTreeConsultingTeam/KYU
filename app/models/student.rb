@@ -16,6 +16,9 @@ class Student < ActiveRecord::Base
   has_many :badges, :through => :levels 
   has_many :levels   
   belongs_to :standard
+  accepts_nested_attributes_for :standard
+  belongs_to :division
+  accepts_nested_attributes_for :division
   validates :username,:birthdate, presence: true
   validates :email, format: {with: VALID_EMAIL_REGEX}, uniqueness: {case_sensitive: false}
   validates :standard_id,presence: true

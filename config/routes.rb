@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   devise_scope :student do
     get "/students" => "students/registrations#index"
     get 'student_views_profile/:id' => 'students/registrations#view_profile', as: :student_views_profile
+    get 'students/registrations/update_division', to: 'students/registrations#update_division', as: 'update_division'
   end
 
   devise_scope :teacher do
@@ -67,5 +68,6 @@ Rails.application.routes.draw do
   post 'reports/top_3_weak_area', to: 'reports#top_3_weak_area', as: :top_3_weak_area
   post 'reports/top_3_strong_area', to: 'reports#top_3_strong_area', as: :top_3_strong_area
   get 'reports/update_students', to: 'reports#update_students', as: 'update_students'
+
   resources :reports
 end
