@@ -1,6 +1,6 @@
 - elementId_upvote = "#upvote_question#{@question.id}"
 $("#{elementId_upvote}").text("#{@question.get_likes.size}")
-
+$.unblockUI();
 - elementId_downvote = "#downvote_question#{@question.id}"
 $("#{elementId_downvote}").text("#{@question.get_dislikes.size}")
 $.unblockUI();
