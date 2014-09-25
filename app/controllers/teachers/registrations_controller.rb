@@ -15,7 +15,7 @@ class Teachers::RegistrationsController <  Devise::RegistrationsController
 
   def view_profile
     @teacher = Teacher.find(params[:id])
-    @questions = @teacher.questions
+    @questions = @teacher.questions.page params[:page]
     @answers = @teacher.answers
     @tag = @teacher.owned_tags
     @tags = @tag.map { |obj| [obj.name, obj.taggings_count]  }  
@@ -23,8 +23,13 @@ class Teachers::RegistrationsController <  Devise::RegistrationsController
     @questions_dislikes_count  =  @teacher.questions.map{|question|question.get_dislikes.count}.inject{|sum,val|sum+val}
     @answers_dislikes_count  =  @teacher.answers.map{|question|question.get_dislikes.count}.inject{|sum,val|sum+val}
     @answers_likes_count  =  @teacher.answers.map{|question|question.get_likes.count}.inject{|sum,val|sum+val}
-    @total_questions_votes = @questions_likes_count + @questions_dislikes_count
-    @total_answers_votes = @answers_dislikes_count + @answers_likes_count
+    if !@questions_likes_count.nil?
+      @total_questions_votes = @questions_likes_count + @questions_dislikes_count
+    end
+
+    if !@answers_likes_count.nil?
+      @total_answers_votes = @answers_dislikes_count + @answers_likes_count
+    end
   end
   
   def update 

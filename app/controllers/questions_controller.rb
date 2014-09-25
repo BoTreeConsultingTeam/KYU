@@ -2,6 +2,7 @@ class QuestionsController < ApplicationController
   before_action :user_signed_in?
   before_filter :tag_list, only: [:new, :edit]
   before_filter :question_find_by_id, only: [:show, :destroy, :edit]
+
   def index
     if received_tag
       @tag = ActsAsTaggableOn::Tag.find_by_name(received_tag)
@@ -103,13 +104,13 @@ class QuestionsController < ApplicationController
       if question_find_by_id.nil?
         redirect_to questions_path,flash: { error: t('flash_message.error.question.vote') }
       else
-        if "up" == params[:type] 
-          if !@question.get_likes.map{|vote| vote.voter_id}.include?current_user.id 
-          question_liked_by(@question,liked_by)
-          give_points(@question, Point.action_score(3))
-        end
+        if 'up' == params[:type] 
+          if !@question.get_likes.map{|vote| vote.voter}.include?current_user
+            question_liked_by(@question,liked_by)
+            give_points(@question, Point.action_score(3))
+          end
         else
-          if !@question.get_dislikes.map{|vote| vote.voter_id}.include?current_user.id 
+          if !@question.get_dislikes.map{|vote| vote.voter}.include?current_user
             question_disliked_by(@question,liked_by)
             give_points(@question, Point.action_score(5))
           end

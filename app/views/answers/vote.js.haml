@@ -2,3 +2,4 @@
 $("#{elementId_upvote}").text("#{@answer.get_likes.size}")
 - elementId_downvote = "#down_vote_answer#{@answer.id}"
 $("#{elementId_downvote}").text("#{@answer.get_dislikes.size}")
+$.unblockUI();
