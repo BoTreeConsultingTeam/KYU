@@ -1,0 +1,19 @@
+.col-md-8.main-content
+  .row
+    .col-md-6
+      .spacer30
+      .table-responsive
+        %table.table.table-bordered.table-striped
+          %thead
+            %tr.success
+              %th.text-center Tag 
+              %th.text-center Tags Usage Count
+          %tbody
+            - top_3_area.each do |tag|
+              %tr.text-center
+                - tag.each do |tag_count|
+                  %td
+                    = tag_count
+    .col-md-6    
+      #chart
+        = render_chart(@student_top3_chart, 'chart') 

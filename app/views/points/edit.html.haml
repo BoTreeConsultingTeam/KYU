@@ -1,0 +1,10 @@
+= render :partial => "layouts/sub_heading", :locals => {:object => 'Edit Points'}
+.modal-submit-questions
+  .modal-dialog
+    .modal-body
+      = form_for(@point) do |f|
+        %br
+        = f.label "#{@point.action}"
+        =f.text_field :score,class: 'form-control'
+        .spacer20
+        %div= f.submit t('common.btn.submit'),class: 'btn-submit-question', id: 'btn_submit_question'  

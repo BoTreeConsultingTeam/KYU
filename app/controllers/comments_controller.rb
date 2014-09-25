@@ -1,24 +1,30 @@
 class CommentsController < ApplicationController
 
   before_action :user_signed_in?
-  
+
   def create 
-    @comment = Comment.new(comment_params.merge({commentable: current_user}).merge({relative: params[:relative]}))
-    @comments = Comment.relative_comments(comment_relative_id,comment_relative_type).page params[:page]
-    if @comment.save
-      if "Question" == relative_type
-        @question = Question.find_by_id(comment_relative_id)
+    @rule = set_rule 4
+    if check_permission current_user,@rule 
+      @comment = Comment.new(comment_params.merge({commentable: current_user}).merge({relative: params[:relative]}))
+      @comments = Comment.relative_comments(comment_relative_id,comment_relative_type).page params[:page]
+      if @comment.save
+        if "Question" == relative_type
+          @question = Question.find_by_id(comment_relative_id)
+        else
+          @answer = find_by_answer_id(comment_relative_id)  
+        end 
+        respond_to do |format|
+          format.js
+        end
       else
-        @answer = find_by_answer_id(comment_relative_id)  
-      end 
-      respond_to do |format|
-        format.js
+        redirect_to questions_path(active_tab: 'all')
       end
     else
-      redirect_to questions_path(active_tab: 'all')
+      flash[:error] = t('answers.messages.unauthorized')
+      redirect_to questions_path
     end
   end
-   
+
   def update
     comment_find_by_id
     if !(@comment.nil?)
@@ -68,7 +74,7 @@ class CommentsController < ApplicationController
   end    
 
   def destroy
-    comment_find_by_id
+    @comment = comment_find_by_id
     if !(comment_find_by_id.nil?)
       @comment.delete
       if params[:answer_id].present?
@@ -85,7 +91,7 @@ class CommentsController < ApplicationController
       if params[:answer_id].present?
         @answer = find_by_answer_id(params[:id])
         @comments = Comment.all
-        redirect_to question_path(@answer.question.id),flash: { error: "No such Comment found for Delete!" }
+        redirect_to question_path(@answer.question.id),flash: { error: t('comments.messages.comment_not_found') }
       else
         redirect_to question_path(params[:question_id]),flash: { error: t('comments.messages.comment_not_found') }
       end

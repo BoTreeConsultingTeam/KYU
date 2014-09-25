@@ -1,2 +1,3 @@
-= @badges.each do |badge|
-  badge.name  
+- @badges.each do |badge|
+  %span.user-badge{style: "background-color: #{badge.color}"}
+   = badge.name  

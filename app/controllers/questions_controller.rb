@@ -1,26 +1,36 @@
 class QuestionsController < ApplicationController
   before_action :user_signed_in?
-    
+  before_filter :tag_list, only: [:new, :edit]
+  before_filter :question_find_by_id, only: [:show, :destroy, :edit]
   def index
     if received_tag
       @tag = ActsAsTaggableOn::Tag.find_by_name(received_tag)
       @questions = Question.tagged_with(received_tag).enabled.page params[:page]
-    else received_active_tab
-      case received_active_tab
-      when 'all'
-        @questions = all_questions.page params[:page]  
-      when 'week'
-        @questions = Question.recent_data_week.enabled.page params[:page]
-      when 'month'
-        @questions = Question.recent_data_month.enabled.page params[:page]
-      when 'un_answered'
-        @questions = Kaminari.paginate_array(Question.enabled.find_all_by_id(un_answered_questions).reverse).page params[:page]
-      when 'most_viewed'
-        @questions = Question.most_viwed_question.enabled.page params[:page]
-      when 'most_voted'
-        @questions = Question.highest_voted.enabled.page params[:page]
-      when 'newest'
-        @questions = Question.newest(current_user).enabled.page params[:page]
+    elsif received_active_tab
+      active_tab(received_active_tab)
+    else
+      @question = Question.all.page params[:page] 
+    end
+  end
+
+  def search_by_keyword 
+    if received_keyword != ''
+      @search = Sunspot.search(Question) do
+        fulltext received_keyword
+      end
+      @question_list = @search.results
+      respond_to do |format|
+          format.html
+          format.json { 
+          render json: @question_list.map{|question|[question.id,question.title]}
+        }
+      end
+    else
+      respond_to do |format|
+        format.html
+        format.json { 
+          render json: []
+        }
       end
     end
   end
@@ -31,34 +41,36 @@ class QuestionsController < ApplicationController
 
   def new
     @standards = Standard.all
-    @tags = tag_list
     if !(current_administrator)
       @question = Question.new
       @question.user_id = session[:id]
     else
-      flash[:error] = "not_permitted: 'You are not authorized to access this page'"
+      flash[:error] = t('answers.messages.unauthorized')
       redirect_to members_path(active_tab: 'Students')
     end
   end
 
   def create
-    @question = Question.new(question_params.merge({askable: current_user}).except!(:tag_list))
-    current_user.tag( @question, :with => question_params[:tag_list], :on => :tags )
-    if @question.save
-      if current_student
-        current_student.change_points(2)
+    if !current_administrator
+      @question = Question.new(question_params.merge({askable: current_user}).except!(:tag_list))
+      current_user.tag( @question, :with => question_params[:tag_list], :on => :tags )
+      if @question.save
+        if current_student
+          current_student.change_points(Point.action_score(1))
+          redirect_to questions_path(active_tab: 'all')
+        else
+          redirect_to new_question_path
+        end
+      else
+        flash[:error] = t('answers.messages.unauthorized')
+        redirect_to questions_path
       end
-      redirect_to questions_path(active_tab: 'all')
-    else
-      @standards = Standard.all
-      render new_question_path
     end
   end
 
   def show
-    @question = question_find_by_id
     if !(@question.nil?)
-      @answers = @question.answers
+      @answers = @question.answers.page params[:page]
       @answer = Answer.new
       impressionist(@question, nil, { unique: [:session_hash] })
       @comment = Comment.new
@@ -69,8 +81,7 @@ class QuestionsController < ApplicationController
     end
   end
 
-  def destroy
-    @question = question_find_by_id
+  def destroy 
     title = @question.title
     if question_find_by_id.nil?
       flash[:error] = t('flash_message.error.question.destroy')
@@ -86,31 +97,36 @@ class QuestionsController < ApplicationController
   end
 
   def vote
-    @question = question_find_by_id
-    if question_find_by_id.nil?
-      redirect_to questions_path,flash: { error: t('flash_message.error.question.vote') }
-    else
-      if "up" == params[:type]
-        if !@question.get_likes.map{|vote| vote.voter_id}.include?current_user.id 
-          question_liked_by(@question,liked_by)
-          give_points(@question,5)
-        end
+    @rule = set_rule 1
+    if check_permission current_user,@rule
+      @question = question_find_by_id
+      if question_find_by_id.nil?
+        redirect_to questions_path,flash: { error: t('flash_message.error.question.vote') }
       else
-        if !@question.get_dislikes.map{|vote| vote.voter_id}.include?current_user.id 
-          question_disliked_by(@question,liked_by)
-          give_points(@question,-5)
+        if "up" == params[:type] 
+          if !@question.get_likes.map{|vote| vote.voter_id}.include?current_user.id 
+          question_liked_by(@question,liked_by)
+          give_points(@question, Point.action_score(3))
+        end
+        else
+          if !@question.get_dislikes.map{|vote| vote.voter_id}.include?current_user.id 
+            question_disliked_by(@question,liked_by)
+            give_points(@question, Point.action_score(5))
+          end
+        end
+        respond_to do |format|
+          format.js
         end
       end
-      respond_to do |format|
-        format.js        
-      end      
+    else
+      flash[:error] = t('answers.messages.unauthorized')
+      redirect_to questions_path
     end
+
   end
   
   def edit
     @standards = Standard.all
-    @question = question_find_by_id
-    @tags = tag_list
     @standards = Standard.all
     if question_find_by_id.nil?
       redirect_to questions_path(active_tab: 'all'),flash: { error: t('flash_message.error.question.edit') }
@@ -118,8 +134,7 @@ class QuestionsController < ApplicationController
   end
   
   def update
-    @question = question_find_by_id
-    if !(@question.nil?) 
+    if !(@question.present?) 
       @question.update(question_params.merge({askable: current_user}).except!(:tag_list))
       current_user.tag( @question, :with => question_params[:tag_list], :on => :tags )
       flash[:notice] = t('flash_message.success.question.update')
@@ -132,6 +147,7 @@ class QuestionsController < ApplicationController
   def enable 
     @question = Question.find_by_id(params[:id])
     @question.update_attributes(enabled: true)
+    give_points(@question, Point.action_score(7))
 
     redirect_to disabled_questions_path
   end
@@ -142,24 +158,51 @@ class QuestionsController < ApplicationController
       flash[:error] = t('flash_message.error.question.disable')
     else
       @question.enabled = false
-      @question.save
+      if @question.save
+        give_points(@question, Point.action_score(8))
+      end
     end
     redirect_to questions_path(active_tab: 'all')
   end
 
   def abuse_report
-    @question = question_find_by_id
-    if @question.nil?
-      flash[:error] =  t('flash_message.error.question.report_abuse') 
+    @rule = set_rule 5
+    if check_permission current_user,@rule
+      @question = question_find_by_id
+      if @question.nil?
+        flash[:error] =  t('flash_message.error.question.report_abuse') 
+      else
+        Question.send_question_answer_abuse_report(current_user,@question)
+        flash[:notice] = t('flash_message.success.question.report_abuse')
+      end
+      redirect_to questions_path(active_tab: 'all')
     else
-      Question.send_question_answer_abuse_report(current_user,@question)
-      flash[:notice] = t('flash_message.success.question.report_abuse')
+      flash[:error] =  t('answers.messages.unauthorized')
+      redirect_to questions_path
     end
-    redirect_to questions_path(active_tab: 'all')
   end
 
   private
   
+  def active_tab(active_tab_params)
+    case active_tab_params
+      when 'all'
+        @questions = all_questions.page params[:page]  
+      when 'week'
+        @questions = Question.recent_data_week.enabled.page params[:page]
+      when 'month'
+        @questions = Question.recent_data_month.enabled.page params[:page]
+      when 'un_answered'
+        @questions = Kaminari.paginate_array(Question.enabled.find_all_by_id(un_answered_questions).reverse).page params[:page]
+      when 'most_viewed'
+        @questions = Question.most_viwed_question.enabled.page params[:page]
+      when 'most_voted'
+        @questions = Question.highest_voted.enabled.page params[:page]
+      when 'newest'
+        @questions = Question.newest(current_user).enabled.page params[:page]
+      end
+  end
+
   def question_params
     params.require(:question).permit(:standard_id, :title, :content, :user_id, :tag_list =>[])
   end
@@ -181,7 +224,7 @@ class QuestionsController < ApplicationController
   end
 
   def question_find_by_id
-    Question.find_by_id(params[:id])
+    @question = Question.find_by_id(params[:id])
   end
 
   def all_questions
@@ -189,16 +232,20 @@ class QuestionsController < ApplicationController
   end
 
   def un_answered_questions
-    question = {}
-    all_questions.each do |q| 
-      if q.answers.count == 0
-        question[q.id] = q
+    answer_counts = {}
+    all_questions.each do |question| 
+      if question.answers.count == 0
+        answer_counts[question.id] = question
       end
     end
-    question.keys
+    answer_counts.keys
   end
 
   def tag_list
-    ActsAsTaggableOn::Tag.all
+    @tags = ActsAsTaggableOn::Tag.all
+  end
+  
+  def received_keyword
+    params[:keyword].gsub(/\s+/, "")
   end
 end

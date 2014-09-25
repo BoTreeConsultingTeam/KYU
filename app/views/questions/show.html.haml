@@ -1,9 +1,5 @@
 .row.select-category.single-head
-  .col-md-2.col-xs-2
-    %span.back
-      %i.fa.fa-angle-double-left
-      %a 
-        = link_to 'Home',questions_path(active_tab: 'all')
+  .col-md-1
   .col-md-8.col-xs-8
     %h3 
       = @question.title
@@ -24,10 +20,11 @@
   - else 
     .col-md-1
   .col-md-9.col-xs-9.q-right-content
-    %ul.post-controls
-      -if !(current_administrator) && @question.askable == current_user
-        %li
-          = link_to '',edit_question_path(@question.id),class: 'post-edit action fa fa-pencil',rel: 'tooltip',title: t('common.links.edit'), 'data-no-turbolink' => true
+    -if !(current_administrator)
+      %ul.post-controls      
+        - if @question.askable == current_user
+          %li
+            = link_to '',edit_question_path(@question.id),class: 'post-edit action fa fa-pencil',rel: 'tooltip',title: t('common.links.edit'), 'data-no-turbolink' => true
           %li
             = link_to '',question_path,method: :delete,data: {confirm: t('common.links.delete.confirm')},rel: 'tooltip',title: t('common.links.delete_link'),class: 'post-delete action fa fa-trash-o'
         
@@ -36,7 +33,7 @@
             = link_to '', bookmarks_path(:question_id => @question.id), method: :post,rel: 'tooltip',title: t('questions.links.add_bookmark'), class: 'post-delete action fa fa-plus'
         -else
           %li
-            = link_to '',bookmark_path(:question_id => @question.id), method: :delete,data: {confirm: t('common.links.delete.confirm')},rel: 'tooltip',title: t('questions.links.delete_bookmark '),class: 'post-delete action fa fa-minus-square'    
+            = link_to '',bookmark_path(:question_id => @question.id), method: :delete,data: {confirm: t('common.links.delete.confirm')},rel: 'tooltip',title: t('questions.links.delete_bookmark'),class: 'post-delete action fa fa-minus-square'    
     .top-content
       - if @question.answers.count > 0
         %span.answered
@@ -83,6 +80,7 @@
     - if @question_comments.present?           
       .row.paginations.home
         .col-md-12{id:'paginator'}
+          .spacer10
           = paginate @question_comments
     .clearfix
 .sticky-wrapper
@@ -96,5 +94,11 @@
 / ANSWERS LOOP
 #answers_main_list
   = render 'answers_list', locals: { :answers =>  @answer}
+.row.paginations.home
+  .col-md-12
+    .answer-item.answer-pagination
+      .spacer20
+      =paginate @answers
   - if !current_administrator
+    .spacer50
     = render 'answers/form'

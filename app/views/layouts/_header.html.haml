@@ -1,18 +1,12 @@
 %header#header
   #logo.col-md-2.col-xs-2
-    KYU
+    = Settings.app_name
   -if (user_signed_in)
     .col-md-8.col-xs-8
-      .header-menu
+      .header-menu    
         %ul
           %li
-            = link_to t('header_navigation.home'), questions_path(active_tab: 'all', active_link: 'home'), class: "#{profile_active_link('home')}"
-          %li
-            = link_to t('header_navigation.users') ,members_path( active_tab: 'Students', active_link: 'users'), class: "#{profile_active_link('users')}"
-          %li
-            = link_to t('header_navigation.questions'), questions_path(active_tab: 'all', active_link: 'questions'), class: "#{profile_active_link('questions')}"
-          %li
-            = link_to t('header_navigation.tags'), tags_path(active_link: 'tags'), class: "#{profile_active_link('tags')}"
+            = link_to t('header_navigation.home'), questions_path(active_tab: 'all')   
           - if student_signed_in?
             %li
               = link_to t('header_navigation.profile'), student_views_profile_path(current_user, active_tab: 'basicinfo', active_link: 'profile'), class: "#{profile_active_link('profile')}"
@@ -46,3 +40,11 @@
               = "Welcome #{current_teacher.username}"
           - if administrator_signed_in?
             = "Welcome #{current_administrator.email}"
+      .header-search-wrapper#que-search
+        %form#header_search
+          %input{:autocomplete => "off", :name => "search", :placeholder => "Enter Keywords", :type => "text", :value => "" , id: 'search'}/ 
+          %i.fa.fa-search
+        .search-preview#search_preview
+          %span.i-preview
+
+        

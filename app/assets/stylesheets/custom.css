@@ -251,6 +251,7 @@ ul.social-icon{
   color: #fff;
 }
 .accept-answer{
+  padding-left: 40px;
   color:green;
 }
 
@@ -308,9 +309,11 @@ ul.tag-list {
 {
   height: 30px;
 }
+
 li.search-field {
   height: 35px;
 }
+
 ul.chosen-choices{
   border: 1px solid #ddd;
   border-radius: 3px;
@@ -320,20 +323,68 @@ ul.chosen-choices{
   border-left: 1px solid #ddd;
   border-right: 1px solid #ddd;
 }
+
 .chosen-container-multi .chosen-choices li.search-choice .search-choice-close{
-  position: absolute;
-  top: 6px;
-  right: 3px;
-  display: block;
-  width: 12px;
-  height: 12px;
-  background: url(chosen-sprite.png) -42px 1px no-repeat;
-  font-size: 1px;
+	position: absolute;
+	top: 6px;
+	right: 3px;
+	display: block;
+	width: 12px;
+	height: 12px;
+	background: url(chosen-sprite.png) -42px 1px no-repeat;
+	font-size: 1px;
 }
+
+.tag-pagination {
+	padding-left: 45px !important;
+}
+
+.answer-pagination {
+	padding-left: 40px !important;
+}
+.member-pagination {
+	padding-left: 30px;
+}
+
 ul li a.active_link {
   color: #fff;
 }
+.question-main-content .question-content {
+	margin: 10px 0 20px;
+}
 
+.q-right-content .top-content {
+	margin-bottom: -5px;
+}
+.comment-list {
+	border-bottom: 1px solid #ddd;
+	padding-top: 5px;
+	float: left;
+}
+.comment-owner {
+	float: left;
+}
+.comment-body {
+	float: left;
+}
+.main-content {
+	border-right: 1px solid #dadfea;
+	border-left: 1px solid #dadfea;
+	min-height: 800px;		
+	padding: 0;
+}
+#que-search{
+	float: right !important;
+    margin-right: 576px !important;
+    margin-top: -25px !important;
+    position: relative !important;
+}
+.rules-list{
+	margin-top: 5px !important;
+}
+.color-picker-width{
+	width: 120px !important;
+}
 .main-questions-list ul.question-statistic li span {
   width: 46px;
   height: 20px;

@@ -42,6 +42,7 @@ en:
       update_success: 'Updated Successfully!'
       delete_success: 'Deleted successfully!'
       answer_accepted: 'Answer Accepted!'
+      unauthorized: 'You are not authorized for this action'
     basic:
       answer_label: 'Your answer'
       new_answer: 'New Answer'
@@ -80,6 +81,19 @@ en:
       answer_vote_up: 'answer is voted up'
       answer_accepted: 'answer is Accepted'
       badge_system: 'Badges System'
+      add_badge: 'Add Badge'
+      add_new_badge: 'Add New Badge'
+      edit_badge: 'Edit Badge'
+    message:
+      badge_create_success: 'Badge Created'
+      badge_create_fail: 'Badge Not Created'
+      badge_update_success: 'Badge updated'
+      badge_destroy_success: 'Badge destroy'
+      badge_destroy_fail: 'Badge not destroy'
+  points:
+    message: 
+      update_success: 'Points Updated '
+      update_failed: 'Points not Updated'
   common:
     error:
       messages: 'No Record Found'
@@ -132,7 +146,15 @@ en:
       delete:
         confirm: 'Are you sure?'
     image:
-      alt: 'Image.image.alt'
+      alt: 'Image'
+    active_tab: 
+      blocked_student: 'Blocked Students'
+      student_for_review: 'Students for Review'
+      students: 'Students'
+      teachers: 'Teachers'
+      managers: 'Managers'
+    page_header:
+      users: 'Users'
   students:
     captions:
       middle_name: 'Middle Name' 
@@ -151,6 +173,21 @@ en:
       unmark_review: 'Unmark Review'
     tooltip:
       manager: 'Student Manager'
+    filter:
+      basic_info: 'basicinfo'
+      questions: 'questions'
+      answers: 'answers'
+      tags: 'tags'
+      badges: 'badges'
+      votes: 'votes'
+    active_tab:
+      basic_info: 'basicinfo'
+      questions: 'questions'
+      answers: 'answers'
+      tags: 'tags'
+      badges: 'badges'
+      votes: 'votes'
+      bookmarks: 'bookmarks'
   teachers:
     captions:
     page_header:
@@ -188,6 +225,10 @@ en:
         edit: 'No such Comment found for Edit!'
         update: 'no such Comment found for Update!'
         destroy:
+      report:
+        no_record: 'No Record Found'
+        no_student: 'No Student Found'
+        no_standard: 'No Standard Found'
     success:
       question:
         update: 'Question successfully updated!'
@@ -227,4 +268,12 @@ en:
     captions:
       not_answered: You don't  have answered any question yet
       never_ask: You don't have asked any questions yet
+  administrator:
+    cancel_account: 'Cancel my account'
+
+  report:
+    captions:
+      select_artist: Select an Artist
+      top_3_weak_area: Top 3 weak Areas
+      top_3_strong_area: Top 3 strong Areas
 

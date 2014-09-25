@@ -23,11 +23,29 @@ module ApplicationHelper
   end
 
   def set_link(title, active_tab)
-    link_to title, questions_path(:active_tab => "#{active_tab}"),{class: profile_active_tab("#{active_tab}")}
+    link_to title, questions_path(:active_tab => "#{active_tab}"),{'data-no-turbolink' => true,class: profile_active_tab("#{active_tab}")}
   end
 
   def set_header_link_for_admin(users_type)
     link_to users_type, members_path(active_tab: users_type), {class: profile_active_tab("#{users_type}")}
+  end
+
+  def student_badge_color(badge_name)
+    if badge_name.blank?
+      css_class = "user-badge"
+    elsif badge_name == "train"
+      css_class = "user-badge-train"
+    elsif badge_name == "Reviewer"
+      css_class = "user-badge-reviewer"
+    elsif badge_name == "Supporter"
+      css_class = "user-badge-supporter"
+    elsif badge_name == "Doctor"
+      css_class = "user-badge-doctor"
+    elsif badge_name == "Vice Professor"
+      css_class = "user-badge-vice-professor"
+    elsif badge_name == "Professor"
+      css_class = "user-badge-professor"
+    end
   end
 
   def questions_count
@@ -43,7 +61,7 @@ module ApplicationHelper
   end
 
   def most_used_tags
-    @tags = Question.tag_counts_on(:tags).limit(5).order('count desc')
+    @tags = Question.tag_counts_on(:tags).limit(Settings.tags.most_used_tags_limit).order('count desc')
   end
   
   def edit_user_registration_path
@@ -51,7 +69,7 @@ module ApplicationHelper
   end
 
   def most_viewed_questions
-    Question.joins(:impressions).group("questions.id").order("count(questions.id) DESC").limit(5)
+    Question.joins(:impressions).group("questions.id").order("count(questions.id) DESC").limit(Settings.questions.most_viewed_questions_limit)
   end
 
   def user_signed_in

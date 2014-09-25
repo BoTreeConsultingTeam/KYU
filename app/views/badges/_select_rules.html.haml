@@ -1,0 +1,11 @@
+%ul
+  - rules.each do |rule|
+    %li
+      -if !badge_rules.nil?
+        - if badge_rules.include? rule
+          = check_box_tag "rule_id[]", rule.id, checked: 'checked'
+        - else
+          = check_box_tag "rule_id[]", rule.id
+      -else
+        = check_box_tag "rule_id[]", rule.id
+      = label_tag "#{rule.id}", rule.description

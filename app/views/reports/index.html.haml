@@ -70,5 +70,45 @@
           = form_tag students_answers_compare_path do 
             = select_tag 'standard_id', content_tag(:option,'select standard...',:value=>"")+options_from_collection_for_select( @standards, :id, :class_no), class: 'form-control'
             .spacer20
+            = submit_tag "Check", class: 'btn btn-primary'    
+.spacer20
+.modal-submit-questions
+  .modal-dialog
+    .modal-body
+      .row  
+        %strong.h3
+          = t('report.captions.top_3_weak_area')
+        .col-md-6
+          = form_tag top_3_weak_area_path do 
+            .spacer20
+            = text_field_tag :id, nil,:class => 'form-control'
+            .spacer20
             = submit_tag "Check", class: 'btn btn-primary'
-            
+
+.spacer20
+.modal-submit-questions
+  .modal-dialog
+    .modal-body
+      .row  
+        %strong.h3
+          = t('report.captions.top_3_strong_area')
+        .col-md-6
+          = form_tag top_3_strong_area_path do 
+            .spacer20
+            = text_field_tag :id, nil,:class => 'form-control'
+            .spacer20
+            = submit_tag "Check", class: 'btn btn-primary'
+
+:javascript
+  $(document).ready(function() {
+    $('#standard_select').change(function() {
+      $.ajax({
+        url: "#{update_students_path}",
+        data: {
+          standard_id : $('#standard_select').val()
+        },
+        dataType: "script"
+      });
+    });
+  });
+

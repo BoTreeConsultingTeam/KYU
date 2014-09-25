@@ -1,0 +1,15 @@
+%ul.raw.points-define.single-head
+  - points.each do |point|
+    %span
+      %li.col-md-3.col-xs-6
+        %div
+          %span.points-count
+            = point.score
+          %span.star
+            %i.fa.fa-star
+            - if (administrator_signed_in?)
+              |
+              = link_to '', edit_point_path(point.id), class: 'fa fa-pencil'
+            %br
+            = point.action
+        %br

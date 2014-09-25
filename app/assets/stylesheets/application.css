@@ -13,6 +13,7 @@
  *= require font-awesome
  *= require chosen.min
  *= require datepicker
+ *= require bootstrap-colorpicker.min
  *= require editor.min
  *= require editor_content
  *= require sign_in
@@ -20,5 +21,5 @@
  *= require main
  *= require css
  *= require custom
- *= require_self
+ *= jquery-ui
  */

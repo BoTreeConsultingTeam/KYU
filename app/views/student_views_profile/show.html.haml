@@ -3,7 +3,7 @@
 #header_sidebar.col-md-12.col-xs-12
 = render 'layouts/left_sidebar'
 .col-md-8.main-content
-  = render :partial => "layouts/sub_heading", :locals => {:object => 'Profile'}
+  = render partial: "layouts/sub_heading", locals: {object: 'Profile'}
   .row.user-statistic.highlight
     .col-md-5.col-xs-5.user-info
       %span.avatar-80
@@ -17,11 +17,12 @@
     .col-md-7.col-xs-7.user-post-count
       .row
         .col-md-4.col-xs-4.question-cat
+        - if @student.badge.last.blank?
           %span.user-badge
-            - if @student.badges.last.blank?
-              No Badges
-            - else
-              = @student.badges.last.name
+
+        - else
+          %span{class: student_badge_color("#{@student.badges.last.name}")}
+            = @student.badge.last.name
           %br
             %span.points-count
               -if @student.points.nil?
@@ -52,39 +53,39 @@
         %li
           = link_to t('common.links.edit_your_info'), edit_student_registration_path
         %li
-          = link_to t('common.links.basic_info'), student_views_profile_path(@student,:filter => "basicinfo")
+          = link_to t('common.links.basic_info'), student_views_profile_path(@student,filter: t('students.filter.basic_info'))
         %li
-          = link_to t('common.links.question'), student_views_profile_path(@student,:filter => "questions")
+          = link_to t('common.links.question'), student_views_profile_path(@student,filter: t('students.filter.questions'))
         %li
-          = link_to t('common.links.answers'), student_views_profile_path(@student,:filter => "answers")
+          = link_to t('common.links.answers'), student_views_profile_path(@student,filter: t('students.filter.answers'))
         %li
-          = link_to t('header_navigation.tags'), student_views_profile_path(@student,:filter => "tags")
+          = link_to t('header_navigation.tags'), student_views_profile_path(@student,filter: t('students.filter.tags'))
         %li
-          = link_to t('common.links.badges'), student_views_profile_path(@student,:filter => "badges")
+          = link_to t('common.links.badges'), student_views_profile_path(@student,filter: t('students.filter.badges'))
         %li
-          = link_to t('common.links.votes'), student_views_profile_path(@student,:filter => "votes")
+          = link_to t('common.links.votes'), student_views_profile_path(@student,filter: t('students.filter.votes'))
   - else
     .col-md-12.sort-questions
       %ul
         %li
-          = link_to t('common.links.basic_info'), student_views_profile_path(@student,:filter => "basicinfo")
+          = link_to t('common.links.basic_info'), student_views_profile_path(@student,filter: t('students.filter.basic_info'))
         %li
-          = link_to t('common.links.question'), student_views_profile_path(@student,:filter => "questions")
+          = link_to t('common.links.question'), student_views_profile_path(@student,filter: t('students.filter.questions'))
         %li
-          = link_to t('common.links.answers'), student_views_profile_path(@student,:filter => "answers")
+          = link_to t('common.links.answers'), student_views_profile_path(@student,filter: t('students.filter.answers'))
         %li
-          = link_to t('header_navigation.tags'), student_views_profile_path(@student,:filter => "tags")
+          = link_to t('header_navigation.tags'), student_views_profile_path(@student,filter: t('students.filter.tags'))
         %li
-          = link_to t('common.links.badges'), student_views_profile_path(@student,:filter => "badges")
+          = link_to t('common.links.badges'), student_views_profile_path(@student,filter: t('students.filter.badges'))
         %li
-          = link_to t('common.links.votes'), student_views_profile_path(@student,:filter => "votes")
+          = link_to t('common.links.votes'), student_views_profile_path(@student,filter: t('students.filter.votes'))
   / END QUESTIONS-FILTER
-  - if params[:filter] == "answers"
+  - if params[:filter] == t('students.filter.answers')
     .main-questions-list
       %ul#main_questions_list
         -if !(@answers.nil?)
           - @answers.each do |answer|
-            %li.post-103.answer.type-answer.status-publish.hentry.answer-item.question-item{"data-id" => "103"}
+            %li.answer.type-answer.status-publish.hentry.answer-item.question-item
               .col-md-8.q-left-content
                 .q-ltop-content.title-answer-style
                   %a.question-title
@@ -92,10 +93,10 @@
                 .q-lbtm-content
                   .question-cat
                     %span.author-avatar
-                      %img.avatar{:alt => "", :src => "http://demo.enginethemes.com/qaengine/wp-content/uploads/2014/08/1282.jpg"}
+                      %img.avatar{alt: "", src: "http://demo.enginethemes.com/qaengine/wp-content/uploads/2014/08/1282.jpg"}
                     %span.user-badge
                       - if answer.answerable.badges.last.blank?
-                        No Badges
+
                       -else
                         = answer.answerable.badges.last.name
                     %span.question-time
@@ -133,7 +134,7 @@
                     votes
         - else
           You don't  have answered any question yet
-  - elsif params[:filter] == "tags"
+  - elsif params[:filter] == t('students.filter.tags')
     .main-questions-list
       %ul#main_questions_list
         -if !(@tags.nil?)
@@ -149,7 +150,7 @@
 
         - else
           You haven't tagged any thing yet!!!
-  - elsif params[:filter] == "badges"
+  - elsif params[:filter] == t('students.filter.badges')
     .main-questions-list
       %ul#main_questions_list
         - if !(@student.badges.last.blank?)
@@ -159,7 +160,7 @@
                 = badge
         -else
           You haven't earned any Badges!!!
-  - elsif params[:filter] == "votes"
+  - elsif params[:filter] == t('students.filter.votes')
     .main-questions-list
       %ul#main_questions_list
         - if !(@questions.nil?)
@@ -192,7 +193,7 @@
 
         -else
           You haven't got any votes!!!
-  - elsif params[:filter] == "questions"
+  - elsif params[:filter] == t('students.filter.questions')
     .main-questions-list
       %ul#main_questions_list
         - if !(@questions.nil?)
@@ -212,14 +213,14 @@
                         %li
                           = link_to tag, tag_path(tag.name),class: 'q-tag'
                     .clearfix
-                    %a{:href => "http://demo.enginethemes.com/qaengine/member/admin/"}
+                    %a{href: "http://demo.enginethemes.com/qaengine/member/admin/"}
                       %span.author-avatar
-                        %img.avatar{:alt => "", :src => "http://demo.enginethemes.com/qaengine/wp-content/uploads/2014/08/1282.jpg"}
+                        %img.avatar{alt: "", src: "http://demo.enginethemes.com/qaengine/wp-content/uploads/2014/08/1282.jpg"}
                       %span.author-name
                         = question.askable.username
                     %span.user-badge
                       - if question.askable.badges.last.blank?
-                        No Badges
+
                       - else
                         = question.askable.badges.last.name
                     %span.question-time
