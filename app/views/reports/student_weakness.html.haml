@@ -1,5 +1,1 @@
-.col-md-8
-  .row
-    .col-md-12.col-xs-12    
-      #chart
-        = render_chart(@student_weakness_chart, 'chart') 
+= render partial: 'top_3_area', locals: {top_3_area: @students_tags}

@@ -23,8 +23,9 @@ class ReportsController < ApplicationController
 
   def student_weakness
     if !@student.questions.blank?
-      @student_weakness_table = @student.questions.map{|question|question.tags.map{|tag|[tag.name,tag.taggings_count]}}.pop
-      @student_weakness_chart = GoogleChartService.render_reports_charts( @student_weakness_table, :bar, "Student's tag ration", true, 'Tag', 'Count', false )  
+      @question_ids = @student.questions.map {|obj| obj.id}
+      @students_tags = map_array_for_top3_chart(@question_ids,0)
+
     else
       error_message
     end
@@ -34,8 +35,9 @@ class ReportsController < ApplicationController
     if @student.answers.blank?
       error_message
     else
-      @student_strength_table = @student.answers.map{|answer|answer.question.tags.map{|tag|[tag.name,tag.taggings_count]}}.pop
-      @student_strength_chart = GoogleChartService.render_reports_charts( @student_strength_table, :bar, "Student's tag ration", true, 'Tag', 'Count', false)  
+      @accepted_answers = @student.answers.accepted_answers
+      @question_ids = @accepted_answers.map {|obj| obj.question_id}
+      @students_tags = map_array_for_top3_chart(@question_ids,0)
     end
   end
 
@@ -78,8 +80,8 @@ class ReportsController < ApplicationController
 
   def top_3_weak_area
     if !@student.questions.blank?
-      @students_tags = @student.owned_tags.map { |obj| [obj.name, obj.taggings_count]  }
-      @top_3_area = map_array_for_chart(@students_tags)  
+      @question_ids = @student.questions.map {|obj| obj.id}
+      @top_3_area = map_array_for_top3_chart(@question_ids,1)  
     else
       error_message
     end
@@ -88,10 +90,8 @@ class ReportsController < ApplicationController
   def top_3_strong_area
     if !@student.answers.blank?
       @accepted_answers = @student.answers.accepted_answers
-      @question_ids = @accepted_answers.pluck(:question_id)
-      @tag_ids_of_question_where_answer_accepted = ActsAsTaggableOn::Tagging.find_all_by_taggable_id(@question_ids).map { |obj| obj.tag_id }
-      @tag_names_and_count_where_anser_accepted =  @tag_ids_of_question_where_answer_accepted.group_by{|tag_id| tag_id}.map{|tag_id,tag_count| [ ActsAsTaggableOn::Tag.find_all_by_id(tag_id).map {|obj| obj.name}, tag_count.count].flatten }
-      @top_3_area = map_array_for_chart(@tag_names_and_count_where_anser_accepted)  
+      @question_ids = @accepted_answers.map {|obj| obj.question_id}
+      @top_3_area = map_array_for_top3_chart(@question_ids,1)  
     else
       error_message
     end
@@ -119,11 +119,18 @@ class ReportsController < ApplicationController
       flash[:error] = t('flash_message.error.report.no_student')
       redirect_to reports_path
     end
-    def map_array_for_chart(data_for_chart)
-      sorted_reverse_array = data_for_chart.sort {|a,b| a[1] <=> b[1]}.reverse
+    def map_array_for_top3_chart(question_ids, flag)
+      tag_ids_of_question = ActsAsTaggableOn::Tagging.find_all_by_taggable_id(question_ids).map { |obj| obj.tag_id }
+      students_tags = tag_ids_of_question.group_by{|tag_id| tag_id}.map{|tag_id,tag_count| [ ActsAsTaggableOn::Tag.find_all_by_id(tag_id).map {|obj| obj.name}, tag_count.count].flatten }
+      sorted_reverse_array = students_tags.sort {|a,b| a[1] <=> b[1]}.reverse
       first_3_elements = sorted_reverse_array.slice(0,3)
-      @student_top3_chart = GoogleChartService.render_reports_charts( first_3_elements, :bar, "Student's tag ration", true, 'Tag', 'Count', false )
-      first_3_elements
+      if flag == 1
+        @chart = GoogleChartService.render_reports_charts( first_3_elements, :bar, "Student's tag ration", true, 'Tag', 'Count', false )
+        first_3_elements
+      else
+        @chart = GoogleChartService.render_reports_charts( students_tags, :bar, "Student's tag ration", true, 'Tag', 'Count', false )
+        students_tags
+      end
     end
 end
 

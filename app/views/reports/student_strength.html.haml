@@ -1,12 +1,1 @@
-.col-md-8
-  .row
-    - if !@student_strength_table.blank?
-      .col-md-12.col-xs-12    
-        #chart
-          = render_chart(@student_strength_chart, 'chart') 
-    - else
-      .spacer50
-      .col-md-4
-      .col-md-6.col-xs-12
-        %h4
-          Not answered any Question yet
+= render partial: 'top_3_area', locals: {top_3_area: @students_tags}
