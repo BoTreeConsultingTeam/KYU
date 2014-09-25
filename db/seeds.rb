@@ -35,8 +35,3 @@ action_arr = [['Create Question',2], ['Create Answer',5], ['Question is voted up
 action_arr.each do |x,y|
   Point.create(score: y, action:"#{x}")
 end
-
-division_arr = ['A', 'B', 'C', 'D', 'E', 'F']
-division_arr.each do |division|
-  Division.create(division_name: "#{division}")
-end

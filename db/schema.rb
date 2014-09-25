@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140925085303) do
+ActiveRecord::Schema.define(version: 20140924050110) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -106,12 +106,6 @@ ActiveRecord::Schema.define(version: 20140925085303) do
 
   add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
 
-  create_table "divisions", force: true do |t|
-    t.string   "division_name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "impressions", force: true do |t|
     t.string   "impressionable_type"
     t.integer  "impressionable_id"
@@ -194,17 +188,6 @@ ActiveRecord::Schema.define(version: 20140925085303) do
     t.datetime "updated_at"
   end
 
-  create_table "standard_divisions", force: true do |t|
-    t.integer  "standard_id"
-    t.integer  "division_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "standard_divisions", ["division_id"], name: "index_standard_divisions_on_division_id", using: :btree
-  add_index "standard_divisions", ["standard_id", "division_id"], name: "index_standard_divisions_on_standard_id_and_division_id", unique: true, using: :btree
-  add_index "standard_divisions", ["standard_id"], name: "index_standard_divisions_on_standard_id", using: :btree
-
   create_table "standards", force: true do |t|
     t.string   "class_no"
     t.datetime "created_at"
@@ -235,7 +218,6 @@ ActiveRecord::Schema.define(version: 20140925085303) do
     t.boolean  "enable",                 default: true
     t.boolean  "mark_as_review",         default: false
     t.integer  "standard_id"
-    t.integer  "division_id"
   end
 
   add_index "students", ["email"], name: "index_students_on_email", unique: true, using: :btree

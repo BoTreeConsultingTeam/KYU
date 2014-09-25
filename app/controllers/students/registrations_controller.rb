@@ -3,17 +3,7 @@ class Students::RegistrationsController <  Devise::RegistrationsController
    before_action :user_signed_in?, only:[:index,:view_profile,:update]
   def new
     @standards = Standard.all
-    @divisions = Division.all
     super
-  end
-
-  def update_division
-    # @form_object = params[:object]
-    standard = Standard.find(params[:student][:standard_id])
-    @divisions = standard.divisions
-    respond_to do |format|
-      format.js { render 'students/registrations/update_division' }
-    end
   end
   
   def index
@@ -29,13 +19,9 @@ class Students::RegistrationsController <  Devise::RegistrationsController
   end
 
   def create
-    puts "+++++++++#{sign_up_params}===="
-    puts "@@@@@@@@#{params[:division]}======================="
-    @divisions = Division.all
+    @standard = Standard.all
     @student = build_resource
-    puts "===========#{@student.inspect}++++++++++++"
-    super
-    puts "===========debug1+++++++++++++++++++++++++++++++++++++"
+    super 
   end
 
   def view_profile
@@ -63,7 +49,7 @@ class Students::RegistrationsController <  Devise::RegistrationsController
 
   private
   def sign_up_params
-    params.require(:student).permit(:email, :password, :username, :birthdate, :standard_id, :avatar, :division =>[:division_id])
+    params.require(:student).permit(:email, :password, :username, :birthdate, :standard_id, :avatar)
   end
 
   def after_sign_in_path_for(resource)

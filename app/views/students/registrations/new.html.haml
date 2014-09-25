@@ -15,15 +15,8 @@
           = f.label t('common.captions.email')
           = f.email_field :email,class: 'submit-input'
           %br
-          = f.label :standard 
-          = f.select :standard_id, options_from_collection_for_select(@standards, 'id', 'class_no'), {:include_blank => 'Please Select'}, data: { remote: true, url: update_division_path}
-
-          %br
-          %span
-            / = render partial: 'division_select', locals: {f: f, divisions: @divisions}
-            = f.fields_for :division do |ff|
-              = ff.label :division
-              = ff.select :division_id, options_from_collection_for_select(@divisions, 'id', 'division_name'), {:prompt   => "Select an division"}, {:id => 'student_select'}
+          = f.label t('students.captions.class')
+          = f.select :standard_id, options_from_collection_for_select(@standards, 'id', 'class_no'),{prompt: t('teachers.basic.prompt')},{class: 'form-control'}
           %br
           %div
           = f.label t('common.captions.password')

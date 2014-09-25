@@ -9,7 +9,6 @@ Rails.application.routes.draw do
   devise_scope :student do
     get "/students" => "students/registrations#index"
     get 'student_views_profile/:id' => 'students/registrations#view_profile', as: :student_views_profile
-    get 'students/registrations/update_division', to: 'students/registrations#update_division', as: 'update_division'
   end
 
   devise_scope :teacher do
