@@ -39,4 +39,6 @@
         .spacer10
         = f.file_field :avatar
         .spacer20
-        %div= f.submit "Submit",class: 'btn-submit-question', id: 'btn_submit_question'
+        %div= f.submit t('common.btn.submit'), class: 'btn-submit-question', id: 'btn btn-primary btn-sm'
+      - if !current_teacher.present?
+        = render "teachers/shared/links"

@@ -6,9 +6,9 @@
           .q-ltop-content
             = link_to  question.title, question_path(question),class: 'question-title', 'data-no-turbolink' => true
           .q-lbtm-content
-            .question-excerpt
-              %p
-                = raw(question.content)
+            / .question-excerpt
+            /   %p
+            /     = raw(question.content)
             .question-cat
               %ul.question-tags
                 - question.tags.each do |tag|
@@ -35,7 +35,12 @@
                 %span.user-badge{:style => "background-color:#780978;"}
                   = question.askable.class
               %span.question-time
-                #{time_ago_in_words(question.created_at)} ago.
-        / end left content
+                #{time_ago_in_words(question.created_at)} ago. 
         = render :partial => 'questions/question_statics',:locals => { :question => question }
-    = paginate questions
+-if questions.length > 10
+  .row.paginations
+    .col-md-12
+      #main_questions_list
+        .question-item
+          .spacer20
+          = paginate questions

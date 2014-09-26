@@ -1,4 +1,4 @@
-.col-md-8
+.col-md-12
   = render :partial => "layouts/sub_heading", :locals => {:object => 'Signin'}
   .modal-submit-questions
     .modal-dialog
@@ -16,5 +16,5 @@
             %div
               = f.check_box :remember_me
               = f.label t('common.captions.remember')
-          %div= f.submit t('common.btn.sign_in'),class: 'btn-submit-question', id: 'btn_submit_question'
+          %div= f.submit t('common.btn.sign_in'),class: 'btn btn-primary btn-sm', id: 'btn_submit_question'
         = render "students/shared/links"

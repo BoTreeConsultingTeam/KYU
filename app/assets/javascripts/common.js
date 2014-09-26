@@ -73,6 +73,10 @@ $( document ).ready(function() {
   $('body').on('click', 'a.delete-comment', function() { 
     blockUI();
   });
+
+  var document_height = $('.main-content').height();
+  $('.right-sidebar').css('min-height',document_height);
+  $('.left-sidebar').css('min-height',document_height);  
 });
 
 

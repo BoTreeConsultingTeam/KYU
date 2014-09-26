@@ -10,7 +10,7 @@
     #wrap
       = render partial: 'layouts/header'
       .container-fluid
-        .row
+        .row{id: 'flash_message'}
           = render partial: 'shared/flash_messages'
       -if current_user.present?
         #header_sidebar.col-md-12.col-xs-12
