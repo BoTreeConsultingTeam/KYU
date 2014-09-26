@@ -5,7 +5,7 @@ server "104.131.111.55", :web, :app, :db, primary: true
 
 set :application, "kyu"
 set :user, "root"
-set :port, 2345
+set :port, 2349
 set :deploy_to, "/home/#{user}/#{application}"
 set :deploy_via, :remote_cache
 set :use_sudo, false
