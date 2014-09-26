@@ -397,7 +397,13 @@ ul li a.active_link {
   color: #5c5c61 !important;
 }
 .disable {
-  color: #f44;
+  color: #fa8;
+}
+.disable:hover, .disable:focus{
+  color: #f84;
+}
+.fa-2x{
+  font-size: 1.5em !important;
 }
 .alert{
   margin-bottom: 0px !important;
