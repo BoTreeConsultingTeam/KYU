@@ -193,54 +193,8 @@
 - elsif params[:active_tab] == "questions"
   .main-questions-list    
     %ul#main_questions_list
-      - if !(@questions.blank?)
-        - @questions.each do |question|
-          %li.post-188.question.type-question.status-publish.hentry.question-item{"data-id" => "188"}
-            .col-md-8.col-xs-8.q-left-content
-              .q-ltop-content
-                %a.question-title
-                  = link_to  question.title, question_path(question),class: 'question-title', 'data-no-turbolink' => true
-              .q-lbtm-content
-                .question-excerpt
-                  %p 
-                    = raw(question.content)
-                .question-cat
-                  %ul.question-tags
-                    - question.tags.each do |tag|
-                      %li
-                        = link_to tag, questions_path(tag: tag.name),class: 'q-tag'   
-                  .clearfix
-                  %a{:href => '#'}
-                    %span.avatar
-                      = image_tag question.askable.avatar.url(:medium), alt: t('common.image.alt') ,class: 'img-circle user-thumb-img'
-                    %span.author-name 
-                      = question.askable.username
-                  %span.user-badge
-                    - if question.askable.badges.last.blank?
-                    - else 
-                      = question.askable.badges.last.name  
-                  %span.question-time
-                    = "#{time_ago_in_words(question.created_at)} ago."
-            / end left content
-            .col-md-4.col-xs-4.q-right-content
-              %ul.question-statistic
-                %li
-                  %span.question-views
-                    = "#{question.impressionist_count}"
-                  views
-                %li.active
-                  %span.question-answers
-                    = "#{question.answers.count}" 
-                  answers
-                %li
-                  %span.question-upvotes
-                    = question.get_upvotes.size
-                  upvotes
-                %li
-                  %span.question-downvotes
-                    = question.get_downvotes.size                      
-                  downvotes
-            / end right content
+      - if !(@questions.nil?)
+        = render :partial => 'questions/questions_list', :locals => { questions: @questions}
       - else
         .col-md-3
         .col-md-6

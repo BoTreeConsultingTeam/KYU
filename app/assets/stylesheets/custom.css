@@ -399,3 +399,6 @@ ul li a.active_link {
 .disable {
   color: #f44;
 }
+.alert{
+  margin-bottom: 0px !important;
+}
