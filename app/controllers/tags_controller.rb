@@ -14,12 +14,17 @@ class TagsController < ApplicationController
   end
 
   def edit
-    @tag
+    if (current_administrator)
+      @tag
+    else
+      flash[:error] = t('common.messages.unauthorized')
+      redirect_to root_path
+    end
   end
 
   def update
     if @tag.update(tag_params)
-      flash[:notice] = "Tag updated"
+      flash[:notice] = t('tags.message.update_success')
       redirect_to tags_path
     else
       render 'edit'
@@ -29,18 +34,18 @@ class TagsController < ApplicationController
   def create
     @tag = ActsAsTaggableOn::Tag.new(tag_params )
     if @tag.save
-      flash[:notice] = "Tag generated"
+      flash[:notice] = t('tags.message.create_success')
     else
-      flash[:error] = "not created"
+      flash[:error] = t('tags.message.create_failure')
     end
     tag_redirection
   end
 
   def destroy
     if @tag.destroy
-      flash[:notice] = "Tag destroy"
+      flash[:notice] = t('tags.message.destroy_success')
     else
-      flash[:error] = "Tag not destroy"
+      flash[:error] = t('tags.message.destroy_failure')
     end
     tag_redirection
   end

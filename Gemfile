@@ -14,8 +14,6 @@ gem 'devise'
 gem 'rails_config', '~> 0.4.2'
 gem 'kaminari'
 gem 'impressionist'
-gem 'sunspot_rails'
-gem 'sunspot_solr' 
 #gem for images
 gem "paperclip", "~> 4.2"
 gem 'delayed_job_active_record'
@@ -29,6 +27,10 @@ gem 'jquery-rails'
 gem 'gioco'
 gem "google_visualr", ">= 2.1"
 gem 'jbuilder', '~> 1.2'
+gem 'unicorn'
+gem 'capistrano', "~> 2.15"
+gem 'rvm-capistrano'
+gem 'net-ssh', '2.7.0'
 
 group :assets do
   gem 'coffee-rails'

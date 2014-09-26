@@ -22,10 +22,6 @@ KYU::Application.configure do
   # Code is not reloaded between requests
   config.cache_classes = true
 
-  # Full error reports are disabled and caching is turned on
-  config.consider_all_requests_local       = false
-  config.action_controller.perform_caching = true
-
   # Disable Rails's static asset server (Apache or nginx will already do this).
   config.serve_static_assets = true
 
@@ -43,7 +39,7 @@ KYU::Application.configure do
   config.assets.digest = true
 
   # Version of your assets, change this if you want to expire all your assets.
-  config.assets.version = '1.0'
+  #config.assets.version = '1.0'
 
   # Specifies the header that your server uses for sending files.
   # config.action_dispatch.x_sendfile_header = "X-Sendfile" # for apache
@@ -53,7 +49,7 @@ KYU::Application.configure do
   # config.force_ssl = true
 
   # Set to :debug to see everything in the log.
-  config.log_level = :info
+  #config.log_level = :info
 
   # Prepend all log lines with the following tags.
   # config.log_tags = [ :subdomain, :uuid ]
@@ -81,9 +77,22 @@ KYU::Application.configure do
 
   config.i18n.fallbacks = true
 
+  #Paperclip.options[:command_path] = "/usr/local/bin/"
   # Send deprecation notices to registered listeners.
   config.active_support.deprecation = :notify
+  config.action_mailer.default_url_options = { host: '104.131.111.55' }
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.delivery_method = :smtp
 
+   config.action_mailer.smtp_settings = {
+      address: 'smtp.gmail.com',
+      port: 587,
+      domain: 'gmail.com',
+      user_name: 'demo4582@gmail.com',
+      password: 'priyam4582',
+      authentication: 'plain'
+  }
   # Disable automatic flushing of the log to improve performance.
   # config.autoflush_log = false
   # Use default logging formatter so that PID and timestamp are not suppressed.

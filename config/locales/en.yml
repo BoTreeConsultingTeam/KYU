@@ -5,6 +5,7 @@ en:
       answers: 'answers'
       upvotes: 'upvotes'
       downvotes: 'downvotes'
+      tagged_questions: 'Tagged Questions'
     messages:
       question_not_found: 'No such Question found for Delete!'
       delete_success: 'Deleted Successfuly!'
@@ -33,6 +34,13 @@ en:
       add_bookmark: 'Add to Bookmark'
       delete_bookmark: 'Remove from Bookmark'
       report_abuse: 'Report Abuse'
+      all: 'All'
+      newest: 'Newest'
+      last_week: 'Last Week'
+      last_month: 'Last Month'
+      most_viewed: 'Most Viewed'
+      most_voted: 'Most '
+      unanswered: 'Unanswered'
     error:
       message: 'No Questions Available'
   answers:
@@ -61,9 +69,17 @@ en:
       update_success: 'Updated Successfully'
       comment_not_found: 'No such Comment found'
       successful_delete: 'Deleted Successfully!'
-  tag: 
+    commentable:
+      teacher: 'Teacher'
+  tags: 
     header:
       title: 'Tags'
+    message:
+      create_success: 'Tag created Successfully'
+      create_failure: 'Cannot create tag. Something went wrong.'
+      update_success: 'Tag updated Successfully'
+      destroy_success: 'Tag destroyed successfully'
+      destroy_failure: 'Tag destruction failed'
   badges:
     captions:
       points_require: 'points require'
@@ -102,6 +118,7 @@ en:
       create_bookmark: 'You have bookmark this question'
       delete_bookmark: 'Successfully delete bookmark'
       confirm_message: 'Are you sure?'
+      unauthorized: 'You are not authorized for this action'
     captions:
       dob: 'Birthdate'
       first_name: 'First Name'

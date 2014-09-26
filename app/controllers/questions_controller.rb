@@ -13,29 +13,7 @@ class QuestionsController < ApplicationController
       @question = Question.all.page params[:page] 
     end
   end
-
-  def search_by_keyword 
-    if received_keyword != ''
-      @search = Sunspot.search(Question) do
-        fulltext received_keyword
-      end
-      @question_list = @search.results
-      respond_to do |format|
-          format.html
-          format.json { 
-          render json: @question_list.map{|question|[question.id,question.title]}
-        }
-      end
-    else
-      respond_to do |format|
-        format.html
-        format.json { 
-          render json: []
-        }
-      end
-    end
-  end
-
+  
   def disabled_questions
     @questions = Question.find_all_by_enabled(false).sort.reverse
   end
@@ -58,10 +36,8 @@ class QuestionsController < ApplicationController
       if @question.save
         if current_student
           current_student.change_points(Point.action_score(1))
-          redirect_to questions_path(active_tab: 'all')
-        else
-          redirect_to new_question_path
         end
+        redirect_to questions_path(active_tab: 'all')
       else
         flash[:error] = t('answers.messages.unauthorized')
         redirect_to questions_path
