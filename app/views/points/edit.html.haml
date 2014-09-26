@@ -2,9 +2,14 @@
 .modal-submit-questions
   .modal-dialog
     .modal-body
-      = form_for(@point) do |f|
-        %br
-        = f.label "#{@point.action}"
-        =f.text_field :score,class: 'form-control'
-        .spacer20
-        %div= f.submit t('common.btn.submit'),class: 'btn-submit-question', id: 'btn_submit_question'  
+      .row
+        .col-md-3
+        .col-md-6
+          = form_for(@point) do |f|
+            %br
+            = f.label "#{@point.action}"  
+            
+            =f.text_field :score,class: 'form-control '
+            .spacer20
+            %div= f.submit t('common.btn.submit'),class: 'btn-submit-question', id: 'btn_submit_question'  
+        .col-md-3

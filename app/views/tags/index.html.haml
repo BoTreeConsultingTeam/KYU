@@ -5,7 +5,7 @@
   .col-md-6.col-xs-6.current-category    
     %span
       - if (administrator_signed_in?)
-        = link_to t('common.links.add_tag'), new_tag_path,'data-no-turbolink' => true, class: 'fa fa-plus btn btn-success  pull-right'
+        = link_to t('common.links.add_tag'), new_tag_path,'data-no-turbolink' => true, class: 'fa fa-plus btn newtag-btn-size btn-success pull-right'
 .main-tag-list
   .wrap-tag-list   
     %ul.raw.tag-list
