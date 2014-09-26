@@ -61,6 +61,8 @@ en:
       update_success: 'Updated Successfully'
       comment_not_found: 'No such Comment found'
       successful_delete: 'Deleted Successfully!'
+    commentable:
+      teacher: 'Teacher'
   tag: 
     header:
       title: 'Tags'

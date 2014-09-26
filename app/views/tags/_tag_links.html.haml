@@ -5,5 +5,5 @@
     = link_to '',delete_tag_path(tag.id), method: :delete, rel: 'tooltip', title: t('common.links.delete_link'), data: {confirm: t('common.links.delete.confirm')}, class: 'fa fa-trash-o pull-right'
     = link_to ' |',edit_tag_path(tag.id),'data-no-turbolink' => true, rel: 'tooltip', title: t('common.links.edit'), class: 'fa fa-pencil pull-right'
   %div
-    = truncate(tag.description, length: 120, escape: false) {link_to "Read more",questions_path(tag: tag.name,id: 'show_tag') }
+    = truncate(tag.description, length: 90, escape: false) {link_to "Read more",questions_path(tag: tag.name,id: 'show_tag') }
     

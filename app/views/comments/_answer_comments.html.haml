@@ -1,9 +1,12 @@
 - if answer_comment.relative == answer
   .col-md-1
-  .col-md-11.col-xs-12.comment-list
+  .col-md-11.col-xs-12.comment-list{id: "#{answer.id}"}   
     .comment-body
       = raw(answer_comment.comment)
     .comment-owner
+    - if answer_comment.commentable_type == 'Teacher'
+      = link_to " -  #{answer_comment.commentable.username}","##{answer.id}"   
+    - else
       = link_to " -  #{answer_comment.commentable.username}",student_views_profile_path(answer_comment.commentable,user: 'Student')   
     - if answer_comment.is_author?(current_user)
       = ' - '
