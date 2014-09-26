@@ -1,6 +1,9 @@
-- elementId_upvote = "#up_vote_answer#{@answer.id}"
-$("#{elementId_upvote}").text("#{@answer.get_likes.size}")
-$.unblockUI();
-- elementId_downvote = "#down_vote_answer#{@answer.id}"
-$("#{elementId_downvote}").text("#{@answer.get_dislikes.size}")
+- if @answer.present?
+  - elementId_upvote = "#up_vote_answer#{@answer.id}"
+  $("#{elementId_upvote}").text("#{@answer.get_likes.size}")
+  $.unblockUI();
+  - elementId_downvote = "#down_vote_answer#{@answer.id}"
+  $("#{elementId_downvote}").text("#{@answer.get_dislikes.size}")
+- else
+  $('#flash_message').html("#{escape_javascript render(:partial=>'shared/flash_messages')}")
 $.unblockUI();

@@ -13,6 +13,7 @@
  *= require font-awesome
  *= require chosen.min
  *= require datepicker
+ *= require bootstrap-datepicker
  *= require bootstrap-colorpicker.min
  *= require editor.min
  *= require editor_content

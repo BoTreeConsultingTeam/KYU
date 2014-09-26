@@ -282,7 +282,7 @@ a.login-url {
 /* M A I N  C O N T E N T  S T Y L E        */
 /* ---------------------------------------- */
 .left-sidebar {
-	/*border-right: 1px solid #dadfea;*/
+	border-right: 1px solid #dadfea;
 	min-height: 800px;
 	padding: 0;
 }
@@ -411,7 +411,7 @@ a.login-url {
 }
 /* ======================================= */
 .right-sidebar {
-	/*border-left: 1px solid #dadfea;*/
+	border-left: 1px solid #dadfea;
 	min-height: 800px;
 	padding: 0;
 	background: #eef1f7;
@@ -484,6 +484,7 @@ a.login-url {
 .widget-hot-questions ul li {
 	margin-bottom: 10px;
 	min-height: 35px;
+	overflow: hidden;
 }
 .widget-hot-questions ul li a {
 	text-decoration: none;
@@ -515,8 +516,8 @@ body.single-question .form-reply{
 }
 /* ======================================= */
 .main-content {
-	border-right: 1px solid #dadfea;
-	border-left: 1px solid #dadfea;
+	/*border-right: 1px solid #dadfea;*/
+	/*border-left: 1px solid #dadfea;*/
 	min-height: 800px;
 	padding: 0;
 }
