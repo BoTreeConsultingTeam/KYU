@@ -11,6 +11,7 @@ en:
       delete_success: 'Deleted Successfuly!'
       profile_update: 'Profile updated'
       block_list_empty: 'No Questions are Blocked'
+      create: 'Please fill proper values'
     table: 
       header:
         title: 'Question Title'

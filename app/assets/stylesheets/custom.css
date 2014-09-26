@@ -408,3 +408,9 @@ ul li a.active_link {
 .alert{
   margin-bottom: 0px !important;
 }
+blockquote {
+  padding: 2px 2px;
+  margin: 0 0 5px;
+  font-size: 14px;
+  border-left: 0px;
+}

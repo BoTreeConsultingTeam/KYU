@@ -1,6 +1,6 @@
 class QuestionsController < ApplicationController
   before_action :user_signed_in?
-  before_filter :tag_list, only: [:new, :edit]
+  before_filter :tag_list, only: [:new, :edit, :create]
   before_filter :question_find_by_id, only: [:show, :destroy, :edit, :update]
 
   def index
@@ -31,6 +31,7 @@ class QuestionsController < ApplicationController
   end
 
   def create
+    @standards = Standard.all
     if !current_administrator
       @question = Question.new(question_params.merge({askable: current_user}).except!(:tag_list))
       current_user.tag( @question, :with => question_params[:tag_list], :on => :tags )
@@ -40,8 +41,8 @@ class QuestionsController < ApplicationController
         end
         redirect_to questions_path(active_tab: 'all')
       else
-        flash[:error] = t('answers.messages.unauthorized')
-        redirect_to new_question_path
+        flash[:error] = t('questions.messages.create')
+        render 'new'
       end
     end
   end

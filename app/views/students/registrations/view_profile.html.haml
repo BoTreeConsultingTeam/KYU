@@ -178,8 +178,9 @@
   .main-questions-list
     %ul#main_questions_list
       - if !(@student.badges.last.blank?)
-        .col-md-12.badge-content
-          = render '/badges/badge_list'
+        .single-head
+          .col-md-12.badge-content
+            = render '/badges/badge_list'
       -else
         .col-md-3
         .col-md-6

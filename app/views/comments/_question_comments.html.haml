@@ -1,15 +1,16 @@
 .col-md-1
 .col-md-11.col-xs-12.comment-list
-  .comment-body
-    = raw(question_comment.comment)
-  .comment-owner
+  %blockquote
+    .comment-body
+      = raw(question_comment.comment)
+      
     - if question_comment.commentable_type == 'Teacher'
       = link_to " -  #{question_comment.commentable.username}",'#'
     - else
       = link_to " -  #{question_comment.commentable.username}",student_views_profile_path(question_comment.commentable,user: 'Student')
 
-  - if question_comment.is_author?(current_user)
-    = ' - '
-    =link_to '',edit_question_comment_path(question.id,question_comment.id),rel: 'tooltip',title: t('common.links.edit'),class: 'edit-comment fa fa-pencil','data-no-turbolink' => true
-    |
-    =link_to '',question_comment_path(question.id,question_comment.id),method: :delete,data: {confirm: t('common.links.delete.confirm')},remote: true,rel: 'tooltip',title: t('common.links.delete_link'),class: 'delete-comment fa fa-trash-o'   
+    - if question_comment.is_author?(current_user)
+      = ' - '
+      =link_to '',edit_question_comment_path(question.id,question_comment.id),rel: 'tooltip',title: t('common.links.edit'),class: 'edit-comment fa fa-pencil','data-no-turbolink' => true
+      |
+      =link_to '',question_comment_path(question.id,question_comment.id),method: :delete,data: {confirm: t('common.links.delete.confirm')},remote: true,rel: 'tooltip',title: t('common.links.delete_link'),class: 'delete-comment fa fa-trash-o'   
