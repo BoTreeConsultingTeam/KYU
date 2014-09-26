@@ -5,6 +5,7 @@ en:
       answers: 'answers'
       upvotes: 'upvotes'
       downvotes: 'downvotes'
+      tagged_questions: 'Tagged Questions'
     messages:
       question_not_found: 'No such Question found for Delete!'
       delete_success: 'Deleted Successfuly!'
@@ -70,9 +71,15 @@ en:
       successful_delete: 'Deleted Successfully!'
     commentable:
       teacher: 'Teacher'
-  tag: 
+  tags: 
     header:
       title: 'Tags'
+    message:
+      create_success: 'Tag created Successfully'
+      create_failure: 'Cannot create tag. Something went wrong.'
+      update_success: 'Tag updated Successfully'
+      destroy_success: 'Tag destroyed successfully'
+      destroy_failure: 'Tag destruction failed'
   badges:
     captions:
       points_require: 'points require'
@@ -111,6 +118,7 @@ en:
       create_bookmark: 'You have bookmark this question'
       delete_bookmark: 'Successfully delete bookmark'
       confirm_message: 'Are you sure?'
+      unauthorized: 'You are not authorized for this action'
     captions:
       dob: 'Birthdate'
       first_name: 'First Name'
