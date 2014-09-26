@@ -2,6 +2,7 @@ class TagsController < ApplicationController
   before_filter :find_tag_by_id, only: [:edit, :update, :destroy]
   # after_filter :tag_redirection, only: [:create, :destroy]
   def index
+    params[:active_tab_menu] = 'alltags'
     @tags = Kaminari.paginate_array(ActsAsTaggableOn::Tag.all).page(params[:page]).per(Settings.pagination.per_page_6)
   end 
 

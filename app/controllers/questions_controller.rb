@@ -4,6 +4,7 @@ class QuestionsController < ApplicationController
   before_filter :question_find_by_id, only: [:show, :destroy, :edit, :update]
 
   def index
+    params[:active_tab_menu] = 'all'
     if received_tag
       @tag = ActsAsTaggableOn::Tag.find_by_name(received_tag)
       @questions = Question.tagged_with(received_tag).enabled.page params[:page]
