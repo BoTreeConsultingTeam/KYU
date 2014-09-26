@@ -37,7 +37,10 @@
               %span.question-time
                 #{time_ago_in_words(question.created_at)} ago. 
         = render :partial => 'questions/question_statics',:locals => { :question => question }
-.row.paginations
-  .col-md-12
-    .spacer20
-    = paginate questions
+-if questions.length > 9
+  .row.paginations
+    .col-md-12
+      #main_questions_list
+        .question-item
+          .spacer20
+          = paginate questions
