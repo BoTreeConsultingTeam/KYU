@@ -68,6 +68,7 @@ en:
       update_success: 'Updated Successfully'
       comment_not_found: 'No such Comment found'
       successful_delete: 'Deleted Successfully!'
+      create: 'Please insert Proper value'
     commentable:
       teacher: 'Teacher'
   tag: 

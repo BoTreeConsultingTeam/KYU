@@ -41,6 +41,7 @@ class ApplicationController < ActionController::Base
   end
   
   def user_profile_update user
+    
     account_update_params = devise_parameter_sanitizer.sanitize(:account_update)
     if account_update_params[:password].blank?
       account_update_params.delete("password")
@@ -55,7 +56,7 @@ class ApplicationController < ActionController::Base
         redirect_to teacher_views_profile_path(user)
       end
     else
-       render "edit"
+      render "edit"
     end
   end
 

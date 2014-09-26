@@ -48,7 +48,7 @@
         - if @question.askable_type != 'Teacher'
           %a{:href => student_views_profile_path(@question.askable.id,user: 'Student')}
             %span.avatar
-              = image_tag @question.askable.avatar.url(:medium) ,class: 'img-circle user-thumb-img',alt: t('common.image.alt')
+              = image_tag @question.askable.avatar.url(:medium) ,class: 'img-circle user-thumb-img', alt: t('common.image.alt')
             %span.author-name                
               - if @question.askable.student_manager?
                 .student_manager{rel: "tooltip",title: t('students.tooltip.manager')} 
@@ -83,14 +83,15 @@
           .spacer10
           = paginate @question_comments
     .clearfix
-.sticky-wrapper
-  #answers_filter.row.answers-filter
-    .max-col-md-8
-      .col-md-6.col-xs-6
-        %span.answers-count
-          %span.number 
-            = @question.answers.count
-          Answers
+- if @question.answers.count > 0
+  .sticky-wrapper
+    #answers_filter.row.answers-filter
+      .max-col-md-8
+        .col-md-6.col-xs-6
+          %span.answers-count
+            %span.number 
+              = @question.answers.count
+            Answers
 / ANSWERS LOOP
 #answers_main_list
   = render 'answers_list', locals: { :answers =>  @answer}

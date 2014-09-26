@@ -6,22 +6,21 @@ class CommentsController < ApplicationController
     @rule = set_rule 4
     if check_permission current_user,@rule 
       @comment = Comment.new(comment_params.merge({commentable: current_user}).merge({relative: params[:relative]}))
-      @comments = Comment.relative_comments(comment_relative_id,comment_relative_type).page params[:page]
       if @comment.save
+        @comments = Comment.relative_comments(comment_relative_id,comment_relative_type).page params[:page]
         if "Question" == relative_type
           @question = Question.find_by_id(comment_relative_id)
         else
           @answer = find_by_answer_id(comment_relative_id)  
         end 
-        respond_to do |format|
-          format.js
-        end
       else
-        redirect_to questions_path(active_tab: 'all')
+        flash.now[:error] = t('comments.messages.create')
       end
     else
-      flash[:error] = t('answers.messages.unauthorized')
-      redirect_to questions_path
+      flash.now[:error] = t('answers.messages.unauthorized')
+    end
+    respond_to do |format|
+      format.js
     end
   end
 

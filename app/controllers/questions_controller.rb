@@ -1,7 +1,7 @@
 class QuestionsController < ApplicationController
   before_action :user_signed_in?
   before_filter :tag_list, only: [:new, :edit]
-  before_filter :question_find_by_id, only: [:show, :destroy, :edit]
+  before_filter :question_find_by_id, only: [:show, :destroy, :edit, :update]
 
   def index
     if received_tag
@@ -10,7 +10,7 @@ class QuestionsController < ApplicationController
     elsif received_active_tab
       active_tab(received_active_tab)
     else
-      @question = Question.all.page params[:page] 
+      @question = Question.all.enabled.page params[:page] 
     end
   end
   
@@ -36,13 +36,11 @@ class QuestionsController < ApplicationController
       if @question.save
         if current_student
           current_student.change_points(Point.action_score(1))
-          redirect_to questions_path(active_tab: 'all')
-        else
-          redirect_to new_question_path
         end
+        redirect_to questions_path(active_tab: 'all')
       else
         flash[:error] = t('answers.messages.unauthorized')
-        redirect_to questions_path
+        redirect_to new_question_path
       end
     end
   end
@@ -77,6 +75,7 @@ class QuestionsController < ApplicationController
 
   def vote
     @rule = set_rule 1
+    
     if check_permission current_user,@rule
       @question = question_find_by_id
       if question_find_by_id.nil?
@@ -93,15 +92,13 @@ class QuestionsController < ApplicationController
             give_points(@question, Point.action_score(5))
           end
         end
-        respond_to do |format|
-          format.js
-        end
       end
     else
-      flash[:error] = t('answers.messages.unauthorized')
-      redirect_to questions_path
+      flash.now[:error] = t('answers.messages.unauthorized')
     end
-
+    respond_to do |format|
+      format.js
+    end
   end
   
   def edit
@@ -113,7 +110,7 @@ class QuestionsController < ApplicationController
   end
   
   def update
-    if !(@question.present?) 
+    if @question.present?
       @question.update(question_params.merge({askable: current_user}).except!(:tag_list))
       current_user.tag( @question, :with => question_params[:tag_list], :on => :tags )
       flash[:notice] = t('flash_message.success.question.update')

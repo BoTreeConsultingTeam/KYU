@@ -22,6 +22,7 @@ gem 'ckeditor_rails'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'
 
+gem 'bootstrap-datepicker-rails'
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 gem 'gioco'

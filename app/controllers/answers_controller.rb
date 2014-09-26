@@ -1,6 +1,6 @@
 class AnswersController < ApplicationController
   before_action :user_signed_in?
-  before_filter :answer_find_by_id, only: [:edit, :update, :destroy, :vote, :accept]
+  before_filter :answer_find_by_id, only: [:edit, :update, :destroy, :accept]
   def new
     @answer = Answer.new
     @question =  Question.find(params[:question_id])
@@ -21,7 +21,7 @@ class AnswersController < ApplicationController
       end
     else
       flash[:error] = t('answers.messages.unauthorized')
-      redirect_to questions_path
+      redirect_to question_path(params[:answer][:question_id])
     end
   end
 
@@ -58,7 +58,7 @@ class AnswersController < ApplicationController
   def vote
     @rule = set_rule 2
     if check_permission current_user,@rule
-      
+      @answer = answer_find_by_id
       if @answer.nil?
         redirect_to questions_path(active_tab: 'all'),flash: { error: t('flash_message.error.answer.vote') }
       else
@@ -72,14 +72,13 @@ class AnswersController < ApplicationController
             answer_disliked_by(@answer,liked_by)
             give_points(@answer, Point.action_score(6))
           end
-        end
-        respond_to do |format|
-          format.js        
         end  
       end
     else
-      flash[:error] = t('answers.messages.unauthorized')
-      redirect_to questions_path
+      flash.now[:error] = t('answers.messages.unauthorized')
+    end
+    respond_to do |format|
+      format.js
     end
   end
 

@@ -131,20 +131,20 @@
                   Downvotes  
       - else
         .spacer50
-        .col-md-2
+        .col-md-3
         .col-md-6.col-xs-12
           %h4
             = @student.username
             don't  have answered any question yet
 - elsif params[:active_tab] == "edit-profile"
-  = render 'form'
+  = render partial: 'form', locals: { standards: @standards}
 -elsif params[:active_tab] == t('students.active_tab.bookmarks')
   - question_list = bookmark_question_ids @student
   - if !(question_list.blank?)
     = render :partial => 'questions/questions_list', :locals => { questions: question_list}
   - else
     .spacer50
-    .col-md-2
+    .col-md-3
     .col-md-6.col-xs-12
       %h4
         = @student.username 
@@ -163,7 +163,7 @@
                 =paginate @tags            
       - else
         .spacer50
-        .col-md-2
+        .col-md-3
         .col-md-6.col-xs-12
           %h4
             = @student.username
@@ -176,7 +176,7 @@
           = render '/badges/badge_list'
       -else
         .spacer50
-        .col-md-2
+        .col-md-3
         .col-md-6.col-xs-12
           %h4
             = @student.username
@@ -234,7 +234,7 @@
             / end right content
       - else
         .spacer50
-        .col-md-2
+        .col-md-3
         .col-md-6.col-xs-12
           %h4
             = @student.username 

@@ -3,7 +3,7 @@ $( document ).ready(function() {
   $('.toggleLink').click(function(){
     $("#comment" + this.id).slideToggle();
   });
-  $('#datepicker1').datepicker();
+  $('#datepicker1').datepicker({format: 'mm-dd-yyyy'});
   $('.colorpicker').colorpicker();
   $('.colorselect').click(function(){
     $('#colorSelector').ColorPicker({
@@ -71,6 +71,10 @@ $( document ).ready(function() {
   $('body').on('click', 'a.delete-comment', function() { 
     blockUI();
   });
+
+  var document_height = $('.main-content').height();
+  $('.right-sidebar').css('min-height',document_height);
+  $('.left-sidebar').css('min-height',document_height);  
 });
 
 

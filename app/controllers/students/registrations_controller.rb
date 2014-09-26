@@ -1,17 +1,16 @@
 class Students::RegistrationsController <  Devise::RegistrationsController
    before_filter :configure_permitted_parameters, if: :devise_controller?
    before_action :user_signed_in?, only:[:index,:view_profile,:update]
-   # before_filter :password_match?, only: [:create]
+   before_filter :standard_list, only: [:new,:edit,:view_profile,:update,:create]
   def new
-    @standards = Standard.all
     super
   end
   
   def index
     if params[:tag]
-      @questions = Kaminari.paginate_array(Question.tagged_with(params[:tag])).page(params[:page]).per(Kaminari.config.default_per_page)
+      @questions = Kaminari.paginate_array(Question.tagged_with(params[:tag]).enabled).page(params[:page]).per(Kaminari.config.default_per_page)
     else
-      @questions = Kaminari.paginate_array(Question.all).page(params[:page]).per(Kaminari.config.default_per_page)
+      @questions = Kaminari.paginate_array(Question.all.enabled).page(params[:page]).per(Kaminari.config.default_per_page)
     end
     @most_used_tags = tag_cloud
     @students_count = Student.count
@@ -24,8 +23,13 @@ class Students::RegistrationsController <  Devise::RegistrationsController
     @student = build_resource
     super
   end
+  
+  def edit
+    super
+  end
 
   def view_profile
+    params[:active_link] = 'profile'
     @student = Student.find(params[:id])
     @badges = @student.badges
     @rules = Rule.all
@@ -49,6 +53,9 @@ class Students::RegistrationsController <  Devise::RegistrationsController
     @tags = Question.tag_counts_on(:tags).limit(5).order('count desc')
   end
 
+  def standard_list
+    @standards = Standard.all
+  end
   private
   def sign_up_params
     params.require(:student).permit(:email, :password, :username, :birthdate, :standard_id, :avatar)
@@ -56,20 +63,5 @@ class Students::RegistrationsController <  Devise::RegistrationsController
   def after_sign_in_path_for(resource)
     students_path(active_tab: 'all')
   end
-  def password_match?
-    @password = params[:student][:password]
-    @password_confirmation = params[:student][:password_confirmation]
-     if @password.present? && !@password_confirmation.present?
-      Student.errors.add(:password, "does not match with confirmed password")
-      false
-    elsif @password != @password_confirmation
-      Student.errors.add(:password, "does not match with confirmed password")
-      false
-    elsif @password.nil?
-      Student.errors.add(:password, "is required")
-      return false
-    else
-      true
-    end
-  end
+  
 end

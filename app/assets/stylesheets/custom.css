@@ -318,11 +318,6 @@ ul.chosen-choices{
   border: 1px solid #ddd;
   border-radius: 3px;
 }
-.main-content {
-  height: auto;
-  border-left: 1px solid #ddd;
-  border-right: 1px solid #ddd;
-}
 
 .chosen-container-multi .chosen-choices li.search-choice .search-choice-close{
 	position: absolute;
@@ -369,12 +364,7 @@ ul li a.active_link {
 .comment-body {
 	float: left;
 }
-.main-content {
-	border-right: 1px solid #dadfea;
-	border-left: 1px solid #dadfea;
-	min-height: 800px;
-	padding: 0;
-}
+
 #que-search{
 	float: right !important;
     margin-right: 576px !important;
