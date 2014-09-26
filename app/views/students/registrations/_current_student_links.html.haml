@@ -14,5 +14,3 @@
       = link_to t('header_navigation.tags'), student_views_profile_path(student.id, active_tab: t('students.active_tab.tags')), class: "#{profile_active_tab(t('students.active_tab.tags'))}"
     %li
       = link_to t('common.links.badges'), student_views_profile_path(student.id, active_tab: t('students.active_tab.badges')), class: "#{profile_active_tab(t('students.active_tab.badges'))}"
-    %li
-      = link_to t('common.links.votes'), student_views_profile_path(student.id, active_tab: t('students.active_tab.votes')), class: "#{profile_active_tab(t('students.active_tab.votes'))}"

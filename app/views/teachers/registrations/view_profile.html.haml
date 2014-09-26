@@ -6,9 +6,6 @@
     %ul
       %li.name 
         = @teacher.username
-      %li.email
-        %i.fa.fa-envelope
-        = @teacher.email
   .col-md-7.col-xs-7.user-post-count
     .row
       .col-md-4.col-xs-4
@@ -38,8 +35,6 @@
           = link_to t('common.links.answers'), teacher_views_profile_path(@teacher.id, active_tab:'answers'), class: "#{profile_active_tab('answers')}"
         %li
           = link_to t('common.links.bookmarks'), teacher_views_profile_path(@teacher.id, active_tab:'bookmarks'), class: "#{profile_active_tab('bookmarks')}"
-        %li
-          = link_to t('common.links.votes'), teacher_views_profile_path(@teacher.id, active_tab:'votes'), class: "#{profile_active_tab('votes')}"
   - else
     .col-md-12.sort-questions
       %ul
@@ -49,8 +44,6 @@
           = link_to t('common.links.question'), teacher_views_profile_path(@teacher.id, active_tab:'questions'), class: "#{profile_active_tab('questions')}"
         %li
           = link_to t('common.links.answers'), teacher_views_profile_path(@teacher.id, active_tab:'answers'), class: "#{profile_active_tab('answers')}"
-        %li
-          = link_to t('common.links.votes'), teacher_views_profile_path(@teacher.id, active_tab:'votes'), class: "#{profile_active_tab('votes')}"
 / END QUESTIONS-FILTER
 - if params[:active_tab] == "answers"
   .main-questions-list
@@ -74,49 +67,6 @@
       %h4
         No Bookmarks yet
     
-
-- elsif params[:active_tab] == "votes"
-  .main-questions-list
-    %ul#main_questions_list
-      - if !(@questions.blank?)
-        .row.select-category
-          .col-md-12.col-xs-12
-            .spacer20
-            %table.table.table-bordered.table-striped
-              %thead
-                %tr.success
-                  %th.text-center
-                  %th.text-center
-                    Up Votes Count
-                  %th.text-center
-                    Down Votes Count
-                  %th.text-center
-                    Total Count
-              %tbody
-                %tr
-                  %td.text-center
-                    Questions
-                  %td.text-center
-                    = @total_upvotes_question
-                  %td.text-center
-                    = @total_downvotes_question
-                  %td.text-center
-                    = @questions.count
-                %tr
-                  %td.text-center
-                    Answers
-                  %td.text-center
-                    = @total_upvotes_answer
-                  %td.text-center
-                    = @total_downvotes_answer
-                  %td.text-center
-                    = @answers.count
-      -else
-        .spacer50
-        .col-md-2
-        .col-md-6.col-xs-12
-          %h4
-            You haven't got any votes!!!
 - elsif params[:active_tab] == "questions"
   - if !(@teacher.questions.blank?)
     = render partial: 'questions/questions_list', locals: {questions: @questions}
