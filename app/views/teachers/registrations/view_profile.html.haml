@@ -29,7 +29,7 @@
     .col-md-12.sort-questions
       %ul
         %li
-          = link_to t('common.links.edit_your_info'), edit_teacher_registration_path
+          = link_to t('common.links.edit_your_info'), teacher_views_profile_path(@teacher.id,active_tab:'edit_profile'),class: "#{profile_active_tab('edit_profile')}"
         %li
           = link_to t('common.links.basic_info'), teacher_views_profile_path(@teacher.id, active_tab:'basicinfo'), class: "#{profile_active_tab('basicinfo')}"
         %li
@@ -74,7 +74,8 @@
       %h4
         No Bookmarks yet
     
-
+- elsif params[:active_tab] == "edit_profile"
+  = render 'form'
 - elsif params[:active_tab] == "votes"
   .main-questions-list
     %ul#main_questions_list
@@ -127,33 +128,19 @@
       %h4
         You don't have asked any questions yet
 - else
-  .row
-    .col-md-9.col-md-push-3 
-      =@teacher.first_name
-      =@teacher.last_name 
-     
-    .col-md-3.col-md-pull-9 
-      %b Name 
-    
-    .col-md-9.col-md-push-3 
-      %br
-        =@teacher.qualification
-    .col-md-3.col-md-pull-9
-      %br/
-      %b Qualification
-    
-    .col-md-9.col-md-push-3
-      %br/
-      =@teacher.username
-    .col-md-3.col-md-pull-9  
-      %br/
-      %b Username
-
-    .col-md-9.col-md-push-3
-      %br/
-      =@teacher   .email 
-    .col-md-3.col-md-pull-9
-      %br/
-      %b Email
+  .modal-submit-questions
+    .modal-dialog
+      .modal-body
+        = form_for(resource, :as => resource_name, :url => student_registration_path) do |f|
+          %br
+          = f.label t('common.captions.user_name')
+          = f.text_field :username,class: 'form-control', disabled: true
+          %br
+          = f.label t('common.captions.qualification')
+          = f.text_field :qualification,class: 'form-control date-picker', id: 'datepicker1', disabled: true
+          %br
+          = f.label t('common.captions.email')
+          = f.email_field :email, :autofocus => true,class: 'form-control', disabled: true
+          %br/
 
 .row.paginations.home
