@@ -33,6 +33,13 @@ en:
       add_bookmark: 'Add to Bookmark'
       delete_bookmark: 'Remove from Bookmark'
       report_abuse: 'Report Abuse'
+      all: 'All'
+      newest: 'Newest'
+      last_week: 'Last Week'
+      last_month: 'Last Month'
+      most_viewed: 'Most Viewed'
+      most_voted: 'Most '
+      unanswered: 'Unanswered'
     error:
       message: 'No Questions Available'
   answers:

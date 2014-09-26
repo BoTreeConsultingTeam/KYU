@@ -20,9 +20,8 @@ class Students::RegistrationsController <  Devise::RegistrationsController
   end
 
   def create
-    @standard = Standard.all
+    @standards = Standard.all
     @student = build_resource
-    @student.save
     super
   end
 
@@ -37,7 +36,8 @@ class Students::RegistrationsController <  Devise::RegistrationsController
     @questions_dislikes_count  =  @student.questions.map{|question|question.get_dislikes.count}.inject{|sum,val|sum+val}
     @answers_dislikes_count  =  @student.answers.map{|question|question.get_dislikes.count}.inject{|sum,val|sum+val}
     @answers_likes_count  =  @student.answers.map{|question|question.get_likes.count}.inject{|sum,val|sum+val}
-   
+    @total_likes = @questions_likes_count.to_i + @answers_likes_count.to_i
+    @total_dislikes = @questions_dislikes_count.to_i + @answers_dislikes_count.to_i
   end
 
   def update
@@ -53,7 +53,6 @@ class Students::RegistrationsController <  Devise::RegistrationsController
   def sign_up_params
     params.require(:student).permit(:email, :password, :username, :birthdate, :standard_id, :avatar)
   end
-
   def after_sign_in_path_for(resource)
     students_path(active_tab: 'all')
   end

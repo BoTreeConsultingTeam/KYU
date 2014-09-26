@@ -395,6 +395,9 @@ ul li a.active_link {
   line-height: 2.3;
   margin-bottom: 5px;
 }
+.newtag-btn-size{
+  padding: 5px 3px !important;
+}
 .comment-owner .comment_owner-teacher {
   color: #44a;
   float: left;

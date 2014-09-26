@@ -42,14 +42,22 @@
         %p.questions-count
           Up Votes
           %br
-            %span 
-              = @total_upvotes 
+            - if @total_likes == 0 
+              %span 
+                0
+            - else 
+              %span 
+                = @total_likes
       .col-md-4.col-xs-4
         %p.answers-count
           Down Votes
           %br
-            %span 
-              = @total_downvotes 
+            - if @total_dislikes == 0 
+              %span 
+                0
+            - else 
+              %span 
+                = @total_dislikes
 / END USER-STATISTIC
 .row.question-filter
   - if ( @student == current_user )

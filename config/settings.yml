@@ -31,5 +31,5 @@ mail:
   default_url_options:
     support_email: 'support@kyu.in'
 google_chart:
-  width: 400
-  height: 240
+  width: 900
+  height: 600

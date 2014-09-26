@@ -1,6 +1,7 @@
 class BadgesController < ApplicationController
+  before_action :user_signed_in?
   before_action :find_badge, only: [:edit, :update, :destroy]
-  before_filter :find_all_rules, only: [:index, :edit, :new]
+  before_filter :find_all_rules, only: [:index, :edit, :new, :create]
   def index
     @badges = Badge.all
     @points = Point.all
@@ -20,8 +21,8 @@ class BadgesController < ApplicationController
       flash[:notice] = t('badges.message.badge_create_success')
       redirect_to badges_path
     else
-      flash[:notice] = t('badges.message.badge_create_fail')
-      redirect_to new_badge_path
+      flash[:error] = t('badges.message.badge_create_fail')
+      render 'new'
     end  
   end
 

@@ -22,7 +22,6 @@ $( document ).ready(function() {
     });
  
   });
-  
   $("#search").keyup(function() {
     $('#search_preview').empty();
     $('.i-preview').hide();

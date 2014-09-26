@@ -4,7 +4,7 @@
     .modal-dialog
       .modal-body
         = form_for(resource, :as => resource_name, :url => student_registration_path) do |f|
-          = devise_error_messages!
+          = render 'shared/error_messages', object: f.object
           %div
           = f.label t('common.captions.user_name')
           = f.text_field :username,autofocus: true, class: 'submit-input'
@@ -16,7 +16,7 @@
           = f.email_field :email, class: 'submit-input'
           %br
           = f.label t('students.captions.class')
-          = f.select :standard_id, options_from_collection_for_select(@standards, 'id', 'class_no'),{prompt: t('teachers.basic.prompt')},{ class: 'form-control'}
+          = f.select :standard_id, options_from_collection_for_select(@standards, 'id', 'class_no'),{prompt: t('teachers.basic.prompt')},{class: 'form-control'}
           %br
           %div
           = f.label t('common.captions.password')
@@ -30,5 +30,5 @@
           = f.label t('common.captions.set_avatar')
           = f.file_field :avatar
           .spacer20
-          = f.submit t('common.btn.submit'), class: 'btn-submit-question', id: 'btn_submit_question'
+          = f.submit t('common.btn.submit'),class: 'btn-submit-question', id: 'btn_submit_question'
         = render "students/shared/links"
