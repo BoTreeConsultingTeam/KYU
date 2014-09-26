@@ -16,7 +16,7 @@
             %li
               = link_to t('header_navigation.report'), reports_path(active_link: 'report'), class: "#{profile_active_link('report')}"
             %li
-              = link_to t('header_navigation.profile'), teacher_views_profile_path(current_user, active_link: 'profile'), class: "#{profile_active_link('profile')}"
+              = link_to t('header_navigation.profile'), teacher_views_profile_path(current_user, active_link: 'profile', active_tab: 'basicinfo'), class: "#{profile_active_link('profile')}"
             %li
               = link_to t('header_navigation.logout'), destroy_teacher_session_path, method: :delete
           - if administrator_signed_in?

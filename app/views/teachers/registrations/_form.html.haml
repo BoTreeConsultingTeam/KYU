@@ -2,7 +2,6 @@
   .modal-dialog
     .modal-body
       = form_for(resource, :as => resource_name, :url => teacher_registration_path) do |f|
-        = devise_error_messages!
         %div
           %br/
           = f.label t('common.captions.salutations')
@@ -25,18 +24,21 @@
           %br/
         %div
           %br/
-          = f.label t('common.captions.new_password')
+          = f.label t('common.captions.password')
           = f.password_field :password, class: 'form-control'
         %div
           %br/
           = f.label t('common.captions.password_confirmation')
 
           = f.password_field :password_confirmation, class: 'form-control'
-          %br
-          = f.label t('common.captions.set_avatar')
+
         %br
-          = f.file_field :avatar
-        %br/
-        %div= f.submit t('common.btn.submit'), class: 'btn btn-primary btn-sm'
+        = f.label t('common.captions.set_avatar')
+        %br
+        = image_tag @teacher.avatar.url(:medium), alt: t('common.image.alt')
+        .spacer10
+        = f.file_field :avatar
+        .spacer20
+        %div= f.submit t('common.btn.submit'), class: 'btn-submit-question', id: 'btn btn-primary btn-sm'
       - if !current_teacher.present?
         = render "teachers/shared/links"
