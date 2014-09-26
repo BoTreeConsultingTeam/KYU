@@ -280,7 +280,7 @@ DEPENDENCIES
   acts_as_votable (~> 0.10.0)
   better_errors
   bootstrap-sass
-  capistrano
+  capistrano (~> 2.15)
   ckeditor_rails
   coffee-rails
   daemons-rails

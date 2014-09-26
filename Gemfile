@@ -28,7 +28,7 @@ gem 'gioco'
 gem "google_visualr", ">= 2.1"
 gem 'jbuilder', '~> 1.2'
 gem 'unicorn'
-gem 'capistrano'
+gem 'capistrano', "~> 2.15"
 gem 'rvm-capistrano'
 gem 'net-ssh', '2.7.0'
 
