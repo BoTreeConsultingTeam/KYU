@@ -3,7 +3,9 @@ $( document ).ready(function() {
   $('.toggleLink').click(function(){
     $("#comment" + this.id).slideToggle();
   });
-  $('#datepicker1').datepicker();
+  $('#datepicker1').datepicker({
+    format: 'yyyy-mm-dd'
+  });
   $('.colorpicker').colorpicker();
   $('.colorselect').click(function(){
     $('#colorSelector').ColorPicker({

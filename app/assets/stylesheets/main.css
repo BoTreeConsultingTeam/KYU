@@ -1106,8 +1106,6 @@ ul.post-controls li a.action {
 }
 /* ============= COMMENT STYLE ======= */
 .comments-container {
-	border: 1px solid #dadfea;
-	border-radius: 3px;
 	margin-top: 15px;
 	position: relative;
 }

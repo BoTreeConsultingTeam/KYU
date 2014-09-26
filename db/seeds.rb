@@ -26,14 +26,12 @@ rules_arr = ['User vote on question', 'User vote on answer', 'User can ask quest
 
  badge_arr = ['Train', 'Doctor', 'Artist', 'Tester', 'Reviewer', 'Scholar', 'Helper']
  point_val = 20
- Badge.delete_all
  badge_arr.each do |badge|
-  Badge.create(name: badge, points: point_val, default: false)
+  Badge.find_or_create_by_name_and_points_and_default(name: badge, points: point_val, default: false)
   point_val = point_val + 30
 end
 
 action_arr = [['Create Question',2], ['Create Answer',5], ['Question is voted up',5], ['Answer is voted up',10], ['Question is voted down',-2], ['Answer is voted down',-5], ['Answer is accepted',15], ['Question is disabled',-15]]
-Point.delete_all
 action_arr.each do |x,y|
-  Point.create(score: y, action:"#{x}")
+  Point.find_or_create_by_score_and_action(score: y, action:"#{x}")
 end
