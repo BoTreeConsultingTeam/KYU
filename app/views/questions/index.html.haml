@@ -11,7 +11,7 @@
           = @tag       
       .col-md-8
         = raw(@tag.description)
-- if @questions.nil?
+- if !@questions.nil?
   = render :partial => 'questions_list', :locals => { questions: @questions}
 -else
   .col-md-4
