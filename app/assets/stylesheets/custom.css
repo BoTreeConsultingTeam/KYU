@@ -403,3 +403,6 @@ ul li a.active_link {
   float: left;
   text-decoration: none;
 }
+.dark-font-color{
+  color: #5c5c61 !important;
+}
