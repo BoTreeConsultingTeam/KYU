@@ -12,6 +12,10 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def all_questions
+    Question.where("enabled = ?",true).order("created_at desc")
+  end
+  
   def user_badge user
     user.badges.last
   end

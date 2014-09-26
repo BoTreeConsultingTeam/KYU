@@ -202,11 +202,7 @@ class QuestionsController < ApplicationController
   def question_find_by_id
     @question = Question.find_by_id(params[:id])
   end
-
-  def all_questions
-    Question.where("enabled = ?",true).order("created_at desc")
-  end
-
+  
   def un_answered_questions
     answer_counts = {}
     all_questions.each do |question| 

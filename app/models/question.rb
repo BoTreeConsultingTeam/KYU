@@ -47,7 +47,7 @@ class Question < ActiveRecord::Base
   end
   
   def self.highest_voted
-    self.order("cached_votes_score DESC").limit(Settings.questions.highest_voted_limit)
+    self.order(cached_votes_up: :desc).limit(Settings.questions.highest_voted_limit)
   end
 
   def tag_list
