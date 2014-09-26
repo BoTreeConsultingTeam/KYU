@@ -9,20 +9,18 @@
           = f.select(:standard_id, options_from_collection_for_select(@standards, 'id', 'class_no',@question.standard_id),{},{class: 'form-control'})
         - else
           = f.select(:standard_id, options_from_collection_for_select(@standards, 'id', 'class_no'),{prompt: t('teachers.basic.prompt')},{class: 'form-control'})
+        .spacer20
         %div
         = f.label :title
-        %br/
         = f.text_field :title, autofocus: true, class: 'submit-input'
         %div
         = f.label t('questions.basic.content_label')
-        %br/
         = f.text_area :content,:toolbar => 'mini', :class => 'ckeditor', style: 'width: none !important;'
-        %br/
+        .spacer20
         = f.label :tag_list, t('questions.basic.tag_on_new')
-        %br/
         .chzn-drop
           = f.select :tag_list, options_for_select(@tags, @question.tags),{},multiple: true, prompt: false, id: 'form-field-select-4', class: 'chzn-drop instructor-chosen-select chosen-select form-control', data: { placeholder: '' }
-        %br/
+        .spacer20
         -if current_student
           = f.hidden_field :user_id, :value => current_student.id
         -elsif current_teacher

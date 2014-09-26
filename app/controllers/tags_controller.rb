@@ -14,7 +14,11 @@ class TagsController < ApplicationController
   end
 
   def edit
-    @tag
+    if (current_administrator)
+      @tag
+    else
+      redirect_to root_path
+    end
   end
 
   def update
