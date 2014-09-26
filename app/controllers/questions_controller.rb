@@ -41,7 +41,7 @@ class QuestionsController < ApplicationController
         end
         redirect_to questions_path(active_tab: 'all')
       else
-        flash[:error] = t('questions.messages.create')
+        flash.now[:error] = t('questions.messages.create')
         render 'new'
       end
     end
