@@ -3,6 +3,7 @@ class BadgesController < ApplicationController
   before_action :find_badge, only: [:edit, :update, :destroy]
   before_filter :find_all_rules, only: [:index, :edit, :new, :create]
   def index
+    params[:active_tab_menu] = 'allbadges'
     @badges = Badge.all
     @points = Point.all
   end

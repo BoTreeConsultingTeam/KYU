@@ -1,6 +1,7 @@
 module ApplicationHelper
   SALUTATIONS = %w[Mr Ms Mrs]
-  PAGE_FILTERS = %w[student teacher basicinfo questions answers votes badges tags]
+  PAGE_FILTERS = %w[student teacher basicinfo questions answers votes badges tags alltags allbadges]
+  QUESTIONS_TAB = %w[all newest]
   def render_css_class(name)
     css_class = ''
     msg_icon_class = ''
@@ -102,6 +103,19 @@ module ApplicationHelper
       css_class = 'active'
     elsif active_tab.blank? && active_tab_param.blank?
       css_class = 'active'
+    end
+      css_class
+  end
+
+  def menu_active_tab(active_tab_menu)
+    css_class = ''
+    active_tab_menu_param = params[:active_tab_menu]
+    if active_tab_menu.present? && active_tab_menu_param.present? && active_tab_menu_param == active_tab_menu
+      css_class = 'current-menu-item'
+    elsif active_tab_menu.blank? && active_tab_menu_param.present? && !PAGE_FILTERS.include?(active_tab_menu_param)
+      css_class = 'current-menu-item'
+    elsif active_tab_menu.blank? && active_tab_menu_param.blank?
+      css_class = 'current-menu-item'
     end
       css_class
   end
