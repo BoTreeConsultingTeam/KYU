@@ -3,5 +3,5 @@
   = f.hidden_field :relative, :value => commentable
   = f.hidden_field :relative_type, :value => commentable.class.to_s
   = f.hidden_field :relative_id, :value => commentable.id
-  %br/
+  .spacer20
   = submit_tag "Post",class: 'btn btn-primary', id: 'comment-box'

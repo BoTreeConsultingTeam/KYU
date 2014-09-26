@@ -1106,8 +1106,6 @@ ul.post-controls li a.action {
 }
 /* ============= COMMENT STYLE ======= */
 .comments-container {
-	border: 1px solid #dadfea;
-	border-radius: 3px;
 	margin-top: 15px;
 	position: relative;
 }
@@ -1238,8 +1236,8 @@ ul.post-controls li a.action {
 	margin-bottom: 10px;
 }
 .modal-submit-questions .btn-submit-question {
-	width: 160px;
-	height: 40px;
+	width: 140px;
+	height: 30px;
 	color: #fff;
 	background: #3498db;
 	font-size: 13px;

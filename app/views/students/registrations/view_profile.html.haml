@@ -43,12 +43,18 @@
           Up Votes
           %br
             %span 
+            -if @total_upvotes.nil?
+              0
+            - else
               = @total_upvotes 
       .col-md-4.col-xs-4
         %p.answers-count
           Down Votes
           %br
             %span 
+            -if @total_downvotes.nil?
+              0
+            - else
               = @total_downvotes 
 / END USER-STATISTIC
 .row.question-filter
@@ -122,12 +128,15 @@
                     = answer.question.get_downvotes.size
                   Downvotes  
       - else
-        .spacer50
-        .col-md-2
-        .col-md-6.col-xs-12
-          %h4
-            = @student.username
-            don't  have answered any question yet
+        .col-md-3
+        .col-md-6
+          .spacer25
+          %h3
+            -if !(current_user == @student)
+              = @student.username
+              has not answered any Question
+            - else
+              You have not answered any Question
 - elsif params[:active_tab] == "edit-profile"
   = render 'form'
 -elsif params[:active_tab] == t('students.active_tab.bookmarks')
@@ -135,12 +144,11 @@
   - if !(question_list.blank?)
     = render :partial => 'questions/questions_list', :locals => { questions: question_list}
   - else
-    .spacer50
-    .col-md-2
-    .col-md-6.col-xs-12
-      %h4
-        = @student.username 
-        don't have Bookmarked any Question
+    .col-md-3
+    .col-md-6
+      .spacer25
+      %h3
+        No Questions are Bookmarked
 - elsif params[:active_tab] == t('students.active_tab.tags')
   .main-questions-list
     %ul#main_questions_list
@@ -154,25 +162,31 @@
               .col-md-12
                 =paginate @tags            
       - else
-        .spacer50
-        .col-md-2
-        .col-md-6.col-xs-12
-          %h4
-            = @student.username
-            You haven't tagged any thing yet!!!
+        .col-md-3
+        .col-md-6
+          .spacer25
+          %h3
+            -if !(current_user == @student)
+              = @student.username
+              has not tagged any Question
+            - else
+              You have not tagged any Question
 - elsif params[:active_tab] == t('students.active_tab.badges')
   .main-questions-list
-    %ul#main_questions_list.single-head
+    %ul#main_questions_list
       - if !(@student.badges.last.blank?)
         .col-md-12.badge-content
           = render '/badges/badge_list'
       -else
-        .spacer50
-        .col-md-2
-        .col-md-6.col-xs-12
-          %h4
-            = @student.username
-            haven't earned any Badges!!!
+        .col-md-3
+        .col-md-6
+          .spacer25
+          %h3
+            -if !(current_user == @student)
+              = @student.username
+              has not earned any Badge
+            - else
+              You have not earned any Badge
 - elsif params[:active_tab] == "questions"
   .main-questions-list    
     %ul#main_questions_list
@@ -225,12 +239,15 @@
                   downvotes
             / end right content
       - else
-        .spacer50
-        .col-md-2
-        .col-md-6.col-xs-12
-          %h4
-            = @student.username 
-            don't have asked any questions yet
+        .col-md-3
+        .col-md-6
+          .spacer25
+          %h3
+            -if !(current_user == @student)
+              = @student.username
+              has not asked any Question
+            - else
+              You have not asked any Question
 - else
   .modal-submit-questions
     .modal-dialog

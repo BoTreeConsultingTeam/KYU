@@ -6,7 +6,7 @@
         = image_tag teacher.avatar.url(:medium), alt: t('common.image.alt'), class: 'img-circle user-thumb-img'
       .left-info
         %span.display_name 
-          = link_to teacher.username.titleize,  teacher_views_profile_path(teacher,user: "Teacher")
+          = link_to teacher.username,  teacher_views_profile_path(teacher,active_tab: 'basicinfo')
         %br/
         / %span.location
         /   = teacher.email
