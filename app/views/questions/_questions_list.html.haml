@@ -38,9 +38,10 @@
                 #{time_ago_in_words(question.created_at)} ago.
         / end left content
         = render :partial => 'questions/question_statics',:locals => { :question => question }
-.row.paginations
-  .col-md-12
-    #main_questions_list
-      .question-item
-        .spacer20
-        = paginate questions
+-if questions.count > 10
+  .row.paginations
+    .col-md-12
+      #main_questions_list
+        .question-item
+          .spacer20
+          = paginate questions

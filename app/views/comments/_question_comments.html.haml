@@ -3,7 +3,10 @@
   .comment-body
     = raw(question_comment.comment)
   .comment-owner
-    = link_to " -  #{question_comment.commentable.username}",student_views_profile_path(question_comment.commentable,user: 'Student')
+    - if question_comment.commentable_type == 'Teacher'
+      = link_to " -  #{question_comment.commentable.username}",'#'
+    - else
+      = link_to " -  #{question_comment.commentable.username}",student_views_profile_path(question_comment.commentable,user: 'Student')
 
   - if question_comment.is_author?(current_user)
     = ' - '

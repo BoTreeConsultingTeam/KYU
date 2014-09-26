@@ -19,7 +19,7 @@ class Student < ActiveRecord::Base
   validates :username,:birthdate, presence: true
   validates :email, format: {with: VALID_EMAIL_REGEX}, uniqueness: {case_sensitive: false}
   validates :standard_id,presence: true
-  validates :password,presence: true,on: :create
+  validates :password, presence: true, on: :create
   validates_confirmation_of :password, if: lambda { |m| m.password.present? }  
   acts_as_tagger
   acts_as_voter

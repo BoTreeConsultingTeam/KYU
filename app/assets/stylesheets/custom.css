@@ -398,3 +398,8 @@ ul li a.active_link {
 .newtag-btn-size{
   padding: 5px 3px !important;
 }
+.comment-owner .comment_owner-teacher {
+  color: #44a;
+  float: left;
+  text-decoration: none;
+}
