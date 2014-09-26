@@ -36,10 +36,8 @@ class QuestionsController < ApplicationController
       if @question.save
         if current_student
           current_student.change_points(Point.action_score(1))
-          redirect_to questions_path(active_tab: 'all')
-        else
-          redirect_to new_question_path
         end
+        redirect_to questions_path(active_tab: 'all')
       else
         flash[:error] = t('answers.messages.unauthorized')
         redirect_to questions_path
