@@ -120,15 +120,15 @@ module ApplicationHelper
   end
 
   def list_of_users(user_type_tab,user)  
-    case user_type_tab
-    when "Teachers"
-      render partial: 'members/teacher_member',locals: {teachers: user}
-    when 'Students','Managers','Students for Review','Blocked Students'
-      if !(user.blank?)
+    if !(user.blank?)
+      case user_type_tab
+      when "Teachers"
+        render partial: 'members/teacher_member',locals: {teachers: user}
+      when 'Students','Managers','Students for Review','Blocked Students'  
         render partial: 'members/student_member',locals: {students: user}
-      else
-        render partial: 'members/blank_messages',locals: {type: user_type_tab}
-      end
-    end
+      end  
+    else 
+      render partial: 'members/blank_messages',locals: {type: user_type_tab}
+    end 
   end 
 end
