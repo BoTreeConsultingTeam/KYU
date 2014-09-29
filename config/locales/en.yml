@@ -172,6 +172,13 @@ en:
       students: 'Students'
       teachers: 'Teachers'
       managers: 'Managers'
+      all: 'all'
+      week: 'week'
+      month: 'month'
+      un_answered: 'un_answered'
+      most_viewed: 'most_viewed'
+      most_voted: 'most_voted'
+      newest: 'newest'
     page_header:
       users: 'Users'
   students:
@@ -289,7 +296,9 @@ en:
       never_ask: You don't have asked any questions yet
   administrator:
     cancel_account: 'Cancel my account'
-
+    active_link:
+      disabled_question: 'disabled_question'
+      home: 'home'
   report:
     captions:
       select_artist: Select an Artist

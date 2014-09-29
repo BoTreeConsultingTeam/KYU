@@ -2,13 +2,10 @@ class Students::RegistrationsController <  Devise::RegistrationsController
    before_filter :configure_permitted_parameters, if: :devise_controller?
    before_action :user_signed_in?, only:[:index,:view_profile,:update]
    before_filter :standard_list, only: [:new,:edit,:view_profile,:update,:create]
-
+   before_filter :current_user_present?, only:[:new]
+   
   def new
-    if current_user.nil?
-      super 
-    else
-      redirect_to questions_path(active_tab: 'all')
-    end
+    super
   end
   
   def index

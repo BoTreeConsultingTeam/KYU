@@ -1,6 +1,8 @@
 class Teachers::RegistrationsController <  Devise::RegistrationsController
   before_filter :configure_permitted_parameters, if: :devise_controller?
   before_action :user_signed_in?, only:[:index,:view_profile,:update]
+  before_filter :current_user_present?, only:[:new]
+  
   def index
     if params[:tag]
       @questions = Kaminari.paginate_array(Question.tagged_with(params[:tag])).page(params[:page]).per(Kaminari.config.default_per_page)
@@ -10,11 +12,7 @@ class Teachers::RegistrationsController <  Devise::RegistrationsController
   end
 
   def new
-    if current_user.nil?
-      super 
-    else
-      redirect_to questions_path(active_tab: 'all')
-    end
+    super 
   end
 
   def create
@@ -52,6 +50,6 @@ class Teachers::RegistrationsController <  Devise::RegistrationsController
   end
 
   def after_sign_in_path_for(resource)
-    teachers_path(active_tab: 'all')
+    teachers_path(active_tab: t('common.active_tab.all'))
   end
 end

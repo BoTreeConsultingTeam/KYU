@@ -28,7 +28,7 @@
               = link_to t('header_navigation.logout'), destroy_teacher_session_path, method: :delete
     .col-md-2.col-xs-2.btn-group.header-avatar
       %span.expand
-        %a{:href => '#'}
+        = link_to 'javascript:void(0)' do
           %span.avatar
             %img.avatar
           %span.display_name

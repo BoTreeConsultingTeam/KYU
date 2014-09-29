@@ -22,8 +22,8 @@ $( document ).ready(function() {
         $('#colorSelector div').css('backgroundColor', '#' + hex);
       }
     });
- 
   });
+  
   $("#search").keyup(function() {
     $('#search_preview').empty();
     $('.i-preview').hide();
@@ -56,6 +56,7 @@ $( document ).ready(function() {
       });
     };
   });
+
   if ($.trim($('i-preview').html()) == '') { $("#search_preview").hide(); }
   $(document).mouseup(function (e){
     var container = $(".i-preview");
@@ -76,7 +77,7 @@ $( document ).ready(function() {
 
   var document_height = $('.main-content').height();
   $('.right-sidebar').css('min-height',document_height);
-  $('.left-sidebar').css('min-height',document_height);  
+  $('.left-sidebar').css('height',document_height); 
 });
 
 function blockUI(){

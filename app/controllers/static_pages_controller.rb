@@ -1,8 +1,6 @@
 class StaticPagesController < ApplicationController
-	
+	before_filter :current_user_present?, only:[:index]
+
   def index
-    if !current_user.nil?
-      redirect_to questions_path(active_tab: 'all')
-    end
   end
 end

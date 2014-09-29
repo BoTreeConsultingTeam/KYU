@@ -37,7 +37,7 @@
       .row.cat-infomation
         .col-md-8.col-xs-8.question-cat
           - if answer.answerable_type == 'Student'
-            %a{:href => student_views_profile_path(answer.answerable.id,user: 'Student')}
+            = link_to student_views_profile_path(answer.answerable.id,user: 'Student') do
               %span.author-avatar
                 = image_tag answer.answerable.avatar.url(:medium), alt: t('common.image.alt'), class: 'img-circle user-thumb-img'
               %span.author-name                                      

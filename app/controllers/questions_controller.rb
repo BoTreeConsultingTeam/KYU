@@ -2,16 +2,16 @@ class QuestionsController < ApplicationController
   before_action :user_signed_in?
   before_filter :tag_list, only: [:new, :edit, :create]
   before_filter :question_find_by_id, only: [:show, :destroy, :edit, :update]
-
+  
   def index
-    params[:active_tab_menu] = 'all'
+    params[:active_tab_menu] = t('common.active_tab.all')
     if received_tag
       @tag = ActsAsTaggableOn::Tag.find_by_name(received_tag)
       @questions = Question.tagged_with(received_tag).enabled.page params[:page]
     elsif received_active_tab
       active_tab(received_active_tab)
     else
-      @question = Question.all.enabled.page params[:page] 
+      @question = Kaminari.paginate_array(Question.all.enabled).page params[:page] 
     end
   end
   
@@ -39,7 +39,7 @@ class QuestionsController < ApplicationController
         if current_student
           current_student.change_points(Point.action_score(1))
         end
-        redirect_to questions_path(active_tab: 'all')
+        redirect_to questions_path(active_tab: t('common.active_tab.all'))
       else
         flash.now[:error] = t('questions.messages.create')
         render 'new'
@@ -56,7 +56,7 @@ class QuestionsController < ApplicationController
       @question_comments = Comment.relative_comments(@question.id,@question.class).page(params[:page]).per(params[:per])
       @answer_comments = Comment.all_comments_of_answers(@answer.class)
     else
-      redirect_to questions_path(active_tab: 'all'),flash: { error: t('flash_message.error.question.show') }
+      redirect_to questions_path(active_tab: t('common.active_tab.all')),flash: { error: t('flash_message.error.question.show') }
     end
   end
 
@@ -69,7 +69,7 @@ class QuestionsController < ApplicationController
       flash[:notice] = "#{title} "+ t('flash_message.success.question.destroy')
     end
     if current_administrator.present?
-      redirect_to disabled_questions_path(active_link: 'disabled_question')
+      redirect_to disabled_questions_path(active_link: t('administrator.active_link.disabled_question'))
     else
       redirect_to students_path
     end
@@ -107,7 +107,7 @@ class QuestionsController < ApplicationController
     @standards = Standard.all
     @standards = Standard.all
     if question_find_by_id.nil?
-      redirect_to questions_path(active_tab: 'all'),flash: { error: t('flash_message.error.question.edit') }
+      redirect_to questions_path(active_tab: t('common.active_tab.all')),flash: { error: t('flash_message.error.question.edit') }
     end
   end
   
@@ -118,7 +118,7 @@ class QuestionsController < ApplicationController
       flash[:notice] = t('flash_message.success.question.update')
       redirect_to question_path(params[:id])
     else
-      redirect_to questions_path(active_tab: 'all'),flash: { error: t('flash_message.error.question.update') }
+      redirect_to questions_path(active_tab: t('common.active_tab.all')),flash: { error: t('flash_message.error.question.update') }
     end 
   end
 
@@ -127,7 +127,7 @@ class QuestionsController < ApplicationController
     @question.update_attributes(enabled: true)
     give_points(@question, Point.action_score(7))
 
-    redirect_to disabled_questions_path(active_link: 'disabled_question')
+    redirect_to disabled_questions_path(active_link: t('administrator.active_link.disabled_question'))
   end
 
   def disable
@@ -140,7 +140,7 @@ class QuestionsController < ApplicationController
         give_points(@question, Point.action_score(8))
       end
     end
-    redirect_to questions_path(active_tab: 'all',active_link: 'home')
+    redirect_to questions_path(active_tab: t('common.active_tab.all'), active_link: t('administrator.active_link.home'))
   end
 
   def abuse_report
@@ -163,20 +163,21 @@ class QuestionsController < ApplicationController
   private
   
   def active_tab(active_tab_params)
+    params[:active_link] = t('administrator.active_link.home')
     case active_tab_params
-      when 'all'
+      when t('common.active_tab.all')
         @questions = all_questions.page params[:page]  
-      when 'week'
+      when t('common.active_tab.week')
         @questions = Question.recent_data_week.enabled.page params[:page]
-      when 'month'
+      when t('common.active_tab.month')
         @questions = Question.recent_data_month.enabled.page params[:page]
-      when 'un_answered'
+      when t('common.active_tab.un_answered')
         @questions = Kaminari.paginate_array(Question.enabled.find_all_by_id(un_answered_questions).reverse).page params[:page]
-      when 'most_viewed'
+      when t('common.active_tab.most_viewed')
         @questions = Question.most_viwed_question.enabled.page params[:page]
-      when 'most_voted'
+      when t('common.active_tab.most_voted')
         @questions = Question.highest_voted.enabled.page params[:page]
-      when 'newest'
+      when t('common.active_tab.newest')
         @questions = Question.newest(current_user).enabled.page params[:page]
       end
   end
