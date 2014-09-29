@@ -45,16 +45,3 @@
             = select_tag 'standard_id', content_tag(:option,'select standard...',:value=>"")+options_from_collection_for_select( @standards, :id, :class_no), class: 'form-control'
             .spacer20
             = submit_tag "Check", class: 'btn btn-primary'    
-:javascript
-  $(document).ready(function() {
-    $('#standard_select').change(function() {
-      $.ajax({
-        url: "#{update_students_path}",
-        data: {
-          standard_id : $('#standard_select').val()
-        },
-        dataType: "script"
-      });
-    });
-  });
-

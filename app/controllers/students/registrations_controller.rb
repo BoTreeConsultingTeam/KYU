@@ -30,7 +30,6 @@ class Students::RegistrationsController <  Devise::RegistrationsController
   end
 
   def view_profile
-    params[:active_link] = 'profile'
     @questions_likes_count  =  @student.questions.map{|question|question.get_likes.count}.inject{|sum,val|sum+val}
     @questions_dislikes_count  =  @student.questions.map{|question|question.get_dislikes.count}.inject{|sum,val|sum+val}
     @answers_dislikes_count  =  @student.answers.map{|question|question.get_dislikes.count}.inject{|sum,val|sum+val}
@@ -55,7 +54,7 @@ class Students::RegistrationsController <  Devise::RegistrationsController
   end
 
   def tag_cloud
-    @tags = Question.tag_counts_on(:tags).limit(5).order('count desc')
+    @tags = Question.tag_counts_on(:tags).limit(Settings.most_used_tags_limit).order('count desc')
   end
 
   def standard_list
