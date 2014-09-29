@@ -2,6 +2,7 @@ class Students::RegistrationsController <  Devise::RegistrationsController
    before_filter :configure_permitted_parameters, if: :devise_controller?
    before_action :user_signed_in?, only:[:index,:view_profile,:update]
    before_filter :standard_list, only: [:new,:edit,:view_profile,:update,:create]
+   before_action :set_student, only: [:view_profile]
   def new
     super
   end
@@ -30,12 +31,6 @@ class Students::RegistrationsController <  Devise::RegistrationsController
 
   def view_profile
     params[:active_link] = 'profile'
-    @student = Student.find(params[:id])
-    @badges = @student.badges
-    @rules = Rule.all
-    @answers = @student.answers
-    @questions = @student.questions.page params[:page]
-    @tags = @student.owned_tags.page params[:page]
     @questions_likes_count  =  @student.questions.map{|question|question.get_likes.count}.inject{|sum,val|sum+val}
     @questions_dislikes_count  =  @student.questions.map{|question|question.get_dislikes.count}.inject{|sum,val|sum+val}
     @answers_dislikes_count  =  @student.answers.map{|question|question.get_dislikes.count}.inject{|sum,val|sum+val}
@@ -45,16 +40,13 @@ class Students::RegistrationsController <  Devise::RegistrationsController
 
 
     @question_ids_strong_area = @student.questions.map {|obj| obj.id}
-    @strong_area_all = map_array_for_chart(@question_ids_strong_area,0)
-    @chart_strong_all = GoogleChartService.render_reports_charts( @strong_area_all, :bar, "Student's tag ratio", true, 'Tag', 'Count', false )
-    @strong_area_3 = map_array_for_chart(@question_ids_strong_area,1)
-    @chart_strong_3 = GoogleChartService.render_reports_charts( @strong_area_3, :bar, "Student's tag ratio", true, 'Tag', 'Count', false )
+    @chart_for_all_strong_area = map_array_for_chart(@question_ids_strong_area,0,"Student's all Strong Area")
+    @chart_for_top_3_strong_area = map_array_for_chart(@question_ids_strong_area,1,"Student's top 3 Strong Area")
+
     @accepted_answers = @student.answers.accepted_answers
     @question_ids_weak_area = @accepted_answers.map {|obj| obj.question_id}
-    @weak_area_all = map_array_for_chart(@question_ids_weak_area,0)
-    @chart_weak_all = GoogleChartService.render_reports_charts( @weak_area_all, :bar, "Student's tag ratio", true, 'Tag', 'Count', false )
-    @weak_area_3 = map_array_for_chart(@question_ids_weak_area,1)
-    @chart_weak_3 = GoogleChartService.render_reports_charts( @weak_area_3, :bar, "Student's tag ratio", true, 'Tag', 'Count', false )
+    @chart_for_all_weak_area = map_array_for_chart(@question_ids_weak_area,0,"Student's all Weak Area")
+    @chart_for_top_3_weak_area = map_array_for_chart(@question_ids_weak_area,1,"Student's top 3 Weak Area")
   end
 
   def update
@@ -73,6 +65,14 @@ class Students::RegistrationsController <  Devise::RegistrationsController
 
   private
 
+  def set_student
+    @student = Student.find(params[:id])
+    @badges = @student.badges
+    @rules = Rule.all
+    @answers = @student.answers
+    @questions = @student.questions.page params[:page]
+    @tags = @student.owned_tags.page params[:page]
+  end
 
   def sign_up_params
     params.require(:student).permit(:email, :password, :username, :birthdate, :standard_id, :avatar)
@@ -82,15 +82,12 @@ class Students::RegistrationsController <  Devise::RegistrationsController
     students_path(active_tab: 'all')
   end
 
-  def map_array_for_chart(question_ids, flag)
+  def map_array_for_chart(question_ids, flag, chart_name)
     tag_ids_of_question = ActsAsTaggableOn::Tagging.find_all_by_taggable_id(question_ids).map { |obj| obj.tag_id }
     students_tags = tag_ids_of_question.group_by{|tag_id| tag_id}.map{|tag_id,tag_count| [ ActsAsTaggableOn::Tag.find_all_by_id(tag_id).map {|obj| obj.name}, tag_count.count].flatten }
     @sorted_reverse_array = students_tags.sort {|a,b| a[1] <=> b[1]}.reverse
-    if flag ==0
-      @sorted_reverse_array
-    else
-      @first_3_elements = @sorted_reverse_array.slice(0,3)
-    end
+    @first_3_elements = @sorted_reverse_array.slice(0,3)
+    flag == 0 ? GoogleChartService.render_reports_charts( @sorted_reverse_array, :bar, chart_name, true, 'Tag', 'Count', false ) : GoogleChartService.render_reports_charts( @first_3_elements, :bar, chart_name, true, 'Tag', 'Count', false )
   end
   
 end

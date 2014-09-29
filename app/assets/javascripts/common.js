@@ -79,11 +79,11 @@ $( document ).ready(function() {
   $('.right-sidebar').css('min-height',document_height);
   $('.left-sidebar').css('min-height',document_height);
 */
-  var z = window.screen.height; 
+  var chart_height = 530 
   var document_height = $(document).height();
   if(window.location.href.indexOf("reports") > -1) {
-     $('.right-sidebar').css('min-height',document_height + z);
-    $('.left-sidebar').css('min-height',document_height + z);
+     $('.right-sidebar').css('min-height',document_height + chart_height);
+    $('.left-sidebar').css('min-height',document_height + chart_height);
   }
   else{
     $('.right-sidebar').css('min-height',document_height);

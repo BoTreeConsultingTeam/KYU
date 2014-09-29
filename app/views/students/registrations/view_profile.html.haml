@@ -202,22 +202,14 @@
 
 - elsif params[:active_tab] == t('students.active_tab.reports')
   .main-questions-list
-    %h3
-      Strong Areas
-      #chart_strong_all
-        = render_chart(@chart_strong_all, 'chart_strong_all')
-    %h3 
-      3 Strongest Areas   
-      #chart_strong_3
-        = render_chart(@chart_strong_3, 'chart_strong_3')
-    %h3
-      Weak Areas 
-      #chart_weak_all
-        = render_chart(@chart_weak_all, 'chart_weak_all')
-    %h3
-      3 Weakest Areas
-      #chart_weak_3
-        = render_chart(@chart_weak_3, 'chart_weak_3')
+    #chart_for_all_strong_area
+      = render_chart(@chart_for_all_strong_area, 'chart_for_all_strong_area')
+    #chart_for_top_3_strong_area
+      = render_chart(@chart_for_top_3_strong_area, 'chart_for_top_3_strong_area')
+    #chart_for_all_weak_area
+      = render_chart(@chart_for_all_weak_area, 'chart_for_all_weak_area')
+    #chart_for_top_3_weak_area
+      = render_chart(@chart_for_top_3_weak_area, 'chart_for_top_3_weak_area')
 
 
 
