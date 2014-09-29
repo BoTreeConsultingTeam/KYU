@@ -66,10 +66,15 @@ $( document ).ready(function() {
     }
   });
 
-  $('a.vote, input#comment-box').on('click', function() { 
+  $('a.vote, input#comment-box, #profile_link').on('click', function() { 
     blockUI();
-  });
 
+  });
+  $('.profile_link').on('click', function(){
+    $('.user_tab').removeClass("active");
+    $(this).addClass('active');
+  });
+ 
   $('body').on('click', 'a.delete-comment', function() { 
     blockUI();
   });

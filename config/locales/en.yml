@@ -207,6 +207,7 @@ en:
       badges: 'badges'
       votes: 'votes'
       bookmarks: 'bookmarks'
+      edit_profile: 'edit-profile'
   teachers:
     captions:
     page_header:
