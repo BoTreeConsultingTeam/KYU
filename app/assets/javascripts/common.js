@@ -74,9 +74,23 @@ $( document ).ready(function() {
     blockUI();
   });
 
-  var document_height = $('.main-content').height();
+
+/*  var document_height = $('.main-content').height();
   $('.right-sidebar').css('min-height',document_height);
-  $('.left-sidebar').css('min-height',document_height);  
+  $('.left-sidebar').css('min-height',document_height);
+*/
+  var z = window.screen.height; 
+  var document_height = $(document).height();
+  if(window.location.href.indexOf("reports") > -1) {
+     $('.right-sidebar').css('min-height',document_height + z);
+    $('.left-sidebar').css('min-height',document_height + z);
+  }
+  else{
+    $('.right-sidebar').css('min-height',document_height);
+    $('.left-sidebar').css('min-height',document_height);
+  }
+
+  
 });
 
 

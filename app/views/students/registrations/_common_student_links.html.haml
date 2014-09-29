@@ -1,0 +1,15 @@
+%li
+  = link_to t('common.links.basic_info'), student_views_profile_path(student.id, active_tab: t('students.active_tab.basic_info')), class: "#{profile_active_tab(t('students.active_tab.basic_info'))}"
+%li
+  = link_to t('common.links.question'), student_views_profile_path(student.id, active_tab: t('students.active_tab.questions')), class: "#{profile_active_tab(t('students.active_tab.questions'))}"
+%li
+  = link_to t('common.links.answers'), student_views_profile_path(student.id, active_tab: t('students.active_tab.answers')), class: "#{profile_active_tab(t('students.active_tab.answers'))}"
+%li
+  = link_to t('common.links.bookmarks'), student_views_profile_path(student.id, active_tab: t('students.active_tab.bookmarks')), class: "#{profile_active_tab(t('students.active_tab.bookmarks'))}"
+%li
+  = link_to t('header_navigation.tags'), student_views_profile_path(student.id, active_tab: t('students.active_tab.tags')), class: "#{profile_active_tab(t('students.active_tab.tags'))}"
+%li
+  = link_to t('common.links.badges'), student_views_profile_path(student.id, active_tab: t('students.active_tab.badges')), class: "#{profile_active_tab(t('students.active_tab.badges'))}"
+-if teacher_signed_in? || administrator_signed_in?
+  %li
+    = link_to t('common.links.reports'), student_views_profile_path(@student.id, active_tab: 'reports'), class: "#{profile_active_tab('reports')}" 
