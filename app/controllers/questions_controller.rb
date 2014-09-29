@@ -14,6 +14,29 @@ class QuestionsController < ApplicationController
       @question = Question.all.enabled.page params[:page] 
     end
   end
+
+  def search_by_keyword 
+    if received_keyword != ''
+      @search = Sunspot.search(Question) do
+        fulltext received_keyword
+      end
+      @question_list = @search.results
+      respond_to do |format|
+          format.html
+          format.json { 
+          render json: @question_list.map{|question|[question.id,question.title]}
+        }
+      end
+    else
+      respond_to do |format|
+        format.html
+        format.json { 
+          render json: []
+        }
+      end
+    end
+  end
+
   
   def disabled_questions
     @questions = Question.find_all_by_enabled(false).sort.reverse
@@ -220,6 +243,6 @@ class QuestionsController < ApplicationController
   end
   
   def received_keyword
-    params[:keyword].gsub(/\s+/, "")
+    params[:keyword]#.gsub(/\s+/, "")
   end
 end

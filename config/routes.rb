@@ -25,6 +25,9 @@ Rails.application.routes.draw do
   resources :badges
   get 'questions/disabled_questions',to: 'questions#disabled_questions',as: :disabled_questions
   resources :questions do
+    collection do
+      get 'search_by_keyword'
+    end
     resources :comments
     resources :answers
     member { post :vote}
