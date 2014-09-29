@@ -6,7 +6,7 @@
       .header-menu    
         %ul
           %li
-            = link_to t('header_navigation.home'), questions_path(active_link: 'home', active_tab: 'all'), class: "#{profile_active_link('home')}"  
+            = link_to t('header_navigation.home'), questions_path(active_link: 'home'), class: "#{profile_active_link('home')}"  
           - if student_signed_in?
             %li
               = link_to t('header_navigation.profile'), student_views_profile_path(current_user, active_link: 'profile'), class: "#{profile_active_link('profile')}"
