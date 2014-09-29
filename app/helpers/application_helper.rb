@@ -24,7 +24,7 @@ module ApplicationHelper
   end
 
   def set_link(title, active_tab)
-    link_to title, questions_path(:active_tab => "#{active_tab}"),{'data-no-turbolink' => true,class: profile_active_tab("#{active_tab}")}
+    link_to title, questions_path(:active_tab => "#{active_tab}"),{'data-no-turbolink' => true, class: profile_active_tab("#{active_tab}"), remote: true}
   end
 
   def set_header_link_for_admin(users_type)

@@ -1,6 +1,7 @@
 $( document ).ready(function() {
   $(".i-preview").hide(); 
   $('#basic_info').addClass('active');
+  $('#all_questions').addClass('active');
   $('.toggleLink').click(function(){
     $("#comment" + this.id).slideToggle();
   });
