@@ -42,6 +42,19 @@ class Students::RegistrationsController <  Devise::RegistrationsController
     @answers_likes_count  =  @student.answers.map{|question|question.get_likes.count}.inject{|sum,val|sum+val}
     @total_likes = @questions_likes_count.to_i + @answers_likes_count.to_i
     @total_dislikes = @questions_dislikes_count.to_i + @answers_dislikes_count.to_i
+
+
+    @question_ids_strong_area = @student.questions.map {|obj| obj.id}
+    @strong_area_all = map_array_for_chart(@question_ids_strong_area,0)
+    @chart_strong_all = GoogleChartService.render_reports_charts( @strong_area_all, :bar, "Student's tag ratio", true, 'Tag', 'Count', false )
+    @strong_area_3 = map_array_for_chart(@question_ids_strong_area,1)
+    @chart_strong_3 = GoogleChartService.render_reports_charts( @strong_area_3, :bar, "Student's tag ratio", true, 'Tag', 'Count', false )
+    @accepted_answers = @student.answers.accepted_answers
+    @question_ids_weak_area = @accepted_answers.map {|obj| obj.question_id}
+    @weak_area_all = map_array_for_chart(@question_ids_weak_area,0)
+    @chart_weak_all = GoogleChartService.render_reports_charts( @weak_area_all, :bar, "Student's tag ratio", true, 'Tag', 'Count', false )
+    @weak_area_3 = map_array_for_chart(@question_ids_weak_area,1)
+    @chart_weak_3 = GoogleChartService.render_reports_charts( @weak_area_3, :bar, "Student's tag ratio", true, 'Tag', 'Count', false )
   end
 
   def update
@@ -56,12 +69,28 @@ class Students::RegistrationsController <  Devise::RegistrationsController
   def standard_list
     @standards = Standard.all
   end
+
+
   private
+
+
   def sign_up_params
     params.require(:student).permit(:email, :password, :username, :birthdate, :standard_id, :avatar)
   end
+
   def after_sign_in_path_for(resource)
     students_path(active_tab: 'all')
+  end
+
+  def map_array_for_chart(question_ids, flag)
+    tag_ids_of_question = ActsAsTaggableOn::Tagging.find_all_by_taggable_id(question_ids).map { |obj| obj.tag_id }
+    students_tags = tag_ids_of_question.group_by{|tag_id| tag_id}.map{|tag_id,tag_count| [ ActsAsTaggableOn::Tag.find_all_by_id(tag_id).map {|obj| obj.name}, tag_count.count].flatten }
+    @sorted_reverse_array = students_tags.sort {|a,b| a[1] <=> b[1]}.reverse
+    if flag ==0
+      @sorted_reverse_array
+    else
+      @first_3_elements = @sorted_reverse_array.slice(0,3)
+    end
   end
   
 end

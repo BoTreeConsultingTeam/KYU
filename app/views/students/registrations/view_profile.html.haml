@@ -61,23 +61,16 @@
                   = @total_dislikes
 / END USER-STATISTIC
 .row.question-filter
-  - if ( @student == current_user )
-    = render partial: 'current_student_links', locals: { student: @student}
+  - if !( @student == current_user )
+    .col-md-12.sort-questions
+      %ul
+        = render partial: 'common_student_links', locals: { student: @student}
   - else
     .col-md-12.sort-questions
       %ul
         %li
-          = link_to t('common.links.basic_info'), student_views_profile_path(@student.id, active_tab: t('students.active_tab.basic_info')), class: "#{profile_active_tab(t('students.active_tab.basic_info'))}"
-        %li
-          = link_to t('common.links.question'), student_views_profile_path(@student.id, active_tab: t('students.active_tab.questions')), class: "#{profile_active_tab(t('students.active_tab.questions'))}"
-        %li
-          = link_to t('common.links.answers'), student_views_profile_path(@student.id, active_tab: t('students.active_tab.answers')), class: "#{profile_active_tab(t('students.active_tab.answers'))}"
-        %li
-          = link_to t('common.links.bookmarks'), student_views_profile_path(@student.id, active_tab: t('students.active_tab.bookmarks')), class: "#{profile_active_tab(t('students.active_tab.bookmarks'))}"
-        %li
-          = link_to t('common.links.tags'), student_views_profile_path(@student.id, active_tab: t('students.active_tab.tags')), class: "#{profile_active_tab(t('students.active_tab.tags'))}"
-        %li
-          = link_to 'Badges', student_views_profile_path(@student.id, active_tab:'badges'), class: "#{profile_active_tab('badges')}"
+          = link_to t('common.links.edit_your_info'), student_views_profile_path(@student.id, active_tab: 'edit-profile'), class: "#{profile_active_tab('edit-profile')}"
+          = render partial: 'common_student_links', locals: { student: @student}
   / END QUESTIONS-FILTER
 - if params[:active_tab] == t('students.active_tab.answers')
   .main-questions-list
@@ -206,6 +199,29 @@
               has not asked any Question
             - else
               You have not asked any Question
+
+- elsif params[:active_tab] == t('students.active_tab.reports')
+  .main-questions-list
+    %h3
+      Strong Areas
+      #chart_strong_all
+        = render_chart(@chart_strong_all, 'chart_strong_all')
+    %h3 
+      3 Strongest Areas   
+      #chart_strong_3
+        = render_chart(@chart_strong_3, 'chart_strong_3')
+    %h3
+      Weak Areas 
+      #chart_weak_all
+        = render_chart(@chart_weak_all, 'chart_weak_all')
+    %h3
+      3 Weakest Areas
+      #chart_weak_3
+        = render_chart(@chart_weak_3, 'chart_weak_3')
+
+
+
+
 - else
   .modal-submit-questions
     .modal-dialog

@@ -150,6 +150,7 @@ en:
       question: 'Questions'
       badges: 'Badges'
       votes: 'Votes'
+      reports: 'Reoprts'
       forgot_password: 'Forgot your password?'
       last_week: 'Last week'
       last_month: 'Last Month'
@@ -207,6 +208,7 @@ en:
       badges: 'badges'
       votes: 'votes'
       bookmarks: 'bookmarks'
+      reports: 'reports'
   teachers:
     captions:
     page_header:
