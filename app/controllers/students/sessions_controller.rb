@@ -1,5 +1,14 @@
 class Students::SessionsController <  Devise::SessionsController
   before_filter :student_authorize, only: [:create]
+  
+  def new
+    if current_user.nil?
+      super 
+    else
+      redirect_to questions_path(active_tab: 'all')
+    end
+  end
+
   def destroy
     super
   end 

@@ -69,7 +69,7 @@ class QuestionsController < ApplicationController
       flash[:notice] = "#{title} "+ t('flash_message.success.question.destroy')
     end
     if current_administrator.present?
-      redirect_to disabled_questions_path
+      redirect_to disabled_questions_path(active_link: 'disabled_question')
     else
       redirect_to students_path
     end
@@ -127,7 +127,7 @@ class QuestionsController < ApplicationController
     @question.update_attributes(enabled: true)
     give_points(@question, Point.action_score(7))
 
-    redirect_to disabled_questions_path
+    redirect_to disabled_questions_path(active_link: 'disabled_question')
   end
 
   def disable
@@ -140,7 +140,7 @@ class QuestionsController < ApplicationController
         give_points(@question, Point.action_score(8))
       end
     end
-    redirect_to questions_path(active_tab: 'all')
+    redirect_to questions_path(active_tab: 'all',active_link: 'home')
   end
 
   def abuse_report

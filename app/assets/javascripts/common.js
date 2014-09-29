@@ -79,7 +79,6 @@ $( document ).ready(function() {
   $('.left-sidebar').css('min-height',document_height);  
 });
 
-
 function blockUI(){
 	$.blockUI({ css: { 
         border: 'none', 

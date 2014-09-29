@@ -9,6 +9,14 @@ class Teachers::RegistrationsController <  Devise::RegistrationsController
     end
   end
 
+  def new
+    if current_user.nil?
+      super 
+    else
+      redirect_to questions_path(active_tab: 'all')
+    end
+  end
+
   def create
     super
   end

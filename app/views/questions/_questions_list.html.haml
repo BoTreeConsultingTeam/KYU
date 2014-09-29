@@ -14,6 +14,8 @@
                 - question.tags.each do |tag|
                   %li
                     = link_to tag, questions_path(tag: tag.name),class: 'q-tag'
+              - if !question.tags.present?
+                .spacer30
               .clearfix
               - if question.askable_type != 'Teacher'
                 %a{:href => student_views_profile_path(question.askable.id,user: 'Student')}
@@ -36,6 +38,14 @@
                   = question.askable.class
               %span.question-time
                 #{time_ago_in_words(question.created_at)} ago. 
+              %span.question_link
+                - if current_student.present?
+                  - if current_student.student_manager?
+                    = link_to ' ',disable_path(question.id, active_link: 'home'),rel: 'tooltip', title: t('common.links.disable'), class: 'fa fa-ban fa-2x disable '
+                - else
+                  = link_to ' ',disable_path(question.id, active_link: 'home'), rel: 'tooltip', title: t('common.links.disable'), class: 'fa fa-ban fa-2x disable'
+                - if !(current_administrator)
+                  = link_to ' ',report_path(question.id), rel: 'tooltip', title: t('questions.links.report_abuse'), class: 'fa fa-envelope-o fa-2x'
         = render :partial => 'questions/question_statics',:locals => { :question => question }
 -if questions.length > 10
   .row.paginations
