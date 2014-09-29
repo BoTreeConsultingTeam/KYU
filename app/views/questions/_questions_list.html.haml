@@ -44,7 +44,6 @@
                 - if !(current_administrator)
                   = link_to ' ',report_path(question.id), rel: 'tooltip', title: t('questions.links.report_abuse'), class: 'fa fa-envelope-o fa-2x'
         = render :partial => 'questions/question_statics',:locals => { :question => question }
-- if questions.length > 9
-  .row
-    .col-md-12
-      = paginate questions
+.row
+  .col-md-12
+    = paginate questions

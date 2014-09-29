@@ -5,7 +5,7 @@
       = raw(question_comment.comment)
       
     - if question_comment.commentable_type == 'Teacher'
-      = link_to " -  #{question_comment.commentable.username}",'#'
+      = link_to " -  #{question_comment.commentable.username}",'javascript:void(0)'
     - else
       = link_to " -  #{question_comment.commentable.username}",student_views_profile_path(question_comment.commentable,user: 'Student')
 
