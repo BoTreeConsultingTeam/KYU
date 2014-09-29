@@ -14,7 +14,7 @@
             %i.fa.fa-tags>
             = t('header_navigation.tags')
         %li.fa-users.menu-item.menu-item-type-post_type.menu-item-object-page{ class: "#{menu_active_tab('members')}"}
-          = link_to members_path(active_tab: 'Students'), class: "#{menu_active_tab('students')}" do
+          = link_to members_path, class: "#{menu_active_tab('students')}" do
             %i.fa.fa-users>
             = t('header_navigation.users')
         %li.fa-users.menu-item.menu-item-type-post_type.menu-item-object-page{ class: "#{menu_active_tab('allbadges')}"}

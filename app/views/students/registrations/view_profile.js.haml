@@ -1,22 +1,15 @@
 - if params[:active_tab] == t('students.active_tab.bookmarks')
   $('.students_profile').html("#{escape_javascript(render('students_owned_bookmarks'))}")
-  
 - elsif params[:active_tab] == t('students.active_tab.answers')
   $('.students_profile').html("#{escape_javascript(render('students_owned_answers', collection: @answers, locals: {answers: @answers}))} ")
-  
 - elsif params[:active_tab] == t('students.active_tab.questions')
   $('.students_profile').html("#{escape_javascript(render('students_owned_questions',collection: @questions, locals: {question: @questions}))}")
-  
 - elsif params[:active_tab] == t('students.active_tab.tags')
   $('.students_profile').html("#{escape_javascript(render('students_owned_tags',collection: @tags, locals: {tags: @tags}))}")
-  
 - elsif params[:active_tab] == t('students.active_tab.badges')
   $('.students_profile').html("#{escape_javascript(render('students_owned_badges',collection: @badges, locals: {tags: @tags}))}")
-  
 - elsif params[:active_tab] == t('students.active_tab.edit_profile')
   $('.students_profile').html("#{escape_javascript(render('form',collection: @standards, locals: {standards: @standards}))}")
-  
 -else
-  $('.students_profile').html("#{escape_javascript(render('students_basic_info',locals: {resource: resource}))}")
-  
+  $('.students_profile').html("#{escape_javascript(render('students_basic_info',locals: {resource: resource}))}") 
 $.unblockUI();

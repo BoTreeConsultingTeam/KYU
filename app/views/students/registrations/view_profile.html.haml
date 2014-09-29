@@ -63,7 +63,7 @@
 .row.question-filter
   .col-md-12.sort-questions
     %ul
-      - if ( @student == current_user )
+      - if current_user == @student
         %li
           = link_to t('common.links.edit_your_info'), student_views_profile_path(@student.id, active_tab: 'edit-profile'), remote: true, class: "user_tab profile_link"
       %li

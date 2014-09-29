@@ -24,11 +24,11 @@ module ApplicationHelper
   end
 
   def set_link(title, active_tab)
-    link_to title, questions_path(:active_tab => "#{active_tab}"),{'data-no-turbolink' => true, class: 'questions_filter_link filter_link', remote: true}
+    link_to title, questions_path(active_tab: "#{active_tab}"),{'data-no-turbolink' => true, class: 'questions_filter_link filter_link', remote: true}
   end
 
   def set_header_link_for_admin(users_type)
-    link_to users_type, members_path(active_tab: users_type), {class: profile_active_tab("#{users_type}")}
+    link_to users_type, members_path(active_tab: users_type), {class: 'user_filter_link user_link', remote: true}
   end
 
   def student_badge_color(badge_name)

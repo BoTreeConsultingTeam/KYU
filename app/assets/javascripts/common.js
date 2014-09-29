@@ -83,6 +83,12 @@ $( document ).ready(function() {
     $(this).addClass('active');
   });
 
+  $('.user_filter_link').on('click', function(){
+    $('.user_link').removeClass("active");
+    blockUI();
+    $(this).addClass('active');
+  });
+
   $('body').on('click', 'a.delete-comment', function() { 
     blockUI();
   });
