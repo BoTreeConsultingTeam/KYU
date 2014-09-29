@@ -1,0 +1,12 @@
+- if !(@teacher.questions.blank?)
+  = render partial: 'questions/questions_list', locals: {questions: @questions}
+- else
+  .col-md-3
+  .col-md-6
+    .spacer25
+    %h3
+      -if !(current_user == @teacher)
+        = @teacher.username
+        has not asked any Question
+      - else
+        You have not asked any Question

@@ -1,0 +1,14 @@
+.main-questions-list
+  %ul#main_questions_list
+    -if !(@answers.blank?)
+      = render :partial => 'members/member_answers_list', locals: { answers: @answers}
+    - else
+      .col-md-3
+      .col-md-6
+        .spacer25
+        %h3
+          -if !(current_user == @teacher)
+            = @teacher.username
+            has not answered any Question
+          - else
+            You have not answered any Question

@@ -3,7 +3,7 @@
     %li
       = link_to t('common.links.edit_your_info'), student_views_profile_path(student.id, active_tab: 'edit-profile'), remote: true, class: "user_tab profile_link"
     %li
-      = link_to t('common.links.basic_info'), student_views_profile_path(student.id, active_tab: t('students.active_tab.basic_info')), remote: true, class: "user_tab profile_link"
+      = link_to t('common.links.basic_info'), student_views_profile_path(student.id, active_tab: t('students.active_tab.basic_info')), remote: true, class: " user_tab profile_link", id: 'basic_info'
     %li
       = link_to t('common.links.question'), student_views_profile_path(student.id, active_tab: t('students.active_tab.questions')), remote: true, class: "user_tab profile_link"
     %li
