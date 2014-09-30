@@ -12,7 +12,11 @@ class QuestionsController < ApplicationController
     elsif received_active_tab
       active_tab(received_active_tab)
     else
-      @questions = Kaminari.paginate_array(Question.all.enabled).page params[:page] 
+      @questions = Question.all.enabled.page params[:page] 
+    end
+    respond_to do |format| 
+      format.html
+      format.js
     end
   end
   

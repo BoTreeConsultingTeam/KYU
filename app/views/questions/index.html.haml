@@ -11,11 +11,5 @@
           = @tag       
       .col-md-8
         = raw(@tag.description)
-- if !@questions.nil?
-  = render :partial => 'questions_list', :locals => { questions: @questions}
--else
-  .col-md-4
-  .col-md-4.col-xs-12
-    .spacer50
-    %h3
-      = t('questions.error.message')
+%div.filter_questions
+  = render partial: 'questions_index', locals: { questions: @questions}

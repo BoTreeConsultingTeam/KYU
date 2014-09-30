@@ -433,3 +433,7 @@ blockquote {
 .question-cat span.user-badge.teacher-class {
   background-color: #780978;
 }
+a:focus{
+  outline: none !important;
+  outline-offset:  0px !important;
+}

@@ -1,0 +1,60 @@
+.main-questions-list
+  %ul#main_questions_list
+    -if !(@answers.blank?)
+      - @answers.each do |answer|
+        %li.question-item
+          .col-md-8.q-left-content
+            .q-ltop-content.title-answer-style
+              %a.question-title
+                = link_to  answer.question.title, question_path(answer.question),class: 'question-title', 'data-no-turbolink' => true
+            .q-lbtm-content
+              .question-cat
+                %span.avatar
+                  = image_tag answer.answerable.avatar.url(:medium), alt: t('common.image.alt') ,class: 'img-circle user-thumb-img'
+                %span.user-badge
+                  - if answer.answerable.badges.last.blank?
+                  -else
+                    = answer.answerable.badges.last.name
+                %span.question-time
+                  = "Asked #{time_ago_in_words(answer.question.created_at)} ago."
+                %ul.question-tags
+                  - answer.question.tags.each do |tag|
+                    %li
+                      = link_to tag, questions_path(tag: tag.name),class: 'q-tag'
+            .quote-answer-style
+              %div
+                %span.icon-quote
+                = raw(answer.content)
+              %p.alert-stt-answer-style
+                %i.fa.fa-check-circle
+                = "Replied #{time_ago_in_words(answer.created_at)} ago."
+          
+          / end left content
+          .col-md-4.q-right-content
+            %ul.question-statistic
+              %li
+                %span.question-views
+                  = "#{answer.question.impressionist_count}"
+                views
+              %li.active
+                %span.question-answers
+                  = "#{answer.question.answers.count}"
+                answers
+              %li
+                %span.question-upvotes
+                  = answer.question.get_upvotes.size
+                Upvotes
+              %li
+                %span.question-downvotes
+                  = answer.question.get_downvotes.size
+                Downvotes  
+    - else
+      .col-md-3
+      .col-md-6
+        .spacer25
+        %h3
+          -if !(current_user == @student)
+            = @student.username
+            has not answered any Question
+          - else
+            You have not answered any Question

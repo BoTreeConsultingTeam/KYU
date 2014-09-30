@@ -61,163 +61,22 @@
                   = @total_dislikes
 / END USER-STATISTIC
 .row.question-filter
-  - if ( @student == current_user )
-    = render partial: 'current_student_links', locals: { student: @student}
-  - else
-    .col-md-12.sort-questions
-      %ul
+  .col-md-12.sort-questions
+    %ul
+      - if current_user == @student
         %li
-          = link_to t('common.links.basic_info'), student_views_profile_path(@student.id, active_tab: t('students.active_tab.basic_info')), class: "#{profile_active_tab(t('students.active_tab.basic_info'))}"
-        %li
-          = link_to t('common.links.question'), student_views_profile_path(@student.id, active_tab: t('students.active_tab.questions')), class: "#{profile_active_tab(t('students.active_tab.questions'))}"
-        %li
-          = link_to t('common.links.answers'), student_views_profile_path(@student.id, active_tab: t('students.active_tab.answers')), class: "#{profile_active_tab(t('students.active_tab.answers'))}"
-        %li
-          = link_to t('common.links.bookmarks'), student_views_profile_path(@student.id, active_tab: t('students.active_tab.bookmarks')), class: "#{profile_active_tab(t('students.active_tab.bookmarks'))}"
-        %li
-          = link_to t('common.links.tags'), student_views_profile_path(@student.id, active_tab: t('students.active_tab.tags')), class: "#{profile_active_tab(t('students.active_tab.tags'))}"
-        %li
-          = link_to 'Badges', student_views_profile_path(@student.id, active_tab:'badges'), class: "#{profile_active_tab('badges')}"
-  / END QUESTIONS-FILTER
-- if params[:active_tab] == t('students.active_tab.answers')
-  .main-questions-list
-    %ul#main_questions_list
-      -if !(@answers.blank?)
-        - @answers.each do |answer|
-          %li.question-item
-            .col-md-8.q-left-content
-              .q-ltop-content.title-answer-style
-                %a.question-title
-                  = link_to  answer.question.title, question_path(answer.question),class: 'question-title', 'data-no-turbolink' => true
-              .q-lbtm-content
-                .question-cat
-                  %span.avatar
-                    = image_tag answer.answerable.avatar.url(:medium), alt: t('common.image.alt') ,class: 'img-circle user-thumb-img'
-                  %span.user-badge
-                    - if answer.answerable.badges.last.blank?
-                    -else
-                      = answer.answerable.badges.last.name
-                  %span.question-time
-                    = "Asked #{time_ago_in_words(answer.question.created_at)} ago."
-                  %ul.question-tags
-                    - answer.question.tags.each do |tag|
-                      %li
-                        = link_to tag, questions_path(tag: tag.name),class: 'q-tag'
-              .quote-answer-style
-                %div
-                  %span.icon-quote
-                  = raw(answer.content)
-                %p.alert-stt-answer-style
-                  %i.fa.fa-check-circle
-                  = "Replied #{time_ago_in_words(answer.created_at)} ago."
-            
-            / end left content
-            .col-md-4.q-right-content
-              %ul.question-statistic
-                %li
-                  %span.question-views
-                    = "#{answer.question.impressionist_count}"
-                  views
-                %li.active
-                  %span.question-answers
-                    = "#{answer.question.answers.count}"
-                  answers
-                %li
-                  %span.question-upvotes
-                    = answer.question.get_upvotes.size
-                  Upvotes
-                %li
-                  %span.question-downvotes
-                    = answer.question.get_downvotes.size
-                  Downvotes  
-      - else
-        .col-md-3
-        .col-md-6
-          .spacer25
-          %h3
-            -if !(current_user == @student)
-              = @student.username
-              has not answered any Question
-            - else
-              You have not answered any Question
-- elsif params[:active_tab] == "edit-profile"
-  = render partial: 'form', locals: { standards: @standards}
--elsif params[:active_tab] == t('students.active_tab.bookmarks')
-  - question_list = bookmark_question_ids @student
-  - if !(question_list.blank?)
-    = render :partial => 'questions/questions_list', :locals => { questions: question_list}
-  - else
-    .col-md-3
-    .col-md-6
-      .spacer25
-      %h3
-        No Questions are Bookmarked
-- elsif params[:active_tab] == t('students.active_tab.tags')
-  .main-questions-list
-    %ul#main_questions_list
-      -if !(@tags.blank?)
-        .main-tag-list
-          .wrap-tag-list   
-            %ul.raw.tag-list
-              - @tags.each do |tag|
-                = render partial: "tags/tag_links", :locals => {:tag => tag}
-            .row.paginations.home
-              .col-md-12
-                =paginate @tags            
-      - else
-        .col-md-3
-        .col-md-6
-          .spacer25
-          %h3
-            -if !(current_user == @student)
-              = @student.username
-              has not tagged any Question
-            - else
-              You have not tagged any Question
-- elsif params[:active_tab] == t('students.active_tab.badges')
-  .main-questions-list
-    %ul#main_questions_list
-      - if !(@student.badges.last.blank?)
-        .single-head
-          .col-md-12.badge-content
-            = render '/badges/badge_list'
-      -else
-        .col-md-3
-        .col-md-6
-          .spacer25
-          %h3
-            -if !(current_user == @student)
-              = @student.username
-              has not earned any Badge
-            - else
-              You have not earned any Badge
-- elsif params[:active_tab] == "questions"
-  .main-questions-list    
-    %ul#main_questions_list
-      - if !(@questions.nil?)
-        = render :partial => 'questions/questions_list', :locals => { questions: @questions}
-      - else
-        .col-md-3
-        .col-md-6
-          .spacer25
-          %h3
-            -if !(current_user == @student)
-              = @student.username
-              has not asked any Question
-            - else
-              You have not asked any Question
-- else
-  .modal-submit-questions
-    .modal-dialog
-      .modal-body
-        = form_for(resource, :as => resource_name, :url => student_registration_path) do |f|
-          %br
-          = f.label t('common.captions.user_name')
-          = f.text_field :username,class: 'form-control', disabled: true
-          %br
-          = f.label t('common.captions.dob')
-          = f.text_field :birthdate,class: 'form-control date-picker', id: 'datepicker1', disabled: true
-          %br
-          = f.label t('common.captions.email')
-          = f.email_field :email, :autofocus => true,class: 'form-control', disabled: true
-          %br/
+          = link_to t('common.links.edit_your_info'), student_views_profile_path(@student.id, active_tab: 'edit-profile'), remote: true, class: "user_tab profile_link"
+      %li
+        = link_to t('common.links.basic_info'), student_views_profile_path(@student.id, active_tab: t('students.active_tab.basic_info')), remote: true, class: " user_tab profile_link", id: 'basic_info'
+      %li
+        = link_to t('common.links.question'), student_views_profile_path(@student.id, active_tab: t('students.active_tab.questions')), remote: true, class: "user_tab profile_link"
+      %li
+        = link_to t('common.links.answers'), student_views_profile_path(@student.id, active_tab: t('students.active_tab.answers')), remote: true, class: "user_tab profile_link"
+      %li
+        = link_to t('common.links.bookmarks'), student_views_profile_path(@student.id, active_tab: t('students.active_tab.bookmarks')), remote: true, class: "user_tab profile_link"
+      %li
+        = link_to t('header_navigation.tags'), student_views_profile_path(@student.id, active_tab: t('students.active_tab.tags')), remote: true, class: "user_tab profile_link"
+      %li
+        = link_to t('common.links.badges'), student_views_profile_path(@student.id, active_tab: t('students.active_tab.badges')), remote: true, class: "user_tab profile_link"
+%div.students_profile
+  = render partial: 'students_basic_info', locals: { answers: @answers}

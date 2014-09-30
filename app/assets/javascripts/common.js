@@ -1,5 +1,7 @@
 $( document ).ready(function() {
   $(".i-preview").hide(); 
+  $('#basic_info').addClass('active');
+  $('#default_link').addClass('active');
   $('.toggleLink').click(function(){
     $("#comment" + this.id).slideToggle();
   });
@@ -69,6 +71,23 @@ $( document ).ready(function() {
 
   $('a.vote, input#comment-box').on('click', function() { 
     blockUI();
+
+  });
+  $('.profile_link').on('click', function(){
+    $('.user_tab').removeClass("active");
+    blockUI();
+    $(this).addClass('active');
+  });
+  $('.questions_filter_link').on('click', function(){
+    $('.filter_link').removeClass("active");
+    blockUI();
+    $(this).addClass('active');
+  });
+
+  $('.user_filter_link').on('click', function(){
+    $('.user_link').removeClass("active");
+    blockUI();
+    $(this).addClass('active');
   });
 
   $('body').on('click', 'a.delete-comment', function() { 
