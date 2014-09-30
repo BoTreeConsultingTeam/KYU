@@ -6,9 +6,6 @@
           .q-ltop-content
             = link_to  question.title, question_path(question),class: 'question-title', 'data-no-turbolink' => true
           .q-lbtm-content
-            / .question-excerpt
-            /   %p
-            /     = raw(question.content)
             .question-cat
               %ul.question-tags
                 - question.tags.each do |tag|
@@ -18,7 +15,7 @@
               - if question.askable_type != 'Teacher'
                 %a{:href => student_views_profile_path(question.askable.id,user: 'Student')}
                   %span.avatar
-                    = image_tag question.askable.avatar.url(:thumb), alt: t('common.image.alt'), class: 'img-circle user-thumb-img'
+                    = image_tag "#{set_user_image(question.askable.avatar.path)}", alt: t('common.image.alt'), class: 'img-circle user-thumb-img' 
                   %span.author-name                     
                     - if question.askable.student_manager?
                       .student_manager{rel: "tooltip",title: t('students.tooltip.manager')} 
@@ -29,7 +26,7 @@
                   = question.askable.class
               - else 
                 %span.avatar
-                  = image_tag question.askable.avatar.url(:thumb), alt: t('common.image.alt'), class: 'img-circle user-thumb-img'
+                  = image_tag "#{set_user_image(question.askable.avatar.path)}", alt: t('common.image.alt'), class: 'img-circle user-thumb-img' 
                 %span.author-name
                   = question.askable.username
                 %span.user-badge{:style => "background-color:#780978;"}

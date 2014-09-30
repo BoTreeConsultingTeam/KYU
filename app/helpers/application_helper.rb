@@ -145,4 +145,12 @@ module ApplicationHelper
       render partial: 'members/blank_messages',locals: {type: user_type_tab}
     end 
   end 
+
+  def set_user_image image_path
+    if File.exist? image_path
+      image_path
+    else
+      image_path = 'missing.jpeg'
+    end
+  end
 end

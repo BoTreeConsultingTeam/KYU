@@ -28,18 +28,15 @@
               = link_to t('header_navigation.logout'), destroy_teacher_session_path, method: :delete
     .col-md-2.col-xs-2.btn-group.header-avatar
       %span.expand
-        %a{:href => '#'}
-          %span.avatar
-            %img.avatar
-          %span.display_name
-          - if student_signed_in?
-            = link_to student_views_profile_path(current_user) do
-              = "Welcome #{current_student.username.titleize}"
-          - if teacher_signed_in?
-            = link_to teacher_views_profile_path(current_user) do
-              = "Welcome #{current_teacher.username}"
-          - if administrator_signed_in?
-            = "Welcome #{current_administrator.email}"
+        %span.display_name
+        - if student_signed_in?
+          = link_to student_views_profile_path(current_user) do
+            = "Welcome #{current_student.username.titleize}"
+        - if teacher_signed_in?
+          = link_to teacher_views_profile_path(current_user) do
+            = "Welcome #{current_teacher.username}"
+        - if administrator_signed_in?
+          = "Welcome #{current_administrator.email}"
       / .header-search-wrapper#que-search
       /   %form#header_search
       /     %input{:autocomplete => "off", :name => "search", :placeholder => "Enter Keywords", :type => "text", :value => "" , id: 'search'}/ 

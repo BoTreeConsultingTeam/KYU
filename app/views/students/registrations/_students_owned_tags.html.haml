@@ -15,7 +15,7 @@
         .spacer25
         %h3
           -if !(current_user == @student)
-            = student.username
+            = @student.username
             has not tagged any Question
           - else
             You have not tagged any Question
