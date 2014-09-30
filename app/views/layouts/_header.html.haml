@@ -37,9 +37,3 @@
             = "Welcome #{current_teacher.username}"
         - if administrator_signed_in?
           = "Welcome #{current_administrator.email}"
-      / .header-search-wrapper#que-search
-      /   %form#header_search
-      /     %input{:autocomplete => "off", :name => "search", :placeholder => "Enter Keywords", :type => "text", :value => "" , id: 'search'}/ 
-      /     %i.fa.fa-search
-      /   .search-preview#search_preview
-      /     %span.i-preview
