@@ -6,6 +6,9 @@ en:
       upvotes: 'upvotes'
       downvotes: 'downvotes'
       tagged_questions: 'Tagged Questions'
+      no_questions_bookmarked: 'No Questions are Bookmarked'
+      teacher_asks_no_questions: 'has not asked any Question'
+      no_questions_asked_by_user: 'You have not asked any Question'
     messages:
       question_not_found: 'No such Question found for Delete!'
       delete_success: 'Deleted Successfuly!'
@@ -55,6 +58,9 @@ en:
     basic:
       answer_label: 'Your answer'
       new_answer: 'New Answer'
+      teacher_not_answered: 'has not answered any Question'
+      user_not_answered: 'You have not answered any Question'
+
     btn:
       submit_answer: 'Submit'
     links:
