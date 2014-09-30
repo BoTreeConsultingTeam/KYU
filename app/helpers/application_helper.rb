@@ -99,17 +99,8 @@ module ApplicationHelper
   end
 
   def menu_active_tab(active_tab_menu)
-    css_class = ''
-    active_tab_in_url = request.original_fullpath.split('=')[1..-1].first
-    if TAB_FOR_USERS.include?active_tab_in_url
-      active_tab_menu_param = 'members'
-    elsif TAB_FOR_QUESTIONS.include?active_tab_in_url
-      active_tab_menu_param = 'all'
-    elsif active_tab_in_url =="alltags"
-      active_tab_menu_param = 'alltags'
-    elsif active_tab_in_url == "allbadges"
-      active_tab_menu_param = 'allbadges'
-    end  
+    css_class = ''  
+    active_tab_menu_param = set_current_controller_for_active_sidebar_tab
     if active_tab_menu.present? && active_tab_menu_param.present? && active_tab_menu_param == active_tab_menu
       css_class = 'current-menu-item'
     elsif active_tab_menu.blank? && active_tab_menu_param.present? && !PAGE_FILTERS.include?(active_tab_menu_param)
@@ -145,4 +136,23 @@ module ApplicationHelper
       render partial: 'members/blank_messages',locals: {type: user_type_tab}
     end 
   end 
+
+  def set_current_controller_for_active_sidebar_tab
+    current_controller = params[:controller]
+    case current_controller
+    when "questions"
+      'active_questions'
+    when "members" 
+      'active_users'
+    when current_controller.match('registrations')
+      'active_users'
+    when "tags"
+      'active_tags'
+    when "badges" 
+      'active_badges'
+    when "points" 
+      'active_badges'  
+    end
+  end
+
 end
