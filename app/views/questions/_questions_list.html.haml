@@ -25,22 +25,22 @@
                         = question.askable.username
                     - else
                       = question.askable.username
-                %span.user-badge{:style => "background-color:#04aad4;"}
+                %span.user-badge.student-class
                   = question.askable.class
               - else 
                 %span.avatar
                   = image_tag question.askable.avatar.url(:thumb), alt: t('common.image.alt'), class: 'img-circle user-thumb-img'
                 %span.author-name
                   = question.askable.username
-                %span.user-badge{:style => "background-color:#780978;"}
+                %span.user-badge.teacher-class
                   = question.askable.class
               %span.question-time
                 #{time_ago_in_words(question.created_at)} ago. 
               %span.question_link
                 - if current_student.present? && current_student.student_manager?
-                  = link_to ' ',disable_path(question.id, active_link: 'home'),rel: 'tooltip', title: t('common.links.disable'), class: 'fa fa-ban fa-2x disable '
+                  = link_to ' ',disable_path(question.id, active_tab: "#{t('common.active_tab.all')}", active_link: "#{t('administrator.active_link.home')}"), rel: 'tooltip', title: t('common.links.disable'), class: 'fa fa-ban fa-2x disable '
                 - else
-                  = link_to ' ',disable_path(question.id, active_link: 'home'), rel: 'tooltip', title: t('common.links.disable'), class: 'fa fa-ban fa-2x disable'
+                  = link_to ' ',disable_path(question.id, active_tab: t('common.active_tab.all'), active_link: t('administrator.active_link.home')), rel: 'tooltip', title: t('common.links.disable'), class: 'fa fa-ban fa-2x disable'
                 - if !(current_administrator)
                   = link_to ' ',report_path(question.id), rel: 'tooltip', title: t('questions.links.report_abuse'), class: 'fa fa-envelope-o fa-2x'
         = render :partial => 'questions/question_statics',:locals => { :question => question }

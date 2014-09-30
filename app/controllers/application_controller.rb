@@ -19,7 +19,7 @@ class ApplicationController < ActionController::Base
   end
 
   def all_questions
-    Question.where("enabled = ?",true).order("created_at desc")
+    Question.enabled.order("created_at desc")
   end
   
   def user_badge user

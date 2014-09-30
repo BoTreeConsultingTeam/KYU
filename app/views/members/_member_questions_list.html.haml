@@ -11,7 +11,7 @@
         .question-cat
           = render :partial => 'questions/question_tags', :locals => { :object => question}   
           .clearfix
-          = link_to 'javascript:void(0)' do
+          = link_to void_link do
             %span.avatar
               = image_tag @teacher.avatar.url(:medium), alt: t('common.image.alt') ,class: 'img-circle user-thumb-img'
             %span.author-name 

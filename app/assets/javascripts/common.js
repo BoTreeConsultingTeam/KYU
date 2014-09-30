@@ -76,8 +76,13 @@ $( document ).ready(function() {
   });
 
   var document_height = $('.main-content').height();
+  var right_sidebar_height = $('.right-sidebar').height();
+  if (document_height < right_sidebar_height) {
+    document_height = right_sidebar_height;
+  };
   $('.right-sidebar').css('min-height',document_height);
   $('.left-sidebar').css('height',document_height); 
+
 });
 
 function blockUI(){

@@ -3,7 +3,7 @@
   .col-md-8.col-xs-8
     %h3 
       = @question.title
-#question_content.row.question-main-content.question-item{"data-id" => "1728"}
+#question_content.row.question-main-content.question-item
   - if !current_administrator
     .col-md-2.col-xs-2.vote-block
       %ul
@@ -55,14 +55,14 @@
                   = @question.askable.username
               - else
                 = @question.askable.username
-          %span.user-badge{:style => "background-color:#04aad4;"} 
+          %span.user-badge.student-class
             = @question.askable.class
         - else                    
           %span.avatar
             = image_tag @question.askable.avatar.url(:medium), class: 'img-circle user-thumb-img',alt: t('common.image.alt')
           %span.author-name   
             = @question.askable.username
-          %span.user-badge{:style => "background-color:#780978;"} 
+          %span.user-badge.teacher-class
             = @question.askable.class
         %span.question-time
           #{time_ago_in_words(@question.created_at)} ago.
@@ -95,7 +95,7 @@
 / ANSWERS LOOP
 #answers_main_list
   = render 'answers_list', locals: { :answers =>  @answer}
-.row.paginations.home
+.row
   .col-md-12
     .answer-item.answer-pagination
       .spacer20

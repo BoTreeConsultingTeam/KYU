@@ -426,3 +426,10 @@ blockquote {
 .disable {
   padding-right: 5px;
 }
+.question-cat span.user-badge.student-class {
+  background-color: #04aad4;
+
+}
+.question-cat span.user-badge.teacher-class {
+  background-color: #780978;
+}

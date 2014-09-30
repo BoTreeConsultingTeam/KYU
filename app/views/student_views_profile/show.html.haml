@@ -93,7 +93,7 @@
                 .q-lbtm-content
                   .question-cat
                     %span.author-avatar
-                      %img.avatar{alt: "", src: "http://demo.enginethemes.com/qaengine/wp-content/uploads/2014/08/1282.jpg"}
+                      = image_tag answer.answerable.avatar.url(:medium), alt: t('common.image.alt') ,class: 'img-circle user-thumb-img'
                     %span.user-badge
                       - if answer.answerable.badges.last.blank?
 
@@ -215,7 +215,7 @@
                     .clearfix
                     = link_to "javascript:void(0)" do
                       %span.author-avatar
-                        %img.avatar{alt: "", src: "http://demo.enginethemes.com/qaengine/wp-content/uploads/2014/08/1282.jpg"}
+                        = image_tag question.askable.avatar.url(:thumb), alt: t('common.image.alt'), class: 'img-circle user-thumb-img'
                       %span.author-name
                         = question.askable.username
                     %span.user-badge
