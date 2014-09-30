@@ -23,17 +23,17 @@
           %span.star
             %i.fa.fa-star
             %br
-              points
+              = t('questions.captions.points')
       %span
         .col-md-4.col-xs-4
           %p.questions-count.dark-font-color
-            Questions
+            = t('common.links.question')
             %br
               %span 
                 = @student.questions.count
         .col-md-4.col-xs-4
           %p.answers-count.dark-font-color
-            Answers
+            = t('common.links.answers')
             %br
               %span 
                 = @student.answers.count
@@ -41,7 +41,7 @@
         .col-md-4.col-xs-4
         .col-md-4.col-xs-4
           %p.questions-count.dark-font-color
-            Up Votes
+            = t('common.links.up_votes')
             %br
               - if @total_likes == 0 
                 %span 
@@ -51,7 +51,7 @@
                   = @total_likes
         .col-md-4.col-xs-4
           %p.answers-count
-            Down Votes
+            = t('common.links.down_votes')
             %br
               - if @total_dislikes == 0 
                 %span 

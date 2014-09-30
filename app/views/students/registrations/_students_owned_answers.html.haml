@@ -35,19 +35,19 @@
               %li
                 %span.question-views
                   = "#{answer.question.impressionist_count}"
-                views
+                = t('questions.captions.views')
               %li.active
                 %span.question-answers
                   = "#{answer.question.answers.count}"
-                answers
+                = t('questions.captions.answers')
               %li
                 %span.question-upvotes
                   = answer.question.get_upvotes.size
-                Upvotes
+                = t('questions.captions.upvotes')
               %li
                 %span.question-downvotes
                   = answer.question.get_downvotes.size
-                Downvotes  
+                = t('questions.captions.downvotes')
     - else
       .col-md-3
       .col-md-6
@@ -55,6 +55,6 @@
         %h3
           -if !(current_user == @student)
             = @student.username
-            has not answered any Question
+            = t('answers.basic.teacher_not_answered')
           - else
-            You have not answered any Question
+            = t('answers.basic.user_not_answered')
