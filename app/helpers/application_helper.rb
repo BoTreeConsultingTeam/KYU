@@ -2,6 +2,10 @@ module ApplicationHelper
   SALUTATIONS = %w[Mr Ms Mrs]
   PAGE_FILTERS = %w[student teacher basicinfo questions answers votes badges tags alltags allbadges]
   QUESTIONS_TAB = %w[all newest]
+  TAB_FOR_USERS = ["basicinfo", "questions", "answers", "bookmarks", "tags", "badges", "reports", "Students", "Teachers",  "Managers",  "Students+for+Review", "Blocked+Students"]
+  TAB_FOR_QUESTIONS = ["all", "newest", "week", "month", "most_viewed", "most_voted", "un_answered"]
+
+
   def render_css_class(name)
     css_class = ''
     msg_icon_class = ''
@@ -81,19 +85,6 @@ module ApplicationHelper
     student_signed_in? || teacher_signed_in?
   end  
 
-  def active_pill(time=nil)
-    css_class = ''
-    filter_status = params[:time]
-    if time.present? && filter_status.present? && filter_status == time
-      css_class = 'active'
-    elsif time.blank? && filter_status.present? && !REGISTRATION_STATUSES.include?(filter_status)
-      css_class = 'active'
-    elsif time.blank? && filter_status.blank?
-      css_class = 'active'
-    end
-    css_class
-  end
-
   def profile_active_tab(active_tab=nil)
     css_class = ''
     active_tab_param = params[:active_tab]
@@ -109,7 +100,16 @@ module ApplicationHelper
 
   def menu_active_tab(active_tab_menu)
     css_class = ''
-    active_tab_menu_param = params[:active_tab_menu]
+    active_tab_in_url = request.original_fullpath.split('=')[1..-1].first
+    if TAB_FOR_USERS.include?active_tab_in_url
+      active_tab_menu_param = 'members'
+    elsif TAB_FOR_QUESTIONS.include?active_tab_in_url
+      active_tab_menu_param = 'all'
+    elsif active_tab_in_url =="alltags"
+      active_tab_menu_param = 'alltags'
+    elsif active_tab_in_url == "allbadges"
+      active_tab_menu_param = 'allbadges'
+    end  
     if active_tab_menu.present? && active_tab_menu_param.present? && active_tab_menu_param == active_tab_menu
       css_class = 'current-menu-item'
     elsif active_tab_menu.blank? && active_tab_menu_param.present? && !PAGE_FILTERS.include?(active_tab_menu_param)

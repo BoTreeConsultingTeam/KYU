@@ -10,14 +10,14 @@
             %i.fa.fa-question-circle>
             = t('header_navigation.questions')
         %li.fa-tags.menu-item.menu-item-type-post_type.menu-item-object-page{ class: "#{menu_active_tab('alltags')}"}
-          = link_to tags_path(active_tab: 'alltags'), class: "#{menu_active_tab('alltags')}"do
+          = link_to tags_path(active_tab: 'alltags') do
             %i.fa.fa-tags>
             = t('header_navigation.tags')
         %li.fa-users.menu-item.menu-item-type-post_type.menu-item-object-page{ class: "#{menu_active_tab('members')}"}
-          = link_to members_path(active_tab: 'Students'), class: "#{menu_active_tab('students')}" do
+          = link_to members_path(active_tab: 'Students') do
             %i.fa.fa-users>
             = t('header_navigation.users')
         %li.fa-users.menu-item.menu-item-type-post_type.menu-item-object-page{ class: "#{menu_active_tab('allbadges')}"}
-          = link_to badges_path(active_tab: 'allbadges'), class: "#{menu_active_tab('allbadges')}" do
+          = link_to badges_path(active_tab: 'allbadges') do
             %i.fa.fa-trophy>
             = t('header_navigation.badges')

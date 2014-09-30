@@ -3,7 +3,6 @@ class MembersController < ApplicationController
   before_action :user_signed_in?
   
   def index
-    params[:active_tab_menu] = 'members'
     if params[:active_tab] == 'Students'
       @students = Student.all.page(params[:page]).per(Settings.pagination.per_page_5)
     elsif params[:active_tab] == 'Teachers'
