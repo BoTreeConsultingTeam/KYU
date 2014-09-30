@@ -29,7 +29,6 @@ class Students::RegistrationsController <  Devise::RegistrationsController
   end
 
   def view_profile
-    params[:active_link] = 'profile'
     @student = Student.find(params[:id])
     @badges = @student.badges
     @rules = Rule.all
@@ -42,6 +41,10 @@ class Students::RegistrationsController <  Devise::RegistrationsController
     @answers_likes_count  =  @student.answers.map{|question|question.get_likes.count}.inject{|sum,val|sum+val}
     @total_likes = @questions_likes_count.to_i + @answers_likes_count.to_i
     @total_dislikes = @questions_dislikes_count.to_i + @answers_dislikes_count.to_i
+    respond_to do |format| 
+      format.html
+      format.js
+    end
   end
 
   def update

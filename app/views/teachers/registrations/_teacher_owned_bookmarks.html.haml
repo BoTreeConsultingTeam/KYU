@@ -1,0 +1,9 @@
+- question_list = bookmark_question_ids @teacher
+- if !(question_list.blank?)
+  = render :partial => 'questions/questions_list', :locals => { questions: question_list}
+- else
+  .col-md-3
+  .col-md-6
+    .spacer25
+    %h3
+      No Questions are Bookmarked

@@ -30,6 +30,10 @@ class Teachers::RegistrationsController <  Devise::RegistrationsController
     if !@answers_likes_count.nil?
       @total_answers_votes = @answers_dislikes_count + @answers_likes_count
     end
+    respond_to do |format| 
+      format.html
+      format.js
+    end
   end
   
   def update 
