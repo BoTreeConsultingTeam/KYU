@@ -15,7 +15,7 @@
         .spacer25
         %h3
           -if !(current_user == @student)
-            = student.username
-            has not tagged any Question
+            = @student.username
+            = t('questions.captions.no_questions_tagged')
           - else
-            You have not tagged any Question
+            = t('questions.captions.no_questions_tagged_by_you')

@@ -10,7 +10,7 @@
         .spacer25
         %h3
           -if !(current_user == @student)
-            = student.username
-            has not earned any Badge
+            = @student.username
+            = t('badges.message.not_earned_any_badge')
           - else
-            You have not earned any Badge
+            = t('badges.message.you_not_earned_any_badge')

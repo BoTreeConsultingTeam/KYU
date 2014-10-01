@@ -2,6 +2,7 @@ class QuestionsController < ApplicationController
   before_action :user_signed_in?
   before_filter :tag_list, only: [:new, :edit, :create]
   before_filter :question_find_by_id, only: [:show, :destroy, :edit, :update, :vote, :disable, :abuse_report, :enable]
+  before_action -> (user = @question.askable) { require_permission user }, only: [:edit, :destroy]
   before_filter :standard_list, only: [:new,:create,:edit]
   before_filter :is_current_administrator, only: [:new, :create]
 
@@ -114,7 +115,6 @@ class QuestionsController < ApplicationController
   def enable 
     @question.update_attributes(enabled: true)
     give_points(@question, Point.action_score(7))
-
     redirect_to disabled_questions_path
   end
 
@@ -164,7 +164,7 @@ class QuestionsController < ApplicationController
         @questions = Question.highest_voted.enabled.page params[:page]
       when t('common.active_tab.newest')
         @questions = Question.newest(current_user).enabled.page params[:page]
-      end
+    end
   end
 
   def question_params

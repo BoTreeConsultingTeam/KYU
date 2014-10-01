@@ -64,7 +64,7 @@ module ApplicationHelper
   def most_used_tags
     @tags = Question.tag_counts_on(:tags).limit(Settings.tags.most_used_tags_limit).order('count desc')
   end
-  
+
   def edit_user_registration_path
     edit_user_registration_path = current_student.present? ? edit_student_registration_path(current_student.id) : edit_teacher_registration_path(current_teacher.id)
   end
@@ -75,11 +75,11 @@ module ApplicationHelper
 
   def user_signed_in
     student_signed_in? || teacher_signed_in? || administrator_signed_in?
-  end  
+  end
 
   def teacher_student_signed_in
     student_signed_in? || teacher_signed_in?
-  end  
+  end
 
   def active_pill(time=nil)
     css_class = ''
@@ -143,19 +143,27 @@ module ApplicationHelper
       css_class
   end
 
-  def list_of_users(user_type_tab,user)  
+  def list_of_users(user_type_tab,user)
     if !(user.blank?)
       case user_type_tab
       when "Teachers"
         render partial: 'members/teacher_member',locals: {teachers: user}
-      when 'Students','Managers','Students for Review','Blocked Students'  
+      when 'Students','Managers','Students for Review','Blocked Students'
         render partial: 'members/student_member',locals: {students: user}
-      end  
-    else 
+      end
+    else
       render partial: 'members/blank_messages',locals: {type: user_type_tab}
-    end 
-  end 
+    end
+  end
 
+  def set_user_image image_path
+    if image_path.present? && File.exist?(image_path)
+      image_path
+    else
+      image_path = 'missing.jpeg'
+    end
+  end
+  
   def void_link
     'javascript:void(0);'
   end

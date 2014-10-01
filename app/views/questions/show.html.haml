@@ -48,7 +48,7 @@
         - if @question.askable_type != 'Teacher'
           = link_to student_views_profile_path(@question.askable.id,user: 'Student') do
             %span.avatar
-              = image_tag @question.askable.avatar.url(:medium), class: 'img-circle user-thumb-img', alt: t('common.image.alt')
+              = image_tag "#{set_user_image(@question.askable.avatar.path)}", alt: t('common.image.alt'), class: 'img-circle user-thumb-img'
             %span.author-name                
               - if @question.askable.student_manager?
                 .student_manager{rel: "tooltip",title: t('students.tooltip.manager')} 
@@ -59,7 +59,7 @@
             = @question.askable.class
         - else                    
           %span.avatar
-            = image_tag @question.askable.avatar.url(:medium), class: 'img-circle user-thumb-img',alt: t('common.image.alt')
+            = image_tag "#{set_user_image(@question.askable.avatar.path)}", alt: t('common.image.alt'), class: 'img-circle user-thumb-img' 
           %span.author-name   
             = @question.askable.username
           %span.user-badge.teacher-class
