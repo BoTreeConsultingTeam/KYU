@@ -2,6 +2,7 @@ class QuestionsController < ApplicationController
   before_action :user_signed_in?
   before_filter :tag_list, only: [:new, :edit, :create]
   before_filter :question_find_by_id, only: [:show, :destroy, :edit, :update, :vote, :disable, :abuse_report, :enable]
+  before_action -> (user = @question.askable) { require_permission user }, only: [:edit, :destroy]
   before_filter :standard_list, only: [:new,:create,:edit]
   before_filter :is_current_administrator, only: [:new, :create]
 
@@ -170,21 +171,21 @@ class QuestionsController < ApplicationController
   
   def active_tab(active_tab_params)
     case active_tab_params
-      when 'all'
+      when t('common.active_tab.all')
         @questions = all_questions.page params[:page]  
-      when 'week'
+      when t('common.active_tab.week')
         @questions = Question.recent_data_week.enabled.page params[:page]
-      when 'month'
+      when t('common.active_tab.month')
         @questions = Question.recent_data_month.enabled.page params[:page]
-      when 'un_answered'
+      when t('common.active_tab.un_answered')
         @questions = Kaminari.paginate_array(Question.enabled.find_all_by_id(un_answered_questions).reverse).page params[:page]
-      when 'most_viewed'
+      when t('common.active_tab.most_viewed')
         @questions = Question.most_viwed_question.enabled.page params[:page]
-      when 'most_voted'
+      when t('common.active_tab.most_voted')
         @questions = Question.highest_voted.enabled.page params[:page]
-      when 'newest'
+      when t('common.active_tab.newest')
         @questions = Question.newest(current_user).enabled.page params[:page]
-      end
+    end
   end
 
   def question_params
@@ -233,5 +234,24 @@ class QuestionsController < ApplicationController
   
   def received_keyword
     params[:keyword].gsub(/\s+/, "")
+  end
+
+  def standard_list
+    @standards = Standard.all
+  end
+
+  def already_upvoted
+    @question.get_likes.map{|vote| vote.voter}.include?current_user
+  end
+
+  def already_downvoted
+    @question.get_dislikes.map{|vote| vote.voter}.include?current_user
+  end
+
+  def is_current_administrator
+    if current_administrator
+      flash[:error] = t('answers.messages.unauthorized')
+      redirect_to members_path(active_tab: 'Students')
+    end
   end
 end

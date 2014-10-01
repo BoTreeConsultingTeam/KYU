@@ -15,7 +15,7 @@
               - if question.askable_type != 'Teacher'
                 = link_to student_views_profile_path(question.askable.id,user: 'Student') do
                   %span.avatar
-                    = image_tag question.askable.avatar.url(:thumb), alt: t('common.image.alt'), class: 'img-circle user-thumb-img'
+                    = image_tag "#{set_user_image(question.askable.avatar.path)}", alt: t('common.image.alt'), class: 'img-circle user-thumb-img' 
                   %span.author-name                     
                     - if question.askable.student_manager?
                       .student_manager{rel: "tooltip",title: t('students.tooltip.manager')} 
@@ -26,7 +26,7 @@
                   = question.askable.class
               - else 
                 %span.avatar
-                  = image_tag question.askable.avatar.url(:thumb), alt: t('common.image.alt'), class: 'img-circle user-thumb-img'
+                  = image_tag "#{set_user_image(question.askable.avatar.path)}", alt: t('common.image.alt'), class: 'img-circle user-thumb-img' 
                 %span.author-name
                   = question.askable.username
                 %span.user-badge.teacher-class
@@ -42,5 +42,5 @@
                   = link_to ' ',report_path(question.id), remote: true, rel: 'tooltip', title: t('questions.links.report_abuse'), class: 'fa fa-envelope-o fa-2x report_abuse'
         = render :partial => 'questions/question_statics',:locals => { :question => question }
 .row
-  .col-xs-12
+  .col-md-12
     = paginate questions

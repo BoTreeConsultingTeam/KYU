@@ -1,6 +1,7 @@
 en:
   questions:
     captions:
+      points: 'points'
       views: 'views'
       answers: 'answers'
       upvotes: 'upvotes'
@@ -9,6 +10,8 @@ en:
       no_questions_bookmarked: 'No Questions are Bookmarked'
       teacher_asks_no_questions: 'has not asked any Question'
       no_questions_asked_by_user: 'You have not asked any Question'
+      no_questions_tagged: 'has not tagged any Question'
+      no_questions_tagged_by_you: 'You have not tagged any Question'
     messages:
       question_not_found: 'No such Question found for Delete!'
       delete_success: 'Deleted Successfuly!'
@@ -114,6 +117,8 @@ en:
       badge_update_success: 'Badge updated'
       badge_destroy_success: 'Badge destroy'
       badge_destroy_fail: 'Badge not destroy'
+      not_earned_any_badge: 'has not earned any Badge'
+      you_not_earned_any_badge: 'You have not earned any Badge'
   points:
     message: 
       update_success: 'Points Updated '
@@ -167,6 +172,8 @@ en:
       disable: 'Disable'
       enable: 'Enable'
       edit: 'Edit'
+      up_votes: 'Up Votes'
+      down_votes: 'Down Votes'
       delete_link: 'Delete'
       delete:
         confirm: 'Are you sure?'
@@ -252,11 +259,11 @@ en:
         update: 'No such Answer found for Update!'
         destroy: 'No such Answer found for delete!'
         comment: 'no such Answer found for Comment!'
-        vote: 'No such Answer found for Vote!'
-        accept: 'No such Answer found for Accept!'
+        vote: 'No such answer found for vote!'
+        accept: 'No such answer found for accept!'
       comment:
-        edit: 'No such Comment found for Edit!'
-        update: 'no such Comment found for Update!'
+        edit: 'No such comment found for edit!'
+        update: 'No such comment found for update!'
         destroy:
       report:
         no_record: 'No Record Found'
@@ -265,9 +272,9 @@ en:
     success:
       question:
         update: 'Question successfully updated!'
-        destroy: 'Question Successfuly Deleted!'
+        destroy: 'Question successfuly deleted!'
         comment:
-        report_abuse: 'Report Abuse mail successfully sent!'
+        report_abuse: 'report abuse mail successfully sent!'
       answer:
         update: 'Answer Successfully Updated.'
         destroy: 'Answer successfully Deleted.'
