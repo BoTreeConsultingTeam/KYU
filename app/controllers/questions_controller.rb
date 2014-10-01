@@ -124,7 +124,6 @@ class QuestionsController < ApplicationController
       format.html
       format.js
     end
-    # redirect_to disabled_questions_path
   end
 
   def disable
@@ -134,7 +133,6 @@ class QuestionsController < ApplicationController
       @question.enabled = false
       if @question.save
         give_points(@question, Point.action_score(8))
-        @questions = all_questions
       end
     end
     redirect_to questions_path
@@ -143,7 +141,6 @@ class QuestionsController < ApplicationController
   def abuse_report
     @rule = set_rule 5
     if check_permission current_user,@rule
-      @question = question_find_by_id
       if @question.nil?
         flash.now[:error] =  t('flash_message.error.question.report_abuse') 
       else
