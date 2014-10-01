@@ -94,6 +94,10 @@ $( document ).ready(function() {
     blockUI();
   });
 
+  $('body').on('click', 'a.disable, a.enable, a.report_abuse, a.delete-disabled-question', function() { 
+    blockUI();
+  });
+
   var document_height = $('.main-content').height();
   var right_sidebar_height = $('.right-sidebar').height();
   if (document_height < right_sidebar_height) {

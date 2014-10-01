@@ -6,9 +6,6 @@
           .q-ltop-content
             = link_to  question.title, question_path(question),class: 'question-title', 'data-no-turbolink' => true
           .q-lbtm-content
-            / .question-excerpt
-            /   %p
-            /     = raw(question.content)
             .question-cat
               %ul.question-tags
                 - question.tags.each do |tag|
@@ -38,12 +35,12 @@
                 #{time_ago_in_words(question.created_at)} ago. 
               %span.question_link
                 - if current_student.present? && current_student.student_manager?
-                  = link_to ' ',disable_path(question.id, active_tab: "#{t('common.active_tab.all')}", active_link: "#{t('administrator.active_link.home')}"), rel: 'tooltip', title: t('common.links.disable'), class: 'fa fa-ban fa-2x disable '
+                  = link_to ' ',disable_path(question.id), remote: true, rel: 'tooltip', title: t('common.links.disable'), class: 'fa fa-ban fa-2x disable'
                 - else
-                  = link_to ' ',disable_path(question.id, active_tab: t('common.active_tab.all'), active_link: t('administrator.active_link.home')), rel: 'tooltip', title: t('common.links.disable'), class: 'fa fa-ban fa-2x disable'
+                  = link_to ' ',disable_path(question.id), remote: true, rel: 'tooltip', title: t('common.links.disable'), class: 'fa fa-ban fa-2x disable'
                 - if !(current_administrator)
-                  = link_to ' ',report_path(question.id), rel: 'tooltip', title: t('questions.links.report_abuse'), class: 'fa fa-envelope-o fa-2x'
+                  = link_to ' ',report_path(question.id), remote: true, rel: 'tooltip', title: t('questions.links.report_abuse'), class: 'fa fa-envelope-o fa-2x report_abuse'
         = render :partial => 'questions/question_statics',:locals => { :question => question }
 .row
-  .col-md-12
+  .col-xs-12
     = paginate questions

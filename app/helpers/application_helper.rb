@@ -24,16 +24,16 @@ module ApplicationHelper
   end
 
   def set_link(title, active_tab)
-    link_to title, questions_path(active_tab: "#{active_tab}", active_link: t('administrator.active_link.home'), active_tab_menu: t('common.active_tab.all')),{'data-no-turbolink' => true, class: profile_active_tab("#{active_tab}"), remote: true}
+    link_to title, questions_path(active_tab: "#{active_tab}", active_link: t('administrator.active_link.home'), active_tab_menu: t('common.active_tab.all')),{'data-no-turbolink' => true, class: "questions_filter_link filter_link", remote: true}
   end
 
   def set_header_link_for_admin(users_type)
-    link_to users_type, members_path(active_tab: users_type), {class: profile_active_tab("#{users_type}"), remote: true}
+    link_to users_type, members_path(active_tab: users_type), {class: 'user_filter_link user_link', remote: true}
   end
 
   def student_badge_color(badge_name)
     if badge_name.blank?
-      css_class = "user-badge"
+      css_class = "user-badge" 
     elsif badge_name == "train"
       css_class = "user-badge-train"
     elsif badge_name == "Reviewer"
@@ -112,7 +112,7 @@ module ApplicationHelper
 
   def menu_active_tab(active_tab_menu)
     css_class = ''
-    if params[:active_tab_menu].nil?
+    if params[:active_tab_menu].nil? && params[:active_link].nil?
       params[:active_tab_menu] = t('common.active_tab.all')
     end
     active_tab_menu_param = params[:active_tab_menu]
@@ -128,7 +128,7 @@ module ApplicationHelper
 
   def profile_active_link(active_link)
     css_class = ''
-    if params[:active_link].nil? 
+    if params[:active_link].nil? && params[:active_tab_menu].nil?
       params[:active_link] = t('administrator.active_link.disabled_question')
     end
     

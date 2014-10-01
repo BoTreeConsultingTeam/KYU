@@ -25,15 +25,23 @@ class QuestionsController < ApplicationController
   end
 
   def new
+    @standards = Standard.all
+    if !(current_administrator)
       @question = Question.new
+      @question.user_id = session[:id]
+    else
+      flash[:error] = t('answers.messages.unauthorized')
+      redirect_to members_path(active_tab: 'Students')
+    end
   end
 
   def create
+    @standards = Standard.all
     if !current_administrator
       @question = Question.new(question_params.merge({askable: current_user}).except!(:tag_list))
       current_user.tag( @question, :with => question_params[:tag_list], :on => :tags )
       if @question.save && current_student
-        current_student.change_points(Point.action_score(1))
+          current_student.change_points(Point.action_score(1))
         redirect_to questions_path
       else
         flash.now[:error] = t('questions.messages.create')
@@ -65,9 +73,13 @@ class QuestionsController < ApplicationController
       flash[:notice] = "#{title}  #{t('flash_message.success.question.destroy')}"
     end
     if current_administrator.present?
-      redirect_to disabled_questions_path
+      @questions = disabled_questions
+      respond_to do |format|
+        format.html
+        format.js
+      end
     else
-      redirect_to students_path
+      redirect_to questions_path
     end
   end
 
@@ -114,8 +126,12 @@ class QuestionsController < ApplicationController
   def enable 
     @question.update_attributes(enabled: true)
     give_points(@question, Point.action_score(7))
-
-    redirect_to disabled_questions_path
+    @questions = disabled_questions
+    respond_to do |format| 
+      format.html
+      format.js
+    end
+    # redirect_to disabled_questions_path
   end
 
   def disable
@@ -125,6 +141,7 @@ class QuestionsController < ApplicationController
       @question.enabled = false
       if @question.save
         give_points(@question, Point.action_score(8))
+        @questions = all_questions
       end
     end
     redirect_to questions_path
@@ -133,16 +150,19 @@ class QuestionsController < ApplicationController
   def abuse_report
     @rule = set_rule 5
     if check_permission current_user,@rule
+      @question = question_find_by_id
       if @question.nil?
-        flash[:error] =  t('flash_message.error.question.report_abuse') 
+        flash.now[:error] =  t('flash_message.error.question.report_abuse') 
       else
         Question.send_question_answer_abuse_report(current_user,@question)
-        flash[:notice] = t('flash_message.success.question.report_abuse')
+        flash.now[:notice] = t('flash_message.success.question.report_abuse')
       end
-      redirect_to questions_path
     else
-      flash[:error] =  t('answers.messages.unauthorized')
-      redirect_to questions_path
+      flash.now[:error] =  t('answers.messages.unauthorized')
+    end
+    respond_to do |format|
+      format.html
+      format.js
     end
   end
 
@@ -150,19 +170,19 @@ class QuestionsController < ApplicationController
   
   def active_tab(active_tab_params)
     case active_tab_params
-      when t('common.active_tab.all')
+      when 'all'
         @questions = all_questions.page params[:page]  
-      when t('common.active_tab.week')
+      when 'week'
         @questions = Question.recent_data_week.enabled.page params[:page]
-      when t('common.active_tab.month')
+      when 'month'
         @questions = Question.recent_data_month.enabled.page params[:page]
-      when t('common.active_tab.un_answered')
+      when 'un_answered'
         @questions = Kaminari.paginate_array(Question.enabled.find_all_by_id(un_answered_questions).reverse).page params[:page]
-      when t('common.active_tab.most_viewed')
+      when 'most_viewed'
         @questions = Question.most_viwed_question.enabled.page params[:page]
-      when t('common.active_tab.most_voted')
+      when 'most_voted'
         @questions = Question.highest_voted.enabled.page params[:page]
-      when t('common.active_tab.newest')
+      when 'newest'
         @questions = Question.newest(current_user).enabled.page params[:page]
       end
   end
@@ -213,26 +233,5 @@ class QuestionsController < ApplicationController
   
   def received_keyword
     params[:keyword].gsub(/\s+/, "")
-  end
-
-  def standard_list
-    @standards = Standard.all
-  end
-
-  def already_upvoted
-    @question.get_likes.map{|vote| vote.voter}.include?current_user
-  end
-
-  def already_downvoted
-    @question.get_dislikes.map{|vote| vote.voter}.include?current_user
-  end
-
-  def is_current_administrator
-    if !current_administrator
-      return true
-    else
-      flash[:error] = t('answers.messages.unauthorized')
-      redirect_to members_path(active_tab: 'Students')
-    end
   end
 end
