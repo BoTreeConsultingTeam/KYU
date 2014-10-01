@@ -44,8 +44,14 @@ class ApplicationController < ActionController::Base
     end
   end
   
+  def require_permission user
+    if current_user != user
+      flash[:error] = 'You are not authorized for this action'
+      redirect_to questions_path 
+    end
+  end
+
   def user_profile_update user
-    
     account_update_params = devise_parameter_sanitizer.sanitize(:account_update)
     if account_update_params[:password].blank?
       account_update_params.delete("password")

@@ -2,6 +2,7 @@ class QuestionsController < ApplicationController
   before_action :user_signed_in?
   before_filter :tag_list, only: [:new, :edit, :create]
   before_filter :question_find_by_id, only: [:show, :destroy, :edit, :update]
+  before_action -> (user = @question.askable) { require_permission user }, only: [:edit, :destroy]
 
   def index
     if received_tag
@@ -80,7 +81,6 @@ class QuestionsController < ApplicationController
 
   def vote
     @rule = set_rule 1
-    
     if check_permission current_user,@rule
       @question = question_find_by_id
       if question_find_by_id.nil?
@@ -107,8 +107,7 @@ class QuestionsController < ApplicationController
   end
   
   def edit
-    @standards = Standard.all
-    @standards = Standard.all
+    @standards = Standard.all 
     if question_find_by_id.nil?
       redirect_to questions_path(active_tab: 'all'),flash: { error: t('flash_message.error.question.edit') }
     end
@@ -129,7 +128,6 @@ class QuestionsController < ApplicationController
     @question = Question.find_by_id(params[:id])
     @question.update_attributes(enabled: true)
     give_points(@question, Point.action_score(7))
-
     redirect_to disabled_questions_path
   end
 
@@ -181,7 +179,7 @@ class QuestionsController < ApplicationController
         @questions = Question.highest_voted.enabled.page params[:page]
       when 'newest'
         @questions = Question.newest(current_user).enabled.page params[:page]
-      end
+    end
   end
 
   def question_params
