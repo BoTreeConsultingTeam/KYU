@@ -5,18 +5,18 @@
     .col-md-8.col-xs-8
       .header-menu    
         %ul
-          %li
-            = link_to t('header_navigation.home'), questions_path(active_link: 'home'), class: "#{profile_active_link('home')}"  
+          / %li
+          /   = link_to t('header_navigation.home'), questions_path(active_tab: 'all',active_link: 'home'), class: "#{profile_active_link('home')}"  
           - if student_signed_in?
             %li
-              = link_to t('header_navigation.profile'), student_views_profile_path(current_user, active_link: 'profile'), class: "#{profile_active_link('profile')}"
+              = link_to t('header_navigation.profile'), student_views_profile_path(current_user, active_tab: 'basicinfo', active_link: 'profile'), class: "#{profile_active_link('profile')}"
             %li
               = link_to t('header_navigation.logout'), destroy_student_session_path, method: :delete
           - if teacher_signed_in?
             %li
               = link_to t('header_navigation.report'), reports_path(active_link: 'report'), class: "#{profile_active_link('report')}"
             %li
-              = link_to t('header_navigation.profile'), teacher_views_profile_path(current_user, active_link: 'profile'),class: "#{profile_active_link('profile')}", id: 'teacher_profile'
+              = link_to t('header_navigation.profile'), teacher_views_profile_path(current_user, active_link: 'profile', active_tab: 'basicinfo'), class: "#{profile_active_link('profile')}"
             %li
               = link_to t('header_navigation.logout'), destroy_teacher_session_path, method: :delete
           - if administrator_signed_in?
@@ -28,12 +28,21 @@
               = link_to t('header_navigation.logout'), destroy_teacher_session_path, method: :delete
     .col-md-2.col-xs-2.btn-group.header-avatar
       %span.expand
-        %span.display_name
-        - if student_signed_in?
-          = link_to student_views_profile_path(current_user) do
-            = "Welcome #{current_student.username.titleize}"
-        - if teacher_signed_in?
-          = link_to teacher_views_profile_path(current_user) do
-            = "Welcome #{current_teacher.username}"
-        - if administrator_signed_in?
-          = "Welcome #{current_administrator.email}"
+        = link_to void_link do
+          %span.avatar
+            %img.avatar
+          %span.display_name
+          - if student_signed_in?
+            = link_to student_views_profile_path(current_user) do
+              = "Welcome #{current_student.username.titleize}"
+          - if teacher_signed_in?
+            = link_to teacher_views_profile_path(current_user) do
+              = "Welcome #{current_teacher.username}"
+          - if administrator_signed_in?
+            = "Welcome #{current_administrator.email}"
+      / .header-search-wrapper#que-search
+      /   %form#header_search
+      /     %input{:autocomplete => "off", :name => "search", :placeholder => "Enter Keywords", :type => "text", :value => "" , id: 'search'}/ 
+      /     %i.fa.fa-search
+      /   .search-preview#search_preview
+      /     %span.i-preview

@@ -1,5 +1,11 @@
 class Students::SessionsController <  Devise::SessionsController
   before_filter :student_authorize, only: [:create]
+  before_filter :current_user_present?, only:[:new]
+
+  def new
+    super
+  end
+
   def destroy
     super
   end 

@@ -24,11 +24,11 @@ module ApplicationHelper
   end
 
   def set_link(title, active_tab)
-    link_to title, questions_path(active_tab: "#{active_tab}"),{'data-no-turbolink' => true, class: 'questions_filter_link filter_link', remote: true}
+    link_to title, questions_path(active_tab: "#{active_tab}", active_link: t('administrator.active_link.home'), active_tab_menu: t('common.active_tab.all')),{'data-no-turbolink' => true, class: profile_active_tab("#{active_tab}"), remote: true}
   end
 
   def set_header_link_for_admin(users_type)
-    link_to users_type, members_path(active_tab: users_type), {class: 'user_filter_link user_link', remote: true}
+    link_to users_type, members_path(active_tab: users_type), {class: profile_active_tab("#{users_type}"), remote: true}
   end
 
   def student_badge_color(badge_name)
@@ -96,6 +96,9 @@ module ApplicationHelper
 
   def profile_active_tab(active_tab=nil)
     css_class = ''
+    if params[:active_tab].nil?
+      params[:active_tab] = t('common.active_tab.all')
+    end
     active_tab_param = params[:active_tab]
     if active_tab.present? && active_tab_param.present? && active_tab_param == active_tab
       css_class = 'active'
@@ -109,6 +112,9 @@ module ApplicationHelper
 
   def menu_active_tab(active_tab_menu)
     css_class = ''
+    if params[:active_tab_menu].nil?
+      params[:active_tab_menu] = t('common.active_tab.all')
+    end
     active_tab_menu_param = params[:active_tab_menu]
     if active_tab_menu.present? && active_tab_menu_param.present? && active_tab_menu_param == active_tab_menu
       css_class = 'current-menu-item'
@@ -122,6 +128,10 @@ module ApplicationHelper
 
   def profile_active_link(active_link)
     css_class = ''
+    if params[:active_link].nil? 
+      params[:active_link] = t('administrator.active_link.disabled_question')
+    end
+    
     active_link_param = params[:active_link]
     if active_link.present? && active_link_param.present? && active_link_param == active_link
       css_class = 'active_link'
@@ -152,5 +162,9 @@ module ApplicationHelper
     else
       image_path = 'missing.jpeg'
     end
+  end
+  
+  def void_link
+    'javascript:void(0);'
   end
 end

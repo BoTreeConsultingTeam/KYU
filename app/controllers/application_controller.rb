@@ -12,8 +12,14 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def current_user_present?
+    if !current_user.nil?
+      redirect_to questions_path(active_tab: t('common.active_tab.all'))
+    end
+  end
+
   def all_questions
-    Question.where("enabled = ?",true).order("created_at desc")
+    Question.enabled.order("created_at desc")
   end
   
   def user_badge user
