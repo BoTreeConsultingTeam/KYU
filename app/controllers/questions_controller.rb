@@ -3,8 +3,8 @@ class QuestionsController < ApplicationController
   before_filter :tag_list, only: [:new, :edit, :create]
   before_filter :question_find_by_id, only: [:show, :destroy, :edit, :update, :vote, :disable, :abuse_report, :enable]
   before_action -> (user = @question.askable) { require_permission user }, only: [:edit, :destroy]
-  before_filter :standard_list, only: [:new,:create,:edit]
-  before_filter :is_current_administrator, only: [:new, :create]
+  before_filter :standard_list, only: [:new, :create, :edit, :update]
+  before_filter :is_current_administrator, only: [:new, :create, :edit ]
 
   def index
     if received_tag
@@ -26,18 +26,10 @@ class QuestionsController < ApplicationController
   end
 
   def new
-    @standards = Standard.all
-    if !(current_administrator)
-      @question = Question.new
-      @question.user_id = session[:id]
-    else
-      flash[:error] = t('answers.messages.unauthorized')
-      redirect_to members_path(active_tab: 'Students')
-    end
+    @question = Question.new
   end
 
   def create
-    @standards = Standard.all
     if !current_administrator
       @question = Question.new(question_params.merge({askable: current_user}).except!(:tag_list))
       current_user.tag( @question, :with => question_params[:tag_list], :on => :tags )
