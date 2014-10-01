@@ -1,5 +1,3 @@
-
-/ END HEADER
 #header_sidebar.col-md-12.col-xs-12
 = render 'layouts/left_sidebar'
 .col-md-8.main-content
@@ -7,7 +5,9 @@
   .row.user-statistic.highlight
     .col-md-5.col-xs-5.user-info
       %span.avatar-80
-        = image_tag @student.avatar.url(:medium), alt: t('common.image.alt') ,class: 'img-circle'
+        = @student
+        - if File.exists?(@student.avatar.url)
+          = image_tag @student.avatar.url, alt: t('common.image.alt'), class: 'img-circle profile-img' 
       %ul
         %li.name
           = @student.username

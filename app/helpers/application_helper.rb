@@ -24,11 +24,11 @@ module ApplicationHelper
   end
 
   def set_link(title, active_tab)
-    link_to title, questions_path(active_tab: "#{active_tab}", active_link: t('administrator.active_link.home'), active_tab_menu: t('common.active_tab.all')),{'data-no-turbolink' => true, class: profile_active_tab("#{active_tab}"), remote: true}
+    link_to title, questions_path(active_tab: "#{active_tab}", active_link: t('administrator.active_link.home'), active_tab_menu: t('common.active_tab.all')),{'data-no-turbolink' => true, class: 'questions_filter_link filter_link', remote: true}
   end
 
   def set_header_link_for_admin(users_type)
-    link_to users_type, members_path(active_tab: users_type), {class: profile_active_tab("#{users_type}"), remote: true}
+    link_to users_type, members_path(active_tab: users_type), {class: 'questions_filter_link filter_link', remote: true}
   end
 
   def student_badge_color(badge_name)
@@ -157,9 +157,9 @@ module ApplicationHelper
   end
 
   def set_user_image image_path
-    if image_path.present? && File.exist?(image_path)
+    if File.exists?(image_path)
       image_path
-    else
+    else  
       image_path = 'missing.jpeg'
     end
   end

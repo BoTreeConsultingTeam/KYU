@@ -42,6 +42,7 @@ Rails.application.routes.draw do
   get '/members' => 'members#index'
   get '/members/:id' => 'members#show', as: :member
   get '/members/select_students_manager/:id' => 'members#select_students_manager',as: :select_students_manager
+  get '/members/remove_students_manager/:id' => 'members#remove_students_manager',as: :remove_students_manager
   get 'members/deactivate/:id', to: 'members#deactivate', as: :deactivate
   get 'members/mark_review/:id', to: 'members#mark_review', as: :markreview
   get 'members/unmark_student_review/:id',to: 'members#unmark_student_review',as: :unmark_student_review

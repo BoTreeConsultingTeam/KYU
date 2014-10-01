@@ -2,7 +2,10 @@
 .row.user-statistic.highlight
   .col-md-5.col-xs-5.user-info
     %span.avatar
-      = image_tag "#{set_user_image(@student.avatar.path)}", alt: t('common.image.alt'), class: 'img-circle profile-img' 
+      - if File.exists? @student.avatar.path
+        = image_tag "#{@student.avatar.url}", alt: 'this', class: 'img-circle profile-img' 
+      - else
+        = image_tag "missing.jpeg", alt: 'this', class: 'img-circle profile-img' 
     %ul
       %li.name 
         = @student.username
