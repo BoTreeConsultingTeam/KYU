@@ -293,6 +293,7 @@ en:
     logout: 'Logout'
     profile: 'Profile'
     report: 'Report'
+    badges: 'Badges'
     disabled_question: 'Disabled Question'
   right_side_bar:
     questions: 'Questions'

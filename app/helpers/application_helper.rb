@@ -157,9 +157,9 @@ module ApplicationHelper
   end
 
   def set_user_image image_path
-    if image_path.present? && File.exist?(image_path)
+    if File.exists?(image_path)
       image_path
-    else
+    else  
       image_path = 'missing.jpeg'
     end
   end
