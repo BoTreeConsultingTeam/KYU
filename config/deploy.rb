@@ -4,8 +4,7 @@ require "rvm/capistrano"
 server "104.131.111.55", :web, :app, :db, primary: true
 
 set :application, "kyu"
-set :user, "kyu"
-set :port, 22
+set :user, "root"
 set :deploy_to, "/home/#{user}/#{application}"
 set :deploy_via, :remote_cache
 set :use_sudo, false
@@ -13,7 +12,7 @@ set :use_sudo, false
 set :scm, "git"
 set :repository, "git@github.com:BoTreeConsultingTeam/KYU.git"
 set :branch, "development_phase_1_pull_requests"
-
+set :rvm_type, :system
 
 default_run_options[:pty] = true
 ssh_options[:forward_agent] = true
