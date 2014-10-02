@@ -139,13 +139,13 @@ module ApplicationHelper
       css_class
   end
 
-  def list_of_users(user_type_tab,user)
+  def list_of_users(user_type_tab,user, all_students)
     if !(user.blank?)
       case user_type_tab
       when "Teachers"
         render partial: 'members/teacher_member',locals: {teachers: user}
       when 'Students','Managers','Students for Review','Blocked Students'
-        render partial: 'members/student_member',locals: {students: user}
+        render partial: 'members/student_member',locals: {students: user, all_students: all_students}
       end
     else
       render partial: 'members/blank_messages',locals: {type: user_type_tab}

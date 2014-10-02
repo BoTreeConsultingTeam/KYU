@@ -3,19 +3,19 @@
   - students.each do |student|
     %li.user-item.col-md-4.col-xs-6
       %span.user-avatar
-        - if File.exists? student.avatar.path
-          = image_tag "#{set_user_image(student.avatar.path)}", alt: t('common.image.alt'), class: 'img-circle user-thumb-img' 
+        - if File.exists? student.avatar.url 
+          = image_tag "#{student.avatar.path}", alt: t('common.image.alt'), class: 'img-circle user-thumb-img' 
         - else
           = image_tag "missing.jpeg", alt: 'this', class: 'img-circle user-thumb-img'
       .left-info
         %span.display_name 
           = link_to student.username,  student_views_profile_path(student,active_tab: 'basicinfo')
           - if current_teacher.present?
-            - if students.student_manager_selected? < 2
+            - if all_students.student_manager_selected? < 2
               - if !(student.student_manager)
                 = link_to t('teachers.basic.student_manager'),select_students_manager_path(student.id), class: 'pull-right'
           -if student.student_manager
-            - if administrator_signed_in? 
+            - if teacher_signed_in? 
               = link_to remove_students_manager_path(student), rel: "tooltip", title: t('students.tooltip.manager') do 
                 %i.fa.fa-user.fa-fw.action.pull-right
             - else

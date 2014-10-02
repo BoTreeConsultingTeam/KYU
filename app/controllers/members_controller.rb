@@ -14,6 +14,7 @@ class MembersController < ApplicationController
     elsif params[:active_tab] == 'Blocked Students'
       @students = Kaminari.paginate_array(Student.where("enable = ?",false)).page(params[:page]).per(Settings.pagination.per_page_5)
     else
+      @all_students = Student.all
       @students = Student.all.page(params[:page]).per(Settings.pagination.per_page_5)
     end
     respond_to do |format| 
@@ -86,7 +87,7 @@ class MembersController < ApplicationController
   def remove_students_manager
     @student.update_attributes(student_manager: false)
     if @student.save      
-      flash[:notice] = 'Successfully removed sm'
+      flash[:notice] = 'Successfully removed'
     else
       flash[:error] = t('flash_message.error.student.manager')
     end
