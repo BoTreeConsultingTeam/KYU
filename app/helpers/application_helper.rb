@@ -112,9 +112,7 @@ module ApplicationHelper
 
   def menu_active_tab(active_tab_menu)
     css_class = ''
-    if params[:active_tab_menu].nil? && params[:active_link].nil?
-      params[:active_tab_menu] = t('common.active_tab.all')
-    end
+    
     active_tab_menu_param = params[:active_tab_menu]
     if active_tab_menu.present? && active_tab_menu_param.present? && active_tab_menu_param == active_tab_menu
       css_class = 'current-menu-item'
@@ -128,9 +126,7 @@ module ApplicationHelper
 
   def profile_active_link(active_link)
     css_class = ''
-    if params[:active_link].nil? && params[:active_tab_menu].nil?
-      params[:active_link] = t('administrator.active_link.disabled_question')
-    end
+   
     
     active_link_param = params[:active_link]
     if active_link.present? && active_link_param.present? && active_link_param == active_link
