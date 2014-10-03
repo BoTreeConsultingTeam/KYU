@@ -113,10 +113,10 @@ module ApplicationHelper
 
   def profile_active_link(active_link)
     css_class = ''
-    if params[:active_link].nil? 
+    if params[:active_link].nil?
       params[:active_link] = t('administrator.active_link.disabled_question')
     end
-    
+
     active_link_param = params[:active_link]
     if active_link.present? && active_link_param.present? && active_link_param == active_link
       css_class = 'active_link'
@@ -142,13 +142,13 @@ module ApplicationHelper
   end
 
   def set_user_image image_path
-    if File.exists?(image_path)
+    if image_path.present? && File.exists?(image_path)
       image_path
-    else  
+    else
       image_path = 'missing.jpeg'
     end
   end
-  
+
   def void_link
     'javascript:void(0);'
   end
