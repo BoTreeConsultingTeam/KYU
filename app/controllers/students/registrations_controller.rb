@@ -2,7 +2,8 @@ class Students::RegistrationsController <  Devise::RegistrationsController
    before_filter :configure_permitted_parameters, if: :devise_controller?
    before_action :user_signed_in?, only:[:index,:view_profile,:update]
    before_filter :standard_list, only: [:new,:edit,:view_profile,:update,:create]
-   before_action :set_student, only: [:view_profile]
+   before_filter :current_user_present?, only:[:new]
+   
   def new
     super
   end
@@ -30,22 +31,22 @@ class Students::RegistrationsController <  Devise::RegistrationsController
   end
 
   def view_profile
+    @student = Student.find(params[:id])
+    @badges = @student.badges
+    @rules = Rule.all
+    @answers = @student.answers
+    @questions = @student.questions.page params[:page]
+    @tags = @student.owned_tags.page params[:page]
     @questions_likes_count  =  @student.questions.map{|question|question.get_likes.count}.inject{|sum,val|sum+val}
     @questions_dislikes_count  =  @student.questions.map{|question|question.get_dislikes.count}.inject{|sum,val|sum+val}
     @answers_dislikes_count  =  @student.answers.map{|question|question.get_dislikes.count}.inject{|sum,val|sum+val}
     @answers_likes_count  =  @student.answers.map{|question|question.get_likes.count}.inject{|sum,val|sum+val}
     @total_likes = @questions_likes_count.to_i + @answers_likes_count.to_i
     @total_dislikes = @questions_dislikes_count.to_i + @answers_dislikes_count.to_i
-
-
-    @question_ids_strong_area = @student.questions.map {|obj| obj.id}
-    @chart_for_all_strong_area = map_array_for_chart(@question_ids_strong_area,0,"Student's all Strong Area")
-    @chart_for_top_3_strong_area = map_array_for_chart(@question_ids_strong_area,1,"Student's top 3 Strong Area")
-
-    @accepted_answers = @student.answers.accepted_answers
-    @question_ids_weak_area = @accepted_answers.map {|obj| obj.question_id}
-    @chart_for_all_weak_area = map_array_for_chart(@question_ids_weak_area,0,"Student's all Weak Area")
-    @chart_for_top_3_weak_area = map_array_for_chart(@question_ids_weak_area,1,"Student's top 3 Weak Area")
+    respond_to do |format| 
+      format.html
+      format.js
+    end
   end
 
   def update

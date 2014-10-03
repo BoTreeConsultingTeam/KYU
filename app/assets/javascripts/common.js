@@ -1,5 +1,7 @@
 $( document ).ready(function() {
   $(".i-preview").hide(); 
+  $('#basic_info').addClass('active');
+  $('#default_link').addClass('active');
   $('.toggleLink').click(function(){
     $("#comment" + this.id).slideToggle();
   });
@@ -22,8 +24,8 @@ $( document ).ready(function() {
         $('#colorSelector div').css('backgroundColor', '#' + hex);
       }
     });
- 
   });
+  
   $("#search").keyup(function() {
     $('#search_preview').empty();
     $('.i-preview').hide();
@@ -56,6 +58,7 @@ $( document ).ready(function() {
       });
     };
   });
+
   if ($.trim($('i-preview').html()) == '') { $("#search_preview").hide(); }
   $(document).mouseup(function (e){
     var container = $(".i-preview");
@@ -68,31 +71,38 @@ $( document ).ready(function() {
 
   $('a.vote, input#comment-box').on('click', function() { 
     blockUI();
+
+  });
+  $('.profile_link').on('click', function(){
+    $('.user_tab').removeClass("active");
+    blockUI();
+    $(this).addClass('active');
+  });
+  $('.questions_filter_link').on('click', function(){
+    $('.filter_link').removeClass("active");
+    blockUI();
+    $(this).addClass('active');
+  });
+
+  $('.user_filter_link').on('click', function(){
+    $('.user_link').removeClass("active");
+    blockUI();
+    $(this).addClass('active');
   });
 
   $('body').on('click', 'a.delete-comment', function() { 
     blockUI();
   });
 
-
-/*  var document_height = $('.main-content').height();
+  var document_height = $('.main-content').height();
+  var right_sidebar_height = $('.right-sidebar').height();
+  if (document_height < right_sidebar_height) {
+    document_height = right_sidebar_height;
+  };
   $('.right-sidebar').css('min-height',document_height);
-  $('.left-sidebar').css('min-height',document_height);
-*/
-  var chart_height = 530 
-  var document_height = $(document).height();
-  if(window.location.href.indexOf("reports") > -1) {
-     $('.right-sidebar').css('min-height',document_height + chart_height);
-    $('.left-sidebar').css('min-height',document_height + chart_height);
-  }
-  else{
-    $('.right-sidebar').css('min-height',document_height);
-    $('.left-sidebar').css('min-height',document_height);
-  }
+  $('.left-sidebar').css('height',document_height); 
 
-  
 });
-
 
 function blockUI(){
 	$.blockUI({ css: { 

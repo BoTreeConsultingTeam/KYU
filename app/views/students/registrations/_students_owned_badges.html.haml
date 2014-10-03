@@ -1,0 +1,16 @@
+.main-questions-list
+  %ul#main_questions_list
+    - if !(@badges.last.blank?)
+      .single-head
+        .col-md-12.badge-content
+          = render '/badges/badge_list'
+    -else
+      .col-md-3
+      .col-md-6
+        .spacer25
+        %h3
+          -if !(current_user == @student)
+            = @student.username
+            = t('badges.message.not_earned_any_badge')
+          - else
+            = t('badges.message.you_not_earned_any_badge')

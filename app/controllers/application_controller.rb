@@ -12,8 +12,14 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def current_user_present?
+    if !current_user.nil?
+      redirect_to questions_path(active_tab: t('common.active_tab.all'))
+    end
+  end
+
   def all_questions
-    Question.where("enabled = ?",true).order("created_at desc")
+    Question.enabled.order("created_at desc")
   end
   
   def user_badge user
@@ -44,8 +50,14 @@ class ApplicationController < ActionController::Base
     end
   end
   
+  def require_permission user
+    if current_user != user
+      flash[:error] = 'You are not authorized for this action'
+      redirect_to questions_path 
+    end
+  end
+
   def user_profile_update user
-    
     account_update_params = devise_parameter_sanitizer.sanitize(:account_update)
     if account_update_params[:password].blank?
       account_update_params.delete("password")

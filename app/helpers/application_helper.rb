@@ -25,11 +25,11 @@ module ApplicationHelper
   end
 
   def set_link(title, active_tab)
-    link_to title, questions_path(:active_tab => "#{active_tab}"),{'data-no-turbolink' => true,class: profile_active_tab("#{active_tab}")}
+    link_to title, questions_path(active_tab: "#{active_tab}", active_link: t('administrator.active_link.home'), active_tab_menu: t('common.active_tab.all')),{'data-no-turbolink' => true, class: 'questions_filter_link filter_link', remote: true}
   end
 
   def set_header_link_for_admin(users_type)
-    link_to users_type, members_path(active_tab: users_type), {class: profile_active_tab("#{users_type}")}
+    link_to users_type, members_path(active_tab: users_type), {class: 'questions_filter_link filter_link', remote: true}
   end
 
   def student_badge_color(badge_name)
@@ -65,7 +65,7 @@ module ApplicationHelper
   def most_used_tags
     @tags = Question.tag_counts_on(:tags).limit(Settings.tags.most_used_tags_limit).order('count desc')
   end
-  
+
   def edit_user_registration_path
     edit_user_registration_path = current_student.present? ? edit_student_registration_path(current_student.id) : edit_teacher_registration_path(current_teacher.id)
   end
@@ -76,14 +76,17 @@ module ApplicationHelper
 
   def user_signed_in
     student_signed_in? || teacher_signed_in? || administrator_signed_in?
-  end  
+  end
 
   def teacher_student_signed_in
     student_signed_in? || teacher_signed_in?
-  end  
+  end
 
   def profile_active_tab(active_tab=nil)
     css_class = ''
+    if params[:active_tab].nil?
+      params[:active_tab] = t('common.active_tab.all')
+    end
     active_tab_param = params[:active_tab]
     if active_tab.present? && active_tab_param.present? && active_tab_param == active_tab
       css_class = 'active'
@@ -96,25 +99,11 @@ module ApplicationHelper
   end
 
   def menu_active_tab(active_tab_menu)
-    css_class = '' 
-    current_controller = params[:controller]
-    puts ("#{current_controller}")
-    case current_controller
-    when "questions"
-      active_tab_menu_param = 'active_questions'
-    when "members" 
-      active_tab_menu_param = 'active_users'
-    when "students/registrations" 
-      active_tab_menu_param = 'active_users'
-    when "teachers/registrations"
-      active_tab_menu_param = 'active_users'
-    when "tags"
-      active_tab_menu_param = 'active_tags'
-    when "badges" 
-      active_tab_menu_param = 'active_badges'
-    when "points" 
-      active_tab_menu_param = 'active_badges'  
-    end 
+    css_class = ''
+    if params[:active_tab_menu].nil?
+      params[:active_tab_menu] = t('common.active_tab.all')
+    end
+    active_tab_menu_param = params[:active_tab_menu]
     if active_tab_menu.present? && active_tab_menu_param.present? && active_tab_menu_param == active_tab_menu
       css_class = 'current-menu-item'
     elsif active_tab_menu.blank? && active_tab_menu_param.present? && !PAGE_FILTERS.include?(active_tab_menu_param)
@@ -127,6 +116,10 @@ module ApplicationHelper
 
   def profile_active_link(active_link)
     css_class = ''
+    if params[:active_link].nil? 
+      params[:active_link] = t('administrator.active_link.disabled_question')
+    end
+    
     active_link_param = params[:active_link]
     if active_link.present? && active_link_param.present? && active_link_param == active_link
       css_class = 'active_link'
@@ -138,38 +131,28 @@ module ApplicationHelper
       css_class
   end
 
-  def list_of_users(user_type_tab,user)  
+  def list_of_users(user_type_tab,user)
     if !(user.blank?)
       case user_type_tab
       when "Teachers"
         render partial: 'members/teacher_member',locals: {teachers: user}
-      when 'Students','Managers','Students for Review','Blocked Students'  
+      when 'Students','Managers','Students for Review','Blocked Students'
         render partial: 'members/student_member',locals: {students: user}
-      end  
-    else 
+      end
+    else
       render partial: 'members/blank_messages',locals: {type: user_type_tab}
-    end 
-  end 
-
-  def set_current_controller_for_active_sidebar_tab
-    current_controller = params[:controller]
-    puts ("#{current_controller}")
-    case current_controller
-    when "questions"
-      'active_questions'
-    when "members" 
-      'active_users'
-    when "students/registrations" 
-      'active_users'
-    when "teachers/registrations"
-      'active_users'
-    when "tags"
-      'active_tags'
-    when "badges" 
-      'active_badges'
-    when "points" 
-      'active_badges'  
     end
   end
 
+  def set_user_image image_path
+    if File.exists?(image_path)
+      image_path
+    else  
+      image_path = 'missing.jpeg'
+    end
+  end
+  
+  def void_link
+    'javascript:void(0);'
+  end
 end

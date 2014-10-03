@@ -20,8 +20,8 @@
             - @questions.each do |question|
               %tr
                 %td 
-                  = question.title
+                  = link_to  question.title, question_path(question),class: 'question-title', 'data-no-turbolink' => true
                 %td.text-center
-                  = link_to '', enable_path(question),rel: 'tooltip',title: t('common.links.enable'), class: 'fa fa-check'
+                  = link_to '', enable_path(question), rel: 'tooltip', title: t('common.links.enable'), class: 'fa fa-check'
                   |
-                  = link_to '', question_path(question), method: :delete, data: {confirm: t('common.links.delete.confirm')},rel: 'tooltip',title: t('common.links.delete_link'), class: 'fa fa-trash-o'
+                  = link_to '', question_path(question), method: :delete, data: { confirm: t('common.links.delete.confirm')}, rel: 'tooltip', title: t('common.links.delete_link'), class: 'fa fa-trash-o'

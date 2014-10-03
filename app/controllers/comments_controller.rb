@@ -1,7 +1,8 @@
 class CommentsController < ApplicationController
 
   before_action :user_signed_in?
-
+  before_filter :comment_find_by_id, only: [:edit, :update, :destroy]
+  before_action -> (user = @comment.commentable) { require_permission user }, only: [:edit, :destroy]
   def create 
     @rule = set_rule 4
     if check_permission current_user,@rule 
@@ -25,7 +26,7 @@ class CommentsController < ApplicationController
   end
 
   def update
-    comment_find_by_id
+    
     if !(@comment.nil?)
       @comment.update(comment_params)
       flash[:notice] = t('flash_message.success.comment.update')
@@ -54,7 +55,6 @@ class CommentsController < ApplicationController
     if params[:question_id]
       @question = Question.find_by_id(params[:question_id])
       @answers = @question.answers
-      comment_find_by_id
       if @comment.nil?
         redirect_to question_path(params[:question_id]),flash: { error: t('flash_message.error.comment.edit') }
       else
@@ -73,8 +73,7 @@ class CommentsController < ApplicationController
   end    
 
   def destroy
-    @comment = comment_find_by_id
-    if !(comment_find_by_id.nil?)
+    if !(@comment.nil?)
       @comment.delete
       if params[:answer_id].present?
         @answer = find_by_answer_id(params[:answer_id])

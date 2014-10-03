@@ -1,0 +1,11 @@
+- if params[:active_tab] == "answers"
+  $('.teacher_profile').html("#{escape_javascript(render('teacher_owned_answers'))}")
+- elsif params[:active_tab] == "edit_profile"
+  $('.teacher_profile').html("#{escape_javascript(render('form'))}")
+- elsif params[:active_tab] == "questions"
+  $('.teacher_profile').html("#{escape_javascript(render('teacher_owned_questions'))}")
+- elsif params[:active_tab] == "bookmarks"
+  $('.teacher_profile').html("#{escape_javascript(render('teacher_owned_bookmarks'))}")
+- else 
+  $('.teacher_profile').html("#{escape_javascript(render('teacher_basic_profile'))}")
+$.unblockUI();

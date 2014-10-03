@@ -1,0 +1,14 @@
+.main-questions-list    
+  %ul#main_questions_list
+    - if !(@questions.nil?)
+      = render :partial => 'questions/questions_list', :locals => { questions: @questions}
+    - else
+      .col-md-3
+      .col-md-6
+        .spacer25
+        %h3
+          -if !(current_user == @student)
+            = @student.username
+            = t('questions.captions.teacher_asks_no_questions')
+          - else
+            = t('questions.captions.no_questions_asked_by_user')

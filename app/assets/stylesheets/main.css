@@ -484,7 +484,7 @@ a.login-url {
 .widget-hot-questions ul li {
 	margin-bottom: 10px;
 	min-height: 35px;
-	overflow: hidden;
+	word-wrap: break-word;
 }
 .widget-hot-questions ul li a {
 	text-decoration: none;

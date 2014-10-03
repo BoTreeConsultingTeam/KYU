@@ -5,9 +5,9 @@
       = raw(answer_comment.comment)
     .comment-owner
     - if answer_comment.commentable_type == 'Teacher'
-      = link_to " -  #{answer_comment.commentable.username}","##{answer.id}"   
+      = link_to " -  #{answer_comment.commentable.username}", void_link  
     - else
-      = link_to " -  #{answer_comment.commentable.username}",student_views_profile_path(answer_comment.commentable,user: 'Student')   
+      = link_to " -  #{answer_comment.commentable.username}", student_views_profile_path(answer_comment.commentable,user: 'Student')   
     - if answer_comment.is_author?(current_user)
       = ' - '
       =link_to '',edit_answer_comment_path(answer.id,answer_comment.id), rel: 'tooltip', title: t('common.links.edit'), class: 'fa fa-pencil','data-no-turbolink' => true

@@ -2,168 +2,38 @@
 .row.user-statistic.highlight
   .col-md-5.col-xs-5.user-info
     %span.avatar
-      = image_tag @teacher.avatar.url(:medium), alt: t('common.image.alt') ,class: 'img-circle profile-img'    
+      = image_tag "#{set_user_image(@teacher.avatar.path)}", alt: t('common.image.alt'), class: 'img-circle profile-img' 
     %ul
       %li.name 
         = @teacher.username
   .col-md-7.col-xs-7.user-post-count
     .row
       .col-md-4.col-xs-4
-        %p.questions-count
+        %p.questions-count.dark-font-color
           Questions
           %br
             %span 
               = @teacher.questions.count
       .col-md-4.col-xs-4
-        %p.answers-count
+        %p.answers-count.dark-font-color
           Answers
           %br
             %span 
               = @teacher.answers.count
 / END USER-STATISTIC
 .row.question-filter
-  - if ( @teacher == current_user )
-    .col-md-12.sort-questions
-      %ul
+  .col-md-12.sort-questions
+    %ul
+      - if ( @teacher == current_user )
         %li
-          = link_to t('common.links.edit_your_info'), teacher_views_profile_path(@teacher.id,active_tab:'edit_profile'),class: "#{profile_active_tab('edit_profile')}"
-        %li
-          = link_to t('common.links.basic_info'), teacher_views_profile_path(@teacher.id, active_tab:'basicinfo'), class: "#{profile_active_tab('basicinfo')}"
-        %li
-          = link_to t('common.links.question'), teacher_views_profile_path(@teacher.id, active_tab: t('students.active_tab.questions')), class: "#{profile_active_tab(t('students.active_tab.questions'))}"
-        %li
-          = link_to t('common.links.answers'), teacher_views_profile_path(@teacher.id, active_tab: t('students.active_tab.answers')), class: "#{profile_active_tab(t('students.active_tab.answers'))}"
-        %li
-          = link_to t('common.links.bookmarks'), teacher_views_profile_path(@teacher.id, active_tab: t('students.active_tab.bookmarks')), class: "#{profile_active_tab(t('students.active_tab.bookmarks'))}"
-  - else
-    .col-md-12.sort-questions
-      %ul
-        %li
-          = link_to t('common.links.basic_info'), teacher_views_profile_path(@teacher.id, active_tab: t('students.active_tab.basic_info')), class: "#{profile_active_tab(t('students.active_tab.basic_info'))}"
-        %li
-          = link_to t('common.links.question'), teacher_views_profile_path(@teacher.id, active_tab: t('students.active_tab.questions')), class: "#{profile_active_tab(t('students.active_tab.questions'))}"
-        %li
-          = link_to t('common.links.answers'), teacher_views_profile_path(@teacher.id, active_tab: t('students.active_tab.answers')), class: "#{profile_active_tab(t('students.active_tab.answers'))}"
-        %li
-          = link_to t('common.links.bookmarks'), teacher_views_profile_path(@teacher.id, active_tab: t('students.active_tab.bookmarks')), class: "#{profile_active_tab(t('students.active_tab.bookmarks'))}"
-/ END QUESTIONS-FILTER
-
-- if params[:active_tab] == "answers"
-  .main-questions-list
-    %ul#main_questions_list
-      -if !(@answers.blank?)
-        = render :partial => 'members/member_answers_list', locals: { answers: @answers}
-      - else
-        .col-md-3
-        .col-md-6
-          .spacer25
-          %h3
-            -if !(current_user == @teacher)
-              = @teacher.username
-              has not answered any Question
-            - else
-              You have not answered any Question
-- elsif params[:active_tab] == "edit-profile"
-  = render 'form'
-
-- elsif params[:active_tab] == "basicinfo"
-  .modal-submit-questions
-    .modal-dialog
-      .modal-body
-        = form_for(resource, :as => resource_name, :url => teacher_registration_path) do |f|
-          %br
-          = f.label t('common.captions.user_name')
-          = f.text_field :username,class: 'form-control', disabled: true
-          %br
-          = f.label t('common.captions.qualification')
-          = f.text_field :qualification, class: 'form-control'
-          %br
-          = f.label t('common.captions.email')
-          = f.email_field :email, :autofocus => true,class: 'form-control', disabled: true
-          %br/
-
-- elsif params[:active_tab] == "bookmarks"
-  - question_list = bookmark_question_ids @teacher
-  - if !(question_list.blank?)
-    = render :partial => 'questions/questions_list', :locals => { questions: question_list}
-  - else
-    .col-md-3
-    .col-md-6
-      .spacer25
-      %h3
-        No Questions are Bookmarked
-    
-- elsif params[:active_tab] == "edit_profile"
-  = render 'form'
-- elsif params[:active_tab] == "votes"
-  .main-questions-list
-    %ul#main_questions_list
-      - if !(@questions.blank?)
-        .row.select-category
-          .col-md-12.col-xs-12
-            .spacer20
-            %table.table.table-bordered.table-striped
-              %thead
-                %tr.success
-                  %th.text-center
-                  %th.text-center
-                    Up Votes Count
-                  %th.text-center
-                    Down Votes Count
-                  %th.text-center
-                    Total Count
-              %tbody
-                %tr
-                  %td.text-center
-                    Questions
-                  %td.text-center
-                    = @total_upvotes_question
-                  %td.text-center
-                    = @total_downvotes_question
-                  %td.text-center
-                    = @questions.count
-                %tr
-                  %td.text-center
-                    Answers
-                  %td.text-center
-                    = @total_upvotes_answer
-                  %td.text-center
-                    = @total_downvotes_answer
-                  %td.text-center
-                    = @answers.count
-      -else
-        .spacer50
-        .col-md-2
-        .col-md-6.col-xs-12
-          %h4
-            You haven't got any votes!!!
-- elsif params[:active_tab] == "questions"
-  - if !(@teacher.questions.blank?)
-    = render partial: 'questions/questions_list', locals: {questions: @questions}
-  - else
-    .col-md-3
-    .col-md-6
-      .spacer25
-      %h3
-        -if !(current_user == @teacher)
-          = @teacher.username
-          has not asked any Question
-        - else
-          You have not asked any Question
-- else
-  .modal-submit-questions
-    .modal-dialog
-      .modal-body
-        = form_for(resource, :as => resource_name, :url => student_registration_path) do |f|
-          %br
-          = f.label t('common.captions.user_name')
-          = f.text_field :username,class: 'form-control', disabled: true
-          %br
-          = f.label t('common.captions.qualification')
-          = f.text_field :qualification,class: 'form-control date-picker', id: 'datepicker1', disabled: true
-          %br
-          = f.label t('common.captions.email')
-          = f.email_field :email, :autofocus => true,class: 'form-control', disabled: true
-          %br/
-
-.row.paginations.home
+          = link_to t('common.links.edit_your_info'), teacher_views_profile_path(@teacher.id,active_tab:'edit_profile'),remote: true, class: "user_tab profile_link"
+      %li
+        = link_to t('common.links.basic_info'), teacher_views_profile_path(@teacher.id, active_tab: t('students.active_tab.basic_info')), remote: true, class: "#{profile_active_tab(t('students.active_tab.basic_info'))} user_tab profile_link", id: 'basic_info'
+      %li
+        = link_to t('common.links.question'), teacher_views_profile_path(@teacher.id, active_tab: t('students.active_tab.questions')), remote: true, class: "user_tab profile_link"
+      %li
+        = link_to t('common.links.answers'), teacher_views_profile_path(@teacher.id, active_tab: t('students.active_tab.answers')), remote: true, class: "user_tab profile_link"
+      %li
+        = link_to t('common.links.bookmarks'), teacher_views_profile_path(@teacher.id, active_tab: t('students.active_tab.bookmarks')), remote: true, class: "user_tab profile_link"
+%div.teacher_profile
+  = render partial: 'teacher_basic_profile', locals: { resource: resource}
