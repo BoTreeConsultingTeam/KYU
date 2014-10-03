@@ -11,7 +11,7 @@
         = @student.username
   .col-md-7.col-xs-7.user-post-count
     .row
-      .col-md-4.col-xs-4.question-cat
+      .col-md-4.col-xs-5.question-cat
         - if @student.badges.last.blank?
           %span.user-badge
         - else
@@ -28,21 +28,23 @@
             %br
               = t('questions.captions.points')
       %span
-        .col-md-4.col-xs-4
+        .col-md-4.col-xs-6
           %p.questions-count.dark-font-color
             = t('common.links.question')
             %br
               %span 
                 = @student.questions.count
-        .col-md-4.col-xs-4
+        .col-xs-1.user-related-count
+        .col-md-4.col-xs-6
           %p.answers-count.dark-font-color
             = t('common.links.answers')
             %br
               %span 
                 = @student.answers.count
         .single-head
-        .col-md-4.col-xs-4
-        .col-md-4.col-xs-4
+        .col-md-4
+        .col-md-4.col-xs-5
+          .user-related-count
           %p.questions-count.dark-font-color
             = t('common.links.up_votes')
             %br
@@ -52,7 +54,8 @@
               - else 
                 %span 
                   = @total_likes
-        .col-md-4.col-xs-4
+        .col-xs-1.user-related-count
+        .col-md-4.col-xs-6
           %p.answers-count
             = t('common.links.down_votes')
             %br

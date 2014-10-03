@@ -33,8 +33,10 @@ class QuestionsController < ApplicationController
     if !current_administrator
       @question = Question.new(question_params.merge({askable: current_user}).except!(:tag_list))
       current_user.tag( @question, :with => question_params[:tag_list], :on => :tags )
-      if @question.save && current_student
+      if @question.save
+        if current_student
           current_student.change_points(Point.action_score(1))
+        end
         redirect_to questions_path
       else
         flash.now[:error] = t('questions.messages.create')

@@ -2,7 +2,7 @@
   %ul#main_questions_list
     - questions.each do |question|
       %li.post-1728.question.type-question.status-publish.hentry.question-item{id: "question#{question.id}"}
-        .col-md-8.col-xs-8.q-left-content
+        .col-md-8.col-xs-11.q-left-content
           .q-ltop-content
             = link_to  question.title, question_path(question),class: 'question-title', 'data-no-turbolink' => true
           .q-lbtm-content

@@ -1,9 +1,8 @@
 .col-md-1
 .col-md-11.col-xs-12.comment-list
-  %blockquote
-    .comment-body
-      = raw(question_comment.comment)
-      
+  .comment-body
+    = raw(question_comment.comment)
+  .comment-owner
     - if question_comment.commentable_type == 'Teacher'
       = link_to " -  #{question_comment.commentable.username}", void_link
     - else

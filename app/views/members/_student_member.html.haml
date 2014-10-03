@@ -3,8 +3,8 @@
   - students.each do |student|
     %li.user-item.col-md-4.col-xs-6
       %span.user-avatar
-        - if File.exists? student.avatar.url 
-          = image_tag "#{student.avatar.path}", alt: t('common.image.alt'), class: 'img-circle user-thumb-img' 
+        - if File.exists? student.avatar.path
+          = image_tag student.avatar.url, alt: t('common.image.alt'), class: 'img-circle user-thumb-img' 
         - else
           = image_tag "missing.jpeg", alt: 'this', class: 'img-circle user-thumb-img'
       .left-info
@@ -21,18 +21,18 @@
             - else
               .action.pull-right{rel: "tooltip", title: t('students.tooltip.manager')}
                 %i.fa.fa-user.fa-fw
-          %br/
-          .question-cat
-            - if !student.badges.last.blank?
-              %span.user-badge
-                = render :partial => 'student_badge', :locals => { :object => student}  
-            - else
-              %span
-            %span.points 
-              -if student.points.nil?
-                0 Points
-              - else
-                = "#{student.points} Points"
+      %br/
+      .question-cat
+        - if !student.badges.last.blank?
+          %span.user-badge
+            = render partial: 'student_badge', locals: {object: student}  
+        - else
+          %span
+        %span.points 
+          -if student.points.nil?
+            0 Points
+          - else
+            = "#{student.points} Points"
           - if administrator_signed_in? 
             -if student.enable == true
               = link_to '', deactivate_path(student), rel: "tooltip", title: t('students.links.block'), class: 'fa fa-lock'

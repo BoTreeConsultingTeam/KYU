@@ -4,6 +4,12 @@
     %title= Settings.app_name
     = stylesheet_link_tag 'application', media: 'all'
     = javascript_include_tag 'application'
+    - if is_mobile_device?
+      = javascript_include_tag 'mobile.js'
+      = stylesheet_link_tag 'mobile.css'
+    - else
+      = javascript_include_tag 'common.js'
+      = stylesheet_link_tag 'custom.css'
     = csrf_meta_tags
     %meta{name: 'viewport', content: 'width=device-width, initial-scale=1, maximum-scale=1'}
   %body.archive.author.author-admindemo.author-11.logged-in.cbp-spmenu-push

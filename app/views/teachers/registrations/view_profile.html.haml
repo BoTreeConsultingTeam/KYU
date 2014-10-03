@@ -2,19 +2,22 @@
 .row.user-statistic.highlight
   .col-md-5.col-xs-5.user-info
     %span.avatar
-      = image_tag "#{set_user_image(@teacher.avatar.path)}", alt: t('common.image.alt'), class: 'img-circle profile-img' 
+      - if File.exists? @teacher.avatar.path
+        = image_tag @teacher.avatar.url, alt: t('common.image.alt'), class: 'img-circle profile-img' 
+      - else
+        = image_tag "missing.jpeg", alt: 'this', class: 'img-circle profile-img' 
     %ul
       %li.name 
         = @teacher.username
   .col-md-7.col-xs-7.user-post-count
     .row
-      .col-md-4.col-xs-4
+      .col-md-4.col-xs-6
         %p.questions-count.dark-font-color
           Questions
           %br
             %span 
               = @teacher.questions.count
-      .col-md-4.col-xs-4
+      .col-md-4.col-xs-6
         %p.answers-count.dark-font-color
           Answers
           %br

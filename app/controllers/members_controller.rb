@@ -4,7 +4,6 @@ class MembersController < ApplicationController
   before_action -> (user = current_administrator) { require_permission user }, only: [:edit, :destroy] 
   
   def index
-    params[:active_tab_menu] = 'members'
     if params[:active_tab] == 'Teachers'
       @teachers = Kaminari.paginate_array(Teacher.all).page(params[:page]).per(Settings.pagination.per_page_5)
     elsif params[:active_tab] == 'Managers'
@@ -15,7 +14,7 @@ class MembersController < ApplicationController
       @students = Kaminari.paginate_array(Student.where("enable = ?",false)).page(params[:page]).per(Settings.pagination.per_page_5)
     else
       @all_students = Student.all
-      @students = Student.all.page(params[:page]).per(Settings.pagination.per_page_5)
+      @students = Student.all.page(params[:page]).per(Settings.pagination.per_page_6)
     end
     respond_to do |format| 
       format.html

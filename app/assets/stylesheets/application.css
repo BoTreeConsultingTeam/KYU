@@ -21,6 +21,5 @@
  *= require style
  *= require main
  *= require css
- *= require custom
  *= jquery-ui
  */

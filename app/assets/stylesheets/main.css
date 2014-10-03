@@ -283,7 +283,7 @@ a.login-url {
 /* ---------------------------------------- */
 .left-sidebar {
 	border-right: 1px solid #dadfea;
-	min-height: 800px;
+	min-height: 200px;
 	padding: 0;
 }
 .left-sidebar ul.menu li:before {
