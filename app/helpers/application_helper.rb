@@ -2,6 +2,7 @@ module ApplicationHelper
   SALUTATIONS = %w[Mr Ms Mrs]
   PAGE_FILTERS = %w[student teacher basicinfo questions answers votes badges tags alltags allbadges]
   QUESTIONS_TAB = %w[all newest]
+
   def render_css_class(name)
     css_class = ''
     msg_icon_class = ''
@@ -81,19 +82,6 @@ module ApplicationHelper
     student_signed_in? || teacher_signed_in?
   end
 
-  def active_pill(time=nil)
-    css_class = ''
-    filter_status = params[:time]
-    if time.present? && filter_status.present? && filter_status == time
-      css_class = 'active'
-    elsif time.blank? && filter_status.present? && !REGISTRATION_STATUSES.include?(filter_status)
-      css_class = 'active'
-    elsif time.blank? && filter_status.blank?
-      css_class = 'active'
-    end
-    css_class
-  end
-
   def profile_active_tab(active_tab=nil)
     css_class = ''
     if params[:active_tab].nil?
@@ -112,15 +100,12 @@ module ApplicationHelper
 
   def menu_active_tab(active_tab_menu)
     css_class = ''
-    if params[:active_tab_menu].nil?
-      params[:active_tab_menu] = t('common.active_tab.all')
-    end
-    active_tab_menu_param = params[:active_tab_menu]
-    if active_tab_menu.present? && active_tab_menu_param.present? && active_tab_menu_param == active_tab_menu
+    active_tab_menu_param = params[:controller]
+    if active_tab_menu_param == active_tab_menu
       css_class = 'current-menu-item'
-    elsif active_tab_menu.blank? && active_tab_menu_param.present? && !PAGE_FILTERS.include?(active_tab_menu_param)
+    elsif active_tab_menu_param.match('registrations') && active_tab_menu == "members"
       css_class = 'current-menu-item'
-    elsif active_tab_menu.blank? && active_tab_menu_param.blank?
+    elsif active_tab_menu_param.match('points') && active_tab_menu == "badges"
       css_class = 'current-menu-item'
     end
       css_class
