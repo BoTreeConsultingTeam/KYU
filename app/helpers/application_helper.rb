@@ -2,9 +2,6 @@ module ApplicationHelper
   SALUTATIONS = %w[Mr Ms Mrs]
   PAGE_FILTERS = %w[student teacher basicinfo questions answers votes badges tags alltags allbadges]
   QUESTIONS_TAB = %w[all newest]
-  TAB_FOR_USERS = ["basicinfo", "questions", "answers", "bookmarks", "tags", "badges", "reports", "Students", "Teachers",  "Managers",  "Students+for+Review", "Blocked+Students"]
-  TAB_FOR_QUESTIONS = ["all", "newest", "week", "month", "most_viewed", "most_voted", "un_answered"]
-
 
   def render_css_class(name)
     css_class = ''
@@ -99,8 +96,25 @@ module ApplicationHelper
   end
 
   def menu_active_tab(active_tab_menu)
-    css_class = ''  
-    active_tab_menu_param = set_current_controller_for_active_sidebar_tab
+    css_class = '' 
+    current_controller = params[:controller]
+    puts ("#{current_controller}")
+    case current_controller
+    when "questions"
+      active_tab_menu_param = 'active_questions'
+    when "members" 
+      active_tab_menu_param = 'active_users'
+    when "students/registrations" 
+      active_tab_menu_param = 'active_users'
+    when "teachers/registrations"
+      active_tab_menu_param = 'active_users'
+    when "tags"
+      active_tab_menu_param = 'active_tags'
+    when "badges" 
+      active_tab_menu_param = 'active_badges'
+    when "points" 
+      active_tab_menu_param = 'active_badges'  
+    end 
     if active_tab_menu.present? && active_tab_menu_param.present? && active_tab_menu_param == active_tab_menu
       css_class = 'current-menu-item'
     elsif active_tab_menu.blank? && active_tab_menu_param.present? && !PAGE_FILTERS.include?(active_tab_menu_param)
@@ -139,12 +153,15 @@ module ApplicationHelper
 
   def set_current_controller_for_active_sidebar_tab
     current_controller = params[:controller]
+    puts ("#{current_controller}")
     case current_controller
     when "questions"
       'active_questions'
     when "members" 
       'active_users'
-    when current_controller.match('registrations')
+    when "students/registrations" 
+      'active_users'
+    when "teachers/registrations"
       'active_users'
     when "tags"
       'active_tags'
