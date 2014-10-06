@@ -13,7 +13,7 @@ class QuestionsController < ApplicationController
     elsif received_active_tab
       active_tab(received_active_tab)
     else
-      @questions = Question.all.enabled.page params[:page] 
+      @questions = all_questions.page params[:page] 
     end
     respond_to do |format| 
       format.html

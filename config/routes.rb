@@ -9,12 +9,14 @@ Rails.application.routes.draw do
   devise_scope :student do
     get "/students" => "students/registrations#index"
     get 'student_views_profile/:id' => 'students/registrations#view_profile', as: :student_views_profile
+    get 'students/registrations/divisions_of_standard', to: 'students/registrations#divisions_of_standard', as: :divisions_of_standard
   end
 
   devise_scope :teacher do
     get 'teacher_views_profile/:id' => 'teachers/registrations#view_profile', as: :teacher_views_profile
     get "/teachers" => "teachers/registrations#index"
   end
+
   devise_scope :administrator do
     get "/administrators" => "administrators/sessions#index"
   end
@@ -65,6 +67,6 @@ Rails.application.routes.draw do
   post 'reports/top_3_weak_area', to: 'reports#top_3_weak_area', as: :top_3_weak_area
   post 'reports/top_3_strong_area', to: 'reports#top_3_strong_area', as: :top_3_strong_area
   get 'reports/update_students', to: 'reports#update_students', as: 'update_students'
-
+  get 'reports/divisions_by_standard', to: 'reports#divisions_by_standard', as: :divisions_by_standard
   resources :reports
 end

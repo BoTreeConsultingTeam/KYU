@@ -198,6 +198,7 @@ en:
     captions:
       middle_name: 'Middle Name' 
       class: 'Class'
+      division: 'Division'
     page_header: 
       title_confirmation: 'Resend confirmation instructions'    
     basic:
