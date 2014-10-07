@@ -106,4 +106,11 @@ class ApplicationController < ActionController::Base
         user.change_points(points)    
       end
   end
+
+  def admin_signin?
+    if !current_administrator.present?
+      flash[:error] = t('answers.messages.unauthorized')
+      redirect_to questions_path
+    end
+  end
 end
