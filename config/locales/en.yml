@@ -161,6 +161,7 @@ en:
       question: 'Questions'
       badges: 'Badges'
       votes: 'Votes'
+      reports: 'Reports'
       forgot_password: 'Forgot your password?'
       last_week: 'Last week'
       last_month: 'Last Month'
