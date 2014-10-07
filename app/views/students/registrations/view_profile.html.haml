@@ -2,12 +2,12 @@
 .row.user-statistic.highlight
   .col-md-5.col-xs-5.user-info
     %span.avatar
-      - if File.exists? @student.avatar.path
-        = image_tag "#{@student.avatar.url}", alt: 'this', class: 'img-circle profile-img' 
+      - if @student.avatar.present? && File.exists?(@student.avatar.path)
+        = image_tag "#{@student.avatar.url}", alt: 'this', class: 'img-circle profile-img'
       - else
-        = image_tag "missing.jpeg", alt: 'this', class: 'img-circle profile-img' 
+        = image_tag "missing.jpeg", alt: 'this', class: 'img-circle profile-img'
     %ul
-      %li.name 
+      %li.name
         = @student.username
   .col-md-7.col-xs-7.user-post-count
     .row
@@ -20,7 +20,7 @@
         %br
           %span.points-count
             -if @student.points.nil?
-              0 
+              0
             -else
               = @student.points
           %span.star
@@ -32,13 +32,13 @@
           %p.questions-count.dark-font-color
             = t('common.links.question')
             %br
-              %span 
+              %span
                 = @student.questions.count
         .col-md-4.col-xs-4
           %p.answers-count.dark-font-color
             = t('common.links.answers')
             %br
-              %span 
+              %span
                 = @student.answers.count
         .single-head
         .col-md-4.col-xs-4
@@ -46,21 +46,21 @@
           %p.questions-count.dark-font-color
             = t('common.links.up_votes')
             %br
-              - if @total_likes == 0 
-                %span 
+              - if @total_likes == 0
+                %span
                   0
-              - else 
-                %span 
+              - else
+                %span
                   = @total_likes
         .col-md-4.col-xs-4
           %p.answers-count
             = t('common.links.down_votes')
             %br
-              - if @total_dislikes == 0 
-                %span 
+              - if @total_dislikes == 0
+                %span
                   0
-              - else 
-                %span 
+              - else
+                %span
                   = @total_dislikes
 / END USER-STATISTIC
 .row.question-filter
