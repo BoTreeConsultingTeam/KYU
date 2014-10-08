@@ -1,6 +1,6 @@
 class TagsController < ApplicationController
   before_filter :find_tag_by_id, only: [:edit, :update, :destroy]
-  before_action :admin_signin? only:[:new, :edit, :destroy]
+  before_action :admin_signin?, only:[:new, :edit, :destroy]
 
   # after_filter :tag_redirection, only: [:create, :destroy]
   def index

@@ -39,7 +39,10 @@
           - if answer.answerable_type == 'Student'
             = link_to student_views_profile_path(answer.answerable.id,user: 'Student') do
               %span.author-avatar
-                = image_tag answer.answerable.avatar.url(:medium), alt: t('common.image.alt'), class: 'img-circle user-thumb-img'
+                - if answer.answerable.avatar.present? && File.exists?(answer.answerable.avatar.path)
+                  = image_tag "#{answer.answerable.avatar.url}", alt: 'this', class: 'img-circle user-thumb-img small'
+                - else
+                  = image_tag "missing.jpeg", alt: 'this', class: 'img-circle profile-img'
               %span.author-name                                      
                 - if answer.answerable.student_manager?
                   .student_manager{href: void_link, rel: "tooltip", title: t('students.tooltip.manager')} 
@@ -50,7 +53,10 @@
               = answer.answerable_type
           - else
             %span.author-avatar
-              = image_tag answer.answerable.avatar.url(:medium), alt: t('common.image.alt'), class: 'img-circle user-thumb-img'
+              - if @answer.answerable.avatar.present? && File.exists?(answer.answerable.avatar.path)
+                = image_tag "#{answer.answerable.avatar.url}", alt: 'this', class: 'img-circle user-thumb-img small'
+              - else
+                = image_tag "missing.jpeg", alt: 'this', class: 'img-circle profile-img'
             %span.author-name
               = answer.answerable.username
             %span.user-badge{:style => "background-color:#780978;"} 

@@ -437,3 +437,7 @@ a:focus{
   outline: none !important;
   outline-offset:  0px !important;
 }
+
+.question-cat span.author-avatar img.small {
+  height: 30px !important;
+}
