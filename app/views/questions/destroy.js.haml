@@ -1,0 +1,3 @@
+$('#disabled_questions').html("#{escape_javascript(render('disabled_questions'))}")
+$('#flash_message').html("#{escape_javascript render(:partial=>'shared/flash_messages')}")
+$.unblockUI();

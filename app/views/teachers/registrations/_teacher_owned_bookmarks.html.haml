@@ -1,5 +1,5 @@
 - question_list = bookmark_question_ids @teacher
-- if !(question_list.blank?)
+- if !(question_list.size > 0)
   = render :partial => 'questions/questions_list', :locals => { questions: question_list}
 - else
   .col-md-3

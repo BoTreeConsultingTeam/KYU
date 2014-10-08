@@ -25,16 +25,16 @@ module ApplicationHelper
   end
 
   def set_link(title, active_tab)
-    link_to title, questions_path(active_tab: "#{active_tab}", active_link: t('administrator.active_link.home'), active_tab_menu: t('common.active_tab.all')),{'data-no-turbolink' => true, class: 'questions_filter_link filter_link', remote: true}
+    link_to title, questions_path(active_tab: "#{active_tab}", active_link: t('administrator.active_link.home'), active_tab_menu: t('common.active_tab.all')),{'data-no-turbolink' => true, class: "questions_filter_link filter_link", remote: true}
   end
 
   def set_header_link_for_admin(users_type)
-    link_to users_type, members_path(active_tab: users_type), {class: 'questions_filter_link filter_link', remote: true}
+    link_to users_type, members_path(active_tab: users_type), {class: 'user_filter_link user_link', remote: true}
   end
 
   def student_badge_color(badge_name)
     if badge_name.blank?
-      css_class = "user-badge"
+      css_class = "user-badge" 
     elsif badge_name == "train"
       css_class = "user-badge-train"
     elsif badge_name == "Reviewer"
@@ -100,8 +100,9 @@ module ApplicationHelper
 
   def menu_active_tab(active_tab_menu)
     css_class = ''
-    active_tab_menu_param = params[:controller]
-    if active_tab_menu_param == active_tab_menu
+    
+    active_tab_menu_param = params[:active_tab_menu]
+    if active_tab_menu.present? && active_tab_menu_param.present? && active_tab_menu_param == active_tab_menu
       css_class = 'current-menu-item'
     elsif active_tab_menu_param.match('registrations') && active_tab_menu == "members"
       css_class = 'current-menu-item'
@@ -113,10 +114,8 @@ module ApplicationHelper
 
   def profile_active_link(active_link)
     css_class = ''
-    if params[:active_link].nil?
-      params[:active_link] = t('administrator.active_link.disabled_question')
-    end
-
+   
+    
     active_link_param = params[:active_link]
     if active_link.present? && active_link_param.present? && active_link_param == active_link
       css_class = 'active_link'
@@ -128,13 +127,13 @@ module ApplicationHelper
       css_class
   end
 
-  def list_of_users(user_type_tab,user)
+  def list_of_users(user_type_tab,user, all_students)
     if !(user.blank?)
       case user_type_tab
       when "Teachers"
         render partial: 'members/teacher_member',locals: {teachers: user}
       when 'Students','Managers','Students for Review','Blocked Students'
-        render partial: 'members/student_member',locals: {students: user}
+        render partial: 'members/student_member',locals: {students: user, all_students: all_students}
       end
     else
       render partial: 'members/blank_messages',locals: {type: user_type_tab}

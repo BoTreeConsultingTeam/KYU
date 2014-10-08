@@ -294,7 +294,7 @@ en:
     profile: 'Profile'
     report: 'Report'
     badges: 'Badges'
-    disabled_question: 'Disabled Question'
+    disabled_questions: 'Disabled Questions'
   right_side_bar:
     questions: 'Questions'
     students: 'Students'

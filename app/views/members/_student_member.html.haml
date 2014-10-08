@@ -11,12 +11,12 @@
         %span.display_name
           = link_to student.username,  student_views_profile_path(student,active_tab: 'basicinfo')
           - if current_teacher.present?
-            - if students.student_manager_selected? < 2
+            - if all_students.student_manager_selected? < 2
               - if !(student.student_manager)
                 = link_to t('teachers.basic.student_manager'),select_students_manager_path(student.id), class: 'pull-right'
           -if student.student_manager
-            - if administrator_signed_in?
-              = link_to remove_students_manager_path(student), rel: "tooltip", title: t('students.tooltip.manager') do
+            - if teacher_signed_in? 
+              = link_to remove_students_manager_path(student), rel: "tooltip", title: t('students.tooltip.manager') do 
                 %i.fa.fa-user.fa-fw.action.pull-right
             - else
               .action.pull-right{rel: "tooltip", title: t('students.tooltip.manager')}

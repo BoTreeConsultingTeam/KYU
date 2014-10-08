@@ -21,7 +21,7 @@
               = link_to t('header_navigation.logout'), destroy_teacher_session_path, method: :delete
           - if administrator_signed_in?
             %li
-              = link_to t('header_navigation.disabled_question'), disabled_questions_path(active_link: 'disabled_question'), class: "#{profile_active_link('disabled_question')}"
+              = link_to t('header_navigation.disabled_questions'), disabled_questions_path(active_link: 'disabled_question'), class: "#{profile_active_link('disabled_question')}"
             %li       
               = link_to t('header_navigation.report'), reports_path(active_link: 'report'), class: "#{profile_active_link('report')}"
             %li
