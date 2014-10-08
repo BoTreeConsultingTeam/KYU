@@ -84,9 +84,6 @@ module ApplicationHelper
 
   def profile_active_tab(active_tab=nil)
     css_class = ''
-    if params[:active_tab].nil?
-      params[:active_tab] = t('common.active_tab.all')
-    end
     active_tab_param = params[:active_tab]
     if active_tab.present? && active_tab_param.present? && active_tab_param == active_tab
       css_class = 'active'
@@ -95,7 +92,7 @@ module ApplicationHelper
     elsif active_tab.blank? && active_tab_param.blank?
       css_class = 'active'
     end
-      css_class
+    css_class
   end
 
   def menu_active_tab(active_tab_menu)
@@ -104,18 +101,16 @@ module ApplicationHelper
     active_tab_menu_param = params[:active_tab_menu]
     if active_tab_menu.present? && active_tab_menu_param.present? && active_tab_menu_param == active_tab_menu
       css_class = 'current-menu-item'
-    elsif active_tab_menu_param.match('registrations') && active_tab_menu == "members"
+    elsif active_tab_menu_param.present? && active_tab_menu.blank? && !PAGE_FILTERS.include?(active_tab_param)
       css_class = 'current-menu-item'
-    elsif active_tab_menu_param.match('points') && active_tab_menu == "badges"
+    elsif active_tab_menu_param.present? && active_tab_menu.blank?
       css_class = 'current-menu-item'
     end
-      css_class
+    css_class
   end
 
   def profile_active_link(active_link)
     css_class = ''
-   
-    
     active_link_param = params[:active_link]
     if active_link.present? && active_link_param.present? && active_link_param == active_link
       css_class = 'active_link'
@@ -124,7 +119,7 @@ module ApplicationHelper
     elsif active_link.blank? && active_link_param.blank?
       css_class = 'active_link'
     end
-      css_class
+    css_class
   end
 
   def list_of_users(user_type_tab,user, all_students)

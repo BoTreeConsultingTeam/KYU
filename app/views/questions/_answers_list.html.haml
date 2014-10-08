@@ -53,7 +53,7 @@
               = answer.answerable_type
           - else
             %span.author-avatar
-              - if @answer.answerable.avatar.present? && File.exists?(answer.answerable.avatar.path)
+              - if answer.answerable.avatar.present? && File.exists?(answer.answerable.avatar.path)
                 = image_tag "#{answer.answerable.avatar.url}", alt: 'this', class: 'img-circle user-thumb-img small'
               - else
                 = image_tag "missing.jpeg", alt: 'this', class: 'img-circle profile-img'

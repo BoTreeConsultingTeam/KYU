@@ -3,7 +3,7 @@
   .col-md-12.col-xs-12.sort-questions
     %ul
       %li
-        = link_to t('questions.links.all'), questions_path(:active_tab => 'all'),{'data-no-turbolink' => true, class: 'questions_filter_link filter_link', id: "default_link", remote: true}
+        = link_to t('questions.links.all'), questions_path,{'data-no-turbolink' => true, class: 'questions_filter_link filter_link', id: "default_link", remote: true}
       %li
         = set_link(t('questions.links.newest'),'newest')
       %li

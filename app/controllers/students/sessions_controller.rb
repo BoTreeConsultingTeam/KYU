@@ -11,7 +11,7 @@ class Students::SessionsController <  Devise::SessionsController
   end 
 
   def after_sign_in_path_for(resource)
-  		students_path(active_tab: 'all')
+  		students_path(active_tab_menu: 'all')
   end
 
   private

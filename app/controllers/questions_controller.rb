@@ -2,7 +2,7 @@ class QuestionsController < ApplicationController
   before_action :user_signed_in?
   before_filter :tag_list, only: [:new, :edit, :create]
   before_filter :question_find_by_id, only: [:show, :destroy, :edit, :update, :vote, :disable, :abuse_report, :enable]
-  before_action -> (user = @question.askable) { require_permission user }, only: [:edit, :destroy]
+  before_action -> (user = @question.askable) { require_permission user }, only: [:edit]
   before_filter :standard_list, only: [:new, :create, :edit, :update]
   before_filter :is_current_administrator, only: [:new, :create, :edit ]
 
@@ -13,6 +13,7 @@ class QuestionsController < ApplicationController
     elsif received_active_tab
       active_tab(received_active_tab)
     else
+      params[:active_tab_menu] = t('common.active_tab.all')
       @questions = all_questions.page params[:page] 
     end
     respond_to do |format| 
@@ -60,7 +61,7 @@ class QuestionsController < ApplicationController
   def destroy 
     title = @question.title
     if @question.nil?
-      flash[:error] = t('flash_message.error.question.destroy')
+      flash.now[:error] = t('flash_message.error.question.destroy')
     else
       @question.destroy
       flash[:notice] = "#{title}  #{t('flash_message.success.question.destroy')}"
@@ -80,7 +81,7 @@ class QuestionsController < ApplicationController
     @rule = set_rule 1
     if check_permission current_user,@rule
       if @question.nil?
-        flash[:error] = t('flash_message.error.question.vote')
+        flash.now[:error] = t('flash_message.error.question.vote')
       else 
         case params[:type]
         when 'up'          
@@ -117,18 +118,23 @@ class QuestionsController < ApplicationController
   end
 
   def enable 
-    @question.update_attributes(enabled: true)
-    give_points(@question, Point.action_score(7))
-    @questions = disabled_questions
-    respond_to do |format| 
+    if current_administrator.present?
+      @question.update_attributes(enabled: true)
+      give_points(@question, Point.action_score(7))
+      @questions = disabled_questions
+      respond_to do |format| 
       format.html
-      format.js
+        format.js
+      end
+    else
+      flash[:error] = t('answers.messages.unauthorized')
+      redirect_to questions_path
     end
   end
 
   def disable
     if @question.nil?
-      flash[:error] = t('flash_message.error.question.disable')
+      flash.now[:error] = t('flash_message.error.question.disable')
     else
       @question.enabled = false
       if @question.save

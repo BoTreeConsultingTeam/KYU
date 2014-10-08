@@ -6,16 +6,16 @@ class MembersController < ApplicationController
   def index
     params[:active_tab_menu] = 'members'
     if params[:active_tab] == 'Teachers'
-      @teachers = Kaminari.paginate_array(Teacher.all).page(params[:page]).per(Settings.pagination.per_page_5)
+      @teachers = Kaminari.paginate_array(Teacher.all).page(params[:page]).per(Settings.pagination.per_page_12)
     elsif params[:active_tab] == 'Managers'
-      @students = Kaminari.paginate_array(Student.where("student_manager = ?",true)).page(params[:page]).per(Settings.pagination.per_page_5)
+      @students = Kaminari.paginate_array(Student.where("student_manager = ?",true)).page(params[:page]).per(Settings.pagination.per_page_12)
     elsif params[:active_tab] == 'Students for Review'
-      @students = Kaminari.paginate_array(Student.where("mark_as_review = ?",true)).page(params[:page]).per(Settings.pagination.per_page_5)
+      @students = Kaminari.paginate_array(Student.where("mark_as_review = ?",true)).page(params[:page]).per(Settings.pagination.per_page_12)
     elsif params[:active_tab] == 'Blocked Students'
-      @students = Kaminari.paginate_array(Student.where("enable = ?",false)).page(params[:page]).per(Settings.pagination.per_page_5)
+      @students = Kaminari.paginate_array(Student.where("enable = ?",false)).page(params[:page]).per(Settings.pagination.per_page_12)
     else
       @all_students = Student.all
-      @students = Student.all.page(params[:page]).per(Settings.pagination.per_page_5)
+      @students = Student.all.page(params[:page]).per(Settings.pagination.per_page_12)
     end
     respond_to do |format| 
       format.html

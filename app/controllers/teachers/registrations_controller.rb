@@ -7,7 +7,7 @@ class Teachers::RegistrationsController <  Devise::RegistrationsController
     if params[:tag]
       @questions = Kaminari.paginate_array(Question.tagged_with(params[:tag])).page(params[:page]).per(Kaminari.config.default_per_page)
     else
-      @questions = Kaminari.paginate_array(Question.all).page(params[:page]).per(Kaminari.config.default_per_page) 
+      @questions = Kaminari.paginate_array(all_questions).page(params[:page]).per(Kaminari.config.default_per_page) 
     end
   end
 
