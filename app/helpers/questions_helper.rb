@@ -16,9 +16,9 @@ module QuestionsHelper
       css_class = "action vote vote-down img-circle fa fa-chevron-down"
     end
     if votable_type.class.to_s == 'Question'
-		  link_to '', vote_question_path(votable_type,type: vote), method: "post",class: css_class,remote: true, :"data-replace" => '#some_id'
+		  link_to '', vote_question_path(votable_type,type: vote), method: "post", class: css_class, remote: true, :"data-replace" => '#some_id'
 	  else 
-      link_to '', vote_answer_path(votable_type,type: vote), method: "post",class: css_class,remote: true, :"data-replace" => '#some_id'
+      link_to '', vote_answer_path(votable_type,type: vote), method: "post", class: css_class, remote: true, :"data-replace" => '#some_id'
     end
   end
   

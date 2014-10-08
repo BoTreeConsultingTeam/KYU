@@ -52,7 +52,7 @@ class ApplicationController < ActionController::Base
   
   def require_permission user
     if current_user != user
-      flash[:error] = 'You are not authorized for this action'
+      flash[:error] = t('answers.messages.unauthorized')
       redirect_to questions_path 
     end
   end

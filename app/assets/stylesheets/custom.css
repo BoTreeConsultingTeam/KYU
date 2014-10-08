@@ -290,8 +290,9 @@ ul.social-icon{
 
 li.tag-list {
   margin-bottom: 30px;
-  padding-right: 30px;
-  height: 100px;
+  padding-right: 25px;
+  padding-left: 20px;
+  height: 125px;
   word-wrap: break-word;
   /*border-bottom: 1px solid #ddd;*/
 }

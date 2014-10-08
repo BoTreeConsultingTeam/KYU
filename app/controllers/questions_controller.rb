@@ -3,8 +3,8 @@ class QuestionsController < ApplicationController
   before_filter :tag_list, only: [:new, :edit, :create]
   before_filter :question_find_by_id, only: [:show, :destroy, :edit, :update, :vote, :disable, :abuse_report, :enable]
   before_action -> (user = @question.askable) { require_permission user }, only: [:edit, :destroy]
-  before_filter :standard_list, only: [:new,:create,:edit]
-  before_filter :is_current_administrator, only: [:new, :create]
+  before_filter :standard_list, only: [:new, :create, :edit, :update]
+  before_filter :is_current_administrator, only: [:new, :create, :edit ]
 
   def index
     if received_tag
@@ -26,7 +26,7 @@ class QuestionsController < ApplicationController
   end
 
   def new
-      @question = Question.new
+    @question = Question.new
   end
 
   def create
@@ -34,7 +34,7 @@ class QuestionsController < ApplicationController
       @question = Question.new(question_params.merge({askable: current_user}).except!(:tag_list))
       current_user.tag( @question, :with => question_params[:tag_list], :on => :tags )
       if @question.save && current_student
-        current_student.change_points(Point.action_score(1))
+          current_student.change_points(Point.action_score(1))
         redirect_to questions_path
       else
         flash.now[:error] = t('questions.messages.create')
@@ -66,9 +66,13 @@ class QuestionsController < ApplicationController
       flash[:notice] = "#{title}  #{t('flash_message.success.question.destroy')}"
     end
     if current_administrator.present?
-      redirect_to disabled_questions_path
+      @questions = disabled_questions
+      respond_to do |format|
+        format.html
+        format.js
+      end
     else
-      redirect_to students_path
+      redirect_to questions_path
     end
   end
 
@@ -115,7 +119,11 @@ class QuestionsController < ApplicationController
   def enable 
     @question.update_attributes(enabled: true)
     give_points(@question, Point.action_score(7))
-    redirect_to disabled_questions_path
+    @questions = disabled_questions
+    respond_to do |format| 
+      format.html
+      format.js
+    end
   end
 
   def disable
@@ -134,15 +142,17 @@ class QuestionsController < ApplicationController
     @rule = set_rule 5
     if check_permission current_user,@rule
       if @question.nil?
-        flash[:error] =  t('flash_message.error.question.report_abuse') 
+        flash.now[:error] =  t('flash_message.error.question.report_abuse') 
       else
         Question.send_question_answer_abuse_report(current_user,@question)
-        flash[:notice] = t('flash_message.success.question.report_abuse')
+        flash.now[:notice] = t('flash_message.success.question.report_abuse')
       end
-      redirect_to questions_path
     else
-      flash[:error] =  t('answers.messages.unauthorized')
-      redirect_to questions_path
+      flash.now[:error] =  t('answers.messages.unauthorized')
+    end
+    respond_to do |format|
+      format.html
+      format.js
     end
   end
 
@@ -228,9 +238,7 @@ class QuestionsController < ApplicationController
   end
 
   def is_current_administrator
-    if !current_administrator
-      return true
-    else
+    if current_administrator
       flash[:error] = t('answers.messages.unauthorized')
       redirect_to members_path(active_tab: 'Students')
     end
