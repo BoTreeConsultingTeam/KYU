@@ -2,6 +2,7 @@ class CommentsController < ApplicationController
 
   before_action :user_signed_in?
   before_filter :comment_find_by_id, only: [:edit, :update, :destroy]
+  before_action -> (user = @comment.commentable) { require_permission user }, only: [:edit, :destroy]
   
   def create 
     @rule = set_rule 4

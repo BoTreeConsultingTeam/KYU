@@ -438,7 +438,34 @@ a:focus{
   outline: none !important;
   outline-offset:  0px !important;
 }
+.user-info {
+	margin-top: 30px;
+	padding-left: 30px !important;
+}
+.user-statistic {
+	min-height: 200px !important;
+	border-bottom: 1px solid #dadfea;
+}
+.right-sidebar {
+	padding-top: 1px !important;
+}
 
-.question-cat span.author-avatar img.small {
-  height: 30px !important;
+.user-related-count {
+	height: 10px;
+	/*clear: right;*/
+}
+li.user-item {
+	height: 70px !important;
+}
+.header-menu {
+	padding: 0px !important;
+	margin-right: 0px !important;
+}
+.header-menu ul li {
+	margin: 0 5px;
+	word-wrap: break-word;
+}
+.header-avatar {
+	padding: 0px !important;
+	word-wrap: break-word;
 }

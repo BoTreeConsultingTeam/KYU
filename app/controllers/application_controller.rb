@@ -79,8 +79,8 @@ class ApplicationController < ActionController::Base
   protected
 
   def configure_permitted_parameters
-    devise_parameter_sanitizer.for(:sign_up) << [:salutation, :first_name,:middle_name, :last_name, :username,:birthdate, :standard_id, :avatar]
-    devise_parameter_sanitizer.for(:account_update) << [:salutation, :first_name, :middle_name, :last_name, :username, :birthdate, :qualification, :standard_id, :avatar]
+    devise_parameter_sanitizer.for(:sign_up) << [:salutation, :first_name,:middle_name, :last_name, :username,:birthdate, :standard_id, :avatar, :division_id]
+    devise_parameter_sanitizer.for(:account_update) << [:salutation, :first_name, :middle_name, :last_name, :username, :birthdate, :qualification, :standard_id, :avatar, :division_id]
   end
 
   private
@@ -105,5 +105,12 @@ class ApplicationController < ActionController::Base
       if user.is_a? Student
         user.change_points(points)    
       end
+  end
+
+  def admin_signin?
+    if !current_administrator.present?
+      flash[:error] = t('answers.messages.unauthorized')
+      redirect_to questions_path
+    end
   end
 end

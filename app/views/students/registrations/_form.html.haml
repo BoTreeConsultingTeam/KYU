@@ -14,8 +14,10 @@
         = f.email_field :email, autofocus: true, class: 'submit-input'
         %br
         = f.label t('students.captions.class')
-        = f.select :standard_id, options_from_collection_for_select(@standards, 'id', 'class_no'),{prompt: t('teachers.basic.prompt')},{class: 'form-control'}
+        = f.select :standard_id, options_from_collection_for_select(@standards, 'id', 'class_no'), {prompt: t('teachers.basic.prompt')},class: 'form-control',data: { remote: true, url: divisions_of_standard_path}
         %br
+        = f.label t('students.captions.division')
+        = f.select :division_id, options_from_collection_for_select(@divisions, 'id', 'division'),{prompt: ''}, {class: 'form-control', id: 'divisions'}
         %div
         = f.label t('common.captions.password')
         %br/

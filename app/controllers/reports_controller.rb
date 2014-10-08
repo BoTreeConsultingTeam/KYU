@@ -1,6 +1,8 @@
 class ReportsController < ApplicationController
   before_action :set_student, only: [:student_weakness, :student_strength, :top_3_strong_area, :top_3_weak_area]
   before_action :set_standard, only: [:student_activeness, :students_questions_compare,:students_questions_compare,:students_answers_compare]
+  before_filter :division_list, only: [:index, :student_activeness, :students_questions_compare, :students_answers_compare]
+  before_filter :set_division, only: [:student_activeness, :students_questions_compare, :students_answers_compare]
   def index
     @students = Student.all
     @standards = Standard.all
@@ -52,28 +54,28 @@ class ReportsController < ApplicationController
   end
 
   def student_activeness
-    if @standard.students.blank?
+    if @standard.students.blank? || @division.students.blank?
       error_message
     else
-      @student_activeness_table = @standard.students.map{|student|[student.username,student.sign_in_count]}
+      @student_activeness_table = Student.where('standard_id = ? and division_id = ?',params[:standard_id], params[:division_id]).map{|student|[student.username,student.sign_in_count]}
       @student_activeness_chart = GoogleChartService.render_reports_charts( @student_activeness_table, :bar, "Student login counts", true, 'Name', 'Login Count',false)  
     end
   end
 
   def students_questions_compare
-    if @standard.students.blank?
+    if @standard.students.blank? || @division.students.blank?
       error_message
     else
-      @students_questions_compare_table = @standard.students.map{|student|[student.username,student.questions.count]}
+      @students_questions_compare_table = Student.where('standard_id = ? and division_id = ?',params[:standard_id], params[:division_id]).map{|student|[student.username,student.questions.count]}
       @students_questions_compare_chart = GoogleChartService.render_reports_charts(@students_questions_compare_table, :bar, "Questions asked by students", true, 'Name', 'Question Count',false)
     end
   end
 
   def students_answers_compare
-    if @standard.students.blank?
+    if @standard.students.blank? || @division.students.blank?
       error_message
     else
-      @students_answers_compare_table = @standard.students.map{|student|[student.username,student.answers.count]}
+      @students_answers_compare_table = Student.where('standard_id = ? and division_id = ?',params[:standard_id], params[:division_id]).map{|student|[student.username,student.answers.count]}
       @students_answers_compare_chart = GoogleChartService.render_reports_charts(@students_answers_compare_table, :bar, "Answers given by students", true,'Name','Answers Count',false)
     end
   end
@@ -97,6 +99,15 @@ class ReportsController < ApplicationController
     end
   end
 
+  def divisions_by_standard
+    @report_type = params[:form]
+    @standard = Standard.find_by_id(params[:standard_id])
+    @divisions = @standard.divisions
+    respond_to do |format| 
+      format.js
+    end
+  end
+    
   private
 
     def set_student
@@ -114,11 +125,20 @@ class ReportsController < ApplicationController
         redirect_to reports_path
       end
     end
-    
+
+    def set_division
+      @division = Division.find_by_id(params[:division_id])
+      if @division.nil?
+        flash[:error] = t('flash_message.error.report.no_standard')
+        redirect_to reports_path
+      end
+    end
+
     def error_message
       flash[:error] = t('flash_message.error.report.no_student')
       redirect_to reports_path
     end
+
     def map_array_for_top3_chart(question_ids, flag)
       tag_ids_of_question = ActsAsTaggableOn::Tagging.find_all_by_taggable_id(question_ids).map { |obj| obj.tag_id }
       students_tags = tag_ids_of_question.group_by{|tag_id| tag_id}.map{|tag_id,tag_count| [ ActsAsTaggableOn::Tag.find_all_by_id(tag_id).map {|obj| obj.name}, tag_count.count].flatten }
@@ -132,5 +152,8 @@ class ReportsController < ApplicationController
         students_tags
       end
     end
-end
 
+  def division_list
+    @divisions = Division.all
+  end
+end

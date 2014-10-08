@@ -1,9 +1,10 @@
 class Students::RegistrationsController <  Devise::RegistrationsController
-   before_filter :configure_permitted_parameters, if: :devise_controller?
-   before_action :user_signed_in?, only:[:index,:view_profile,:update]
-   before_filter :standard_list, only: [:new,:edit,:view_profile,:update,:create]
-   before_filter :current_user_present?, only:[:new]
-   
+  before_filter :configure_permitted_parameters, if: :devise_controller?
+  before_action :user_signed_in?, only:[:index,:view_profile,:update]
+  before_filter :standard_list, only: [:new, :edit, :view_profile, :update, :create]
+  before_filter :current_user_present?, only:[:new]
+  before_filter :division_list, only: [:new, :create, :edit, :update, :view_profile]
+
   def new
     super
   end
@@ -20,8 +21,15 @@ class Students::RegistrationsController <  Devise::RegistrationsController
     @questions_count = Question.count
   end
 
+  def divisions_of_standard
+    @standard = Standard.find_by_id(params[:student][:standard_id])
+    @divisions = @standard.divisions
+    respond_to do |format|
+      format.js
+    end
+  end
+  
   def create
-    @standards = Standard.all
     @student = build_resource
     super
   end
@@ -63,10 +71,13 @@ class Students::RegistrationsController <  Devise::RegistrationsController
   end
   private
   def sign_up_params
-    params.require(:student).permit(:email, :password, :username, :birthdate, :standard_id, :avatar)
+    params.require(:student).permit(:email, :password, :username, :birthdate, :standard_id, :avatar, :division_id)
   end
   def after_sign_in_path_for(resource)
     students_path(active_tab: 'all')
   end
-  
+
+  def division_list
+    @divisions = Division.all
+  end
 end
