@@ -1,0 +1,14 @@
+.modal-submit-questions
+  .modal-dialog
+    .modal-body
+      = form_for(resource, :as => resource_name, :url => student_registration_path) do |f|
+        %br
+        = f.label t('common.captions.user_name')
+        = f.text_field :username,class: 'form-control', disabled: true
+        %br
+        = f.label t('common.captions.dob')
+        = f.text_field :birthdate,class: 'form-control date-picker', id: 'datepicker1', disabled: true
+        %br
+        = f.label t('common.captions.email')
+        = f.email_field :email, :autofocus => true,class: 'form-control', disabled: true
+        %br/

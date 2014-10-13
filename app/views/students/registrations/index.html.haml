@@ -1,3 +1,5 @@
-= render :partial => "layouts/sub_heading", :locals => {:object => 'All Questions'}
-= render :partial => "questions/questions_filter_links"
-= render :partial => 'questions/questions_list', :locals => { questions: @questions}
+= render partial: "layouts/sub_heading", locals: {object: 'All Questions'}
+= render partial: "questions/questions_filter_links"
+%div.filter_questions
+  = render partial: 'questions/questions_index', locals: { questions: @questions}
+

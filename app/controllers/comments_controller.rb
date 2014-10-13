@@ -1,7 +1,9 @@
 class CommentsController < ApplicationController
 
   before_action :user_signed_in?
-
+  before_filter :comment_find_by_id, only: [:edit, :update, :destroy]
+  before_action -> (user = @comment.commentable) { require_permission user }, only: [:edit, :destroy]
+  
   def create 
     @rule = set_rule 4
     if check_permission current_user,@rule 
@@ -25,7 +27,7 @@ class CommentsController < ApplicationController
   end
 
   def update
-    comment_find_by_id
+    
     if !(@comment.nil?)
       @comment.update(comment_params)
       flash[:notice] = t('flash_message.success.comment.update')
@@ -52,19 +54,21 @@ class CommentsController < ApplicationController
   
   def edit
     if params[:question_id]
-      @question = Question.find_by_id(params[:question_id])
+      @question = find_question
       @answers = @question.answers
-      comment_find_by_id
       if @comment.nil?
-        redirect_to question_path(params[:question_id]),flash: { error: t('flash_message.error.comment.edit') }
+        flash[:error] = t('flash_message.error.comment.edit')
+        redirect_to question_path(params[:question_id])
       else
+        require_permission @comment.commentable
         @question_comments = Comment.relative_comments(@question.id,@question.class)
       end
     else
       @answer = find_by_answer_id(params[:answer_id])
       comment_find_by_id
       if @comment.nil?
-        redirect_to questions_path(active_tab: 'all'),flash: { error: t('flash_message.error.comment.edit') }
+        flash[:error] = t('flash_message.error.comment.edit')
+        redirect_to question_path(@answer.question)
       else       
         find_by_answer_id(params[:id])
         @answer_comments = Comment.relative_comments(@answer.id,@answer.class)
@@ -73,30 +77,21 @@ class CommentsController < ApplicationController
   end    
 
   def destroy
-    @comment = comment_find_by_id
-    if !(comment_find_by_id.nil?)
+    if !(@comment.nil?)
+      require_permission @comment.commentable
       @comment.delete
-      if params[:answer_id].present?
-        @answer = find_by_answer_id(params[:answer_id])
-        @comments = Comment.relative_comments(params[:answer_id],"Answer")
-      else
-        @question = Question.find_by_id(params[:question_id])
-        @comments = Comment.relative_comments(params[:question_id],"Question").page params[:page]
-      end
-      respond_to do |format|
-        format.js
-      end
     else
-      if params[:answer_id].present?
-        @answer = find_by_answer_id(params[:id])
-        @comments = Comment.all
-        redirect_to question_path(@answer.question.id),flash: { error: t('comments.messages.comment_not_found') }
-      else
-        redirect_to question_path(params[:question_id]),flash: { error: t('comments.messages.comment_not_found') }
-      end
-        respond_to do |format|
-          format.js
-        end
+      flash[:error] = t('comments.messages.comment_not_found')
+    end
+    if params[:answer_id].present?
+      @answer = find_by_answer_id(params[:answer_id])
+      @comments = Comment.relative_comments(params[:answer_id],"Answer")
+    else
+      @question = find_question
+      @comments = Comment.relative_comments(params[:question_id],"Question").page params[:page]
+    end
+    respond_to do |format|
+      format.js
     end
   end
 
@@ -130,4 +125,7 @@ class CommentsController < ApplicationController
     @comment = Comment.find_by_id(params[:id])
   end
 
+  def find_question
+    Question.find_by_id(params[:question_id])
+  end
 end

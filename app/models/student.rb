@@ -16,9 +16,12 @@ class Student < ActiveRecord::Base
   has_many :badges, :through => :levels 
   has_many :levels   
   belongs_to :standard
+  belongs_to :division
+  validates :division_id, presence: true
   validates :username,:birthdate, presence: true
   validates :email, format: {with: VALID_EMAIL_REGEX}, uniqueness: {case_sensitive: false}
   validates :standard_id, presence: true
+  validates :avatar, presence: true
   acts_as_tagger
   acts_as_voter
   has_attached_file :avatar, :styles => { :medium => "#{Settings.paperclip.style.medium}>", :thumb => "#{Settings.paperclip.style.thumb}>" }, :default_url => Settings.paperclip.style.image_default_url

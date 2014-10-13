@@ -4,8 +4,7 @@ require "rvm/capistrano"
 server "104.131.111.55", :web, :app, :db, primary: true
 
 set :application, "kyu"
-set :user, "kyu"
-set :port, 22
+set :user, "root"
 set :deploy_to, "/home/#{user}/#{application}"
 set :deploy_via, :remote_cache
 set :use_sudo, false
@@ -13,7 +12,7 @@ set :use_sudo, false
 set :scm, "git"
 set :repository, "git@github.com:BoTreeConsultingTeam/KYU.git"
 set :branch, "development_phase_1_pull_requests"
-
+set :rvm_type, :system
 
 default_run_options[:pty] = true
 ssh_options[:forward_agent] = true
@@ -53,7 +52,7 @@ namespace :deploy do
     sudo "ln -nfs #{current_path}/config/nginx.conf /etc/nginx/sites-enabled/#{application}"
     sudo "ln -nfs #{current_path}/config/unicorn_init.sh /etc/init.d/unicorn_#{application}"
     run "mkdir -p #{shared_path}/config"
-    put File.read("config/database.example.yml"), "#{shared_path}/config/database.yml"
+    put File.read("config/database.yml"), "#{shared_path}/config/database.yml"
     puts "Now edit the config files in #{shared_path}."
   end
   after "deploy:setup", "deploy:setup_config"

@@ -12,8 +12,14 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def current_user_present?
+    if !current_user.nil?
+      redirect_to questions_path(active_tab: t('common.active_tab.all'))
+    end
+  end
+
   def all_questions
-    Question.where("enabled = ?",true).order("created_at desc")
+    Question.enabled.order("created_at desc")
   end
   
   def user_badge user
@@ -44,8 +50,14 @@ class ApplicationController < ActionController::Base
     end
   end
   
+  def require_permission user
+    if current_user != user
+      flash[:error] = t('answers.messages.unauthorized')
+      redirect_to questions_path 
+    end
+  end
+
   def user_profile_update user
-    
     account_update_params = devise_parameter_sanitizer.sanitize(:account_update)
     if account_update_params[:password].blank?
       account_update_params.delete("password")
@@ -67,8 +79,8 @@ class ApplicationController < ActionController::Base
   protected
 
   def configure_permitted_parameters
-    devise_parameter_sanitizer.for(:sign_up) << [:salutation, :first_name,:middle_name, :last_name, :username,:birthdate, :standard_id, :avatar]
-    devise_parameter_sanitizer.for(:account_update) << [:salutation, :first_name, :middle_name, :last_name, :username, :birthdate, :qualification, :standard_id, :avatar]
+    devise_parameter_sanitizer.for(:sign_up) << [:salutation, :first_name,:middle_name, :last_name, :username,:birthdate, :standard_id, :avatar, :division_id]
+    devise_parameter_sanitizer.for(:account_update) << [:salutation, :first_name, :middle_name, :last_name, :username, :birthdate, :qualification, :standard_id, :avatar, :division_id]
   end
 
   private
@@ -93,5 +105,12 @@ class ApplicationController < ActionController::Base
       if user.is_a? Student
         user.change_points(points)    
       end
+  end
+
+  def admin_signin?
+    if !current_administrator.present?
+      flash[:error] = t('answers.messages.unauthorized')
+      redirect_to questions_path
+    end
   end
 end

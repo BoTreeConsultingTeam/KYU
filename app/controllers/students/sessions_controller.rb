@@ -1,11 +1,17 @@
 class Students::SessionsController <  Devise::SessionsController
   before_filter :student_authorize, only: [:create]
+  before_filter :current_user_present?, only:[:new]
+
+  def new
+    super
+  end
+
   def destroy
     super
   end 
 
   def after_sign_in_path_for(resource)
-  		students_path(active_tab: 'all')
+  		students_path(active_tab_menu: 'all')
   end
 
   private

@@ -3,30 +3,37 @@
   - students.each do |student|
     %li.user-item.col-md-4.col-xs-6
       %span.user-avatar
-        = image_tag student.avatar.url(:medium), alt: t('common.image.alt'), class: 'img-circle user-thumb-img'
+        - if student.avatar.present? && File.exists?(student.avatar.path)
+          = image_tag "#{student.avatar.url}", alt: t('common.image.alt'), class: 'img-circle user-thumb-img'
+        - else
+          = image_tag "missing.jpeg", alt: 'this', class: 'img-circle user-thumb-img'
       .left-info
-        %span.display_name 
+        %span.display_name
           = link_to student.username,  student_views_profile_path(student,active_tab: 'basicinfo')
           - if current_teacher.present?
-            - if students.student_manager_selected? < 2
+            - if all_students.student_manager_selected? < 2
               - if !(student.student_manager)
                 = link_to t('teachers.basic.student_manager'),select_students_manager_path(student.id), class: 'pull-right'
           -if student.student_manager
-            .action.pull-right{href: "#", rel: "tooltip", title: t('students.tooltip.manager')}
-              %i.fa.fa-user.fa-fw
+            - if teacher_signed_in? 
+              = link_to remove_students_manager_path(student), rel: "tooltip", title: t('students.tooltip.manager') do 
+                %i.fa.fa-user.fa-fw.action.pull-right
+            - else
+              .action.pull-right{rel: "tooltip", title: t('students.tooltip.manager')}
+                %i.fa.fa-user.fa-fw
           %br/
           .question-cat
             - if !student.badges.last.blank?
               %span.user-badge
-                = render :partial => 'student_badge', :locals => { :object => student}  
+                = render :partial => 'student_badge', :locals => { :object => student}
             - else
               %span
-            %span.points 
+            %span.points
               -if student.points.nil?
                 0 Points
               - else
                 = "#{student.points} Points"
-          - if administrator_signed_in? 
+          - if administrator_signed_in?
             -if student.enable == true
               = link_to '', deactivate_path(student), rel: "tooltip", title: t('students.links.block'), class: 'fa fa-lock'
               |
@@ -43,7 +50,6 @@
             - if params[:active_tab] == t('common.active_tab.student_for_review')
               |
               = link_to t('students.links.unmark_review'), unmark_student_review_path(student)
-%hr/
 .row.paginations.home
   .col-md-12
     .question-item.answer-pagination

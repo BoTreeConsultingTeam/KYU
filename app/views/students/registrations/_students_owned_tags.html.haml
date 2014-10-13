@@ -1,0 +1,21 @@
+.main-questions-list
+  %ul#main_questions_list
+    - if !(@tags.blank?)
+      .main-tag-list
+        .wrap-tag-list   
+          %ul.raw.tag-list
+            - @tags.each do |tag|
+              = render partial: "tags/tag_links", :locals => {:tag => tag}
+        .row.paginations.home
+          .col-md-12
+            =paginate @tags            
+    - else
+      .col-md-3
+      .col-md-6
+        .spacer25
+        %h3
+          -if !(current_user == @student)
+            = @student.username
+            = t('questions.captions.no_questions_tagged')
+          - else
+            = t('questions.captions.no_questions_tagged_by_you')

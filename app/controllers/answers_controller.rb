@@ -1,6 +1,8 @@
 class AnswersController < ApplicationController
   before_action :user_signed_in?
   before_filter :answer_find_by_id, only: [:edit, :update, :destroy, :accept]
+  before_action -> (user = @answer.answerable) { require_permission user }, only: [:edit, :destroy]
+  
   def new
     @answer = Answer.new
     @question =  Question.find(params[:question_id])

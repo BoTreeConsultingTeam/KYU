@@ -5,8 +5,8 @@
     .col-md-8.col-xs-8
       .header-menu    
         %ul
-          %li
-            = link_to t('header_navigation.home'), questions_path(active_tab: 'all',active_link: 'home'), class: "#{profile_active_link('home')}"  
+          / %li
+          /   = link_to t('header_navigation.home'), questions_path(active_tab: 'all',active_link: 'home'), class: "#{profile_active_link('home')}"  
           - if student_signed_in?
             %li
               = link_to t('header_navigation.profile'), student_views_profile_path(current_user, active_tab: 'basicinfo', active_link: 'profile'), class: "#{profile_active_link('profile')}"
@@ -21,14 +21,14 @@
               = link_to t('header_navigation.logout'), destroy_teacher_session_path, method: :delete
           - if administrator_signed_in?
             %li
-              = link_to t('header_navigation.disabled_question'), disabled_questions_path(active_link: 'disabled_question'), class: "#{profile_active_link('disabled_question')}"
+              = link_to t('header_navigation.disabled_questions'), disabled_questions_path(active_link: 'disabled_question'), class: "#{profile_active_link('disabled_question')}"
             %li       
               = link_to t('header_navigation.report'), reports_path(active_link: 'report'), class: "#{profile_active_link('report')}"
             %li
               = link_to t('header_navigation.logout'), destroy_teacher_session_path, method: :delete
     .col-md-2.col-xs-2.btn-group.header-avatar
       %span.expand
-        %a{:href => '#'}
+        = link_to void_link do
           %span.avatar
             %img.avatar
           %span.display_name

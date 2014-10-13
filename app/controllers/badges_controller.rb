@@ -1,5 +1,6 @@
 class BadgesController < ApplicationController
   before_action :user_signed_in?
+  before_action :admin_signin?, only:[:new, :edit, :destroy]
   before_action :find_badge, only: [:edit, :update, :destroy]
   before_filter :find_all_rules, only: [:index, :edit, :new, :create]
   def index
@@ -25,6 +26,10 @@ class BadgesController < ApplicationController
       flash[:error] = t('badges.message.badge_create_fail')
       render 'new'
     end  
+  end
+
+  def show 
+    redirect_to badges_path
   end
 
   def edit

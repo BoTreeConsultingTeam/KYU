@@ -3,7 +3,7 @@
   .col-md-8.col-xs-8
     %h3 
       = @question.title
-#question_content.row.question-main-content.question-item{"data-id" => "1728"}
+#question_content.row.question-main-content.question-item
   - if !current_administrator
     .col-md-2.col-xs-2.vote-block
       %ul
@@ -24,16 +24,16 @@
       %ul.post-controls      
         - if @question.askable == current_user
           %li
-            = link_to '',edit_question_path(@question.id),class: 'post-edit action fa fa-pencil',rel: 'tooltip',title: t('common.links.edit'), 'data-no-turbolink' => true
+            = link_to '',edit_question_path(@question.id), class: 'post-edit action fa fa-pencil',rel: 'tooltip',title: t('common.links.edit'), 'data-no-turbolink' => true
           %li
-            = link_to '',question_path,method: :delete,data: {confirm: t('common.links.delete.confirm')},rel: 'tooltip',title: t('common.links.delete_link'),class: 'post-delete action fa fa-trash-o'
+            = link_to '',question_path(@question.id),method: :delete,data: {confirm: t('common.links.delete.confirm')},rel: 'tooltip',title: t('common.links.delete_link'), class: 'post-delete action fa fa-trash-o'
         
         - if (check_bookmark @question).blank?
           %li
             = link_to '', bookmarks_path(:question_id => @question.id), method: :post,rel: 'tooltip',title: t('questions.links.add_bookmark'), class: 'post-delete action fa fa-plus'
         -else
           %li
-            = link_to '',bookmark_path(:question_id => @question.id), method: :delete,data: {confirm: t('common.links.delete.confirm')},rel: 'tooltip',title: t('questions.links.delete_bookmark'),class: 'post-delete action fa fa-minus-square'    
+            = link_to '',bookmark_path(:question_id => @question.id), method: :delete,data: {confirm: t('common.links.delete.confirm')},rel: 'tooltip',title: t('questions.links.delete_bookmark'), class: 'post-delete action fa fa-minus-square'    
     .top-content
       - if @question.answers.count > 0
         %span.answered
@@ -46,23 +46,29 @@
     .row
       .col-md-8.col-xs-9.question-cat
         - if @question.askable_type != 'Teacher'
-          %a{:href => student_views_profile_path(@question.askable.id,user: 'Student')}
+          = link_to student_views_profile_path(@question.askable.id,user: 'Student') do
             %span.avatar
-              = image_tag @question.askable.avatar.url(:medium) ,class: 'img-circle user-thumb-img', alt: t('common.image.alt')
+              - if @question.askable.avatar.present? && File.exists?(@question.askable.avatar.path)
+                = image_tag "#{@question.askable.avatar.url}", alt: 'this', class: 'img-circle user-thumb-img'
+              - else
+                = image_tag "missing.jpeg", alt: 'this', class: 'img-circle profile-img'
             %span.author-name                
               - if @question.askable.student_manager?
                 .student_manager{rel: "tooltip",title: t('students.tooltip.manager')} 
                   = @question.askable.username
               - else
                 = @question.askable.username
-          %span.user-badge{:style => "background-color:#04aad4;"} 
+          %span.user-badge.student-class
             = @question.askable.class
         - else                    
           %span.avatar
-            = image_tag @question.askable.avatar.url(:medium) ,class: 'img-circle user-thumb-img',alt: t('common.image.alt')
+            - if @question.askable.avatar.present? && File.exists?(@question.askable.avatar.path)
+              = image_tag "#{@question.askable.avatar.url}", alt: 'this', class: 'img-circle user-thumb-img'
+            - else
+              = image_tag "missing.jpeg", alt: 'this', class: 'img-circle profile-img'
           %span.author-name   
             = @question.askable.username
-          %span.user-badge{:style => "background-color:#780978;"} 
+          %span.user-badge.teacher-class
             = @question.askable.class
         %span.question-time
           #{time_ago_in_words(@question.created_at)} ago.
@@ -95,7 +101,7 @@
 / ANSWERS LOOP
 #answers_main_list
   = render 'answers_list', locals: { :answers =>  @answer}
-.row.paginations.home
+.row
   .col-md-12
     .answer-item.answer-pagination
       .spacer20

@@ -2,7 +2,7 @@
   -if can? :new, Question
     = ask_question
 - if can? :edit, @questions
-  = link_to 'Hello',"#",class:" btn btn-primary pull-right"
+  = link_to 'Hello', void_link, class:" btn btn-primary pull-right"
 %div
   %h1
     Latest Questions

@@ -33,6 +33,9 @@ gem 'unicorn'
 gem 'capistrano', "~> 2.15"
 gem 'rvm-capistrano'
 gem 'net-ssh', '2.7.0'
+#Gem for resolve ExecJS::RuntimeUnavailable: Could not find a JavaScript runtime. See https://github.com/sstephenson/execjs for a list of available runtimes
+#Not working on heroku
+gem 'therubyracer', '~> 0.12.1'
 
 group :assets do
   gem 'coffee-rails'
@@ -40,7 +43,6 @@ group :assets do
 end
 
 group :development do
-
   gem 'sextant'
   gem 'quiet_assets'
   gem 'pry-rails'

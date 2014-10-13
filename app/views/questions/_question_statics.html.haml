@@ -20,11 +20,3 @@
         = question.get_downvotes.size
       %h4
         %i.dislike.fa.fa-thumbs-down
-  .spacer30
-  - if !(current_administrator)
-    = link_to '',report_path(question.id), rel: 'tooltip', title: t('questions.links.report_abuse'), class: 'fa fa-envelope-o fa-2x pull-right'
-  - if current_student.present?
-    - if current_student.student_manager?
-      = link_to '',disable_path(question.id),rel: 'tooltip', title: t('common.links.disable'), class: 'fa fa-ban pull-right fa-2x disable'
-  - else
-    = link_to '',disable_path(question.id), rel: 'tooltip', title: t('common.links.disable'), class: 'fa fa-ban pull-right fa-2x disable'

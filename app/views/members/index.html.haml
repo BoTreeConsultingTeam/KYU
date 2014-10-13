@@ -1,23 +1,13 @@
 = render partial: "layouts/sub_heading", locals: {object: t('common.page_header.users')}
 .row.question-filter
-  - if ( current_teacher.present? )
-    .col-md-12.sort-questions
-      %ul
-        %li
-          = set_header_link_for_admin(t('common.active_tab.students'))
+  .col-md-12.sort-questions
+    %ul
+      %li
+        = link_to t('common.active_tab.students'), members_path(active_tab: t('common.active_tab.students')), {class: 'user_filter_link user_link', id: 'default_link', remote: true}
+      - if ( current_teacher.present? )
         %li       
           = set_header_link_for_admin(t('common.active_tab.teachers'))
-
-  - elsif (current_student.present?)
-    .col-md-12.sort-questions
-      %ul
-        %li
-          = set_header_link_for_admin(t('common.active_tab.students'))
-  - else 
-    .col-md-12.sort-questions
-      %ul.dark-font-color
-        %li
-          = set_header_link_for_admin(t('common.active_tab.students'))
+      - elsif current_administrator.present?
         %li       
           = set_header_link_for_admin(t('common.active_tab.teachers'))
         %li 
@@ -26,4 +16,5 @@
           = set_header_link_for_admin(t('common.active_tab.student_for_review'))   
         %li 
           = set_header_link_for_admin(t('common.active_tab.blocked_student'))
-= list_of_users(params[:active_tab], @students.present? ? @students : @teachers)
+%div.members_index
+  = render partial: 'member_list', locals: { user: current_user}

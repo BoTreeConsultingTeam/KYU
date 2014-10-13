@@ -19,6 +19,17 @@ standard_arr.each do |standard|
   Standard.find_or_create_by_class_no(standard)
 end
 
+division_arr = ['A','B','C','D','E']
+
+division_arr.each do |division|
+  Division.find_or_create_by_division(division)
+end
+
+standard_division_relationship_arr  = [[1,1],[1,2],[1,3],[2,1],[2,2],[3,1],[3,2],[3,3],[3,4],[4,1],[4,2],[4,3],[4,4],[4,5],[5,1],[5,2]]
+standard_division_relationship_arr.each do |standard_id, division_id|
+  StandardDivision.find_or_create_by_standard_id_and_division_id(standard_id: standard_id, division_id: division_id)
+end
+
 rules_arr = ['User vote on question', 'User vote on answer', 'User can ask question', 'User can comment', 'User report abuse', 'User can answer']
  rules_arr.each do |rule|
   Rule.find_or_create_by_description(rule)

@@ -2,5 +2,8 @@
   - most_viewed_questions.each do |question|
     %li
       %span.avatar
-        = image_tag question.askable.avatar.url(:thumb), alt: t('common.image.alt'), class: 'img-circle user-small-thumb-img'
+      - if question.askable.avatar.present? && File.exists?(question.askable.avatar.path)
+        = image_tag "#{question.askable.avatar.url}", alt: t('common.image.alt'), class: 'img-circle user-thumb-img'
+      - else
+        = image_tag "missing.jpeg", alt: 'this', class: 'img-circle user-thumb-img'
       = link_to  question.title, question_path(question), 'data-no-turbolink' => true

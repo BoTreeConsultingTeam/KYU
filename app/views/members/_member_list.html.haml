@@ -1,0 +1,4 @@
+- if params[:active_tab]
+	= list_of_users(params[:active_tab], @students.present? ? @students : @teachers, @all_students)
+- else
+	= render partial: 'members/student_member',locals: {students: @students, all_students: @all_students}

@@ -22,6 +22,7 @@
 .answers-filter .answers-count,
 .form-reply h3 {
   color: #444c63;
+  word-wrap: break-word;
 }
 .main-questions-list .q-lbtm-content .question-excerpt,
 .single-header .vote-block a,
@@ -289,9 +290,11 @@ ul.social-icon{
 
 li.tag-list {
   margin-bottom: 30px;
-  padding-right: 30px;
-  height: 100px;
-  border-bottom: 1px solid #ddd;
+  padding-right: 25px;
+  padding-left: 20px;
+  height: 125px;
+  word-wrap: break-word;
+  /*border-bottom: 1px solid #ddd;*/
 }
 ul.tag-list {
   margin-top: 30px
@@ -413,4 +416,29 @@ blockquote {
   margin: 0 0 5px;
   font-size: 14px;
   border-left: 0px;
+}
+.widget-menus ul li.left-sidebar-link a  {
+  color: #88a;
+}
+.question_link {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.disable {
+  padding-right: 5px;
+}
+.question-cat span.user-badge.student-class {
+  background-color: #04aad4;
+
+}
+.question-cat span.user-badge.teacher-class {
+  background-color: #780978;
+}
+a:focus{
+  outline: none !important;
+  outline-offset:  0px !important;
+}
+
+.question-cat span.author-avatar img.small {
+  height: 30px !important;
 }
