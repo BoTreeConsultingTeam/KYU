@@ -290,6 +290,7 @@ en:
     users: 'Users'
     questions: 'Questions'
     tags: 'Tags'
+    badges: 'Badges'
     edit_profile: 'Edit Profile'
     logout: 'Logout'
     profile: 'Profile'

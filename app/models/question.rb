@@ -53,5 +53,9 @@ class Question < ActiveRecord::Base
   def tag_list
     self.tags.map { |t| t.name}.join(', ')
   end
+
+  searchable do
+    text :title, :content, :stored => true
+  end
   
 end
