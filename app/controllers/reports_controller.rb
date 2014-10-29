@@ -103,18 +103,18 @@ class ReportsController < ApplicationController
     @report_type = params[:form]
     @standard = Standard.find_by_id(params[:standard_id])
     @divisions = @standard.divisions
-    respond_to do |format| 
+    respond_to do |format|
       format.js
     end
   end
-    
+
   private
 
     def set_student
-      @student  = Student.find_by_id(params[:id])
+      @student  = Student.find_by_email(params[:email])
       if @student.nil?
         flash[:error] = t('flash_message.error.report.no_student')
-        redirect_to reports_path        
+        redirect_to reports_path
       end
     end
 
