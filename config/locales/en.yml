@@ -18,7 +18,7 @@ en:
       profile_update: 'Profile updated'
       block_list_empty: 'No Questions are Blocked'
       create: 'Please fill proper values'
-    table: 
+    table:
       header:
         title: 'Question Title'
         action: 'Action'
@@ -82,7 +82,7 @@ en:
       create: 'Please insert Proper value'
     commentable:
       teacher: 'Teacher'
-  tags: 
+  tags:
     header:
       title: 'Tags'
     message:
@@ -120,7 +120,7 @@ en:
       not_earned_any_badge: 'has not earned any Badge'
       you_not_earned_any_badge: 'You have not earned any Badge'
   points:
-    message: 
+    message:
       update_success: 'Points Updated '
       update_failed: 'Points not Updated'
   common:
@@ -164,7 +164,7 @@ en:
       forgot_password: 'Forgot your password?'
       last_week: 'Last week'
       last_month: 'Last Month'
-      questions: 'Questions'     
+      questions: 'Questions'
       answers: 'Answers'
       add_tag: ' Add Tag'
       bookmarks: 'Bookmarks'
@@ -179,7 +179,7 @@ en:
         confirm: 'Are you sure?'
     image:
       alt: 'Image'
-    active_tab: 
+    active_tab:
       blocked_student: 'Blocked Students'
       student_for_review: 'Students for Review'
       students: 'Students'
@@ -192,21 +192,23 @@ en:
       most_viewed: 'most_viewed'
       most_voted: 'most_voted'
       newest: 'newest'
+      class_activity: 'Class Activity'
+      used_tags: 'Used Tags'
     page_header:
       users: 'Users'
   students:
     captions:
-      middle_name: 'Middle Name' 
+      middle_name: 'Middle Name'
       class: 'Class'
       division: 'Division'
-    page_header: 
-      title_confirmation: 'Resend confirmation instructions'    
+    page_header:
+      title_confirmation: 'Resend confirmation instructions'
     basic:
       forgot_password: 'Forgot your password?'
     messages:
       blocked_profile: 'Your account has been blocked. Please contact to administrator'
     links:
-      block : 'Block' 
+      block : 'Block'
       mark_as_review: 'Mark as Review'
       review: 'Review'
       unblock: 'Unblock'
@@ -318,7 +320,9 @@ en:
       home: 'home'
   report:
     captions:
-      select_artist: Select an Artist
-      top_3_weak_area: Top 3 weak Areas
-      top_3_strong_area: Top 3 strong Areas
+      select_artist: 'Select an Artist'
+      top_3_weak_area: 'Top 3 weak Areas'
+      top_3_strong_area: 'Top 3 strong Areas'
+    page_headers:
+      reports: 'Reports'
 
