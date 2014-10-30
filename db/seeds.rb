@@ -5,18 +5,18 @@ def find_or_create_admin(admin_attrs)
   if admin.nil?
     admin = Administrator.create(admin_attrs)
     puts "Created admin having email #{email}"
-  else 
-    puts "Admin having  email #{email} already exists, thus not created"  
+  else
+    puts "Admin having  email #{email} already exists, thus not created"
   end
-  admin 
-end 
+  admin
+end
 
 admin_user = find_or_create_admin({email: 'admin@kyu.com', password: 'password'})
 
-standard_arr = ['VIII','IX','X', 'XI', 'XII']
+standard_arr = [[1,'VIII'], [2,'IX'], [3,'X'], [4,'XI'], [5,'XII']]
 
-standard_arr.each do |standard|
-  Standard.find_or_create_by_class_no(standard)
+standard_arr.each do |id, class_no|
+  Standard.find_or_create_by_class_no(id: id, class_no: class_no)
 end
 
 division_arr = ['A','B','C','D','E']
@@ -33,7 +33,7 @@ end
 rules_arr = ['User vote on question', 'User vote on answer', 'User can ask question', 'User can comment', 'User report abuse', 'User can answer']
  rules_arr.each do |rule|
   Rule.find_or_create_by_description(rule)
- end 
+ end
 
  badge_arr = ['Train', 'Doctor', 'Artist', 'Tester', 'Reviewer', 'Scholar', 'Helper']
  point_val = 20
