@@ -19,6 +19,7 @@ ssh_options[:forward_agent] = true
 
 after "deploy", "deploy:cleanup" # keep only the last 5 releases
 after "deploy", "deploy:migrate"
+after "deploy", "deploy:asset:generate_assets"
 
 namespace :deploy do
   # Reference: https://www.ruby-forum.com/topic/85305
@@ -61,5 +62,4 @@ namespace :deploy do
     run "ln -nfs #{shared_path}/config/database.yml #{release_path}/config/database.yml"
   end
   after "deploy:finalize_update", "deploy:symlink_config"
-  after "deploy", "deploy:asset:generate_assets"
 end
