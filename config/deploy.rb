@@ -13,13 +13,13 @@ set :scm, "git"
 set :repository, "git@github.com:BoTreeConsultingTeam/KYU.git"
 set :branch, "development_phase_1_pull_requests"
 set :rvm_type, :system
+set :rvm_bin_path, "$HOME/bin"
 
 default_run_options[:pty] = true
 ssh_options[:forward_agent] = true
 
 after "deploy", "deploy:cleanup" # keep only the last 5 releases
 after "deploy", "deploy:migrate"
-after "deploy", "deploy:asset:generate_assets"
 
 namespace :deploy do
   # Reference: https://www.ruby-forum.com/topic/85305
@@ -62,4 +62,5 @@ namespace :deploy do
     run "ln -nfs #{shared_path}/config/database.yml #{release_path}/config/database.yml"
   end
   after "deploy:finalize_update", "deploy:symlink_config"
+  after "deploy", "deploy:asset:generate_assets"
 end
