@@ -13,7 +13,6 @@ set :scm, "git"
 set :repository, "git@github.com:BoTreeConsultingTeam/KYU.git"
 set :branch, "development_phase_1_pull_requests"
 set :rvm_type, :system
-set :rvm_bin_path, "$HOME/bin"
 
 default_run_options[:pty] = true
 ssh_options[:forward_agent] = true
