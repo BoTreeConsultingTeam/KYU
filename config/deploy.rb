@@ -1,5 +1,6 @@
 require "bundler/capistrano"
 require "rvm/capistrano"
+load 'deploy/assets'
 
 server "104.131.111.55", :web, :app, :db, primary: true
 
