@@ -3,9 +3,25 @@ class ReportsController < ApplicationController
   before_action :set_standard, only: [:student_activeness, :students_questions_compare,:students_questions_compare,:students_answers_compare]
   before_filter :division_list, only: [:index, :student_activeness, :students_questions_compare, :students_answers_compare]
   before_filter :set_division, only: [:student_activeness, :students_questions_compare, :students_answers_compare]
+
   def index
     @students = Student.all
     @standards = Standard.all
+    @tags = ActsAsTaggableOn::Tag.all
+    if params[:active_tab] == 'Class Activeness'
+      @questions = @standards.map{|standard| [standard.class_no, standard.questions.count]}
+      @class_activity_bar_chart = GoogleChartService.render_reports_charts( @questions, :bar, "Questions asked by each Class ", :true, 'Questions', 'Class', false)
+    elsif params[:active_tab] == 'Used Tags'
+      @tags_usage_table = @tags.map{|tag|[tag.name,Question.tagged_with(tag).count]}
+      @tags_usage_chart = GoogleChartService.render_reports_charts( @tags_usage_table, :pie, "Used tags by all students", true, 'Tag', 'Count', false)
+    else
+      @questions = @standards.map{|standard| [standard.class_no, standard.questions.count]}
+      @class_activity_bar_chart = GoogleChartService.render_reports_charts( @questions, :bar, "Questions asked by each Class ", :true, 'Questions', 'Class', false)
+    end
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   def update_students
@@ -13,15 +29,16 @@ class ReportsController < ApplicationController
     @students = standard.students.map{|a| [a.username, a.id]}.insert(0, t('report.caption.select_artist'))
   end
 
-  def class_activity
-    @standards =Standard.all
-    if @standards.nil?
-      error_message
-    else
-      @questions = @standards.map{|standard| [standard.class_no, standard.questions.count]}
-      @class_activity_bar_chart = GoogleChartService.render_reports_charts( @questions, :bar, "Questions asked by each Class ", :true, 'Questions', 'Class', false)
-    end
-  end
+  # def class_activity
+  #   @standards =Standard.all
+  #   if @standards.nil?
+  #     error_message
+  #   else
+  #     @questions = @standards.map{|standard| [standard.class_no, standard.questions.count]}
+  #     @class_activity_bar_chart = GoogleChartService.render_reports_charts( @questions, :bar, "Questions asked by each Class ", :true, 'Questions', 'Class', false)
+  #     puts "-----------------#{@class_activity_bar_chart.inspect}"
+  #   end
+  # end
 
   def student_weakness
     if !@student.questions.blank?
@@ -43,22 +60,22 @@ class ReportsController < ApplicationController
     end
   end
 
-  def tags_usage
-    @tags = ActsAsTaggableOn::Tag.all
-    if @tags.blank?
-      error_message
-    else
-      @tags_usage_table = @tags.map{|tag|[tag.name,Question.tagged_with(tag).count]}
-      @tags_usage_chart = GoogleChartService.render_reports_charts( @tags_usage_table, :pie, "Tags Usage", true, 'Tag', 'Count', false)  
-    end
-  end
+  # def tags_usage
+  #   @tags = ActsAsTaggableOn::Tag.all
+  #   if @tags.blank?
+  #     error_message
+  #   else
+  #     @tags_usage_table = @tags.map{|tag|[tag.name,Question.tagged_with(tag).count]}
+  #     @tags_usage_chart = GoogleChartService.render_reports_charts( @tags_usage_table, :pie, "Tags Usage", true, 'Tag', 'Count', false)
+  #   end
+  # end
 
   def student_activeness
     if @standard.students.blank? || @division.students.blank?
       error_message
     else
       @student_activeness_table = Student.where('standard_id = ? and division_id = ?',params[:standard_id], params[:division_id]).map{|student|[student.username,student.sign_in_count]}
-      @student_activeness_chart = GoogleChartService.render_reports_charts( @student_activeness_table, :bar, "Student login counts", true, 'Name', 'Login Count',false)  
+      @student_activeness_chart = GoogleChartService.render_reports_charts( @student_activeness_table, :bar, "Student login counts", true, 'Name', 'Login Count',false)
     end
   end
 
@@ -83,7 +100,7 @@ class ReportsController < ApplicationController
   def top_3_weak_area
     if !@student.questions.blank?
       @question_ids = @student.questions.map {|obj| obj.id}
-      @top_3_area = map_array_for_top3_chart(@question_ids,1)  
+      @top_3_area = map_array_for_top3_chart(@question_ids,1)
     else
       error_message
     end
@@ -93,7 +110,7 @@ class ReportsController < ApplicationController
     if !@student.answers.blank?
       @accepted_answers = @student.answers.accepted_answers
       @question_ids = @accepted_answers.map {|obj| obj.question_id}
-      @top_3_area = map_array_for_top3_chart(@question_ids,1)  
+      @top_3_area = map_array_for_top3_chart(@question_ids,1)
     else
       error_message
     end

@@ -2,21 +2,27 @@
   .col-md-6.col-xs-6.current-category
     %span
       = t('report.page_headers.reports')
-/ .row.question-filter
-/   .col-md-12.sort-questions
-/     %ul
-/       %li
-/         = link_to t('common.active_tab.class_activity'), class_activity_path(active_tab: t('common.active_tab.class_activity')), {class: 'user_filter_link user_link', id: 'default_link', remote: true}
-/         %li
-/           = link_to t('common.active_tab.used_tags'), tags_usage_path(active_tab: t('common.active_tab.used_tags')), {class: 'user_filter_link user_link', id: 'default_link', remote: true}
-.row
-  .col-xs-6
-    = link_to "Class Activity", class_activity_path, class: 'report-link'
-.spacer20
+.row.question-filter
+  .col-md-12.sort-questions
+    %ul
+      %li
+        = link_to t('common.active_tab.class_activeness'), reports_path(active_tab: t('common.active_tab.class_activeness')), {class: 'user_filter_link user_link', id: 'default_link', remote: true}
+      %li
+        = link_to t('common.active_tab.used_tags'), reports_path(active_tab: t('common.active_tab.used_tags')), {class: 'user_filter_link user_link', id: 'default_link', remote: true}
+.reports
+  = render partial: 'class_activeness_and_used_tags'
+/.row
+/  .col-md-12.col-xs-12
+/    #chart
+/      = render_chart(@class_activity_bar_chart, 'chart')
+/ .row
+/   .col-xs-6
+/     = link_to "Class Activity", class_activity_path, class: 'report-link'
+/ .spacer20
 
-.row
-  .col-xs-6
-    = link_to "Tags Usage", tags_usage_path, class: 'report-link'
+/ .row
+/   .col-xs-6
+/     = link_to "Tags Usage", tags_usage_path, class: 'report-link'
 .spacer20
 .modal-submit-questions
   .modal-dialog

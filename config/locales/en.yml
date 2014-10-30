@@ -192,7 +192,7 @@ en:
       most_viewed: 'most_viewed'
       most_voted: 'most_voted'
       newest: 'newest'
-      class_activity: 'Class Activity'
+      class_activeness: 'Class Activeness'
       used_tags: 'Used Tags'
     page_header:
       users: 'Users'

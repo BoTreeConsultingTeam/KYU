@@ -26,10 +26,10 @@ paperclip:
   style:
     medium: '300x300'
     thumb: '50x50'
-    image_default_url: 'missing.jpeg'  
+    image_default_url: 'missing.jpeg'
 mail:
   default_url_options:
     support_email: 'support@kyu.in'
 google_chart:
-  width: 900
-  height: 600
+  width: 800
+  height: 500

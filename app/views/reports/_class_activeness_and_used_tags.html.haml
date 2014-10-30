@@ -1,0 +1,9 @@
+.row
+  .col-md-12.col-xs-12
+    #chart
+      - if params[:active_tab] == 'Class Activeness'
+        = render_chart(@class_activity_bar_chart, 'chart')
+      - elsif params[:active_tab] == "Used Tags"
+        = render_chart(@tags_usage_chart, 'chart')
+      - else
+        = render_chart(@class_activity_bar_chart, 'chart')
