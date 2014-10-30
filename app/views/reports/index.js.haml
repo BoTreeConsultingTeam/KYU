@@ -1,2 +1,7 @@
-$('.reports').html("#{escape_javascript(render('class_activeness_and_used_tags'))}")
+- if @active_tab
+  $('.reports').html("#{escape_javascript(render('other_reports'))}")
+- elsif @report_name
+  $('.display_other_reports').html("#{escape_javascript(render('display_other_reports'))}")
+- else
+  $('.reports').html("#{escape_javascript(render('class_activeness_and_used_tags'))}")
 $.unblockUI();

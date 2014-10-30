@@ -4,7 +4,7 @@ Rails.application.routes.draw do
 
   devise_for :students,controllers: { sessions: 'students/sessions', registrations: 'students/registrations', passwords:'students/passwords'}
   devise_for :teachers,controllers: { sessions: 'teachers/sessions', registrations: 'teachers/registrations', passwords:'teachers/passwords' }
-  devise_for :administrators,controllers: { sessions: 'administrators/sessions', registrations: 'administrators/registrations'} 
+  devise_for :administrators,controllers: { sessions: 'administrators/sessions', registrations: 'administrators/registrations'}
   resources :bookmarks
   devise_scope :student do
     get "/students" => "students/registrations#index"
@@ -41,7 +41,7 @@ Rails.application.routes.draw do
   get 'tags/:tag', to: 'questions#index', as: :tag_search
   get '/questions/disable/:id' => 'questions#disable',as: :disable
   get '/questions/enable/:id' => 'questions#enable',as: :enable
-  
+
   resources :comments
 
   get '/members' => 'members#index'
@@ -57,8 +57,8 @@ Rails.application.routes.draw do
     member { post :vote }
     resources :comments
   end
-  
-  
+
+
   get 'kyu_mailer/mailer' => 'kyu_mailer#mailer'
   get 'reports/class_activity', to: 'reports#class_activity', as: :class_activity
   get 'reports/tags_usage', to: 'reports#tags_usage', as: :tags_usage
@@ -71,5 +71,7 @@ Rails.application.routes.draw do
   post 'reports/top_3_strong_area', to: 'reports#top_3_strong_area', as: :top_3_strong_area
   get 'reports/update_students', to: 'reports#update_students', as: 'update_students'
   get 'reports/divisions_by_standard', to: 'reports#divisions_by_standard', as: :divisions_by_standard
+  get 'search_reports', to: 'reports#search_reports', as: :search_reports
+  post 'find_report', to: 'reports#find_report', as: :find_report
   resources :reports
 end

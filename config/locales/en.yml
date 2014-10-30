@@ -194,6 +194,10 @@ en:
       newest: 'newest'
       class_activeness: 'Class Activeness'
       used_tags: 'Used Tags'
+      weakness: 'Weakness'
+      strength: 'Strength'
+      top_3_weak_area: 'Top 3 Weak Area'
+      top_3_strong_area: 'Top 3 Strong Area'
     page_header:
       users: 'Users'
   students:
@@ -213,6 +217,7 @@ en:
       review: 'Review'
       unblock: 'Unblock'
       unmark_review: 'Unmark Review'
+      reports: 'Reports'
     tooltip:
       manager: 'Student Manager'
     filter:
@@ -231,6 +236,7 @@ en:
       votes: 'votes'
       bookmarks: 'bookmarks'
       edit_profile: 'edit-profile'
+      reports: 'Reports'
   teachers:
     captions:
     page_header:

@@ -9,46 +9,48 @@
         = link_to t('common.active_tab.class_activeness'), reports_path(active_tab: t('common.active_tab.class_activeness')), {class: 'user_filter_link user_link', id: 'default_link', remote: true}
       %li
         = link_to t('common.active_tab.used_tags'), reports_path(active_tab: t('common.active_tab.used_tags')), {class: 'user_filter_link user_link', id: 'default_link', remote: true}
+      %li
+        = link_to t('common.active_tab.strength'), search_reports_path(active_tab: t('common.active_tab.strength')), {class: 'user_filter_link user_link', id: 'default_link', remote: true}
+      %li
+        = link_to t('common.active_tab.weakness'), search_reports_path(active_tab: t('common.active_tab.weakness')), {class: 'user_filter_link user_link', id: 'default_link', remote: true}
+      %li
+        = link_to t('common.active_tab.top_3_weak_area'), search_reports_path(active_tab: t('common.active_tab.top_3_weak_area')), {class: 'user_filter_link user_link', id: 'default_link', remote: true}
+      %li
+        = link_to t('common.active_tab.top_3_strong_area'), search_reports_path(active_tab: t('common.active_tab.top_3_strong_area')), {class: 'user_filter_link user_link', id: 'default_link', remote: true}
 .reports
   = render partial: 'class_activeness_and_used_tags'
-/.row
-/  .col-md-12.col-xs-12
-/    #chart
-/      = render_chart(@class_activity_bar_chart, 'chart')
-/ .row
-/   .col-xs-6
-/     = link_to "Class Activity", class_activity_path, class: 'report-link'
-/ .spacer20
 
-/ .row
-/   .col-xs-6
-/     = link_to "Tags Usage", tags_usage_path, class: 'report-link'
+
+.display_other_reports
+  - if @report_name.present?
+    = render partial: 'display_other_reports'
+
 .spacer20
-.modal-submit-questions
-  .modal-dialog
-    .modal-body
-      .row
-        %strong.h3
-          Check Student's Weakness
-        .col-md-6
-          = form_tag student_weakness_path do
-            .spacer20
-            = text_field_tag :email, nil,:class => 'form-control'
-            .spacer20
-            = submit_tag "Check", class: 'btn btn-primary'
-.spacer20
-.modal-submit-questions
-  .modal-dialog
-    .modal-body
-      .row
-        %strong.h3
-          Check Student's Strength
-        .col-md-6
-          = form_tag student_strength_path do
-            .spacer20
-            = text_field_tag :email, nil,:class => 'form-control'
-            .spacer20
-            = submit_tag "Check", class: 'btn btn-primary'
+/ .modal-submit-questions
+/   .modal-dialog
+/     .modal-body
+/       .row
+/         %strong.h3
+/           Check Student's Weakness
+/         .col-md-6
+/           = form_tag student_weakness_path do
+/             .spacer20
+/             = text_field_tag :email, nil,:class => 'form-control'
+/             .spacer20
+/             = submit_tag "Check", class: 'btn btn-primary'
+/ .spacer20
+/ .modal-submit-questions
+/   .modal-dialog
+/     .modal-body
+/       .row
+/         %strong.h3
+/           Check Student's Strength
+/         .col-md-6
+/           = form_tag student_strength_path do
+/             .spacer20
+/             = text_field_tag :email, nil,:class => 'form-control'
+/             .spacer20
+/             = submit_tag "Check", class: 'btn btn-primary'
 
 .spacer20
 .modal-submit-questions
@@ -94,33 +96,33 @@
             = select_tag 'division_id', content_tag(:option,'select division...',:value=>"")+options_from_collection_for_select( @divisions, :id, :division), class: 'form-control division_list3', id: 'answers'
             .spacer20
             = submit_tag "Check", class: 'btn btn-primary'
-.spacer20
-.modal-submit-questions
-  .modal-dialog
-    .modal-body
-      .row
-        %strong.h3
-          = t('report.captions.top_3_weak_area')
-        .col-md-6
-          = form_tag top_3_weak_area_path do
-            .spacer20
-            = text_field_tag :email, nil,:class => 'form-control'
-            .spacer20
-            = submit_tag "Check", class: 'btn btn-primary'
+/ .spacer20
+/ .modal-submit-questions
+/   .modal-dialog
+/     .modal-body
+/       .row
+/         %strong.h3
+/           = t('report.captions.top_3_weak_area')
+/         .col-md-6
+/           = form_tag top_3_weak_area_path do
+/             .spacer20
+/             = text_field_tag :email, nil,:class => 'form-control'
+/             .spacer20
+/             = submit_tag "Check", class: 'btn btn-primary'
 
-.spacer20
-.modal-submit-questions
-  .modal-dialog
-    .modal-body
-      .row
-        %strong.h3
-          = t('report.captions.top_3_strong_area')
-        .col-md-6
-          = form_tag top_3_strong_area_path do
-            .spacer20
-            = text_field_tag :email, nil,:class => 'form-control'
-            .spacer20
-            = submit_tag "Check", class: 'btn btn-primary'
+/ .spacer20
+/ .modal-submit-questions
+/   .modal-dialog
+/     .modal-body
+/       .row
+/         %strong.h3
+/           = t('report.captions.top_3_strong_area')
+/         .col-md-6
+/           = form_tag top_3_strong_area_path do
+/             .spacer20
+/             = text_field_tag :email, nil,:class => 'form-control'
+/             .spacer20
+/             = submit_tag "Check", class: 'btn btn-primary'
 
 :javascript
   $(document).ready(function() {

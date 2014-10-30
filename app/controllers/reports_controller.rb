@@ -1,5 +1,5 @@
 class ReportsController < ApplicationController
-  before_action :set_student, only: [:student_weakness, :student_strength, :top_3_strong_area, :top_3_weak_area]
+  before_action :set_student, only: [:find_report]
   before_action :set_standard, only: [:student_activeness, :students_questions_compare,:students_questions_compare,:students_answers_compare]
   before_filter :division_list, only: [:index, :student_activeness, :students_questions_compare, :students_answers_compare]
   before_filter :set_division, only: [:student_activeness, :students_questions_compare, :students_answers_compare]
@@ -24,6 +24,43 @@ class ReportsController < ApplicationController
     end
   end
 
+  def search_reports
+    @active_tab = params[:active_tab]
+    respond_to do |format|
+      format.js {
+        render file: 'reports/index'
+      }
+    end
+  end
+
+  def find_report
+    @report_name = params[:report_name]
+    if @report_name == 'Strength'
+      @accepted_answers = @student.answers.accepted_answers
+      @question_ids = @accepted_answers.map {|obj| obj.question_id}
+      @students_tags = prepate_chart(@question_ids,0)
+
+    elsif @report_name == 'Weakness'
+      @question_ids = @student.questions.map {|obj| obj.id}
+      @students_tags = prepate_chart(@question_ids,0)
+
+    elsif @report_name == 'Top 3 Weak Area'
+      @question_ids = @student.questions.map {|obj| obj.id}
+      @top_3_area = prepate_chart(@question_ids,1)
+
+    elsif @report_name == 'Top 3 Strong Area'
+      @accepted_answers = @student.answers.accepted_answers
+      @question_ids = @accepted_answers.map {|obj| obj.question_id}
+      @top_3_area = prepate_chart(@question_ids,1)
+    end
+
+    respond_to do |format|
+      format.js {
+        render file: 'reports/index'
+      }
+    end
+  end
+
   def update_students
     standard = Standard.find(params[:standard_id])
     @students = standard.students.map{|a| [a.username, a.id]}.insert(0, t('report.caption.select_artist'))
@@ -40,25 +77,25 @@ class ReportsController < ApplicationController
   #   end
   # end
 
-  def student_weakness
-    if !@student.questions.blank?
-      @question_ids = @student.questions.map {|obj| obj.id}
-      @students_tags = map_array_for_top3_chart(@question_ids,0)
+  # def student_weakness
+  #   if !@student.questions.blank?
+  #     @question_ids = @student.questions.map {|obj| obj.id}
+  #     @students_tags = prepate_chart(@question_ids,0)
 
-    else
-      error_message
-    end
-  end
+  #   else
+  #     error_message
+  #   end
+  # end
 
-  def student_strength
-    if @student.answers.blank?
-      error_message
-    else
-      @accepted_answers = @student.answers.accepted_answers
-      @question_ids = @accepted_answers.map {|obj| obj.question_id}
-      @students_tags = map_array_for_top3_chart(@question_ids,0)
-    end
-  end
+  # def student_strength
+  #   if @student.answers.blank?
+  #     error_message
+  #   else
+  #     @accepted_answers = @student.answers.accepted_answers
+  #     @question_ids = @accepted_answers.map {|obj| obj.question_id}
+  #     @students_tags = prepate_chart(@question_ids,0)
+  #   end
+  # end
 
   # def tags_usage
   #   @tags = ActsAsTaggableOn::Tag.all
@@ -97,24 +134,24 @@ class ReportsController < ApplicationController
     end
   end
 
-  def top_3_weak_area
-    if !@student.questions.blank?
-      @question_ids = @student.questions.map {|obj| obj.id}
-      @top_3_area = map_array_for_top3_chart(@question_ids,1)
-    else
-      error_message
-    end
-  end
+  # def top_3_weak_area
+  #   if !@student.questions.blank?
+  #     @question_ids = @student.questions.map {|obj| obj.id}
+  #     @top_3_area = prepate_chart(@question_ids,1)
+  #   else
+  #     error_message
+  #   end
+  # end
 
-  def top_3_strong_area
-    if !@student.answers.blank?
-      @accepted_answers = @student.answers.accepted_answers
-      @question_ids = @accepted_answers.map {|obj| obj.question_id}
-      @top_3_area = map_array_for_top3_chart(@question_ids,1)
-    else
-      error_message
-    end
-  end
+  # def top_3_strong_area
+  #   if !@student.answers.blank?
+  #     @accepted_answers = @student.answers.accepted_answers
+  #     @question_ids = @accepted_answers.map {|obj| obj.question_id}
+  #     @top_3_area = prepate_chart(@question_ids,1)
+  #   else
+  #     error_message
+  #   end
+  # end
 
   def divisions_by_standard
     @report_type = params[:form]
@@ -156,7 +193,7 @@ class ReportsController < ApplicationController
       redirect_to reports_path
     end
 
-    def map_array_for_top3_chart(question_ids, flag)
+    def prepate_chart(question_ids, flag)
       tag_ids_of_question = ActsAsTaggableOn::Tagging.find_all_by_taggable_id(question_ids).map { |obj| obj.tag_id }
       students_tags = tag_ids_of_question.group_by{|tag_id| tag_id}.map{|tag_id,tag_count| [ ActsAsTaggableOn::Tag.find_all_by_id(tag_id).map {|obj| obj.name}, tag_count.count].flatten }
       sorted_reverse_array = students_tags.sort {|a,b| a[1] <=> b[1]}.reverse
@@ -165,7 +202,7 @@ class ReportsController < ApplicationController
         @chart = GoogleChartService.render_reports_charts( first_3_elements, :bar, "Student's tag ration", true, 'Tag', 'Count', false )
         first_3_elements
       else
-        @chart = GoogleChartService.render_reports_charts( students_tags, :bar, "Student's tag ration", true, 'Tag', 'Count', false )
+        @chart = GoogleChartService.render_reports_charts( students_tags, :bar, "Student's tag rtaion", true, 'Tag', 'Count', false )
         students_tags
       end
     end

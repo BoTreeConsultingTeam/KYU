@@ -1,0 +1,10 @@
+.spacer30
+.row
+  = form_tag find_report_path, remote: true do
+    = hidden_field_tag 'report_name', params[:active_tab]
+    .col-xs-12
+      .col-md-1.col-md-offset-1
+      .col-xs-6.col-md-6
+        = text_field_tag :email, nil,:class => 'form-control'
+      .col-xs-2.col-md-2
+        = submit_tag "Check", class: 'btn btn-primary'
