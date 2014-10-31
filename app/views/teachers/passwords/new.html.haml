@@ -1,5 +1,5 @@
-.col-md-8.main-content
-  = render :partial => "layouts/sub_heading", :locals => {:object => 'Forgot your Password'}
+.col-md-12.main-content
+  = render :partial => "layouts/sub_heading", :locals => {:object => 'Forgot your Password ?'}
   .modal-submit-questions
     .modal-dialog
       .modal-body
@@ -7,7 +7,7 @@
           = devise_error_messages!
           .row
             = f.label :email, class: 'submit-input'
-          
+
             = f.email_field :email, :autofocus => true, :autofocus => true, class: 'form-control'
             .spacer20
             = f.submit "Send me reset password instructions", class: 'btn btn-primary'
