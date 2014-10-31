@@ -8,7 +8,7 @@ class Students::RegistrationsController <  Devise::RegistrationsController
   def new
     super
   end
-  
+
   def index
     if params[:tag]
       @questions = Kaminari.paginate_array(Question.tagged_with(params[:tag]).enabled).page(params[:page]).per(Kaminari.config.default_per_page)
@@ -28,12 +28,12 @@ class Students::RegistrationsController <  Devise::RegistrationsController
       format.js
     end
   end
-  
+
   def create
     @student = build_resource
     super
   end
-  
+
   def edit
     super
   end
@@ -51,7 +51,7 @@ class Students::RegistrationsController <  Devise::RegistrationsController
     @answers_likes_count  =  @student.answers.map{|question|question.get_likes.count}.inject{|sum,val|sum+val}
     @total_likes = @questions_likes_count.to_i + @answers_likes_count.to_i
     @total_dislikes = @questions_dislikes_count.to_i + @answers_dislikes_count.to_i
-    respond_to do |format| 
+    respond_to do |format|
       format.html
       format.js
     end

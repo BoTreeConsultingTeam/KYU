@@ -1,0 +1,11 @@
+.row
+  .col-md-6
+    #chart
+      - if @report_name == 'Class Wise Activeness'
+        = render_chart(@student_activeness_chart, 'chart')
+      - elsif @report_name == 'Class Wise Questions Comparison'
+        = render_chart(@students_questions_compare_chart, 'chart')
+      - elsif @report_name == 'Class Wise Answers Comparison'
+        = render_chart(@students_answers_compare_chart, 'chart')
+      - else
+        = render_chart(@chart, 'chart')

@@ -2,119 +2,33 @@
   .col-md-6.col-xs-6.current-category
     %span
       = t('report.page_headers.reports')
-/ .row.question-filter
-/   .col-md-12.sort-questions
-/     %ul
-/       %li
-/         = link_to t('common.active_tab.class_activity'), class_activity_path(active_tab: t('common.active_tab.class_activity')), {class: 'user_filter_link user_link', id: 'default_link', remote: true}
-/         %li
-/           = link_to t('common.active_tab.used_tags'), tags_usage_path(active_tab: t('common.active_tab.used_tags')), {class: 'user_filter_link user_link', id: 'default_link', remote: true}
-.row
-  .col-xs-6
-    = link_to "Class Activity", class_activity_path, class: 'report-link'
-.spacer20
+.row.question-filter
+  .col-md-12.sort-questions
+    %ul
+      %li
+        = link_to t('common.active_tab.class_activeness'), reports_path(active_tab: t('common.active_tab.class_activeness')), {class: 'user_filter_link user_link', id: 'default_link', remote: true}
+      %li
+        = link_to t('common.active_tab.used_tags'), reports_path(active_tab: t('common.active_tab.used_tags')), {class: 'user_filter_link user_link', id: 'default_link', remote: true}
+      %li
+        = link_to t('common.active_tab.strength'), search_reports_path(active_tab: t('common.active_tab.strength')), {class: 'user_filter_link user_link', id: 'default_link', remote: true}
+      %li
+        = link_to t('common.active_tab.weakness'), search_reports_path(active_tab: t('common.active_tab.weakness')), {class: 'user_filter_link user_link', id: 'default_link', remote: true}
+      %li
+        = link_to t('common.active_tab.top_3_weak_area'), search_reports_path(active_tab: t('common.active_tab.top_3_weak_area')), {class: 'user_filter_link user_link', id: 'default_link', remote: true}
+      %li
+        = link_to t('common.active_tab.top_3_strong_area'), search_reports_path(active_tab: t('common.active_tab.top_3_strong_area')), {class: 'user_filter_link user_link', id: 'default_link', remote: true}
+      %li
+        = link_to t('common.active_tab.class_wise_activeness'), search_reports_path(active_tab: t('common.active_tab.class_wise_activeness')), {class: 'user_filter_link user_link', id: 'default_link', remote: true}
+      %li
+        = link_to t('common.active_tab.class_wise_questions_comparision'), search_reports_path(active_tab: t('common.active_tab.class_wise_questions_comparision')), {class: 'user_filter_link user_link', id: 'default_link', remote: true}
+      %li
+        = link_to t('common.active_tab.class_wise_answers_comparision'), search_reports_path(active_tab: t('common.active_tab.class_wise_answers_comparision')), {class: 'user_filter_link user_link', id: 'default_link', remote: true}
+.reports
+  = render partial: 'class_activeness_and_used_tags'
 
-.row
-  .col-xs-6
-    = link_to "Tags Usage", tags_usage_path, class: 'report-link'
-.spacer20
-.modal-submit-questions
-  .modal-dialog
-    .modal-body
-      .row
-        %strong.h3
-          Check Student's Weakness
-        .col-md-6
-          = form_tag student_weakness_path do
-            .spacer20
-            = text_field_tag :email, nil,:class => 'form-control'
-            .spacer20
-            = submit_tag "Check", class: 'btn btn-primary'
-.spacer20
-.modal-submit-questions
-  .modal-dialog
-    .modal-body
-      .row
-        %strong.h3
-          Check Student's Strength
-        .col-md-6
-          = form_tag student_strength_path do
-            .spacer20
-            = text_field_tag :email, nil,:class => 'form-control'
-            .spacer20
-            = submit_tag "Check", class: 'btn btn-primary'
-
-.spacer20
-.modal-submit-questions
-  .modal-dialog
-    .modal-body
-      .row
-        %strong.h3
-          Check Student's Activeness
-        .col-md-6
-          = form_tag student_activeness_path do
-            = select_tag :standard_id, content_tag(:option,'select standard...',:value=>"")+options_from_collection_for_select( @standards, :id, :class_no), class: 'form-control', data: {remote: true, url: divisions_by_standard_path(form: 'activeness')}
-            .spacer20
-            = select_tag 'division_id', content_tag(:option,'select division...',:value=>"")+options_from_collection_for_select( @divisions, :id, :division), class: 'form-control division_list1', id: 'activeness'
-            .spacer20
-            = submit_tag "Check", class: 'btn btn-primary'
-
-.spacer20
-.modal-submit-questions
-  .modal-dialog
-    .modal-body
-      .row
-        %strong.h3
-          Check Students' Questions Comparision
-        .col-md-6
-          = form_tag students_questions_compare_path do
-            = select_tag 'standard_id', content_tag(:option,'select standard...',:value=>"")+options_from_collection_for_select( @standards, :id, :class_no), class: 'form-control', data: {remote: true, url: divisions_by_standard_path(form: 'questions') }
-            .spacer20
-            = select_tag 'division_id', content_tag(:option,'select division...',:value=>"")+options_from_collection_for_select( @divisions, :id, :division), class: 'form-control division_list2', id: 'questions'
-            .spacer20
-            = submit_tag "Check", class: 'btn btn-primary'
-
-.spacer20
-.modal-submit-questions
-  .modal-dialog
-    .modal-body
-      .row
-        %strong.h3
-          Check Students' Answers Comparision
-        .col-md-6
-          = form_tag students_answers_compare_path do
-            = select_tag 'standard_id', content_tag(:option,'select standard...',:value=>"")+options_from_collection_for_select( @standards, :id, :class_no), class: 'form-control', data: {remote: true, url: divisions_by_standard_path(form: 'answers') }
-            .spacer20
-            = select_tag 'division_id', content_tag(:option,'select division...',:value=>"")+options_from_collection_for_select( @divisions, :id, :division), class: 'form-control division_list3', id: 'answers'
-            .spacer20
-            = submit_tag "Check", class: 'btn btn-primary'
-.spacer20
-.modal-submit-questions
-  .modal-dialog
-    .modal-body
-      .row
-        %strong.h3
-          = t('report.captions.top_3_weak_area')
-        .col-md-6
-          = form_tag top_3_weak_area_path do
-            .spacer20
-            = text_field_tag :email, nil,:class => 'form-control'
-            .spacer20
-            = submit_tag "Check", class: 'btn btn-primary'
-
-.spacer20
-.modal-submit-questions
-  .modal-dialog
-    .modal-body
-      .row
-        %strong.h3
-          = t('report.captions.top_3_strong_area')
-        .col-md-6
-          = form_tag top_3_strong_area_path do
-            .spacer20
-            = text_field_tag :email, nil,:class => 'form-control'
-            .spacer20
-            = submit_tag "Check", class: 'btn btn-primary'
+.display_other_reports
+  - if @report_name.present?
+    = render partial: 'display_other_reports'
 
 :javascript
   $(document).ready(function() {

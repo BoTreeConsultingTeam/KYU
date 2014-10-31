@@ -1,6 +1,6 @@
 module ApplicationHelper
   SALUTATIONS = %w[Mr Ms Mrs]
-  PAGE_FILTERS = %w[student teacher basicinfo questions answers votes badges tags alltags allbadges]
+  PAGE_FILTERS = %w[student teacher basicinfo questions answers votes badges tags alltags allbadges used_tags]
   QUESTIONS_TAB = %w[all newest]
 
   def render_css_class(name)
@@ -34,7 +34,7 @@ module ApplicationHelper
 
   def student_badge_color(badge_name)
     if badge_name.blank?
-      css_class = "user-badge" 
+      css_class = "user-badge"
     elsif badge_name == "train"
       css_class = "user-badge-train"
     elsif badge_name == "Reviewer"
@@ -97,7 +97,7 @@ module ApplicationHelper
 
   def menu_active_tab(active_tab_menu)
     css_class = ''
-    
+
     active_tab_menu_param = params[:active_tab_menu]
     if active_tab_menu.present? && active_tab_menu_param.present? && active_tab_menu_param == active_tab_menu
       css_class = 'current-menu-item'
