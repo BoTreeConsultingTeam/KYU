@@ -1,11 +1,11 @@
 class ApplicationController < ActionController::Base
 
   protect_from_forgery with: :exception
-  
+
   def liked_by
     current_user
   end
-  
+
   def user_signed_in?
     if current_user.nil?
       redirect_to root_path, flash: { error: t('common.messages.sign_in') }
@@ -21,7 +21,7 @@ class ApplicationController < ActionController::Base
   def all_questions
     Question.enabled.order("created_at desc")
   end
-  
+
   def user_badge user
     user.badges.last
   end
@@ -29,7 +29,7 @@ class ApplicationController < ActionController::Base
   def set_rule id
     Rule.find_by_id(id)
   end
-  
+
   def badge_rules badge
     badge.rules.map{|rule|rule.id}
   end
@@ -49,11 +49,11 @@ class ApplicationController < ActionController::Base
       end
     end
   end
-  
+
   def require_permission user
     if current_user != user
       flash[:error] = t('answers.messages.unauthorized')
-      redirect_to questions_path 
+      redirect_to questions_path
     end
   end
 
@@ -84,26 +84,26 @@ class ApplicationController < ActionController::Base
   end
 
   private
-  
+
   def current_user
     if(current_administrator.present?)
       current_user = current_administrator
     elsif(current_teacher.present?)
       current_user = current_teacher
     else
-      current_user = current_student   
-    end      
+      current_user = current_student
+    end
   end
   helper_method :current_user
 
   def give_points(object, points)
       if object.is_a? Question
-        user = object.askable  
+        user = object.askable
       else
         user = object.answerable
-      end 
+      end
       if user.is_a? Student
-        user.change_points(points)    
+        user.change_points(points)
       end
   end
 

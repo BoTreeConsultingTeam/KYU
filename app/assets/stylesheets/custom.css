@@ -442,3 +442,11 @@ a:focus{
 .question-cat span.author-avatar img.small {
   height: 30px !important;
 }
+
+.logo-color {
+  color: #FFFFFF;
+}
+
+.logo-color:hover {
+  color: #FFFFFF;
+}
