@@ -198,6 +198,9 @@ en:
       strength: 'Strength'
       top_3_weak_area: 'Top 3 Weak Area'
       top_3_strong_area: 'Top 3 Strong Area'
+      class_wise_activeness: 'Class Wise Activeness'
+      class_wise_questions_comparision: 'Class Wise Questions Comparison'
+      class_wise_answers_comparision: 'Class Wise Answers Comparison'
     page_header:
       users: 'Users'
   students:
