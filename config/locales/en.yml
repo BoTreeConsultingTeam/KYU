@@ -153,6 +153,9 @@ en:
       sign_in: 'Sign in'
       submit: 'Submit'
       post: 'Post'
+      student: 'Student'
+      teacher: 'Teacher'
+      administrator: 'Administrator'
     links:
       sign_in: 'Sign in'
       sign_up: 'Sign up'

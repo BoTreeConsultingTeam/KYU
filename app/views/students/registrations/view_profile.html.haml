@@ -81,7 +81,5 @@
         = link_to t('header_navigation.tags'), student_views_profile_path(@student.id, active_tab: t('students.active_tab.tags')), remote: true, class: "user_tab profile_link"
       %li
         = link_to t('common.links.badges'), student_views_profile_path(@student.id, active_tab: t('students.active_tab.badges')), remote: true, class: "user_tab profile_link"
-      %li
-        = link_to t('common.links.reports'), student_views_profile_path(@student.id, active_tab: t('students.active_tab.reports')), remote: true, class: "user_tab profile_link"
 %div.students_profile
   = render partial: 'students_basic_info', locals: { answers: @answers}
