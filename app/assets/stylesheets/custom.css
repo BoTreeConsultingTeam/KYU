@@ -448,5 +448,5 @@ a:focus{
 }
 
 .logo-color:hover {
-  color: #FFFFFF;
+  color: #FFFFFF !important;
 }
