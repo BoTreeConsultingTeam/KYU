@@ -211,6 +211,9 @@ en:
       middle_name: 'Middle Name'
       class: 'Class'
       division: 'Division'
+      prompt:
+        class: 'Select Class'
+        division: 'Select Division'
     page_header:
       title_confirmation: 'Resend confirmation instructions'
     basic:
