@@ -17,6 +17,6 @@
           %label{style: 'margin-top:7px;'}
             Email
         .col-xs-6.col-md-6
-          = text_field_tag :email, nil,:class => 'form-control'
+          = text_field_tag :email, '', autofocus: true, class: 'form-control', id: 'search_reports'
         .col-xs-2.col-md-2
           = submit_tag "Check", class: 'btn btn-primary'
